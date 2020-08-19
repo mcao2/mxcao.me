@@ -4,13 +4,94 @@
  <title>mxin</title>
  <link href="/atom.xml" rel="self"/>
  <link href="/"/>
- <updated>2020-08-19T18:21:11+00:00</updated>
+ <updated>2020-08-19T19:26:53+00:00</updated>
  <id></id>
  <author>
    <name>Mengxin Cao</name>
    <email>mcao2 at andrew.cmu.edu</email>
  </author>
 
+ 
+ <entry>
+   <title>Use Travis CI for Jekyll site generation</title>
+   <link href="/notes/2020/08/19/jekyll-travis/"/>
+   <updated>2020-08-19T00:00:00+00:00</updated>
+   <id>/notes/2020/08/19/jekyll-travis</id>
+   <content type="html">&lt;h2 id=&quot;introduction&quot;&gt;Introduction&lt;/h2&gt;
+
+&lt;p&gt;I have been using &lt;a href=&quot;https://jekyllrb.com/&quot;&gt;Jekyll&lt;/a&gt; for my homepage site generation for months and I’m happy with it. Usually my workflow for posting a new page involves:&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Create the source file (.md files)&lt;/li&gt;
+  &lt;li&gt;Commit the changes&lt;/li&gt;
+  &lt;li&gt;Run &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;bundle exec jekyll serve -w &lt;/code&gt; to view the post in my local computer&lt;/li&gt;
+  &lt;li&gt;If satisfied, run &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;JEKYLL_ENV=production bundle exec jekyll build &lt;/code&gt; to generate the public content&lt;/li&gt;
+  &lt;li&gt;Copy the public content to another folder used for publication&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;automation-with-bash-script&quot;&gt;Automation with bash script&lt;/h2&gt;
+
+&lt;p&gt;You can see this is a lot! And posting a trivial page like a short intro or recommendation takes non-trivial time. Later I wrote a bash script that help me handle most of the steps so that I can focus on the content rather than the infra-side things.&lt;/p&gt;
+
+&lt;p&gt;This solution works pretty well and I stick to it for a while. But… It’s just ugly and I finally decided to bring modern CI tools into the play.&lt;/p&gt;
+
+&lt;h2 id=&quot;automation-with-cicd-tools&quot;&gt;Automation with CI/CD tools&lt;/h2&gt;
+
+&lt;p&gt;I have been using Jenkins during my internship and it seems a good starting point. However, I want to try something different (another kind of exploration). I tried Circle CI this morning and it’s pretty cool. What about Travis? It has been installed in my Github account for a long time and I did not use it before. I finally chose Travis because its interface looks much cleaner and cute.&lt;/p&gt;
+
+&lt;p&gt;The integration is pretty simple:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Add a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.travis.yml&lt;/code&gt; config file for Travis-CI to use&lt;/li&gt;
+  &lt;li&gt;Configure the repo in the Travis-CI dashboard&lt;/li&gt;
+  &lt;li&gt;Set up GitHub tokens for the CI bot to be able to deploy my public content in a separate branch (e.g. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;gh-pages&lt;/code&gt;) so that I can simply push the updates to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;master&lt;/code&gt; and let travis to help me update the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;gh-pages&lt;/code&gt; branch&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Jekyll has its own &lt;a href=&quot;https://jekyllrb.com/docs/continuous-integration/travis-ci/#1-enabling-travis-and-github&quot;&gt;tutorial&lt;/a&gt; about setting up Travis CI with GitHub, which is pretty good. You may find my &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.travis.yml&lt;/code&gt; file below as a good starting point if you want to do the same thing too:&lt;/p&gt;
+
+&lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;na&quot;&gt;language&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;ruby&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;rvm&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;2.7&lt;/span&gt;
+
+&lt;span class=&quot;na&quot;&gt;env&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;global&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;NOKOGIRI_USE_SYSTEM_LIBRARIES=true&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# speeds up installation of html-proofer&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;# branch whitelist&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;branches&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;only&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;master&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# test the master branch&lt;/span&gt;
+
+&lt;span class=&quot;na&quot;&gt;cache&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;bundler&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# caching bundler gem packages will speed up build&lt;/span&gt;
+
+&lt;span class=&quot;na&quot;&gt;install&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;bundle install&lt;/span&gt;
+
+&lt;span class=&quot;na&quot;&gt;script&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;JEKYLL_ENV=production bundle exec jekyll build&lt;/span&gt;
+  &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;bundle exec htmlproofer docs --check-html --empty_alt_ignore --http-status-ignore &lt;/span&gt;&lt;span class=&quot;m&quot;&gt;999&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# For now, ignore 999 error from linkedin links&lt;/span&gt;
+
+&lt;span class=&quot;na&quot;&gt;deploy&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;provider&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;pages&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;local_dir&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;docs&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;target-branch&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;gh-pages&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;skip_cleanup&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;true&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;github_token&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;$GITHUB_TOKEN&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# Set in the settings page of the repository, as a secure variable&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;keep_history&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;true&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;on&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;branch&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;master&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# Only deploy when current branch is master&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Note that I use &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;htmlproofer&lt;/code&gt; to check if there’s any broken links. I ignored errors like empty alt attribute and 999 error code from LinkedIn links. You can adjust it for your needs.&lt;/p&gt;
+
+&lt;p&gt;For the GitHub token, you can reference Travis’s documentation on how to &lt;a href=&quot;https://docs.travis-ci.com/user/deployment/pages/#setting-the-github-token&quot;&gt;set up the GitHub token for Travis&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Thank you and Enjoy.&lt;/p&gt;
+</content>
+ </entry>
  
  <entry>
    <title>Ansible 101</title>
