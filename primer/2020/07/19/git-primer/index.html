@@ -136,7 +136,7 @@
 
 <p>Fortunately, well-established conventions exist and you don’t need to re-invent the wheel.</p>
 
-<h3 id="several-rules-of-a-great-git-commit-msg-">Several rules of a great git commit msg <sup id="fnref:1"><a href="#fn:1" class="footnote">1</a></sup></h3>
+<h3 id="several-rules-of-a-great-git-commit-msg-">Several rules of a great git commit msg <sup id="fnref:1" role="doc-noteref"><a href="#fn:1" class="footnote">1</a></sup></h3>
 
 <ol>
   <li>Separate <strong>subject</strong> from <strong>body</strong> with a blank line</li>
@@ -191,16 +191,16 @@ See also: #456, #789
 </code></pre></div>    </div>
   </li>
   <li>
-    <p>Commit msgs with a subject and a body are not easy to write with the <code class="highlighter-rouge">-m</code> option. You should configure an editor for use with git. You can also define a commit msg template in the git config like below to remind you of the proper format and style when creating a commit msg:</p>
+    <p>Commit msgs with a subject and a body are not easy to write with the <code class="language-plaintext highlighter-rouge">-m</code> option. You should configure an editor for use with git. You can also define a commit msg template in the git config like below to remind you of the proper format and style when creating a commit msg:</p>
 
-    <p>E.g. Consider a template file at <code class="highlighter-rouge">~/.gitmessage.txt</code> that looks like this</p>
+    <p>E.g. Consider a template file at <code class="language-plaintext highlighter-rouge">~/.gitmessage.txt</code> that looks like this</p>
 
     <div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code> Subject line (try to keep under 50 characters)
 
  Multi-line description of commit,
  feel free to be detailed.
 
- <span class="p">[</span><span class="nv">Ticket: X</span><span class="p">]</span>
+ [Ticket: X]
 </code></pre></div>    </div>
 
     <p>To tell Git to use it as the default message that appears in your editor when you run git commit, set the commit.template configuration value:</p>
@@ -210,7 +210,7 @@ See also: #456, #789
 </code></pre></div>    </div>
   </li>
   <li>
-    <p>The blank line b/w the subject and body is essential and there’re a number of contexts in git like <code class="highlighter-rouge">git log --oneline</code> or <code class="highlighter-rouge">git shortlog</code> that the distinction b/w subject and body matter</p>
+    <p>The blank line b/w the subject and body is essential and there’re a number of contexts in git like <code class="language-plaintext highlighter-rouge">git log --oneline</code> or <code class="language-plaintext highlighter-rouge">git shortlog</code> that the distinction b/w subject and body matter</p>
   </li>
   <li>
     <p>The 50 characters limit for the subject line forces the author to think about the most concise way to express his ideas. It also ensures that they are readable from the GitHub WebUI</p>
@@ -236,7 +236,7 @@ See also: #456, #789
 </code></pre></div>        </div>
       </li>
       <li>
-        <p>In your VSCode user <code class="highlighter-rouge">settings.json</code>, add the following wrap rule:</p>
+        <p>In your VSCode user <code class="language-plaintext highlighter-rouge">settings.json</code>, add the following wrap rule:</p>
 
         <div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="w">  </span><span class="nl">"[git-commit]"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
       </span><span class="nl">"editor.rulers"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
@@ -254,15 +254,15 @@ See also: #456, #789
   </li>
 </ol>
 
-<h2 id="git-commands-">Git Commands <sup id="fnref:2"><a href="#fn:2" class="footnote">2</a></sup></h2>
+<h2 id="git-commands-">Git Commands <sup id="fnref:2" role="doc-noteref"><a href="#fn:2" class="footnote">2</a></sup></h2>
 
 <ul>
   <li><strong>Commit changes</strong>
     <ul>
-      <li><code class="highlighter-rouge">git commit -m 'Simple msg goes here'</code></li>
-      <li><code class="highlighter-rouge">git commit --amend</code> <sup id="fnref:3"><a href="#fn:3" class="footnote">3</a></sup>
+      <li><code class="language-plaintext highlighter-rouge">git commit -m 'Simple msg goes here'</code></li>
+      <li><code class="language-plaintext highlighter-rouge">git commit --amend</code> <sup id="fnref:3" role="doc-noteref"><a href="#fn:3" class="footnote">3</a></sup>
         <ul>
-          <li>Sometimes we commit too early and possibly forget to add some files, or you mess up your commit msg format, you want to undo that commit, make additional changes you forgot, stage and commit again. Now this time use the <code class="highlighter-rouge">--amend</code> option!</li>
+          <li>Sometimes we commit too early and possibly forget to add some files, or you mess up your commit msg format, you want to undo that commit, make additional changes you forgot, stage and commit again. Now this time use the <code class="language-plaintext highlighter-rouge">--amend</code> option!</li>
           <li>This will take you staging area and uses it for the commit. The same commit msg will pop up and you can update this msg and it will overwrites your previous commit</li>
           <li>You end up with a single commit, the one amended will <strong>replace</strong> the results of the first</li>
         </ul>
@@ -271,27 +271,27 @@ See also: #456, #789
   </li>
   <li><strong>Create a new branch</strong>
     <ul>
-      <li><code class="highlighter-rouge">git branch bugFix</code> (Note that this does not set the HEAD at the new branch)</li>
-      <li><code class="highlighter-rouge">git checkout -b bugFix</code></li>
+      <li><code class="language-plaintext highlighter-rouge">git branch bugFix</code> (Note that this does not set the HEAD at the new branch)</li>
+      <li><code class="language-plaintext highlighter-rouge">git checkout -b bugFix</code></li>
     </ul>
   </li>
   <li><strong>Combine changes</strong>
     <ul>
-      <li><code class="highlighter-rouge">merge</code>
+      <li><code class="language-plaintext highlighter-rouge">merge</code>
         <ul>
           <li>Create a special commit that has two unique parents:
             <ul>
               <li>
-                <p><code class="highlighter-rouge">git merge bugFix</code>
-<img src="/public/files/git_primer/15951758006949.jpg" alt="" /></p>
+                <p><code class="language-plaintext highlighter-rouge">git merge bugFix</code>
+<img src="/public/files/git_primer/15951758006949.jpg" alt="git merge bugFix" /></p>
               </li>
               <li>
-                <p>If you want to keep the <code class="highlighter-rouge">bugFix</code> branch up to date and continue work on it, we can merge the <code class="highlighter-rouge">master</code> branch to the <code class="highlighter-rouge">bugFix</code> branch. Since <code class="highlighter-rouge">bugFix</code> was an ancestor of <code class="highlighter-rouge">master</code> after the above merge, it simply move the <code class="highlighter-rouge">bugFix</code> to the same commit as <code class="highlighter-rouge">master</code>: <code class="highlighter-rouge">git checkout bugFix; git merge master</code>
-<img src="/public/files/git_primer/15951774331718.jpg" alt="" /></p>
+                <p>If you want to keep the <code class="language-plaintext highlighter-rouge">bugFix</code> branch up to date and continue work on it, we can merge the <code class="language-plaintext highlighter-rouge">master</code> branch to the <code class="language-plaintext highlighter-rouge">bugFix</code> branch. Since <code class="language-plaintext highlighter-rouge">bugFix</code> was an ancestor of <code class="language-plaintext highlighter-rouge">master</code> after the above merge, it simply move the <code class="language-plaintext highlighter-rouge">bugFix</code> to the same commit as <code class="language-plaintext highlighter-rouge">master</code>: <code class="language-plaintext highlighter-rouge">git checkout bugFix; git merge master</code>
+<img src="/public/files/git_primer/15951774331718.jpg" alt="keep bugFix up to date with master" /></p>
               </li>
             </ul>
           </li>
-          <li><code class="highlighter-rouge">rebase</code>
+          <li><code class="language-plaintext highlighter-rouge">rebase</code>
             <ul>
               <li>Explanations:
                 <ul>
@@ -299,13 +299,13 @@ See also: #456, #789
                   <li>Take all the changes that were committed on one branch and <strong>reply</strong> them on a different branch.</li>
                 </ul>
               </li>
-              <li><code class="highlighter-rouge">git rebase target_branch_to_reply_changes_to</code>
+              <li><code class="language-plaintext highlighter-rouge">git rebase target_branch_to_reply_changes_to</code>
                 <ul>
-                  <li>E.g. If you are on branch <code class="highlighter-rouge">bugFix</code> and want to move work from <code class="highlighter-rouge">bugFix</code> directly onto the <code class="highlighter-rouge">master</code>. That way the commit history will looks like these two features were developed sequentially, when in reality they were developed in parallel.</li>
-                  <li><code class="highlighter-rouge">git checkout bugFix; git rebase master</code>
-<img src="/public/files/git_primer/15951781011384.jpg" alt="" />
+                  <li>E.g. If you are on branch <code class="language-plaintext highlighter-rouge">bugFix</code> and want to move work from <code class="language-plaintext highlighter-rouge">bugFix</code> directly onto the <code class="language-plaintext highlighter-rouge">master</code>. That way the commit history will looks like these two features were developed sequentially, when in reality they were developed in parallel.</li>
+                  <li><code class="language-plaintext highlighter-rouge">git checkout bugFix; git rebase master</code>
+<img src="/public/files/git_primer/15951781011384.jpg" alt="rebase bugFix changes to master" />
                     <ul>
-                      <li>Now you can go back to the <code class="highlighter-rouge">master</code> and do a fast-forward merge to keep the <code class="highlighter-rouge">master</code> up to date: <code class="highlighter-rouge">git checkout master; git merge/rebase bugFix</code></li>
+                      <li>Now you can go back to the <code class="language-plaintext highlighter-rouge">master</code> and do a fast-forward merge to keep the <code class="language-plaintext highlighter-rouge">master</code> up to date: <code class="language-plaintext highlighter-rouge">git checkout master; git merge/rebase bugFix</code></li>
                     </ul>
                   </li>
                 </ul>
@@ -318,29 +318,29 @@ See also: #456, #789
   </li>
   <li><strong>Moving around commits</strong>
     <ul>
-      <li><code class="highlighter-rouge">HEAD</code>: the symbolic name for the currently checked out commit. It always points to the most recent commit which is reflected in the working tree.</li>
-      <li>Detaching <code class="highlighter-rouge">HEAD</code>: attach <code class="highlighter-rouge">HEAD</code> to a commit instead of a branch, e.g. when you checkout a particular commit rather than a branch. Typically you find the commit by using <code class="highlighter-rouge">git log</code> to find the right hash.
-<img src="/public/files/git_primer/15951786444183.jpg" alt="" />
+      <li><code class="language-plaintext highlighter-rouge">HEAD</code>: the symbolic name for the currently checked out commit. It always points to the most recent commit which is reflected in the working tree.</li>
+      <li>Detaching <code class="language-plaintext highlighter-rouge">HEAD</code>: attach <code class="language-plaintext highlighter-rouge">HEAD</code> to a commit instead of a branch, e.g. when you checkout a particular commit rather than a branch. Typically you find the commit by using <code class="language-plaintext highlighter-rouge">git log</code> to find the right hash.
+<img src="/public/files/git_primer/15951786444183.jpg" alt="detach HEAD" />
         <ul>
           <li><strong>Relative Refs</strong>
             <ul>
-              <li>Start from somewhere memorable e.g. branch <code class="highlighter-rouge">bugFix</code> or the <code class="highlighter-rouge">HEAD</code>, and move from there
+              <li>Start from somewhere memorable e.g. branch <code class="language-plaintext highlighter-rouge">bugFix</code> or the <code class="language-plaintext highlighter-rouge">HEAD</code>, and move from there
                 <ul>
-                  <li>moving upwards, 1 commit at a time: <code class="highlighter-rouge">^</code> (Caret operator)
+                  <li>moving upwards, 1 commit at a time: <code class="language-plaintext highlighter-rouge">^</code> (Caret operator)
                     <ul>
                       <li>e.g.
                         <ul>
-                          <li>detach head to its parent: <code class="highlighter-rouge">git checkout HEAD^1</code>, or</li>
-                          <li>checkout to the <code class="highlighter-rouge">master</code>’s grandparent: <code class="highlighter-rouge">git checkout master^^</code></li>
+                          <li>detach head to its parent: <code class="language-plaintext highlighter-rouge">git checkout HEAD^1</code>, or</li>
+                          <li>checkout to the <code class="language-plaintext highlighter-rouge">master</code>’s grandparent: <code class="language-plaintext highlighter-rouge">git checkout master^^</code></li>
                         </ul>
                       </li>
                     </ul>
                   </li>
-                  <li>moving upwards for &lt;num&gt; commits: <code class="highlighter-rouge">~&lt;num&gt;</code> (Tilde operator)
+                  <li>moving upwards for &lt;num&gt; commits: <code class="language-plaintext highlighter-rouge">~&lt;num&gt;</code> (Tilde operator)
                     <ul>
                       <li>e.g.
                         <ul>
-                          <li>detach head and move upward 4 commits: <code class="highlighter-rouge">git checkout HEAD~4</code></li>
+                          <li>detach head and move upward 4 commits: <code class="language-plaintext highlighter-rouge">git checkout HEAD~4</code></li>
                         </ul>
                       </li>
                     </ul>
@@ -350,7 +350,7 @@ See also: #456, #789
               <li>Branch forcing:
                 <ul>
                   <li>Reassign a branch to a particular commit</li>
-                  <li>E.g. move the <code class="highlighter-rouge">master</code> branch to 3 parents behind HEAD: <code class="highlighter-rouge">git branch -f master HEAD~3</code></li>
+                  <li>E.g. move the <code class="language-plaintext highlighter-rouge">master</code> branch to 3 parents behind HEAD: <code class="language-plaintext highlighter-rouge">git branch -f master HEAD~3</code></li>
                 </ul>
               </li>
             </ul>
@@ -361,35 +361,35 @@ See also: #456, #789
   </li>
   <li><strong>Reversing changes</strong>
     <ul>
-      <li><code class="highlighter-rouge">git reset</code>
+      <li><code class="language-plaintext highlighter-rouge">git reset</code>
         <ul>
           <li><strong>Rewriting history</strong>: revert changes by moving a branch reference backwards in time to an older commit</li>
           <li><strong>Warning</strong>: This cmd is great for <strong>local branches on your own machine</strong>, not good for remote branches that others are using!</li>
-          <li>E.g. move the <code class="highlighter-rouge">master</code> branch to the parent of HEAD: <code class="highlighter-rouge">git reset HEAD^</code>, or you can achieve this via <code class="highlighter-rouge">branch forcing</code>: <code class="highlighter-rouge">git branch -f master HEAD^</code></li>
+          <li>E.g. move the <code class="language-plaintext highlighter-rouge">master</code> branch to the parent of HEAD: <code class="language-plaintext highlighter-rouge">git reset HEAD^</code>, or you can achieve this via <code class="language-plaintext highlighter-rouge">branch forcing</code>: <code class="language-plaintext highlighter-rouge">git branch -f master HEAD^</code></li>
           <li>Modes
             <ul>
-              <li><code class="highlighter-rouge">--soft</code>
+              <li><code class="language-plaintext highlighter-rouge">--soft</code>
                 <ul>
                   <li>does not touch the index file or the working tree at all but resets the head to the given &lt;commit&gt;</li>
                 </ul>
               </li>
-              <li><code class="highlighter-rouge">--mixed</code>
+              <li><code class="language-plaintext highlighter-rouge">--mixed</code>
                 <ul>
                   <li>default mode, resets the index file but not the working tree, i.e. preserve changes but not marked for commit</li>
                 </ul>
               </li>
-              <li><code class="highlighter-rouge">--hard</code>
+              <li><code class="language-plaintext highlighter-rouge">--hard</code>
                 <ul>
                   <li>resets the index and working tree and any changes to tracked files are discarded</li>
                 </ul>
               </li>
-              <li><code class="highlighter-rouge">--merge</code></li>
-              <li><code class="highlighter-rouge">--keep</code></li>
+              <li><code class="language-plaintext highlighter-rouge">--merge</code></li>
+              <li><code class="language-plaintext highlighter-rouge">--keep</code></li>
             </ul>
           </li>
         </ul>
       </li>
-      <li><code class="highlighter-rouge">git revert</code>
+      <li><code class="language-plaintext highlighter-rouge">git revert</code>
         <ul>
           <li>Revert changes and share those reversed changes with others by creating a new commit, whose effect is to revert a particular commit</li>
         </ul>
@@ -399,16 +399,16 @@ See also: #456, #789
   <li><strong>Move works around</strong>
     <ul>
       <li>i.e. “Move this commit here, that commit there”</li>
-      <li><code class="highlighter-rouge">git cherry-pick &lt;commit1&gt; &lt;commit2&gt; &lt;...&gt;</code>
+      <li><code class="language-plaintext highlighter-rouge">git cherry-pick &lt;commit1&gt; &lt;commit2&gt; &lt;...&gt;</code>
         <ul>
-          <li>A way of saying that you want to copy the provided commits below your current location i.e. below the <code class="highlighter-rouge">HEAD</code></li>
-          <li>Surely you may be able to achieve the same goal by using <code class="highlighter-rouge">git rebase</code>, but <code class="highlighter-rouge">cherry-pick</code> is kinda of magic and easier to achieve this goal…</li>
+          <li>A way of saying that you want to copy the provided commits below your current location i.e. below the <code class="language-plaintext highlighter-rouge">HEAD</code></li>
+          <li>Surely you may be able to achieve the same goal by using <code class="language-plaintext highlighter-rouge">git rebase</code>, but <code class="language-plaintext highlighter-rouge">cherry-pick</code> is kinda of magic and easier to achieve this goal…</li>
         </ul>
       </li>
-      <li>Interactive rebasing <code class="highlighter-rouge">git rebase -i target_branch_to_replay_changes_to</code>
+      <li>Interactive rebasing <code class="language-plaintext highlighter-rouge">git rebase -i target_branch_to_replay_changes_to</code>
         <ul>
           <li>Cover the situation where you don’t know what commits you want: review a series of commits you’re about to rebase</li>
-          <li>Git will open up a UI to show you which commits are about to be copied below the target of the rebase (i.e. <code class="highlighter-rouge">target_branch_to_replay_changes_to</code>).
+          <li>Git will open up a UI to show you which commits are about to be copied below the target of the rebase (i.e. <code class="language-plaintext highlighter-rouge">target_branch_to_replay_changes_to</code>).
             <ul>
               <li>You can reorder commits by changing their order in the UI</li>
               <li>You can choose to completely omit some commits</li>
@@ -425,16 +425,16 @@ See also: #456, #789
 
 <h3 id="references">References</h3>
 
-<div class="footnotes">
+<div class="footnotes" role="doc-endnotes">
   <ol>
-    <li id="fn:1">
-      <p>https://chris.beams.io/posts/git-commit/ <a href="#fnref:1" class="reversefootnote">&#8617;</a></p>
+    <li id="fn:1" role="doc-endnote">
+      <p>https://chris.beams.io/posts/git-commit/ <a href="#fnref:1" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
-    <li id="fn:2">
-      <p>https://learngitbranching.js.org/?locale=en_US <a href="#fnref:2" class="reversefootnote">&#8617;</a></p>
+    <li id="fn:2" role="doc-endnote">
+      <p>https://learngitbranching.js.org/?locale=en_US <a href="#fnref:2" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
-    <li id="fn:3">
-      <p>https://git-scm.com/book/en/v2/Git-Basics-Undoing-Things <a href="#fnref:3" class="reversefootnote">&#8617;</a></p>
+    <li id="fn:3" role="doc-endnote">
+      <p>https://git-scm.com/book/en/v2/Git-Basics-Undoing-Things <a href="#fnref:3" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
   </ol>
 </div>

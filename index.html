@@ -145,7 +145,7 @@
 
     <span class="post-info">09 Aug 2020</span>
 
-    <h2 id="introduction-">Introduction <sup id="fnref:1"><a href="#fn:1" class="footnote">1</a></sup></h2>
+    <h2 id="introduction-">Introduction <sup id="fnref:1" role="doc-noteref"><a href="#fn:1" class="footnote">1</a></sup></h2>
 
 <p>Bazel is an open-source build/test framework similar to Maven, Make, and Gradle.</p>
 
@@ -160,10 +160,10 @@
 
 <p>This post is a reading notes about the official documentation on Bazel version 3.4.0. You can skip these intros and jump directly to the sample repo to get started.</p>
 
-<div class="footnotes">
+<div class="footnotes" role="doc-endnotes">
   <ol>
-    <li id="fn:1">
-      <p>https://www.bazel.build <a href="#fnref:1" class="reversefootnote">&#8617;</a></p>
+    <li id="fn:1" role="doc-endnote">
+      <p>https://www.bazel.build <a href="#fnref:1" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
   </ol>
 </div>
@@ -187,23 +187,23 @@
 
     <h2 id="introduction">Introduction</h2>
 
-<p>WireGuard <sup id="fnref:1"><a href="#fn:1" class="footnote">1</a></sup> is a simple, fast, and modern <strong>VPN</strong> that utilizes cryptography.</p>
+<p>WireGuard <sup id="fnref:1" role="doc-noteref"><a href="#fn:1" class="footnote">1</a></sup> is a simple, fast, and modern <strong>VPN</strong> that utilizes cryptography.</p>
 
 <p>It encapsulates IP packets over UDP. The general workflow can be summarized as:</p>
 
 <ul>
   <li>Install WireGuard</li>
-  <li>Add a WireGuard interface (like <code class="highlighter-rouge">wlan0</code>/<code class="highlighter-rouge">eth0</code> but named <code class="highlighter-rouge">wg0</code>/<code class="highlighter-rouge">wg1</code>…)</li>
+  <li>Add a WireGuard interface (like <code class="language-plaintext highlighter-rouge">wlan0</code>/<code class="language-plaintext highlighter-rouge">eth0</code> but named <code class="language-plaintext highlighter-rouge">wg0</code>/<code class="language-plaintext highlighter-rouge">wg1</code>…)</li>
   <li>Configure the interface with a private key and optionally add peer’s public key(s)</li>
   <li>Send packets to the interface</li>
 </ul>
 
 <p>It’s similar to the ssh model. Both parties have each other’s public keys and they communicate by exchanging packets encrypted by the public keys through the WireGuard interface.</p>
 
-<div class="footnotes">
+<div class="footnotes" role="doc-endnotes">
   <ol>
-    <li id="fn:1">
-      <p>https://www.wireguard.com/ <a href="#fnref:1" class="reversefootnote">&#8617;</a></p>
+    <li id="fn:1" role="doc-endnote">
+      <p>https://www.wireguard.com/ <a href="#fnref:1" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
   </ol>
 </div>

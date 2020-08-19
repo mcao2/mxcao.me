@@ -1,6 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2020-08-19T11:31:20-04:00</updated><id>/feed.xml</id><title type="html">mxin</title><subtitle>mxin</subtitle><author><name>Mengxin Cao</name><email>mcao2 at andrew.cmu.edu</email></author><entry><title type="html">Ansible 101</title><link href="/devops/2020/08/18/ansible-101/" rel="alternate" type="text/html" title="Ansible 101" /><published>2020-08-18T00:00:00-04:00</published><updated>2020-08-18T00:00:00-04:00</updated><id>/devops/2020/08/18/ansible-101</id><content type="html" xml:base="/devops/2020/08/18/ansible-101/">&lt;h2 id=&quot;introduction&quot;&gt;Introduction&lt;/h2&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2020-08-19T18:21:11+00:00</updated><id>/feed.xml</id><title type="html">mxin</title><subtitle>mxin</subtitle><author><name>Mengxin Cao</name><email>mcao2 at andrew.cmu.edu</email></author><entry><title type="html">Ansible 101</title><link href="/devops/2020/08/18/ansible-101/" rel="alternate" type="text/html" title="Ansible 101" /><published>2020-08-18T00:00:00+00:00</published><updated>2020-08-18T00:00:00+00:00</updated><id>/devops/2020/08/18/ansible-101</id><content type="html" xml:base="/devops/2020/08/18/ansible-101/">&lt;h2 id=&quot;introduction&quot;&gt;Introduction&lt;/h2&gt;
 
-&lt;p&gt;This post was supposed to discuss Ansible as the next primer series. However, I found Jeff’s posts and YouTube videos much better than what I would achive via a plain post. So definitely checkout &lt;a href=&quot;https://www.jeffgeerling.com/blog/2020/ansible-101-jeff-geerling-youtube-streaming-series&quot;&gt;Ansible 101 by Jeff Geerling&lt;/a&gt;. I also recommend purchase the &lt;a href=&quot;https://leanpub.com/ansible-for-devops&quot;&gt;eBook&lt;/a&gt; for further reading and as a reference manual for common tasks. Thank you.&lt;/p&gt;</content><author><name>Mengxin Cao</name><email>mcao2 at andrew.cmu.edu</email></author><category term="Infrastructure" /><category term="SysAdmin" /><summary type="html">Introduction This post was supposed to discuss Ansible as the next primer series. However, I found Jeff’s posts and YouTube videos much better than what I would achive via a plain post. So definitely checkout Ansible 101 by Jeff Geerling. I also recommend purchase the eBook for further reading and as a reference manual for common tasks. Thank you.</summary></entry><entry><title type="html">Bazel Primer</title><link href="/primer/2020/08/09/bazel-primer/" rel="alternate" type="text/html" title="Bazel Primer" /><published>2020-08-09T00:00:00-04:00</published><updated>2020-08-09T00:00:00-04:00</updated><id>/primer/2020/08/09/bazel-primer</id><content type="html" xml:base="/primer/2020/08/09/bazel-primer/">&lt;h2 id=&quot;introduction-&quot;&gt;Introduction &lt;sup id=&quot;fnref:1&quot;&gt;&lt;a href=&quot;#fn:1&quot; class=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/h2&gt;
+&lt;p&gt;This post was supposed to discuss Ansible as the next primer series. However, I found Jeff’s posts and YouTube videos much better than what I would achive via a plain post. So definitely checkout &lt;a href=&quot;https://www.jeffgeerling.com/blog/2020/ansible-101-jeff-geerling-youtube-streaming-series&quot;&gt;Ansible 101 by Jeff Geerling&lt;/a&gt;. I also recommend purchase the &lt;a href=&quot;https://leanpub.com/ansible-for-devops&quot;&gt;eBook&lt;/a&gt; for further reading and as a reference manual for common tasks. Thank you.&lt;/p&gt;</content><author><name>Mengxin Cao</name><email>mcao2 at andrew.cmu.edu</email></author><category term="Infrastructure" /><category term="SysAdmin" /><summary type="html">Introduction This post was supposed to discuss Ansible as the next primer series. However, I found Jeff’s posts and YouTube videos much better than what I would achive via a plain post. So definitely checkout Ansible 101 by Jeff Geerling. I also recommend purchase the eBook for further reading and as a reference manual for common tasks. Thank you.</summary></entry><entry><title type="html">Bazel Primer</title><link href="/primer/2020/08/09/bazel-primer/" rel="alternate" type="text/html" title="Bazel Primer" /><published>2020-08-09T00:00:00+00:00</published><updated>2020-08-09T00:00:00+00:00</updated><id>/primer/2020/08/09/bazel-primer</id><content type="html" xml:base="/primer/2020/08/09/bazel-primer/">&lt;h2 id=&quot;introduction-&quot;&gt;Introduction &lt;sup id=&quot;fnref:1&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:1&quot; class=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/h2&gt;
 
 &lt;p&gt;Bazel is an open-source build/test framework similar to Maven, Make, and Gradle.&lt;/p&gt;
 
@@ -59,7 +59,7 @@
 
 &lt;p&gt;Note the new symbolic links created from that build.&lt;/p&gt;
 
-&lt;p&gt;Bazel identify a directory as a &lt;em&gt;workspace root&lt;/em&gt; by searching for a file named &lt;code class=&quot;highlighter-rouge&quot;&gt;WORKSPACE&lt;/code&gt; or &lt;code class=&quot;highlighter-rouge&quot;&gt;WORKSPACE.bazel&lt;/code&gt;. It may be empty or may contain references to external dependencies required to build the outputs. If both &lt;code class=&quot;highlighter-rouge&quot;&gt;WORKSPACE&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;WORKSPACE.bazel&lt;/code&gt; exist, Bazel will ignore the &lt;code class=&quot;highlighter-rouge&quot;&gt;WORKSPACE&lt;/code&gt; file.&lt;/p&gt;
+&lt;p&gt;Bazel identify a directory as a &lt;em&gt;workspace root&lt;/em&gt; by searching for a file named &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;WORKSPACE&lt;/code&gt; or &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;WORKSPACE.bazel&lt;/code&gt;. It may be empty or may contain references to external dependencies required to build the outputs. If both &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;WORKSPACE&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;WORKSPACE.bazel&lt;/code&gt; exist, Bazel will ignore the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;WORKSPACE&lt;/code&gt; file.&lt;/p&gt;
 
 &lt;p&gt;If there’s another subdirectory under the workspace root and it contains a file called &lt;strong&gt;WORKSPACE&lt;/strong&gt;, Bazel simply ignores them. In other words, Bazel does not support nested workspaces.&lt;/p&gt;
 
@@ -75,9 +75,9 @@
   &lt;li&gt;a specification of the dependencies among these files&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;In reality (ps: joking), it is a subdirectory containing a &lt;code class=&quot;highlighter-rouge&quot;&gt;BUILD&lt;/code&gt; or &lt;code class=&quot;highlighter-rouge&quot;&gt;BUILD.bazel&lt;/code&gt; file beneath the workspace root. A package includes all files + all subdirectories beneath the package root, except those themselves contain a &lt;code class=&quot;highlighter-rouge&quot;&gt;BUILD&lt;/code&gt; (or &lt;code class=&quot;highlighter-rouge&quot;&gt;BUILD.bazel&lt;/code&gt;), which become &lt;strong&gt;subpackages&lt;/strong&gt; in this case.&lt;/p&gt;
+&lt;p&gt;In reality (ps: joking), it is a subdirectory containing a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;BUILD&lt;/code&gt; or &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;BUILD.bazel&lt;/code&gt; file beneath the workspace root. A package includes all files + all subdirectories beneath the package root, except those themselves contain a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;BUILD&lt;/code&gt; (or &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;BUILD.bazel&lt;/code&gt;), which become &lt;strong&gt;subpackages&lt;/strong&gt; in this case.&lt;/p&gt;
 
-&lt;p&gt;For example, the below directory tree contains two packages: &lt;code class=&quot;highlighter-rouge&quot;&gt;my/app&lt;/code&gt; and its subpackage &lt;code class=&quot;highlighter-rouge&quot;&gt;my/app/test&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;For example, the below directory tree contains two packages: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;my/app&lt;/code&gt; and its subpackage &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;my/app/test&lt;/code&gt;.&lt;/p&gt;
 
 &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;src/my/app/BUILD
 src/my/app/app.cc
@@ -90,11 +90,11 @@ src/my/app/tests/test.cc
 
 &lt;p&gt;In the above introduction of packages, we mentioned &lt;strong&gt;repository&lt;/strong&gt;, so what is it? We know GitHub repos, and it’s a way of organizing source code. Bazel repository is a similar concept.&lt;/p&gt;
 
-&lt;p&gt;Bazel defines &lt;strong&gt;the root of the main repository&lt;/strong&gt; as the directory containing the &lt;code class=&quot;highlighter-rouge&quot;&gt;WORKSPACE&lt;/code&gt; file, also called &lt;code class=&quot;highlighter-rouge&quot;&gt;@&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Bazel defines &lt;strong&gt;the root of the main repository&lt;/strong&gt; as the directory containing the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;WORKSPACE&lt;/code&gt; file, also called &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;@&lt;/code&gt;.&lt;/p&gt;
 
-&lt;p&gt;We can have dependent external repositories like googletest and these external repos are defined in the main repo’s &lt;code class=&quot;highlighter-rouge&quot;&gt;WORKSPACE&lt;/code&gt; file using workspace rules.&lt;/p&gt;
+&lt;p&gt;We can have dependent external repositories like googletest and these external repos are defined in the main repo’s &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;WORKSPACE&lt;/code&gt; file using workspace rules.&lt;/p&gt;
 
-&lt;p&gt;Note that external repos are repos themselves, which means they have their own &lt;code class=&quot;highlighter-rouge&quot;&gt;WORKSPACE&lt;/code&gt; file as well! However, these &lt;code class=&quot;highlighter-rouge&quot;&gt;WORKSPACE&lt;/code&gt; files are ignored by Bazel and hence those transitively dependent repos are not added automatically.&lt;/p&gt;
+&lt;p&gt;Note that external repos are repos themselves, which means they have their own &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;WORKSPACE&lt;/code&gt; file as well! However, these &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;WORKSPACE&lt;/code&gt; files are ignored by Bazel and hence those transitively dependent repos are not added automatically.&lt;/p&gt;
 
 &lt;h3 id=&quot;targets&quot;&gt;Targets&lt;/h3&gt;
 
@@ -131,7 +131,7 @@ src/my/app/tests/test.cc
 
 &lt;h5 id=&quot;attributes&quot;&gt;Attributes&lt;/h5&gt;
 
-&lt;p&gt;Each rule has a set of &lt;strong&gt;attributes&lt;/strong&gt; and the applicable attributes for a given rule and the significance/semantics of each attribute are a function of the rule’s &lt;strong&gt;class&lt;/strong&gt;. Each attribute has a &lt;code class=&quot;highlighter-rouge&quot;&gt;name&lt;/code&gt; and a &lt;code class=&quot;highlighter-rouge&quot;&gt;type&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Each rule has a set of &lt;strong&gt;attributes&lt;/strong&gt; and the applicable attributes for a given rule and the significance/semantics of each attribute are a function of the rule’s &lt;strong&gt;class&lt;/strong&gt;. Each attribute has a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;name&lt;/code&gt; and a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;type&lt;/code&gt;.&lt;/p&gt;
 
 &lt;p&gt;For example, common attribute types are:&lt;/p&gt;
 
@@ -149,36 +149,36 @@ src/my/app/tests/test.cc
 
 &lt;p&gt;Below we introduce several common attributes.&lt;/p&gt;
 
-&lt;h6 id=&quot;name-attribute&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;name&lt;/code&gt; attribute&lt;/h6&gt;
+&lt;h6 id=&quot;name-attribute&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;name&lt;/code&gt; attribute&lt;/h6&gt;
 
-&lt;p&gt;Every rule has a &lt;code class=&quot;highlighter-rouge&quot;&gt;name&lt;/code&gt; attribute of type &lt;code class=&quot;highlighter-rouge&quot;&gt;string&lt;/code&gt; and must be &lt;strong&gt;syntactically valid&lt;/strong&gt; target name as explained below (&lt;strong&gt;labels&lt;/strong&gt; section).&lt;/p&gt;
+&lt;p&gt;Every rule has a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;name&lt;/code&gt; attribute of type &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;string&lt;/code&gt; and must be &lt;strong&gt;syntactically valid&lt;/strong&gt; target name as explained below (&lt;strong&gt;labels&lt;/strong&gt; section).&lt;/p&gt;
 
-&lt;p&gt;In some cases, a rule’s &lt;code class=&quot;highlighter-rouge&quot;&gt;name&lt;/code&gt; is somewhat arbitrary such as for &lt;code class=&quot;highlighter-rouge&quot;&gt;genrules&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;In some cases, a rule’s &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;name&lt;/code&gt; is somewhat arbitrary such as for &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;genrules&lt;/code&gt;.&lt;/p&gt;
 
-&lt;p&gt;In other cases, the &lt;code class=&quot;highlighter-rouge&quot;&gt;name&lt;/code&gt; is significant. For example, for &lt;code class=&quot;highlighter-rouge&quot;&gt;*_binary&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;*_test&lt;/code&gt; rules, the &lt;code class=&quot;highlighter-rouge&quot;&gt;name&lt;/code&gt; attribute determines the produced executable’s name by the build.&lt;/p&gt;
+&lt;p&gt;In other cases, the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;name&lt;/code&gt; is significant. For example, for &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;*_binary&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;*_test&lt;/code&gt; rules, the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;name&lt;/code&gt; attribute determines the produced executable’s name by the build.&lt;/p&gt;
 
-&lt;h6 id=&quot;srcs-attribute&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;srcs&lt;/code&gt; attribute&lt;/h6&gt;
+&lt;h6 id=&quot;srcs-attribute&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;srcs&lt;/code&gt; attribute&lt;/h6&gt;
 
-&lt;p&gt;This attribute has type &lt;code class=&quot;highlighter-rouge&quot;&gt;list of labels&lt;/code&gt;, which means its value, if present, is a list of labels with each being the name of a target that is an input to this rule.&lt;/p&gt;
+&lt;p&gt;This attribute has type &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;list of labels&lt;/code&gt;, which means its value, if present, is a list of labels with each being the name of a target that is an input to this rule.&lt;/p&gt;
 
-&lt;h6 id=&quot;outs-attribute&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;outs&lt;/code&gt; attribute&lt;/h6&gt;
+&lt;h6 id=&quot;outs-attribute&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;outs&lt;/code&gt; attribute&lt;/h6&gt;
 
-&lt;p&gt;This attribute has type &lt;code class=&quot;highlighter-rouge&quot;&gt;list of output labels&lt;/code&gt;. It is similar to the &lt;code class=&quot;highlighter-rouge&quot;&gt;srcs&lt;/code&gt; attribute but differs in two significant ways:&lt;/p&gt;
+&lt;p&gt;This attribute has type &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;list of output labels&lt;/code&gt;. It is similar to the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;srcs&lt;/code&gt; attribute but differs in two significant ways:&lt;/p&gt;
 
 &lt;ol&gt;
   &lt;li&gt;due to the invariant that &lt;strong&gt;the outputs of a rule belong to the same package as the rule itself&lt;/strong&gt; (mentioned earlier), output labels cannot include a package component and must be in one of the “relative” forms (discussed below in the &lt;strong&gt;labels&lt;/strong&gt; section)&lt;/li&gt;
-  &lt;li&gt;the relationship implied by an (ordinary) label attribute is &lt;strong&gt;inverse&lt;/strong&gt; to that implied by an output label: a rule &lt;em&gt;depends on&lt;/em&gt; its &lt;code class=&quot;highlighter-rouge&quot;&gt;srcs&lt;/code&gt;, whereas a rule &lt;em&gt;is depended on by&lt;/em&gt; its &lt;code class=&quot;highlighter-rouge&quot;&gt;outs&lt;/code&gt;.&lt;/li&gt;
+  &lt;li&gt;the relationship implied by an (ordinary) label attribute is &lt;strong&gt;inverse&lt;/strong&gt; to that implied by an output label: a rule &lt;em&gt;depends on&lt;/em&gt; its &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;srcs&lt;/code&gt;, whereas a rule &lt;em&gt;is depended on by&lt;/em&gt; its &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;outs&lt;/code&gt;.&lt;/li&gt;
 &lt;/ol&gt;
 
 &lt;blockquote&gt;
-  &lt;p&gt;The two types of label attributes (&lt;code class=&quot;highlighter-rouge&quot;&gt;srcs&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;outs&lt;/code&gt;) thus assign direction to the edges b/w targets, giving rise to a &lt;strong&gt;dependency graph&lt;/strong&gt; (DAG over targets, a.k.a &lt;code class=&quot;highlighter-rouge&quot;&gt;target graph&lt;/code&gt; or &lt;code class=&quot;highlighter-rouge&quot;&gt;build dependency graph&lt;/code&gt;), which is the domain over which the &lt;a href=&quot;https://docs.bazel.build/versions/3.4.0/query.html&quot;&gt;Bazel Query tool&lt;/a&gt; operates.&lt;/p&gt;
+  &lt;p&gt;The two types of label attributes (&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;srcs&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;outs&lt;/code&gt;) thus assign direction to the edges b/w targets, giving rise to a &lt;strong&gt;dependency graph&lt;/strong&gt; (DAG over targets, a.k.a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;target graph&lt;/code&gt; or &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;build dependency graph&lt;/code&gt;), which is the domain over which the &lt;a href=&quot;https://docs.bazel.build/versions/3.4.0/query.html&quot;&gt;Bazel Query tool&lt;/a&gt; operates.&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;h5 id=&quot;inputs&quot;&gt;Inputs&lt;/h5&gt;
 
 &lt;p&gt;The &lt;strong&gt;inputs&lt;/strong&gt; may be source files, generated files, or even other rules. Allowing generated files as the inputs means outputs of one rule may be the inputs to another rule, thus allowing &lt;strong&gt;rule chaining&lt;/strong&gt;. Allowing other rules to be the inputs of one rule is more complex and language/rule-dependent.&lt;/p&gt;
 
-&lt;p&gt;For example, a C++ library rule &lt;code class=&quot;highlighter-rouge&quot;&gt;A&lt;/code&gt; may have another C++ library rule &lt;code class=&quot;highlighter-rouge&quot;&gt;B&lt;/code&gt; as input. The effect of this dependency is that &lt;code class=&quot;highlighter-rouge&quot;&gt;B&lt;/code&gt;’s &lt;em&gt;header files&lt;/em&gt; are available to &lt;code class=&quot;highlighter-rouge&quot;&gt;A&lt;/code&gt; during compilation, &lt;code class=&quot;highlighter-rouge&quot;&gt;B&lt;/code&gt;’s &lt;em&gt;symbols&lt;/em&gt; are available to &lt;code class=&quot;highlighter-rouge&quot;&gt;A&lt;/code&gt; during linking, and &lt;code class=&quot;highlighter-rouge&quot;&gt;B&lt;/code&gt;’s &lt;em&gt;runtime data&lt;/em&gt; is available to &lt;code class=&quot;highlighter-rouge&quot;&gt;A&lt;/code&gt; during execution.&lt;/p&gt;
+&lt;p&gt;For example, a C++ library rule &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;A&lt;/code&gt; may have another C++ library rule &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;B&lt;/code&gt; as input. The effect of this dependency is that &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;B&lt;/code&gt;’s &lt;em&gt;header files&lt;/em&gt; are available to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;A&lt;/code&gt; during compilation, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;B&lt;/code&gt;’s &lt;em&gt;symbols&lt;/em&gt; are available to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;A&lt;/code&gt; during linking, and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;B&lt;/code&gt;’s &lt;em&gt;runtime data&lt;/em&gt; is available to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;A&lt;/code&gt; during execution.&lt;/p&gt;
 
 &lt;p&gt;Note that a rule’s inputs may come from another package.&lt;/p&gt;
 
@@ -194,7 +194,7 @@ src/my/app/tests/test.cc
 
 &lt;p&gt;A package group is a set of packages whose purpose is to limit accessibility of certain rules.&lt;/p&gt;
 
-&lt;p&gt;It is defined by the &lt;code class=&quot;highlighter-rouge&quot;&gt;package_group&lt;/code&gt; function and does not generate nor consume files.&lt;/p&gt;
+&lt;p&gt;It is defined by the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;package_group&lt;/code&gt; function and does not generate nor consume files.&lt;/p&gt;
 
 &lt;h3 id=&quot;labels&quot;&gt;Labels&lt;/h3&gt;
 
@@ -205,31 +205,31 @@ src/my/app/tests/test.cc
 &lt;pre&gt;&lt;code class=&quot;language-txt&quot;&gt;@myrepo//my/app/main:app_binary
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;Note that &lt;code class=&quot;highlighter-rouge&quot;&gt;@myrepo&lt;/code&gt; is the repo’s identifier.&lt;/p&gt;
+&lt;p&gt;Note that &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;@myrepo&lt;/code&gt; is the repo’s identifier.&lt;/p&gt;
 
 &lt;p&gt;Usually a label refers to a target in the same repo, and hence we can omit the repo identifier and written it as:&lt;/p&gt;
 
 &lt;pre&gt;&lt;code class=&quot;language-txt&quot;&gt;//my/app/main:app_binary
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;A label starts with &lt;code class=&quot;highlighter-rouge&quot;&gt;//&lt;/code&gt; and consists of two parts separated by a &lt;code class=&quot;highlighter-rouge&quot;&gt;:&lt;/code&gt;:&lt;/p&gt;
+&lt;p&gt;A label starts with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;//&lt;/code&gt; and consists of two parts separated by a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;:&lt;/code&gt;:&lt;/p&gt;
 
 &lt;ul&gt;
   &lt;li&gt;package name
     &lt;ul&gt;
-      &lt;li&gt;e.g. &lt;code class=&quot;highlighter-rouge&quot;&gt;my/app/main&lt;/code&gt; in the above example&lt;/li&gt;
+      &lt;li&gt;e.g. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;my/app/main&lt;/code&gt; in the above example&lt;/li&gt;
     &lt;/ul&gt;
   &lt;/li&gt;
   &lt;li&gt;target name
     &lt;ul&gt;
-      &lt;li&gt;e.g. &lt;code class=&quot;highlighter-rouge&quot;&gt;app_binary&lt;/code&gt; in the above example&lt;/li&gt;
+      &lt;li&gt;e.g. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;app_binary&lt;/code&gt; in the above example&lt;/li&gt;
     &lt;/ul&gt;
   &lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;A label’s second part (i.e. the target name) can be omitted if the target name is the same as the last component of the package name. Such &lt;strong&gt;short-form labels&lt;/strong&gt; are just an abbreviation and these two forms are equivalent.&lt;/p&gt;
 
-&lt;p&gt;For example, if we have label &lt;code class=&quot;highlighter-rouge&quot;&gt;//my/app:app&lt;/code&gt;, we can also write it as &lt;code class=&quot;highlighter-rouge&quot;&gt;//my/app&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;For example, if we have label &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;//my/app:app&lt;/code&gt;, we can also write it as &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;//my/app&lt;/code&gt;.&lt;/p&gt;
 
 &lt;hr /&gt;
 
@@ -238,89 +238,89 @@ src/my/app/tests/test.cc
 &lt;p&gt;What are the types of the following representations:&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;my/app&lt;/code&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;my/app&lt;/code&gt;
     &lt;ul&gt;
-      &lt;li&gt;a package named &lt;code class=&quot;highlighter-rouge&quot;&gt;my/app&lt;/code&gt;&lt;/li&gt;
+      &lt;li&gt;a package named &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;my/app&lt;/code&gt;&lt;/li&gt;
     &lt;/ul&gt;
   &lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;//my/app&lt;/code&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;//my/app&lt;/code&gt;
     &lt;ul&gt;
-      &lt;li&gt;a target under &lt;code class=&quot;highlighter-rouge&quot;&gt;my/app&lt;/code&gt; package, with its label in short-form and target name is assumed to be &lt;code class=&quot;highlighter-rouge&quot;&gt;app&lt;/code&gt;&lt;/li&gt;
+      &lt;li&gt;a target under &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;my/app&lt;/code&gt; package, with its label in short-form and target name is assumed to be &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;app&lt;/code&gt;&lt;/li&gt;
     &lt;/ul&gt;
   &lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;//my/app:app&lt;/code&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;//my/app:app&lt;/code&gt;
     &lt;ul&gt;
-      &lt;li&gt;a target under &lt;code class=&quot;highlighter-rouge&quot;&gt;my/app&lt;/code&gt; package, with target name &lt;code class=&quot;highlighter-rouge&quot;&gt;app&lt;/code&gt;&lt;/li&gt;
+      &lt;li&gt;a target under &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;my/app&lt;/code&gt; package, with target name &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;app&lt;/code&gt;&lt;/li&gt;
     &lt;/ul&gt;
   &lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;@myrepo//my/app/main:app_binary&lt;/code&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;@myrepo//my/app/main:app_binary&lt;/code&gt;
     &lt;ul&gt;
-      &lt;li&gt;a target under repo &lt;code class=&quot;highlighter-rouge&quot;&gt;myrepo&lt;/code&gt;, package &lt;code class=&quot;highlighter-rouge&quot;&gt;my/app/main&lt;/code&gt;, target name &lt;code class=&quot;highlighter-rouge&quot;&gt;app_binary&lt;/code&gt;&lt;/li&gt;
+      &lt;li&gt;a target under repo &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;myrepo&lt;/code&gt;, package &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;my/app/main&lt;/code&gt;, target name &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;app_binary&lt;/code&gt;&lt;/li&gt;
     &lt;/ul&gt;
   &lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;hr /&gt;
 
-&lt;p&gt;We can shorten the label identifier even further! Within the &lt;code class=&quot;highlighter-rouge&quot;&gt;BUILD&lt;/code&gt; file for package &lt;code class=&quot;highlighter-rouge&quot;&gt;my/app&lt;/code&gt;, we can omit the package-name part of labels for this package’s targets, similar to relative paths…&lt;/p&gt;
+&lt;p&gt;We can shorten the label identifier even further! Within the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;BUILD&lt;/code&gt; file for package &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;my/app&lt;/code&gt;, we can omit the package-name part of labels for this package’s targets, similar to relative paths…&lt;/p&gt;
 
-&lt;p&gt;For example, if we have targets &lt;code class=&quot;highlighter-rouge&quot;&gt;//my/app&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;//my/app:app_binary&lt;/code&gt;, we can refer to them in the file &lt;code class=&quot;highlighter-rouge&quot;&gt;my/app/BUILD&lt;/code&gt; as&lt;/p&gt;
+&lt;p&gt;For example, if we have targets &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;//my/app&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;//my/app:app_binary&lt;/code&gt;, we can refer to them in the file &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;my/app/BUILD&lt;/code&gt; as&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;//my/app:app&lt;/code&gt; or &lt;code class=&quot;highlighter-rouge&quot;&gt;//my/app&lt;/code&gt; or &lt;code class=&quot;highlighter-rouge&quot;&gt;:app&lt;/code&gt; or &lt;code class=&quot;highlighter-rouge&quot;&gt;app&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;//my/app:app_binary&lt;/code&gt; or &lt;code class=&quot;highlighter-rouge&quot;&gt;:app_binary&lt;/code&gt; or &lt;code class=&quot;highlighter-rouge&quot;&gt;app_binary&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;//my/app:app&lt;/code&gt; or &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;//my/app&lt;/code&gt; or &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;:app&lt;/code&gt; or &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;app&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;//my/app:app_binary&lt;/code&gt; or &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;:app_binary&lt;/code&gt; or &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;app_binary&lt;/code&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;Don’t be confused with all these forms of representations! Remember to be consistent with your styles of using labels.&lt;/p&gt;
 
-&lt;p&gt;Usually the colon &lt;code class=&quot;highlighter-rouge&quot;&gt;:&lt;/code&gt; is omitted for &lt;code class=&quot;highlighter-rouge&quot;&gt;file&lt;/code&gt; targets, but retained for &lt;code class=&quot;highlighter-rouge&quot;&gt;rule&lt;/code&gt; targets. This allows us to reference files by their unadorned name relative to the package directory in the package’s &lt;code class=&quot;highlighter-rouge&quot;&gt;BUILD&lt;/code&gt; file, e.g.&lt;/p&gt;
+&lt;p&gt;Usually the colon &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;:&lt;/code&gt; is omitted for &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;file&lt;/code&gt; targets, but retained for &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;rule&lt;/code&gt; targets. This allows us to reference files by their unadorned name relative to the package directory in the package’s &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;BUILD&lt;/code&gt; file, e.g.&lt;/p&gt;
 
 &lt;pre&gt;&lt;code class=&quot;language-txt&quot;&gt;generate.cc
 testdata/input.txt
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;If you want to reference targets outside current package in the &lt;code class=&quot;highlighter-rouge&quot;&gt;BUILD&lt;/code&gt; file, you need to refer to them using their complete label.&lt;/p&gt;
+&lt;p&gt;If you want to reference targets outside current package in the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;BUILD&lt;/code&gt; file, you need to refer to them using their complete label.&lt;/p&gt;
 
-&lt;p&gt;For example, with another package named &lt;code class=&quot;highlighter-rouge&quot;&gt;my/test&lt;/code&gt; and you want to refer a file in the package &lt;code class=&quot;highlighter-rouge&quot;&gt;my/app&lt;/code&gt; in &lt;code class=&quot;highlighter-rouge&quot;&gt;my/test&lt;/code&gt;’s &lt;code class=&quot;highlighter-rouge&quot;&gt;BUILD&lt;/code&gt; file, you need to use &lt;code class=&quot;highlighter-rouge&quot;&gt;//my/app:generate.cc&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;For example, with another package named &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;my/test&lt;/code&gt; and you want to refer a file in the package &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;my/app&lt;/code&gt; in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;my/test&lt;/code&gt;’s &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;BUILD&lt;/code&gt; file, you need to use &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;//my/app:generate.cc&lt;/code&gt;.&lt;/p&gt;
 
-&lt;p&gt;If you refer to a target with incorrect label, you may get errors like &lt;code class=&quot;highlighter-rouge&quot;&gt;crosses a package boundary&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;If you refer to a target with incorrect label, you may get errors like &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;crosses a package boundary&lt;/code&gt;.&lt;/p&gt;
 
-&lt;p&gt;Labels starting with &lt;code class=&quot;highlighter-rouge&quot;&gt;@//&lt;/code&gt; are &lt;strong&gt;references to the main repo&lt;/strong&gt; and still work even from external repos.&lt;/p&gt;
+&lt;p&gt;Labels starting with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;@//&lt;/code&gt; are &lt;strong&gt;references to the main repo&lt;/strong&gt; and still work even from external repos.&lt;/p&gt;
 
-&lt;p&gt;Therefore &lt;code class=&quot;highlighter-rouge&quot;&gt;@//a/b/c&lt;/code&gt; is different from &lt;code class=&quot;highlighter-rouge&quot;&gt;//a/b/c&lt;/code&gt; when referenced from an external repo. The former refers back to the main repo while the latter looks for target &lt;code class=&quot;highlighter-rouge&quot;&gt;//a/b/c&lt;/code&gt; in the current external repo itself.&lt;/p&gt;
+&lt;p&gt;Therefore &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;@//a/b/c&lt;/code&gt; is different from &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;//a/b/c&lt;/code&gt; when referenced from an external repo. The former refers back to the main repo while the latter looks for target &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;//a/b/c&lt;/code&gt; in the current external repo itself.&lt;/p&gt;
 
 &lt;p&gt;Such nuance difference can be especially important when you write rules in the main repo that refer to targets in the main repo, but these rules &lt;strong&gt;will be used from external repos&lt;/strong&gt;.&lt;/p&gt;
 
 &lt;p&gt;I know the label syntax is strict, but Bazel intentionally enforces that to many reasons. The precise details can be found &lt;a href=&quot;https://docs.bazel.build/versions/3.4.0/build-ref.html#lexi&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
 
-&lt;h3 id=&quot;the-build-files&quot;&gt;The &lt;code class=&quot;highlighter-rouge&quot;&gt;BUILD&lt;/code&gt; files&lt;/h3&gt;
+&lt;h3 id=&quot;the-build-files&quot;&gt;The &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;BUILD&lt;/code&gt; files&lt;/h3&gt;
 
-&lt;p&gt;In the above sections, we discussed packages, targets, labels, build dependency graph abstractly. They are building blocks of Bazel and can be found in a &lt;code class=&quot;highlighter-rouge&quot;&gt;BUILD&lt;/code&gt; file.&lt;/p&gt;
+&lt;p&gt;In the above sections, we discussed packages, targets, labels, build dependency graph abstractly. They are building blocks of Bazel and can be found in a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;BUILD&lt;/code&gt; file.&lt;/p&gt;
 
-&lt;p&gt;A &lt;code class=&quot;highlighter-rouge&quot;&gt;BUILD&lt;/code&gt; file defines a package and is interpreted as a sequential list of statements by using the imperative language called &lt;a href=&quot;https://github.com/bazelbuild/starlark/&quot;&gt;Starlark&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;A &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;BUILD&lt;/code&gt; file defines a package and is interpreted as a sequential list of statements by using the imperative language called &lt;a href=&quot;https://github.com/bazelbuild/starlark/&quot;&gt;Starlark&lt;/a&gt;.&lt;/p&gt;
 
-&lt;p&gt;By saying “sequential list”, we emphasize the &lt;code class=&quot;highlighter-rouge&quot;&gt;order&lt;/code&gt; does matter, especially for &lt;strong&gt;variables&lt;/strong&gt;. Variables must be defined before they are used.&lt;/p&gt;
+&lt;p&gt;By saying “sequential list”, we emphasize the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;order&lt;/code&gt; does matter, especially for &lt;strong&gt;variables&lt;/strong&gt;. Variables must be defined before they are used.&lt;/p&gt;
 
 &lt;p&gt;In the meantime, the relative order of &lt;strong&gt;rule declarations&lt;/strong&gt; is immaterial and all that matter is &lt;strong&gt;which rules were declared and with what value&lt;/strong&gt; by the time package evaluation completes.&lt;/p&gt;
 
-&lt;p&gt;So, in simple &lt;code class=&quot;highlighter-rouge&quot;&gt;BUILD&lt;/code&gt; files that consist only of rule declarations, these declarations can be re-ordered freely without changing the behavior.&lt;/p&gt;
+&lt;p&gt;So, in simple &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;BUILD&lt;/code&gt; files that consist only of rule declarations, these declarations can be re-ordered freely without changing the behavior.&lt;/p&gt;
 
 &lt;h4 id=&quot;limitations&quot;&gt;Limitations&lt;/h4&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;no function definition, &lt;code class=&quot;highlighter-rouge&quot;&gt;for&lt;/code&gt; statements or &lt;code class=&quot;highlighter-rouge&quot;&gt;if&lt;/code&gt; statements to encourage a clean separation b/w code and data
+  &lt;li&gt;no function definition, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;for&lt;/code&gt; statements or &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;if&lt;/code&gt; statements to encourage a clean separation b/w code and data
     &lt;ul&gt;
-      &lt;li&gt;functions should be declared in &lt;code class=&quot;highlighter-rouge&quot;&gt;.bzl&lt;/code&gt; files instead&lt;/li&gt;
+      &lt;li&gt;functions should be declared in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.bzl&lt;/code&gt; files instead&lt;/li&gt;
     &lt;/ul&gt;
   &lt;/li&gt;
-  &lt;li&gt;no &lt;code class=&quot;highlighter-rouge&quot;&gt;*args&lt;/code&gt; or &lt;code class=&quot;highlighter-rouge&quot;&gt;**kwargs&lt;/code&gt; arguments
+  &lt;li&gt;no &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;*args&lt;/code&gt; or &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;**kwargs&lt;/code&gt; arguments
     &lt;ul&gt;
       &lt;li&gt;have to list all the arguments explicitly&lt;/li&gt;
     &lt;/ul&gt;
   &lt;/li&gt;
   &lt;li&gt;unable to perform arbitrary I/O
     &lt;ul&gt;
-      &lt;li&gt;hence the interpretation of &lt;code class=&quot;highlighter-rouge&quot;&gt;BUILD&lt;/code&gt; files is hermetic i.e. dependent only on a known set of inputs, which is essential for ensuring that builds are reproducible&lt;/li&gt;
+      &lt;li&gt;hence the interpretation of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;BUILD&lt;/code&gt; files is hermetic i.e. dependent only on a known set of inputs, which is essential for ensuring that builds are reproducible&lt;/li&gt;
     &lt;/ul&gt;
   &lt;/li&gt;
   &lt;li&gt;should be written using only ASCII characters&lt;/li&gt;
@@ -331,38 +331,38 @@ testdata/input.txt
 &lt;ul&gt;
   &lt;li&gt;use comments liberally to document the role of each build target, whether or not it is intended for public use and to document the role of the package itself
     &lt;ul&gt;
-      &lt;li&gt;since &lt;code class=&quot;highlighter-rouge&quot;&gt;BUILD&lt;/code&gt; files need to be updated whenever the dependencies of the underlying code change, and are typically maintained by multiple people on a team&lt;/li&gt;
+      &lt;li&gt;since &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;BUILD&lt;/code&gt; files need to be updated whenever the dependencies of the underlying code change, and are typically maintained by multiple people on a team&lt;/li&gt;
     &lt;/ul&gt;
   &lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;h4 id=&quot;bazel-extensions&quot;&gt;Bazel extensions&lt;/h4&gt;
 
-&lt;p&gt;Bazel extensions are files ending in &lt;code class=&quot;highlighter-rouge&quot;&gt;.bzl&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Bazel extensions are files ending in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.bzl&lt;/code&gt;.&lt;/p&gt;
 
-&lt;p&gt;As mentioned in the &lt;code class=&quot;highlighter-rouge&quot;&gt;BUILD&lt;/code&gt; file limitations, such files can be used to load new rules, functions or constants. Use &lt;code class=&quot;highlighter-rouge&quot;&gt;load&lt;/code&gt; statement in the &lt;code class=&quot;highlighter-rouge&quot;&gt;BUILD&lt;/code&gt; file to import a symbol from an extension.&lt;/p&gt;
+&lt;p&gt;As mentioned in the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;BUILD&lt;/code&gt; file limitations, such files can be used to load new rules, functions or constants. Use &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;load&lt;/code&gt; statement in the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;BUILD&lt;/code&gt; file to import a symbol from an extension.&lt;/p&gt;
 
-&lt;p&gt;E.g. The following code loads the file &lt;code class=&quot;highlighter-rouge&quot;&gt;foo/bar/file.bzl&lt;/code&gt; and add the &lt;code class=&quot;highlighter-rouge&quot;&gt;some_library&lt;/code&gt; symbol to the environment.&lt;/p&gt;
+&lt;p&gt;E.g. The following code loads the file &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;foo/bar/file.bzl&lt;/code&gt; and add the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;some_library&lt;/code&gt; symbol to the environment.&lt;/p&gt;
 
 &lt;pre&gt;&lt;code class=&quot;language-txt&quot;&gt;load(&quot;//foo/bar:file.bzl&quot;, &quot;some_library&quot;)
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;load&lt;/code&gt; also supports additional arguments to import multiple symbols.&lt;/p&gt;
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;load&lt;/code&gt; also supports additional arguments to import multiple symbols.&lt;/p&gt;
 
-&lt;p&gt;Limitations of &lt;code class=&quot;highlighter-rouge&quot;&gt;load&lt;/code&gt; statement:&lt;/p&gt;
+&lt;p&gt;Limitations of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;load&lt;/code&gt; statement:&lt;/p&gt;
 
 &lt;ul&gt;
   &lt;li&gt;arguments must be string literals (i.e. no variables)&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;load&lt;/code&gt; statements must appear at the top-level (i.e. cannot be in function body)&lt;/li&gt;
-  &lt;li&gt;the first argument is a label (discussed above) identifying the &lt;code class=&quot;highlighter-rouge&quot;&gt;.bzl&lt;/code&gt; file (i.e. a file target). If it is a &lt;strong&gt;relative label&lt;/strong&gt;,
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;load&lt;/code&gt; statements must appear at the top-level (i.e. cannot be in function body)&lt;/li&gt;
+  &lt;li&gt;the first argument is a label (discussed above) identifying the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.bzl&lt;/code&gt; file (i.e. a file target). If it is a &lt;strong&gt;relative label&lt;/strong&gt;,
     &lt;ul&gt;
-      &lt;li&gt;it is resolved w.r.t the package (not directory) containing the &lt;code class=&quot;highlighter-rouge&quot;&gt;.bzl&lt;/code&gt; file.&lt;/li&gt;
-      &lt;li&gt;it should use a leading &lt;code class=&quot;highlighter-rouge&quot;&gt;:&lt;/code&gt;&lt;/li&gt;
+      &lt;li&gt;it is resolved w.r.t the package (not directory) containing the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.bzl&lt;/code&gt; file.&lt;/li&gt;
+      &lt;li&gt;it should use a leading &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;:&lt;/code&gt;&lt;/li&gt;
     &lt;/ul&gt;
   &lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;Another typical usage of &lt;code class=&quot;highlighter-rouge&quot;&gt;load&lt;/code&gt; is to assign different names (i.e. aliases) to the imported symbols:&lt;/p&gt;
+&lt;p&gt;Another typical usage of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;load&lt;/code&gt; is to assign different names (i.e. aliases) to the imported symbols:&lt;/p&gt;
 
 &lt;p&gt;E.g.&lt;/p&gt;
 
@@ -372,30 +372,30 @@ testdata/input.txt
 load(&quot;:my_rules.bzl&quot;, &quot;some_rule&quot;, nice_alias = &quot;some_other_rule&quot;)
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;In a &lt;code class=&quot;highlighter-rouge&quot;&gt;.bzl&lt;/code&gt; file, symbols starting with &lt;code class=&quot;highlighter-rouge&quot;&gt;_&lt;/code&gt; are not exported and thus cannot be loaded from another file.&lt;/p&gt;
+&lt;p&gt;In a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.bzl&lt;/code&gt; file, symbols starting with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;_&lt;/code&gt; are not exported and thus cannot be loaded from another file.&lt;/p&gt;
 
 &lt;h3 id=&quot;build-rules&quot;&gt;Build rules&lt;/h3&gt;
 
-&lt;p&gt;Majority of Bazel build rules come in families and grouped by language. For example, &lt;code class=&quot;highlighter-rouge&quot;&gt;cc_binary&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;cc_library&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;cc_test&lt;/code&gt; are the build rules for C++ binaries, libraries, and tests.&lt;/p&gt;
+&lt;p&gt;Majority of Bazel build rules come in families and grouped by language. For example, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;cc_binary&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;cc_library&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;cc_test&lt;/code&gt; are the build rules for C++ binaries, libraries, and tests.&lt;/p&gt;
 
-&lt;p&gt;As you can imagine, the naming schema for other languages is similar: with a different prefix that identifying that language. E.g. &lt;code class=&quot;highlighter-rouge&quot;&gt;java_*&lt;/code&gt; for Java. The suffix identifies the feature of that rule:&lt;/p&gt;
+&lt;p&gt;As you can imagine, the naming schema for other languages is similar: with a different prefix that identifying that language. E.g. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;java_*&lt;/code&gt; for Java. The suffix identifies the feature of that rule:&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;*_binary&lt;/code&gt; rules build executables. The executable will be put in the build tool’s binary output tree w.r.t the rule’s label, so &lt;code class=&quot;highlighter-rouge&quot;&gt;//my:program&lt;/code&gt; will appear at &lt;code class=&quot;highlighter-rouge&quot;&gt;$(BINDIR)/my/program&lt;/code&gt;.&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;*_test&lt;/code&gt; rules are a specialization of a &lt;code class=&quot;highlighter-rouge&quot;&gt;*_binary&lt;/code&gt; rule and is used for automated testing.
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;*_binary&lt;/code&gt; rules build executables. The executable will be put in the build tool’s binary output tree w.r.t the rule’s label, so &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;//my:program&lt;/code&gt; will appear at &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$(BINDIR)/my/program&lt;/code&gt;.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;*_test&lt;/code&gt; rules are a specialization of a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;*_binary&lt;/code&gt; rule and is used for automated testing.
     &lt;ul&gt;
       &lt;li&gt;tests return 0 on success&lt;/li&gt;
       &lt;li&gt;it can only open files that beneath its runfiles tree at runtime&lt;/li&gt;
     &lt;/ul&gt;
   &lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;*_library&lt;/code&gt; rules specify &lt;strong&gt;separately-compiled modules&lt;/strong&gt; in the given programming language. Libraries can depend on other libs, and binaries and tests can depend on libs.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;*_library&lt;/code&gt; rules specify &lt;strong&gt;separately-compiled modules&lt;/strong&gt; in the given programming language. Libraries can depend on other libs, and binaries and tests can depend on libs.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;h3 id=&quot;dependencies&quot;&gt;Dependencies&lt;/h3&gt;
 
 &lt;p&gt;We discussed dependency graph in the above sections, and it models the &lt;em&gt;depends on&lt;/em&gt; relationship among targets.&lt;/p&gt;
 
-&lt;p&gt;A target &lt;code class=&quot;highlighter-rouge&quot;&gt;A&lt;/code&gt; &lt;em&gt;depends on&lt;/em&gt; a target &lt;code class=&quot;highlighter-rouge&quot;&gt;B&lt;/code&gt; if &lt;code class=&quot;highlighter-rouge&quot;&gt;B&lt;/code&gt; is needed by &lt;code class=&quot;highlighter-rouge&quot;&gt;A&lt;/code&gt; at build or execution time.&lt;/p&gt;
+&lt;p&gt;A target &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;A&lt;/code&gt; &lt;em&gt;depends on&lt;/em&gt; a target &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;B&lt;/code&gt; if &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;B&lt;/code&gt; is needed by &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;A&lt;/code&gt; at build or execution time.&lt;/p&gt;
 
 &lt;p&gt;With the dependency graph defined, we further define a target’s &lt;em&gt;direct dependencies&lt;/em&gt; as those direct neighbors in the dependency graph, i.e. targets reachable by a path of length 1 in the DAG. Similarly, a target’s &lt;em&gt;transitive dependencies&lt;/em&gt; are those targets on which it depends via &lt;strong&gt;a path&lt;/strong&gt; through the graph.&lt;/p&gt;
 
@@ -404,7 +404,7 @@ load(&quot;:my_rules.bzl&quot;, &quot;some_rule&quot;, nice_alias = &quot;some_o
 &lt;ul&gt;
   &lt;li&gt;the graph of actual dependencies
     &lt;ul&gt;
-      &lt;li&gt;a target &lt;code class=&quot;highlighter-rouge&quot;&gt;X&lt;/code&gt; is actually dependent on target &lt;code class=&quot;highlighter-rouge&quot;&gt;Y&lt;/code&gt;if and only if &lt;code class=&quot;highlighter-rouge&quot;&gt;Y&lt;/code&gt; must be present, built and up-to-date in order for &lt;code class=&quot;highlighter-rouge&quot;&gt;X&lt;/code&gt; to be &lt;strong&gt;built&lt;/strong&gt; correctly.
+      &lt;li&gt;a target &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;X&lt;/code&gt; is actually dependent on target &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Y&lt;/code&gt;if and only if &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Y&lt;/code&gt; must be present, built and up-to-date in order for &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;X&lt;/code&gt; to be &lt;strong&gt;built&lt;/strong&gt; correctly.
         &lt;ul&gt;
           &lt;li&gt;&lt;strong&gt;built&lt;/strong&gt; could mean generated, processed, compiled, linked, archived, compressed, executed, or any other kinds of tasks that routinely occur during a build.&lt;/li&gt;
         &lt;/ul&gt;
@@ -413,33 +413,33 @@ load(&quot;:my_rules.bzl&quot;, &quot;some_rule&quot;, nice_alias = &quot;some_o
   &lt;/li&gt;
   &lt;li&gt;the graph of declared dependencies
     &lt;ul&gt;
-      &lt;li&gt;a target &lt;code class=&quot;highlighter-rouge&quot;&gt;X&lt;/code&gt; has a declared dependency on target &lt;code class=&quot;highlighter-rouge&quot;&gt;Y&lt;/code&gt; if and only if there’s a &lt;strong&gt;dependency edge&lt;/strong&gt; from &lt;code class=&quot;highlighter-rouge&quot;&gt;X&lt;/code&gt; to &lt;code class=&quot;highlighter-rouge&quot;&gt;Y&lt;/code&gt; in the package of &lt;code class=&quot;highlighter-rouge&quot;&gt;X&lt;/code&gt;.&lt;/li&gt;
+      &lt;li&gt;a target &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;X&lt;/code&gt; has a declared dependency on target &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Y&lt;/code&gt; if and only if there’s a &lt;strong&gt;dependency edge&lt;/strong&gt; from &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;X&lt;/code&gt; to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Y&lt;/code&gt; in the package of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;X&lt;/code&gt;.&lt;/li&gt;
     &lt;/ul&gt;
   &lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;In order to have a correct build, the actual dependency graph (denoted by &lt;code class=&quot;highlighter-rouge&quot;&gt;Α&lt;/code&gt;) must be a subgraph of the declared dependency graph (denoted by &lt;code class=&quot;highlighter-rouge&quot;&gt;D&lt;/code&gt;) (i.e. every pair of directly-connected nodes in &lt;code class=&quot;highlighter-rouge&quot;&gt;A&lt;/code&gt; must also be directly connected in &lt;code class=&quot;highlighter-rouge&quot;&gt;D&lt;/code&gt;). We therefore say &lt;code class=&quot;highlighter-rouge&quot;&gt;D&lt;/code&gt; is an &lt;strong&gt;overapproximation&lt;/strong&gt; of &lt;code class=&quot;highlighter-rouge&quot;&gt;A&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;In order to have a correct build, the actual dependency graph (denoted by &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Α&lt;/code&gt;) must be a subgraph of the declared dependency graph (denoted by &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;D&lt;/code&gt;) (i.e. every pair of directly-connected nodes in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;A&lt;/code&gt; must also be directly connected in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;D&lt;/code&gt;). We therefore say &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;D&lt;/code&gt; is an &lt;strong&gt;overapproximation&lt;/strong&gt; of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;A&lt;/code&gt;.&lt;/p&gt;
 
-&lt;p&gt;What all these mean is that &lt;code class=&quot;highlighter-rouge&quot;&gt;BUILD&lt;/code&gt; file writers should try to make &lt;code class=&quot;highlighter-rouge&quot;&gt;D&lt;/code&gt; as close to &lt;code class=&quot;highlighter-rouge&quot;&gt;A&lt;/code&gt; as possible, and thus every rule must explicitly declare all of its actual direct dependencies to the build system, and no more.&lt;/p&gt;
+&lt;p&gt;What all these mean is that &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;BUILD&lt;/code&gt; file writers should try to make &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;D&lt;/code&gt; as close to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;A&lt;/code&gt; as possible, and thus every rule must explicitly declare all of its actual direct dependencies to the build system, and no more.&lt;/p&gt;
 
 &lt;h4 id=&quot;types-of-dependencies&quot;&gt;Types of dependencies&lt;/h4&gt;
 
-&lt;p&gt;Most build rules have 3 attributes for specifying different kinds of generic dependencies: &lt;code class=&quot;highlighter-rouge&quot;&gt;srcs&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;deps&lt;/code&gt;, and &lt;code class=&quot;highlighter-rouge&quot;&gt;data&lt;/code&gt;. Other attributes also exist for rule-specific kinds of dependencies e.g. &lt;code class=&quot;highlighter-rouge&quot;&gt;compiler&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;resources&lt;/code&gt;, etc.&lt;/p&gt;
+&lt;p&gt;Most build rules have 3 attributes for specifying different kinds of generic dependencies: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;srcs&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;deps&lt;/code&gt;, and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;data&lt;/code&gt;. Other attributes also exist for rule-specific kinds of dependencies e.g. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;compiler&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;resources&lt;/code&gt;, etc.&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;srcs&lt;/code&gt; dependencies
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;srcs&lt;/code&gt; dependencies
     &lt;ul&gt;
       &lt;li&gt;represent files directly consumed by the rule or rules that output source files&lt;/li&gt;
     &lt;/ul&gt;
   &lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;deps&lt;/code&gt; dependencies
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;deps&lt;/code&gt; dependencies
     &lt;ul&gt;
       &lt;li&gt;rule pointing to separately-compiled modules providing header files, symbols, libraries, data, etc.&lt;/li&gt;
     &lt;/ul&gt;
   &lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;data&lt;/code&gt; dependencies
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;data&lt;/code&gt; dependencies
     &lt;ul&gt;
-      &lt;li&gt;the build system runs tests in an isolated directory where only files listed as &lt;code class=&quot;highlighter-rouge&quot;&gt;data&lt;/code&gt; are available&lt;/li&gt;
+      &lt;li&gt;the build system runs tests in an isolated directory where only files listed as &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;data&lt;/code&gt; are available&lt;/li&gt;
       &lt;li&gt;
         &lt;p&gt;E.g.&lt;/p&gt;
 
@@ -468,23 +468,23 @@ sh_test(
 
 &lt;h2 id=&quot;example-project&quot;&gt;Example project&lt;/h2&gt;
 
-&lt;p&gt;I tried to re-build our previous post &lt;a href=&quot;/primer/2020/08/07/value-parameterized-gtest/&quot;&gt;Value-Parameterized GTest&lt;/a&gt; with Bazel, and you can find the source code &lt;a href=&quot;https://github.com/mcao2/value-parameterized-gtest/tree/bazel&quot;&gt;here&lt;/a&gt;. It’s interesting to compare these two branches (&lt;code class=&quot;highlighter-rouge&quot;&gt;master&lt;/code&gt; branch uses cmake while &lt;code class=&quot;highlighter-rouge&quot;&gt;bazel&lt;/code&gt; branch uses bazel) and appreciate the elegance when we adopted Bazel.&lt;/p&gt;
+&lt;p&gt;I tried to re-build our previous post &lt;a href=&quot;/primer/2020/08/07/value-parameterized-gtest/&quot;&gt;Value-Parameterized GTest&lt;/a&gt; with Bazel, and you can find the source code &lt;a href=&quot;https://github.com/mcao2/value-parameterized-gtest/tree/bazel&quot;&gt;here&lt;/a&gt;. It’s interesting to compare these two branches (&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;master&lt;/code&gt; branch uses cmake while &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;bazel&lt;/code&gt; branch uses bazel) and appreciate the elegance when we adopted Bazel.&lt;/p&gt;
 
-&lt;div class=&quot;footnotes&quot;&gt;
+&lt;div class=&quot;footnotes&quot; role=&quot;doc-endnotes&quot;&gt;
   &lt;ol&gt;
-    &lt;li id=&quot;fn:1&quot;&gt;
-      &lt;p&gt;https://www.bazel.build &lt;a href=&quot;#fnref:1&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;li id=&quot;fn:1&quot; role=&quot;doc-endnote&quot;&gt;
+      &lt;p&gt;https://www.bazel.build &lt;a href=&quot;#fnref:1&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
     &lt;/li&gt;
   &lt;/ol&gt;
-&lt;/div&gt;</content><author><name>Mengxin Cao</name><email>mcao2 at andrew.cmu.edu</email></author><category term="Build System" /><category term="C++" /><summary type="html">Introduction 1 Bazel is an open-source build/test framework similar to Maven, Make, and Gradle. It features: Human-readable, high-level build language Fast and reliable via caching Scalable Extensible for other language or framework This post is a reading notes about the official documentation on Bazel version 3.4.0. You can skip these intros and jump directly to the sample repo to get started. https://www.bazel.build &amp;#8617;</summary></entry><entry><title type="html">WireGuard Primer</title><link href="/primer/2020/08/08/wireguard-primer/" rel="alternate" type="text/html" title="WireGuard Primer" /><published>2020-08-08T00:00:00-04:00</published><updated>2020-08-08T00:00:00-04:00</updated><id>/primer/2020/08/08/wireguard-primer</id><content type="html" xml:base="/primer/2020/08/08/wireguard-primer/">&lt;h2 id=&quot;introduction&quot;&gt;Introduction&lt;/h2&gt;
+&lt;/div&gt;</content><author><name>Mengxin Cao</name><email>mcao2 at andrew.cmu.edu</email></author><category term="Build System" /><category term="C++" /><summary type="html">Introduction 1 Bazel is an open-source build/test framework similar to Maven, Make, and Gradle. It features: Human-readable, high-level build language Fast and reliable via caching Scalable Extensible for other language or framework This post is a reading notes about the official documentation on Bazel version 3.4.0. You can skip these intros and jump directly to the sample repo to get started. https://www.bazel.build &amp;#8617;</summary></entry><entry><title type="html">WireGuard Primer</title><link href="/primer/2020/08/08/wireguard-primer/" rel="alternate" type="text/html" title="WireGuard Primer" /><published>2020-08-08T00:00:00+00:00</published><updated>2020-08-08T00:00:00+00:00</updated><id>/primer/2020/08/08/wireguard-primer</id><content type="html" xml:base="/primer/2020/08/08/wireguard-primer/">&lt;h2 id=&quot;introduction&quot;&gt;Introduction&lt;/h2&gt;
 
-&lt;p&gt;WireGuard &lt;sup id=&quot;fnref:1&quot;&gt;&lt;a href=&quot;#fn:1&quot; class=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt; is a simple, fast, and modern &lt;strong&gt;VPN&lt;/strong&gt; that utilizes cryptography.&lt;/p&gt;
+&lt;p&gt;WireGuard &lt;sup id=&quot;fnref:1&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:1&quot; class=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt; is a simple, fast, and modern &lt;strong&gt;VPN&lt;/strong&gt; that utilizes cryptography.&lt;/p&gt;
 
 &lt;p&gt;It encapsulates IP packets over UDP. The general workflow can be summarized as:&lt;/p&gt;
 
 &lt;ul&gt;
   &lt;li&gt;Install WireGuard&lt;/li&gt;
-  &lt;li&gt;Add a WireGuard interface (like &lt;code class=&quot;highlighter-rouge&quot;&gt;wlan0&lt;/code&gt;/&lt;code class=&quot;highlighter-rouge&quot;&gt;eth0&lt;/code&gt; but named &lt;code class=&quot;highlighter-rouge&quot;&gt;wg0&lt;/code&gt;/&lt;code class=&quot;highlighter-rouge&quot;&gt;wg1&lt;/code&gt;…)&lt;/li&gt;
+  &lt;li&gt;Add a WireGuard interface (like &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;wlan0&lt;/code&gt;/&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;eth0&lt;/code&gt; but named &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;wg0&lt;/code&gt;/&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;wg1&lt;/code&gt;…)&lt;/li&gt;
   &lt;li&gt;Configure the interface with a private key and optionally add peer’s public key(s)&lt;/li&gt;
   &lt;li&gt;Send packets to the interface&lt;/li&gt;
 &lt;/ul&gt;
@@ -497,7 +497,7 @@ sh_test(
 
 &lt;p&gt;The WireGuard network interface is where the magic happens and it acts as a tunnel interface.&lt;/p&gt;
 
-&lt;p&gt;You can add one or more such interfaces depending on your needs. It can be configured normally using utilities like &lt;code class=&quot;highlighter-rouge&quot;&gt;ifconfig(8)&lt;/code&gt; or &lt;code class=&quot;highlighter-rouge&quot;&gt;ip-address(8)&lt;/code&gt;, but more typically you configure such interfaces using the &lt;code class=&quot;highlighter-rouge&quot;&gt;wg(8)&lt;/code&gt; tool for WireGuard-specific settings.&lt;/p&gt;
+&lt;p&gt;You can add one or more such interfaces depending on your needs. It can be configured normally using utilities like &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ifconfig(8)&lt;/code&gt; or &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ip-address(8)&lt;/code&gt;, but more typically you configure such interfaces using the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;wg(8)&lt;/code&gt; tool for WireGuard-specific settings.&lt;/p&gt;
 
 &lt;p&gt;By saying that it acts as a tunnel interface, we mean:&lt;/p&gt;
 
@@ -507,13 +507,13 @@ sh_test(
     &lt;ul&gt;
       &lt;li&gt;&lt;strong&gt;Find the destination peer&lt;/strong&gt;
         &lt;ul&gt;
-          &lt;li&gt;E.g. this packet is meant for &lt;code class=&quot;highlighter-rouge&quot;&gt;192.168.30.8&lt;/code&gt;. Which peer is that? Let me look… Okay, it’s for peer &lt;code class=&quot;highlighter-rouge&quot;&gt;ABCDEFGH&lt;/code&gt;. (Or if it’s not for any configured peer, drop the packet.)&lt;/li&gt;
+          &lt;li&gt;E.g. this packet is meant for &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;192.168.30.8&lt;/code&gt;. Which peer is that? Let me look… Okay, it’s for peer &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ABCDEFGH&lt;/code&gt;. (Or if it’s not for any configured peer, drop the packet.)&lt;/li&gt;
         &lt;/ul&gt;
       &lt;/li&gt;
-      &lt;li&gt;&lt;strong&gt;Encrypt the IP packet using peer &lt;code class=&quot;highlighter-rouge&quot;&gt;ABCDEFGH&lt;/code&gt;’s public key&lt;/strong&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;strong&gt;Encrypt the IP packet using peer &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ABCDEFGH&lt;/code&gt;’s public key&lt;/strong&gt;&lt;/li&gt;
       &lt;li&gt;&lt;strong&gt;Find the destination’s remote endpoint&lt;/strong&gt;
         &lt;ul&gt;
-          &lt;li&gt;E.g. what is the remote endpoint of peer &lt;code class=&quot;highlighter-rouge&quot;&gt;ABCDEFGH&lt;/code&gt;? Let me look… Okay, the endpoint is UDP port &lt;code class=&quot;highlighter-rouge&quot;&gt;53133&lt;/code&gt; on host &lt;code class=&quot;highlighter-rouge&quot;&gt;216.58.211.110&lt;/code&gt;&lt;/li&gt;
+          &lt;li&gt;E.g. what is the remote endpoint of peer &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ABCDEFGH&lt;/code&gt;? Let me look… Okay, the endpoint is UDP port &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;53133&lt;/code&gt; on host &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;216.58.211.110&lt;/code&gt;&lt;/li&gt;
         &lt;/ul&gt;
       &lt;/li&gt;
     &lt;/ul&gt;
@@ -523,12 +523,12 @@ sh_test(
       &lt;li&gt;&lt;strong&gt;Decrypt the received packet&lt;/strong&gt;
         &lt;ul&gt;
           &lt;li&gt;I just got a packet from UDP port 7361 on host 98.139.183.24. Let’s decrypt it!&lt;/li&gt;
-          &lt;li&gt;If the decryption failed, drop the packet; Otherwise let’s remember that peer &lt;code class=&quot;highlighter-rouge&quot;&gt;LMNOPQRS&lt;/code&gt;’s most recent Internet endpoint is &lt;code class=&quot;highlighter-rouge&quot;&gt;98.139.183.24:7361&lt;/code&gt; using UDP&lt;/li&gt;
+          &lt;li&gt;If the decryption failed, drop the packet; Otherwise let’s remember that peer &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;LMNOPQRS&lt;/code&gt;’s most recent Internet endpoint is &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;98.139.183.24:7361&lt;/code&gt; using UDP&lt;/li&gt;
         &lt;/ul&gt;
       &lt;/li&gt;
       &lt;li&gt;&lt;strong&gt;Authentication&lt;/strong&gt;
         &lt;ul&gt;
-          &lt;li&gt;Now we have the plaintext packet from peer &lt;code class=&quot;highlighter-rouge&quot;&gt;LMNOPQRS&lt;/code&gt; with IP &lt;code class=&quot;highlighter-rouge&quot;&gt;192.168.43.89&lt;/code&gt;, is &lt;code class=&quot;highlighter-rouge&quot;&gt;LMNOPQRS&lt;/code&gt; allowed to be sending packets to us as &lt;code class=&quot;highlighter-rouge&quot;&gt;192.168.43.89&lt;/code&gt;?&lt;/li&gt;
+          &lt;li&gt;Now we have the plaintext packet from peer &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;LMNOPQRS&lt;/code&gt; with IP &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;192.168.43.89&lt;/code&gt;, is &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;LMNOPQRS&lt;/code&gt; allowed to be sending packets to us as &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;192.168.43.89&lt;/code&gt;?&lt;/li&gt;
           &lt;li&gt;If so, accept the packet on the interface. If not, drop it.&lt;/li&gt;
         &lt;/ul&gt;
       &lt;/li&gt;
@@ -567,7 +567,7 @@ AllowedIPs = 10.10.10.230/32
 
 &lt;p&gt;Each peer in this case will be a client that can send packets to the server’s network interface with a source IP matching the allowed IPs.&lt;/p&gt;
 
-&lt;p&gt;For example, if a packet is &lt;strong&gt;received by the server&lt;/strong&gt; from peer &lt;code class=&quot;highlighter-rouge&quot;&gt;gN65BkIK...&lt;/code&gt;, after being decrypted and authenticated, if its source IP is &lt;code class=&quot;highlighter-rouge&quot;&gt;10.10.10.230&lt;/code&gt;, then it’s allowed onto the interface; otherwise it’s dropped. If the server wants to &lt;strong&gt;send a packet to a client&lt;/strong&gt;, it looks at that packet’s destination IP and compares it to each peer’s list of allowed IPs to see &lt;em&gt;which peer to send&lt;/em&gt; it to. For example, if the server’s network interface is asked to send a packet with a destination IP of &lt;code class=&quot;highlighter-rouge&quot;&gt;10.10.10.230&lt;/code&gt;, it will encrypt it using the public key of peer &lt;code class=&quot;highlighter-rouge&quot;&gt;gN65BkIK...&lt;/code&gt;, and then send it out to the peer’s &lt;strong&gt;most recent internet endpoint&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;For example, if a packet is &lt;strong&gt;received by the server&lt;/strong&gt; from peer &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;gN65BkIK...&lt;/code&gt;, after being decrypted and authenticated, if its source IP is &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;10.10.10.230&lt;/code&gt;, then it’s allowed onto the interface; otherwise it’s dropped. If the server wants to &lt;strong&gt;send a packet to a client&lt;/strong&gt;, it looks at that packet’s destination IP and compares it to each peer’s list of allowed IPs to see &lt;em&gt;which peer to send&lt;/em&gt; it to. For example, if the server’s network interface is asked to send a packet with a destination IP of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;10.10.10.230&lt;/code&gt;, it will encrypt it using the public key of peer &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;gN65BkIK...&lt;/code&gt;, and then send it out to the peer’s &lt;strong&gt;most recent internet endpoint&lt;/strong&gt;.&lt;/p&gt;
 
 &lt;p&gt;In the meantime, a client may have the below config file:&lt;/p&gt;
 
@@ -581,13 +581,13 @@ Endpoint = 192.95.5.69:51820
 AllowedIPs = 0.0.0.0/0
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;The client here has only 1 peer with public key &lt;code class=&quot;highlighter-rouge&quot;&gt;HIgo9...&lt;/code&gt;. That peer is able to send packets to this interface with any source IP.&lt;/p&gt;
+&lt;p&gt;The client here has only 1 peer with public key &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;HIgo9...&lt;/code&gt;. That peer is able to send packets to this interface with any source IP.&lt;/p&gt;
 
 &lt;p&gt;The endpoint in the above client config is an &lt;strong&gt;initial endpoint&lt;/strong&gt; of its single peer so that it knows where to send encrypted data before it has received encrypted data. Compared to this, the server side config does not have any initial endpoints of its peers because the server discovers the peer endpoints by examining from where correctly authenticated data originates.&lt;/p&gt;
 
 &lt;p&gt;If a server changes its own endpoint, and sends data to the clients, the clients will discover the new server endpoint and update its config. This is what we referred in the previous discussion “&lt;em&gt;use the most recent IP endpoint&lt;/em&gt;”. Such feature is also called &lt;strong&gt;IP roaming&lt;/strong&gt;.&lt;/p&gt;
 
-&lt;p&gt;For example, if a &lt;strong&gt;packet is received from&lt;/strong&gt; peer &lt;code class=&quot;highlighter-rouge&quot;&gt;HIgo9...&lt;/code&gt;, after being decrypted and authenticated, it is allowed onto the interface; otherwise it is dropped. In the meantime, if the client’s network interface is asked to send a packet to its single peer, it will encrypt the packet for the peer with &lt;em&gt;any&lt;/em&gt; destination IP since the allowed IP is a wildcard &lt;code class=&quot;highlighter-rouge&quot;&gt;0.0.0.0/0&lt;/code&gt;, and then send it out to the single peer’s most recent internet endpoint.&lt;/p&gt;
+&lt;p&gt;For example, if a &lt;strong&gt;packet is received from&lt;/strong&gt; peer &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;HIgo9...&lt;/code&gt;, after being decrypted and authenticated, it is allowed onto the interface; otherwise it is dropped. In the meantime, if the client’s network interface is asked to send a packet to its single peer, it will encrypt the packet for the peer with &lt;em&gt;any&lt;/em&gt; destination IP since the allowed IP is a wildcard &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;0.0.0.0/0&lt;/code&gt;, and then send it out to the single peer’s most recent internet endpoint.&lt;/p&gt;
 
 &lt;p&gt;In other words, the &lt;strong&gt;list of allowed IPs&lt;/strong&gt; behave differently depending on the purpose is sending or receiving:&lt;/p&gt;
 
@@ -606,7 +606,7 @@ AllowedIPs = 0.0.0.0/0
 
 &lt;h2 id=&quot;setup&quot;&gt;Setup&lt;/h2&gt;
 
-&lt;h3 id=&quot;installation-&quot;&gt;Installation &lt;sup id=&quot;fnref:2&quot;&gt;&lt;a href=&quot;#fn:2&quot; class=&quot;footnote&quot;&gt;2&lt;/a&gt;&lt;/sup&gt;&lt;/h3&gt;
+&lt;h3 id=&quot;installation-&quot;&gt;Installation &lt;sup id=&quot;fnref:2&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:2&quot; class=&quot;footnote&quot;&gt;2&lt;/a&gt;&lt;/sup&gt;&lt;/h3&gt;
 
 &lt;p&gt;Here I only cover the commands used to install WireGuard in Ubuntu.&lt;/p&gt;
 
@@ -618,7 +618,7 @@ AllowedIPs = 0.0.0.0/0
 &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;wg &lt;span class=&quot;nt&quot;&gt;-v&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;Verify that the &lt;code class=&quot;highlighter-rouge&quot;&gt;wireguard&lt;/code&gt; kernel module is loaded:&lt;/p&gt;
+&lt;p&gt;Verify that the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;wireguard&lt;/code&gt; kernel module is loaded:&lt;/p&gt;
 
 &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;lsmod | &lt;span class=&quot;nb&quot;&gt;grep &lt;/span&gt;wireguard
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
@@ -630,7 +630,7 @@ AllowedIPs = 0.0.0.0/0
 &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;modprobe wireguard
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;h3 id=&quot;server-setup-&quot;&gt;Server Setup &lt;sup id=&quot;fnref:3&quot;&gt;&lt;a href=&quot;#fn:3&quot; class=&quot;footnote&quot;&gt;3&lt;/a&gt;&lt;/sup&gt;&lt;/h3&gt;
+&lt;h3 id=&quot;server-setup-&quot;&gt;Server Setup &lt;sup id=&quot;fnref:3&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:3&quot; class=&quot;footnote&quot;&gt;3&lt;/a&gt;&lt;/sup&gt;&lt;/h3&gt;
 
 &lt;p&gt;&lt;strong&gt;Generate a public and private certificate on the server&lt;/strong&gt;:&lt;/p&gt;
 
@@ -638,7 +638,7 @@ AllowedIPs = 0.0.0.0/0
 wg genkey | &lt;span class=&quot;nb&quot;&gt;tee &lt;/span&gt;server_private_key | wg pubkey &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; server_public_key
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;&lt;strong&gt;Create the server config file&lt;/strong&gt; in &lt;code class=&quot;highlighter-rouge&quot;&gt;/etc/wireguard/wg0.conf&lt;/code&gt;:&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Create the server config file&lt;/strong&gt; in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/etc/wireguard/wg0.conf&lt;/code&gt;:&lt;/p&gt;
 
 &lt;pre&gt;&lt;code class=&quot;language-txt&quot;&gt;[Interface]
 Address = 10.9.0.1/24, fd42:42:42::1/64
@@ -652,15 +652,15 @@ PublicKey = # PLACEHOLDER for your client side public key
 AllowedIPs = 10.9.0.2/32, fd42:42:42::2/128
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;Note that you need to change the public interface based on your situation. In my case it is &lt;code class=&quot;highlighter-rouge&quot;&gt;eth0&lt;/code&gt;. If it is not, change it to the actual name.&lt;/p&gt;
+&lt;p&gt;Note that you need to change the public interface based on your situation. In my case it is &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;eth0&lt;/code&gt;. If it is not, change it to the actual name.&lt;/p&gt;
 
-&lt;p&gt;As we mentioned earlier, the list of &lt;code class=&quot;highlighter-rouge&quot;&gt;AllowedIPs&lt;/code&gt; has different interpretation when sending/receiving packets (a routing table when sending and a ACL when receiving). You will want to add your LAN’s &lt;strong&gt;subnet&lt;/strong&gt; under &lt;code class=&quot;highlighter-rouge&quot;&gt;AllowedIPs&lt;/code&gt; so that you can access them through the tunnel. Note that it is a subnet! Otherwise you may encounter errors like &lt;code class=&quot;highlighter-rouge&quot;&gt;RTNETLINK answers: File exists&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;As we mentioned earlier, the list of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;AllowedIPs&lt;/code&gt; has different interpretation when sending/receiving packets (a routing table when sending and a ACL when receiving). You will want to add your LAN’s &lt;strong&gt;subnet&lt;/strong&gt; under &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;AllowedIPs&lt;/code&gt; so that you can access them through the tunnel. Note that it is a subnet! Otherwise you may encounter errors like &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;RTNETLINK answers: File exists&lt;/code&gt;.&lt;/p&gt;
 
 &lt;p&gt;In the above sever config file, I also assigned an IPv6 IP for the server and the peer since my instance has a public IPv6 address, and hence we can use it as a dual-stack VPN.&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;Enable IPv4/IPv6 forwarding&lt;/strong&gt;&lt;/p&gt;
 
-&lt;p&gt;Open &lt;code class=&quot;highlighter-rouge&quot;&gt;/etc/sysctl.conf&lt;/code&gt; and uncomment the following lines:&lt;/p&gt;
+&lt;p&gt;Open &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/etc/sysctl.conf&lt;/code&gt; and uncomment the following lines:&lt;/p&gt;
 
 &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;net.ipv4.ip_forward&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;1
 net.ipv6.conf.all.forwarding&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;1
@@ -684,18 +684,18 @@ wg-quick up wg0
 
 &lt;p&gt;I’m using the WireGuard Mac App, and the configuration is simple and intuitive. Follow the instructions above to generate the certificates for the client, and populate the configs following the official docs.&lt;/p&gt;
 
-&lt;h3 id=&quot;forward-all-your-traffic-through-the-tunnel-&quot;&gt;Forward all your traffic through the tunnel &lt;sup id=&quot;fnref:4&quot;&gt;&lt;a href=&quot;#fn:4&quot; class=&quot;footnote&quot;&gt;4&lt;/a&gt;&lt;/sup&gt;&lt;/h3&gt;
+&lt;h3 id=&quot;forward-all-your-traffic-through-the-tunnel-&quot;&gt;Forward all your traffic through the tunnel &lt;sup id=&quot;fnref:4&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:4&quot; class=&quot;footnote&quot;&gt;4&lt;/a&gt;&lt;/sup&gt;&lt;/h3&gt;
 
 &lt;p&gt;Remember what we emphasized earlier? The dual-purpose list of AllowedIPs? If you want your traffic looks like it’s coming from your server, you can forward all the traffic through WireGuard interface.&lt;/p&gt;
 
-&lt;p&gt;Simply change the &lt;code class=&quot;highlighter-rouge&quot;&gt;AllowedIPs&lt;/code&gt; line on the client to this:&lt;/p&gt;
+&lt;p&gt;Simply change the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;AllowedIPs&lt;/code&gt; line on the client to this:&lt;/p&gt;
 
 &lt;pre&gt;&lt;code class=&quot;language-txt&quot;&gt;AllowedIPs = 0.0.0.0/0, ::/0
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;This will make the &lt;code class=&quot;highlighter-rouge&quot;&gt;wg0&lt;/code&gt; (or whatever your WireGuard interface is) responsible for routing all IP addresses/traffic over your server. You can check this by visiting &lt;a href=&quot;http://ping.pe/&quot;&gt;ping.pe&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;This will make the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;wg0&lt;/code&gt; (or whatever your WireGuard interface is) responsible for routing all IP addresses/traffic over your server. You can check this by visiting &lt;a href=&quot;http://ping.pe/&quot;&gt;ping.pe&lt;/a&gt;.&lt;/p&gt;
 
-&lt;h3 id=&quot;protect-your-dns-&quot;&gt;Protect your DNS &lt;sup id=&quot;fnref:5&quot;&gt;&lt;a href=&quot;#fn:5&quot; class=&quot;footnote&quot;&gt;5&lt;/a&gt;&lt;/sup&gt;&lt;/h3&gt;
+&lt;h3 id=&quot;protect-your-dns-&quot;&gt;Protect your DNS &lt;sup id=&quot;fnref:5&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:5&quot; class=&quot;footnote&quot;&gt;5&lt;/a&gt;&lt;/sup&gt;&lt;/h3&gt;
 
 &lt;p&gt;When you use WireGuard in your machine as a client, your local network won’t be accessible, which means if the DNS servers pushed by your DHCP server are in the local network, you cannot access it! You can add a DNS entry in your client interface config like below:&lt;/p&gt;
 
@@ -712,25 +712,25 @@ Endpoint = # PLACEHOLDER for your peer's remote endpoint, be it IPv4 or IPv6
 
 &lt;p&gt;Here we use Adguard DNS but you can definitely host your own DNS server in your server machine. I also recommend &lt;a href=&quot;https://nextdns.io/&quot;&gt;NextDNS&lt;/a&gt; for your DNS experience. Thank you.&lt;/p&gt;
 
-&lt;div class=&quot;footnotes&quot;&gt;
+&lt;div class=&quot;footnotes&quot; role=&quot;doc-endnotes&quot;&gt;
   &lt;ol&gt;
-    &lt;li id=&quot;fn:1&quot;&gt;
-      &lt;p&gt;https://www.wireguard.com/ &lt;a href=&quot;#fnref:1&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;li id=&quot;fn:1&quot; role=&quot;doc-endnote&quot;&gt;
+      &lt;p&gt;https://www.wireguard.com/ &lt;a href=&quot;#fnref:1&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
     &lt;/li&gt;
-    &lt;li id=&quot;fn:2&quot;&gt;
-      &lt;p&gt;https://www.wireguard.com/install/ &lt;a href=&quot;#fnref:2&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;li id=&quot;fn:2&quot; role=&quot;doc-endnote&quot;&gt;
+      &lt;p&gt;https://www.wireguard.com/install/ &lt;a href=&quot;#fnref:2&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
     &lt;/li&gt;
-    &lt;li id=&quot;fn:3&quot;&gt;
-      &lt;p&gt;http://portal.altispeed.com/kb/faq.php?id=201 &lt;a href=&quot;#fnref:3&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;li id=&quot;fn:3&quot; role=&quot;doc-endnote&quot;&gt;
+      &lt;p&gt;http://portal.altispeed.com/kb/faq.php?id=201 &lt;a href=&quot;#fnref:3&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
     &lt;/li&gt;
-    &lt;li id=&quot;fn:4&quot;&gt;
-      &lt;p&gt;https://www.stavros.io/posts/how-to-configure-wireguard/ &lt;a href=&quot;#fnref:4&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;li id=&quot;fn:4&quot; role=&quot;doc-endnote&quot;&gt;
+      &lt;p&gt;https://www.stavros.io/posts/how-to-configure-wireguard/ &lt;a href=&quot;#fnref:4&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
     &lt;/li&gt;
-    &lt;li id=&quot;fn:5&quot;&gt;
-      &lt;p&gt;https://stanislas.blog/2019/01/how-to-setup-vpn-server-wireguard-nat-ipv6/ &lt;a href=&quot;#fnref:5&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;li id=&quot;fn:5&quot; role=&quot;doc-endnote&quot;&gt;
+      &lt;p&gt;https://stanislas.blog/2019/01/how-to-setup-vpn-server-wireguard-nat-ipv6/ &lt;a href=&quot;#fnref:5&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
     &lt;/li&gt;
   &lt;/ol&gt;
-&lt;/div&gt;</content><author><name>Mengxin Cao</name><email>mcao2 at andrew.cmu.edu</email></author><category term="WireGuard" /><category term="Open Source" /><category term="VPN" /><summary type="html">Introduction WireGuard 1 is a simple, fast, and modern VPN that utilizes cryptography. It encapsulates IP packets over UDP. The general workflow can be summarized as: Install WireGuard Add a WireGuard interface (like wlan0/eth0 but named wg0/wg1…) Configure the interface with a private key and optionally add peer’s public key(s) Send packets to the interface It’s similar to the ssh model. Both parties have each other’s public keys and they communicate by exchanging packets encrypted by the public keys through the WireGuard interface. https://www.wireguard.com/ &amp;#8617;</summary></entry><entry><title type="html">Value-Parameterized GTest</title><link href="/primer/2020/08/07/value-parameterized-gtest/" rel="alternate" type="text/html" title="Value-Parameterized GTest" /><published>2020-08-07T00:00:00-04:00</published><updated>2020-08-07T00:00:00-04:00</updated><id>/primer/2020/08/07/value-parameterized-gtest</id><content type="html" xml:base="/primer/2020/08/07/value-parameterized-gtest/">&lt;h2 id=&quot;introduction&quot;&gt;Introduction&lt;/h2&gt;
+&lt;/div&gt;</content><author><name>Mengxin Cao</name><email>mcao2 at andrew.cmu.edu</email></author><category term="WireGuard" /><category term="Open Source" /><category term="VPN" /><summary type="html">Introduction WireGuard 1 is a simple, fast, and modern VPN that utilizes cryptography. It encapsulates IP packets over UDP. The general workflow can be summarized as: Install WireGuard Add a WireGuard interface (like wlan0/eth0 but named wg0/wg1…) Configure the interface with a private key and optionally add peer’s public key(s) Send packets to the interface It’s similar to the ssh model. Both parties have each other’s public keys and they communicate by exchanging packets encrypted by the public keys through the WireGuard interface. https://www.wireguard.com/ &amp;#8617;</summary></entry><entry><title type="html">Value-Parameterized GTest</title><link href="/primer/2020/08/07/value-parameterized-gtest/" rel="alternate" type="text/html" title="Value-Parameterized GTest" /><published>2020-08-07T00:00:00+00:00</published><updated>2020-08-07T00:00:00+00:00</updated><id>/primer/2020/08/07/value-parameterized-gtest</id><content type="html" xml:base="/primer/2020/08/07/value-parameterized-gtest/">&lt;h2 id=&quot;introduction&quot;&gt;Introduction&lt;/h2&gt;
 
 &lt;p&gt;Last time I talked about gtest in the &lt;a href=&quot;/primer/2020/06/10/googletest-primer/&quot;&gt;gtest primer&lt;/a&gt;, and in this post we discuss the usage of &lt;a href=&quot;https://github.com/google/googletest/blob/master/googletest/docs/advanced.md#value-parameterized-tests&quot;&gt;“value-paramterized” tests&lt;/a&gt;. In general, when you write a simple test case and verified it is working, what is the next step? Maybe you want to add more test cases! But how? Adding them by “hard-coding” the logics in the source files? It’s not a good idea since cases may evolve and we may later add new corner cases, maybe months later. At that time, you may already forgot how to write a test case using gtest.&lt;/p&gt;
 
@@ -758,9 +758,9 @@ Endpoint = # PLACEHOLDER for your peer's remote endpoint, be it IPv4 or IPv6
 
 &lt;h2 id=&quot;prepare-the-apis&quot;&gt;Prepare the APIs&lt;/h2&gt;
 
-&lt;p&gt;In this example we will add a simple getter method under the namespace of “Foo”. The only function we have is called &lt;code class=&quot;highlighter-rouge&quot;&gt;GetBar&lt;/code&gt; which returns a vector of strings.&lt;/p&gt;
+&lt;p&gt;In this example we will add a simple getter method under the namespace of “Foo”. The only function we have is called &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;GetBar&lt;/code&gt; which returns a vector of strings.&lt;/p&gt;
 
-&lt;p&gt;The header file &lt;code class=&quot;highlighter-rouge&quot;&gt;foo.h&lt;/code&gt; contains:&lt;/p&gt;
+&lt;p&gt;The header file &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;foo.h&lt;/code&gt; contains:&lt;/p&gt;
 
 &lt;div class=&quot;language-cpp highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;namespace&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;foo&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
 
@@ -769,7 +769,7 @@ Endpoint = # PLACEHOLDER for your peer's remote endpoint, be it IPv4 or IPv6
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;  &lt;span class=&quot;c1&quot;&gt;// namespace foo&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;And its implementation &lt;code class=&quot;highlighter-rouge&quot;&gt;foo.cpp&lt;/code&gt; is:&lt;/p&gt;
+&lt;p&gt;And its implementation &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;foo.cpp&lt;/code&gt; is:&lt;/p&gt;
 
 &lt;div class=&quot;language-cpp highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cp&quot;&gt;#include &quot;foo.h&quot;
 &lt;/span&gt;
@@ -784,21 +784,21 @@ Endpoint = # PLACEHOLDER for your peer's remote endpoint, be it IPv4 or IPv6
 
 &lt;h2 id=&quot;setup-the-gtest&quot;&gt;Setup the gtest&lt;/h2&gt;
 
-&lt;p&gt;I want to be as general as possible. So I setup a separate fixture for namespace &lt;code class=&quot;highlighter-rouge&quot;&gt;Foo&lt;/code&gt;. If we later added more APIs under &lt;code class=&quot;highlighter-rouge&quot;&gt;Foo&lt;/code&gt;, then the adaptation will be easier.&lt;/p&gt;
+&lt;p&gt;I want to be as general as possible. So I setup a separate fixture for namespace &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Foo&lt;/code&gt;. If we later added more APIs under &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Foo&lt;/code&gt;, then the adaptation will be easier.&lt;/p&gt;
 
 &lt;p&gt;Note that we use &lt;a href=&quot;https://github.com/jbeder/yaml-cpp&quot;&gt;yaml-cpp&lt;/a&gt; to parse the config files and I will assume you already built and installed the library.&lt;/p&gt;
 
-&lt;p&gt;I created a header file called &lt;code class=&quot;highlighter-rouge&quot;&gt;test_foo_core.h&lt;/code&gt; to setup the test cases for &lt;code class=&quot;highlighter-rouge&quot;&gt;Foo&lt;/code&gt; and defined a value-parameterized fixture class called &lt;code class=&quot;highlighter-rouge&quot;&gt;FooTest&lt;/code&gt;. All the API tests can afterwards be derived from the &lt;code class=&quot;highlighter-rouge&quot;&gt;FooTest&lt;/code&gt; class to reuse the settings. The value type will be a &lt;code class=&quot;highlighter-rouge&quot;&gt;YAML::Node&lt;/code&gt; that include the configurations for a specific test case.&lt;/p&gt;
+&lt;p&gt;I created a header file called &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;test_foo_core.h&lt;/code&gt; to setup the test cases for &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Foo&lt;/code&gt; and defined a value-parameterized fixture class called &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;FooTest&lt;/code&gt;. All the API tests can afterwards be derived from the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;FooTest&lt;/code&gt; class to reuse the settings. The value type will be a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;YAML::Node&lt;/code&gt; that include the configurations for a specific test case.&lt;/p&gt;
 
-&lt;p&gt;The &lt;code class=&quot;highlighter-rouge&quot;&gt;SetUp&lt;/code&gt; method of &lt;code class=&quot;highlighter-rouge&quot;&gt;FooTest&lt;/code&gt; will retrieve the &lt;code class=&quot;highlighter-rouge&quot;&gt;YAML::Node&lt;/code&gt; by using gtest’s &lt;code class=&quot;highlighter-rouge&quot;&gt;GetParam&lt;/code&gt; method, from which we read the &lt;code class=&quot;highlighter-rouge&quot;&gt;case_params&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;case_assertion&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;The &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;SetUp&lt;/code&gt; method of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;FooTest&lt;/code&gt; will retrieve the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;YAML::Node&lt;/code&gt; by using gtest’s &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;GetParam&lt;/code&gt; method, from which we read the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;case_params&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;case_assertion&lt;/code&gt;.&lt;/p&gt;
 
-&lt;p&gt;We defined a function &lt;code class=&quot;highlighter-rouge&quot;&gt;ReadTestCasesFromYaml&lt;/code&gt; to help us parse a specific test case from the test config file. You provide the fucntion test name (e.g. &lt;code class=&quot;highlighter-rouge&quot;&gt;GetBarTest&lt;/code&gt; in the above example config file) and it will read all the test cases under that name and use them to run the tests.&lt;/p&gt;
+&lt;p&gt;We defined a function &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ReadTestCasesFromYaml&lt;/code&gt; to help us parse a specific test case from the test config file. You provide the fucntion test name (e.g. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;GetBarTest&lt;/code&gt; in the above example config file) and it will read all the test cases under that name and use them to run the tests.&lt;/p&gt;
 
 &lt;p&gt;Enough introduction and explanations! Go clone &lt;a href=&quot;https://github.com/mcao2/value-parameterized-gtest&quot;&gt;the tutorial repo&lt;/a&gt; and play around the tests!&lt;/p&gt;
 
 &lt;h2 id=&quot;commands-to-run-the-buildtestcoverage&quot;&gt;Commands to run the build/test/coverage&lt;/h2&gt;
 
-&lt;p&gt;In the tutorial repo, I also included the option to produce a code coverage report using &lt;code class=&quot;highlighter-rouge&quot;&gt;gcov&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;lcov&lt;/code&gt;. Check it out by running &lt;code class=&quot;highlighter-rouge&quot;&gt;make coverage&lt;/code&gt; under the &lt;code class=&quot;highlighter-rouge&quot;&gt;build&lt;/code&gt; directory and read the reports in the coverage folder.&lt;/p&gt;
+&lt;p&gt;In the tutorial repo, I also included the option to produce a code coverage report using &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;gcov&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;lcov&lt;/code&gt;. Check it out by running &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;make coverage&lt;/code&gt; under the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;build&lt;/code&gt; directory and read the reports in the coverage folder.&lt;/p&gt;
 
 &lt;h3 id=&quot;clone-the-repo&quot;&gt;Clone the repo&lt;/h3&gt;
 
@@ -852,7 +852,7 @@ Checking &lt;span class=&quot;nb&quot;&gt;test &lt;/span&gt;dependency graph end
 &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;make coverage
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;To view the report, go to &lt;code class=&quot;highlighter-rouge&quot;&gt;coverage&lt;/code&gt; and run:&lt;/p&gt;
+&lt;p&gt;To view the report, go to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;coverage&lt;/code&gt; and run:&lt;/p&gt;
 
 &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;python3 &lt;span class=&quot;nt&quot;&gt;-m&lt;/span&gt; http.server
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
@@ -865,7 +865,7 @@ Checking &lt;span class=&quot;nb&quot;&gt;test &lt;/span&gt;dependency graph end
 
 &lt;hr /&gt;
 
-&lt;p&gt;Thank you and I hope this is useful :)&lt;/p&gt;</content><author><name>Mengxin Cao</name><email>mcao2 at andrew.cmu.edu</email></author><category term="Test" /><category term="C++" /><summary type="html">Introduction Last time I talked about gtest in the gtest primer, and in this post we discuss the usage of “value-paramterized” tests. In general, when you write a simple test case and verified it is working, what is the next step? Maybe you want to add more test cases! But how? Adding them by “hard-coding” the logics in the source files? It’s not a good idea since cases may evolve and we may later add new corner cases, maybe months later. At that time, you may already forgot how to write a test case using gtest. Value-parameterized tests are a good way to organize your test cases and group them in a logical manner e.g. test cases for a particular API. I use value-parameterized tests and a YAML configuration file to dynamically add/reduce my test cases, so that adding or removing a test case is as simple as updating the YAML file.</summary></entry><entry><title type="html">Git Primer</title><link href="/primer/2020/07/19/git-primer/" rel="alternate" type="text/html" title="Git Primer" /><published>2020-07-19T00:00:00-04:00</published><updated>2020-07-19T00:00:00-04:00</updated><id>/primer/2020/07/19/git-primer</id><content type="html" xml:base="/primer/2020/07/19/git-primer/">&lt;h1 id=&quot;git-primer&quot;&gt;Git Primer&lt;/h1&gt;
+&lt;p&gt;Thank you and I hope this is useful :)&lt;/p&gt;</content><author><name>Mengxin Cao</name><email>mcao2 at andrew.cmu.edu</email></author><category term="Test" /><category term="C++" /><summary type="html">Introduction Last time I talked about gtest in the gtest primer, and in this post we discuss the usage of “value-paramterized” tests. In general, when you write a simple test case and verified it is working, what is the next step? Maybe you want to add more test cases! But how? Adding them by “hard-coding” the logics in the source files? It’s not a good idea since cases may evolve and we may later add new corner cases, maybe months later. At that time, you may already forgot how to write a test case using gtest. Value-parameterized tests are a good way to organize your test cases and group them in a logical manner e.g. test cases for a particular API. I use value-parameterized tests and a YAML configuration file to dynamically add/reduce my test cases, so that adding or removing a test case is as simple as updating the YAML file.</summary></entry><entry><title type="html">Git Primer</title><link href="/primer/2020/07/19/git-primer/" rel="alternate" type="text/html" title="Git Primer" /><published>2020-07-19T00:00:00+00:00</published><updated>2020-07-19T00:00:00+00:00</updated><id>/primer/2020/07/19/git-primer</id><content type="html" xml:base="/primer/2020/07/19/git-primer/">&lt;h1 id=&quot;git-primer&quot;&gt;Git Primer&lt;/h1&gt;
 
 &lt;h2 id=&quot;git-commit-messages&quot;&gt;Git Commit Messages&lt;/h2&gt;
 
@@ -885,7 +885,7 @@ Checking &lt;span class=&quot;nb&quot;&gt;test &lt;/span&gt;dependency graph end
 
 &lt;p&gt;Fortunately, well-established conventions exist and you don’t need to re-invent the wheel.&lt;/p&gt;
 
-&lt;h3 id=&quot;several-rules-of-a-great-git-commit-msg-&quot;&gt;Several rules of a great git commit msg &lt;sup id=&quot;fnref:1&quot;&gt;&lt;a href=&quot;#fn:1&quot; class=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/h3&gt;
+&lt;h3 id=&quot;several-rules-of-a-great-git-commit-msg-&quot;&gt;Several rules of a great git commit msg &lt;sup id=&quot;fnref:1&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:1&quot; class=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/h3&gt;
 
 &lt;ol&gt;
   &lt;li&gt;Separate &lt;strong&gt;subject&lt;/strong&gt; from &lt;strong&gt;body&lt;/strong&gt; with a blank line&lt;/li&gt;
@@ -940,16 +940,16 @@ See also: #456, #789
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
   &lt;/li&gt;
   &lt;li&gt;
-    &lt;p&gt;Commit msgs with a subject and a body are not easy to write with the &lt;code class=&quot;highlighter-rouge&quot;&gt;-m&lt;/code&gt; option. You should configure an editor for use with git. You can also define a commit msg template in the git config like below to remind you of the proper format and style when creating a commit msg:&lt;/p&gt;
+    &lt;p&gt;Commit msgs with a subject and a body are not easy to write with the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;-m&lt;/code&gt; option. You should configure an editor for use with git. You can also define a commit msg template in the git config like below to remind you of the proper format and style when creating a commit msg:&lt;/p&gt;
 
-    &lt;p&gt;E.g. Consider a template file at &lt;code class=&quot;highlighter-rouge&quot;&gt;~/.gitmessage.txt&lt;/code&gt; that looks like this&lt;/p&gt;
+    &lt;p&gt;E.g. Consider a template file at &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;~/.gitmessage.txt&lt;/code&gt; that looks like this&lt;/p&gt;
 
     &lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; Subject line (try to keep under 50 characters)
 
  Multi-line description of commit,
  feel free to be detailed.
 
- &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;Ticket: X&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+ [Ticket: X]
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
 
     &lt;p&gt;To tell Git to use it as the default message that appears in your editor when you run git commit, set the commit.template configuration value:&lt;/p&gt;
@@ -959,7 +959,7 @@ See also: #456, #789
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
   &lt;/li&gt;
   &lt;li&gt;
-    &lt;p&gt;The blank line b/w the subject and body is essential and there’re a number of contexts in git like &lt;code class=&quot;highlighter-rouge&quot;&gt;git log --oneline&lt;/code&gt; or &lt;code class=&quot;highlighter-rouge&quot;&gt;git shortlog&lt;/code&gt; that the distinction b/w subject and body matter&lt;/p&gt;
+    &lt;p&gt;The blank line b/w the subject and body is essential and there’re a number of contexts in git like &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;git log --oneline&lt;/code&gt; or &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;git shortlog&lt;/code&gt; that the distinction b/w subject and body matter&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
     &lt;p&gt;The 50 characters limit for the subject line forces the author to think about the most concise way to express his ideas. It also ensures that they are readable from the GitHub WebUI&lt;/p&gt;
@@ -985,7 +985,7 @@ See also: #456, #789
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;        &lt;/div&gt;
       &lt;/li&gt;
       &lt;li&gt;
-        &lt;p&gt;In your VSCode user &lt;code class=&quot;highlighter-rouge&quot;&gt;settings.json&lt;/code&gt;, add the following wrap rule:&lt;/p&gt;
+        &lt;p&gt;In your VSCode user &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;settings.json&lt;/code&gt;, add the following wrap rule:&lt;/p&gt;
 
         &lt;div class=&quot;language-json highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;w&quot;&gt;  &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;[git-commit]&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
       &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;editor.rulers&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
@@ -1003,15 +1003,15 @@ See also: #456, #789
   &lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;h2 id=&quot;git-commands-&quot;&gt;Git Commands &lt;sup id=&quot;fnref:2&quot;&gt;&lt;a href=&quot;#fn:2&quot; class=&quot;footnote&quot;&gt;2&lt;/a&gt;&lt;/sup&gt;&lt;/h2&gt;
+&lt;h2 id=&quot;git-commands-&quot;&gt;Git Commands &lt;sup id=&quot;fnref:2&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:2&quot; class=&quot;footnote&quot;&gt;2&lt;/a&gt;&lt;/sup&gt;&lt;/h2&gt;
 
 &lt;ul&gt;
   &lt;li&gt;&lt;strong&gt;Commit changes&lt;/strong&gt;
     &lt;ul&gt;
-      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;git commit -m 'Simple msg goes here'&lt;/code&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;git commit --amend&lt;/code&gt; &lt;sup id=&quot;fnref:3&quot;&gt;&lt;a href=&quot;#fn:3&quot; class=&quot;footnote&quot;&gt;3&lt;/a&gt;&lt;/sup&gt;
+      &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;git commit -m 'Simple msg goes here'&lt;/code&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;git commit --amend&lt;/code&gt; &lt;sup id=&quot;fnref:3&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:3&quot; class=&quot;footnote&quot;&gt;3&lt;/a&gt;&lt;/sup&gt;
         &lt;ul&gt;
-          &lt;li&gt;Sometimes we commit too early and possibly forget to add some files, or you mess up your commit msg format, you want to undo that commit, make additional changes you forgot, stage and commit again. Now this time use the &lt;code class=&quot;highlighter-rouge&quot;&gt;--amend&lt;/code&gt; option!&lt;/li&gt;
+          &lt;li&gt;Sometimes we commit too early and possibly forget to add some files, or you mess up your commit msg format, you want to undo that commit, make additional changes you forgot, stage and commit again. Now this time use the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;--amend&lt;/code&gt; option!&lt;/li&gt;
           &lt;li&gt;This will take you staging area and uses it for the commit. The same commit msg will pop up and you can update this msg and it will overwrites your previous commit&lt;/li&gt;
           &lt;li&gt;You end up with a single commit, the one amended will &lt;strong&gt;replace&lt;/strong&gt; the results of the first&lt;/li&gt;
         &lt;/ul&gt;
@@ -1020,27 +1020,27 @@ See also: #456, #789
   &lt;/li&gt;
   &lt;li&gt;&lt;strong&gt;Create a new branch&lt;/strong&gt;
     &lt;ul&gt;
-      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;git branch bugFix&lt;/code&gt; (Note that this does not set the HEAD at the new branch)&lt;/li&gt;
-      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;git checkout -b bugFix&lt;/code&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;git branch bugFix&lt;/code&gt; (Note that this does not set the HEAD at the new branch)&lt;/li&gt;
+      &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;git checkout -b bugFix&lt;/code&gt;&lt;/li&gt;
     &lt;/ul&gt;
   &lt;/li&gt;
   &lt;li&gt;&lt;strong&gt;Combine changes&lt;/strong&gt;
     &lt;ul&gt;
-      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;merge&lt;/code&gt;
+      &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;merge&lt;/code&gt;
         &lt;ul&gt;
           &lt;li&gt;Create a special commit that has two unique parents:
             &lt;ul&gt;
               &lt;li&gt;
-                &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;git merge bugFix&lt;/code&gt;
-&lt;img src=&quot;/public/files/git_primer/15951758006949.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+                &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;git merge bugFix&lt;/code&gt;
+&lt;img src=&quot;/public/files/git_primer/15951758006949.jpg&quot; alt=&quot;git merge bugFix&quot; /&gt;&lt;/p&gt;
               &lt;/li&gt;
               &lt;li&gt;
-                &lt;p&gt;If you want to keep the &lt;code class=&quot;highlighter-rouge&quot;&gt;bugFix&lt;/code&gt; branch up to date and continue work on it, we can merge the &lt;code class=&quot;highlighter-rouge&quot;&gt;master&lt;/code&gt; branch to the &lt;code class=&quot;highlighter-rouge&quot;&gt;bugFix&lt;/code&gt; branch. Since &lt;code class=&quot;highlighter-rouge&quot;&gt;bugFix&lt;/code&gt; was an ancestor of &lt;code class=&quot;highlighter-rouge&quot;&gt;master&lt;/code&gt; after the above merge, it simply move the &lt;code class=&quot;highlighter-rouge&quot;&gt;bugFix&lt;/code&gt; to the same commit as &lt;code class=&quot;highlighter-rouge&quot;&gt;master&lt;/code&gt;: &lt;code class=&quot;highlighter-rouge&quot;&gt;git checkout bugFix; git merge master&lt;/code&gt;
-&lt;img src=&quot;/public/files/git_primer/15951774331718.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+                &lt;p&gt;If you want to keep the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;bugFix&lt;/code&gt; branch up to date and continue work on it, we can merge the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;master&lt;/code&gt; branch to the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;bugFix&lt;/code&gt; branch. Since &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;bugFix&lt;/code&gt; was an ancestor of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;master&lt;/code&gt; after the above merge, it simply move the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;bugFix&lt;/code&gt; to the same commit as &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;master&lt;/code&gt;: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;git checkout bugFix; git merge master&lt;/code&gt;
+&lt;img src=&quot;/public/files/git_primer/15951774331718.jpg&quot; alt=&quot;keep bugFix up to date with master&quot; /&gt;&lt;/p&gt;
               &lt;/li&gt;
             &lt;/ul&gt;
           &lt;/li&gt;
-          &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;rebase&lt;/code&gt;
+          &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;rebase&lt;/code&gt;
             &lt;ul&gt;
               &lt;li&gt;Explanations:
                 &lt;ul&gt;
@@ -1048,13 +1048,13 @@ See also: #456, #789
                   &lt;li&gt;Take all the changes that were committed on one branch and &lt;strong&gt;reply&lt;/strong&gt; them on a different branch.&lt;/li&gt;
                 &lt;/ul&gt;
               &lt;/li&gt;
-              &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;git rebase target_branch_to_reply_changes_to&lt;/code&gt;
+              &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;git rebase target_branch_to_reply_changes_to&lt;/code&gt;
                 &lt;ul&gt;
-                  &lt;li&gt;E.g. If you are on branch &lt;code class=&quot;highlighter-rouge&quot;&gt;bugFix&lt;/code&gt; and want to move work from &lt;code class=&quot;highlighter-rouge&quot;&gt;bugFix&lt;/code&gt; directly onto the &lt;code class=&quot;highlighter-rouge&quot;&gt;master&lt;/code&gt;. That way the commit history will looks like these two features were developed sequentially, when in reality they were developed in parallel.&lt;/li&gt;
-                  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;git checkout bugFix; git rebase master&lt;/code&gt;
-&lt;img src=&quot;/public/files/git_primer/15951781011384.jpg&quot; alt=&quot;&quot; /&gt;
+                  &lt;li&gt;E.g. If you are on branch &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;bugFix&lt;/code&gt; and want to move work from &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;bugFix&lt;/code&gt; directly onto the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;master&lt;/code&gt;. That way the commit history will looks like these two features were developed sequentially, when in reality they were developed in parallel.&lt;/li&gt;
+                  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;git checkout bugFix; git rebase master&lt;/code&gt;
+&lt;img src=&quot;/public/files/git_primer/15951781011384.jpg&quot; alt=&quot;rebase bugFix changes to master&quot; /&gt;
                     &lt;ul&gt;
-                      &lt;li&gt;Now you can go back to the &lt;code class=&quot;highlighter-rouge&quot;&gt;master&lt;/code&gt; and do a fast-forward merge to keep the &lt;code class=&quot;highlighter-rouge&quot;&gt;master&lt;/code&gt; up to date: &lt;code class=&quot;highlighter-rouge&quot;&gt;git checkout master; git merge/rebase bugFix&lt;/code&gt;&lt;/li&gt;
+                      &lt;li&gt;Now you can go back to the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;master&lt;/code&gt; and do a fast-forward merge to keep the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;master&lt;/code&gt; up to date: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;git checkout master; git merge/rebase bugFix&lt;/code&gt;&lt;/li&gt;
                     &lt;/ul&gt;
                   &lt;/li&gt;
                 &lt;/ul&gt;
@@ -1067,29 +1067,29 @@ See also: #456, #789
   &lt;/li&gt;
   &lt;li&gt;&lt;strong&gt;Moving around commits&lt;/strong&gt;
     &lt;ul&gt;
-      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;HEAD&lt;/code&gt;: the symbolic name for the currently checked out commit. It always points to the most recent commit which is reflected in the working tree.&lt;/li&gt;
-      &lt;li&gt;Detaching &lt;code class=&quot;highlighter-rouge&quot;&gt;HEAD&lt;/code&gt;: attach &lt;code class=&quot;highlighter-rouge&quot;&gt;HEAD&lt;/code&gt; to a commit instead of a branch, e.g. when you checkout a particular commit rather than a branch. Typically you find the commit by using &lt;code class=&quot;highlighter-rouge&quot;&gt;git log&lt;/code&gt; to find the right hash.
-&lt;img src=&quot;/public/files/git_primer/15951786444183.jpg&quot; alt=&quot;&quot; /&gt;
+      &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;HEAD&lt;/code&gt;: the symbolic name for the currently checked out commit. It always points to the most recent commit which is reflected in the working tree.&lt;/li&gt;
+      &lt;li&gt;Detaching &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;HEAD&lt;/code&gt;: attach &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;HEAD&lt;/code&gt; to a commit instead of a branch, e.g. when you checkout a particular commit rather than a branch. Typically you find the commit by using &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;git log&lt;/code&gt; to find the right hash.
+&lt;img src=&quot;/public/files/git_primer/15951786444183.jpg&quot; alt=&quot;detach HEAD&quot; /&gt;
         &lt;ul&gt;
           &lt;li&gt;&lt;strong&gt;Relative Refs&lt;/strong&gt;
             &lt;ul&gt;
-              &lt;li&gt;Start from somewhere memorable e.g. branch &lt;code class=&quot;highlighter-rouge&quot;&gt;bugFix&lt;/code&gt; or the &lt;code class=&quot;highlighter-rouge&quot;&gt;HEAD&lt;/code&gt;, and move from there
+              &lt;li&gt;Start from somewhere memorable e.g. branch &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;bugFix&lt;/code&gt; or the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;HEAD&lt;/code&gt;, and move from there
                 &lt;ul&gt;
-                  &lt;li&gt;moving upwards, 1 commit at a time: &lt;code class=&quot;highlighter-rouge&quot;&gt;^&lt;/code&gt; (Caret operator)
+                  &lt;li&gt;moving upwards, 1 commit at a time: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;^&lt;/code&gt; (Caret operator)
                     &lt;ul&gt;
                       &lt;li&gt;e.g.
                         &lt;ul&gt;
-                          &lt;li&gt;detach head to its parent: &lt;code class=&quot;highlighter-rouge&quot;&gt;git checkout HEAD^1&lt;/code&gt;, or&lt;/li&gt;
-                          &lt;li&gt;checkout to the &lt;code class=&quot;highlighter-rouge&quot;&gt;master&lt;/code&gt;’s grandparent: &lt;code class=&quot;highlighter-rouge&quot;&gt;git checkout master^^&lt;/code&gt;&lt;/li&gt;
+                          &lt;li&gt;detach head to its parent: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;git checkout HEAD^1&lt;/code&gt;, or&lt;/li&gt;
+                          &lt;li&gt;checkout to the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;master&lt;/code&gt;’s grandparent: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;git checkout master^^&lt;/code&gt;&lt;/li&gt;
                         &lt;/ul&gt;
                       &lt;/li&gt;
                     &lt;/ul&gt;
                   &lt;/li&gt;
-                  &lt;li&gt;moving upwards for &amp;lt;num&amp;gt; commits: &lt;code class=&quot;highlighter-rouge&quot;&gt;~&amp;lt;num&amp;gt;&lt;/code&gt; (Tilde operator)
+                  &lt;li&gt;moving upwards for &amp;lt;num&amp;gt; commits: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;~&amp;lt;num&amp;gt;&lt;/code&gt; (Tilde operator)
                     &lt;ul&gt;
                       &lt;li&gt;e.g.
                         &lt;ul&gt;
-                          &lt;li&gt;detach head and move upward 4 commits: &lt;code class=&quot;highlighter-rouge&quot;&gt;git checkout HEAD~4&lt;/code&gt;&lt;/li&gt;
+                          &lt;li&gt;detach head and move upward 4 commits: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;git checkout HEAD~4&lt;/code&gt;&lt;/li&gt;
                         &lt;/ul&gt;
                       &lt;/li&gt;
                     &lt;/ul&gt;
@@ -1099,7 +1099,7 @@ See also: #456, #789
               &lt;li&gt;Branch forcing:
                 &lt;ul&gt;
                   &lt;li&gt;Reassign a branch to a particular commit&lt;/li&gt;
-                  &lt;li&gt;E.g. move the &lt;code class=&quot;highlighter-rouge&quot;&gt;master&lt;/code&gt; branch to 3 parents behind HEAD: &lt;code class=&quot;highlighter-rouge&quot;&gt;git branch -f master HEAD~3&lt;/code&gt;&lt;/li&gt;
+                  &lt;li&gt;E.g. move the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;master&lt;/code&gt; branch to 3 parents behind HEAD: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;git branch -f master HEAD~3&lt;/code&gt;&lt;/li&gt;
                 &lt;/ul&gt;
               &lt;/li&gt;
             &lt;/ul&gt;
@@ -1110,35 +1110,35 @@ See also: #456, #789
   &lt;/li&gt;
   &lt;li&gt;&lt;strong&gt;Reversing changes&lt;/strong&gt;
     &lt;ul&gt;
-      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;git reset&lt;/code&gt;
+      &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;git reset&lt;/code&gt;
         &lt;ul&gt;
           &lt;li&gt;&lt;strong&gt;Rewriting history&lt;/strong&gt;: revert changes by moving a branch reference backwards in time to an older commit&lt;/li&gt;
           &lt;li&gt;&lt;strong&gt;Warning&lt;/strong&gt;: This cmd is great for &lt;strong&gt;local branches on your own machine&lt;/strong&gt;, not good for remote branches that others are using!&lt;/li&gt;
-          &lt;li&gt;E.g. move the &lt;code class=&quot;highlighter-rouge&quot;&gt;master&lt;/code&gt; branch to the parent of HEAD: &lt;code class=&quot;highlighter-rouge&quot;&gt;git reset HEAD^&lt;/code&gt;, or you can achieve this via &lt;code class=&quot;highlighter-rouge&quot;&gt;branch forcing&lt;/code&gt;: &lt;code class=&quot;highlighter-rouge&quot;&gt;git branch -f master HEAD^&lt;/code&gt;&lt;/li&gt;
+          &lt;li&gt;E.g. move the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;master&lt;/code&gt; branch to the parent of HEAD: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;git reset HEAD^&lt;/code&gt;, or you can achieve this via &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;branch forcing&lt;/code&gt;: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;git branch -f master HEAD^&lt;/code&gt;&lt;/li&gt;
           &lt;li&gt;Modes
             &lt;ul&gt;
-              &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;--soft&lt;/code&gt;
+              &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;--soft&lt;/code&gt;
                 &lt;ul&gt;
                   &lt;li&gt;does not touch the index file or the working tree at all but resets the head to the given &amp;lt;commit&amp;gt;&lt;/li&gt;
                 &lt;/ul&gt;
               &lt;/li&gt;
-              &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;--mixed&lt;/code&gt;
+              &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;--mixed&lt;/code&gt;
                 &lt;ul&gt;
                   &lt;li&gt;default mode, resets the index file but not the working tree, i.e. preserve changes but not marked for commit&lt;/li&gt;
                 &lt;/ul&gt;
               &lt;/li&gt;
-              &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;--hard&lt;/code&gt;
+              &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;--hard&lt;/code&gt;
                 &lt;ul&gt;
                   &lt;li&gt;resets the index and working tree and any changes to tracked files are discarded&lt;/li&gt;
                 &lt;/ul&gt;
               &lt;/li&gt;
-              &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;--merge&lt;/code&gt;&lt;/li&gt;
-              &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;--keep&lt;/code&gt;&lt;/li&gt;
+              &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;--merge&lt;/code&gt;&lt;/li&gt;
+              &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;--keep&lt;/code&gt;&lt;/li&gt;
             &lt;/ul&gt;
           &lt;/li&gt;
         &lt;/ul&gt;
       &lt;/li&gt;
-      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;git revert&lt;/code&gt;
+      &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;git revert&lt;/code&gt;
         &lt;ul&gt;
           &lt;li&gt;Revert changes and share those reversed changes with others by creating a new commit, whose effect is to revert a particular commit&lt;/li&gt;
         &lt;/ul&gt;
@@ -1148,16 +1148,16 @@ See also: #456, #789
   &lt;li&gt;&lt;strong&gt;Move works around&lt;/strong&gt;
     &lt;ul&gt;
       &lt;li&gt;i.e. “Move this commit here, that commit there”&lt;/li&gt;
-      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;git cherry-pick &amp;lt;commit1&amp;gt; &amp;lt;commit2&amp;gt; &amp;lt;...&amp;gt;&lt;/code&gt;
+      &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;git cherry-pick &amp;lt;commit1&amp;gt; &amp;lt;commit2&amp;gt; &amp;lt;...&amp;gt;&lt;/code&gt;
         &lt;ul&gt;
-          &lt;li&gt;A way of saying that you want to copy the provided commits below your current location i.e. below the &lt;code class=&quot;highlighter-rouge&quot;&gt;HEAD&lt;/code&gt;&lt;/li&gt;
-          &lt;li&gt;Surely you may be able to achieve the same goal by using &lt;code class=&quot;highlighter-rouge&quot;&gt;git rebase&lt;/code&gt;, but &lt;code class=&quot;highlighter-rouge&quot;&gt;cherry-pick&lt;/code&gt; is kinda of magic and easier to achieve this goal…&lt;/li&gt;
+          &lt;li&gt;A way of saying that you want to copy the provided commits below your current location i.e. below the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;HEAD&lt;/code&gt;&lt;/li&gt;
+          &lt;li&gt;Surely you may be able to achieve the same goal by using &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;git rebase&lt;/code&gt;, but &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;cherry-pick&lt;/code&gt; is kinda of magic and easier to achieve this goal…&lt;/li&gt;
         &lt;/ul&gt;
       &lt;/li&gt;
-      &lt;li&gt;Interactive rebasing &lt;code class=&quot;highlighter-rouge&quot;&gt;git rebase -i target_branch_to_replay_changes_to&lt;/code&gt;
+      &lt;li&gt;Interactive rebasing &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;git rebase -i target_branch_to_replay_changes_to&lt;/code&gt;
         &lt;ul&gt;
           &lt;li&gt;Cover the situation where you don’t know what commits you want: review a series of commits you’re about to rebase&lt;/li&gt;
-          &lt;li&gt;Git will open up a UI to show you which commits are about to be copied below the target of the rebase (i.e. &lt;code class=&quot;highlighter-rouge&quot;&gt;target_branch_to_replay_changes_to&lt;/code&gt;).
+          &lt;li&gt;Git will open up a UI to show you which commits are about to be copied below the target of the rebase (i.e. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;target_branch_to_replay_changes_to&lt;/code&gt;).
             &lt;ul&gt;
               &lt;li&gt;You can reorder commits by changing their order in the UI&lt;/li&gt;
               &lt;li&gt;You can choose to completely omit some commits&lt;/li&gt;
@@ -1174,19 +1174,19 @@ See also: #456, #789
 
 &lt;h3 id=&quot;references&quot;&gt;References&lt;/h3&gt;
 
-&lt;div class=&quot;footnotes&quot;&gt;
+&lt;div class=&quot;footnotes&quot; role=&quot;doc-endnotes&quot;&gt;
   &lt;ol&gt;
-    &lt;li id=&quot;fn:1&quot;&gt;
-      &lt;p&gt;https://chris.beams.io/posts/git-commit/ &lt;a href=&quot;#fnref:1&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;li id=&quot;fn:1&quot; role=&quot;doc-endnote&quot;&gt;
+      &lt;p&gt;https://chris.beams.io/posts/git-commit/ &lt;a href=&quot;#fnref:1&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
     &lt;/li&gt;
-    &lt;li id=&quot;fn:2&quot;&gt;
-      &lt;p&gt;https://learngitbranching.js.org/?locale=en_US &lt;a href=&quot;#fnref:2&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;li id=&quot;fn:2&quot; role=&quot;doc-endnote&quot;&gt;
+      &lt;p&gt;https://learngitbranching.js.org/?locale=en_US &lt;a href=&quot;#fnref:2&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
     &lt;/li&gt;
-    &lt;li id=&quot;fn:3&quot;&gt;
-      &lt;p&gt;https://git-scm.com/book/en/v2/Git-Basics-Undoing-Things &lt;a href=&quot;#fnref:3&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;li id=&quot;fn:3&quot; role=&quot;doc-endnote&quot;&gt;
+      &lt;p&gt;https://git-scm.com/book/en/v2/Git-Basics-Undoing-Things &lt;a href=&quot;#fnref:3&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
     &lt;/li&gt;
   &lt;/ol&gt;
-&lt;/div&gt;</content><author><name>Mengxin Cao</name><email>mcao2 at andrew.cmu.edu</email></author><category term="Git" /><category term="SCM" /><summary type="html">Git Primer Git Commit Messages Git commit messages can help you understand why something happened months or years ago for your collaborators or yourselves. It affects a project’s maintainability, and hence plays a critical role in a project’s long-term success. This section we summarize some common techniques to write a healthy commit message. Of course there are variations on the styles and conventions adopted by different projects/orgs, you should pick one and stick to it as much as possible to reduce chaos and inconsistency.</summary></entry><entry><title type="html">Boost.Log Primer</title><link href="/primer/2020/07/12/boost-log-primer/" rel="alternate" type="text/html" title="Boost.Log Primer" /><published>2020-07-12T00:00:00-04:00</published><updated>2020-07-12T00:00:00-04:00</updated><id>/primer/2020/07/12/boost-log-primer</id><content type="html" xml:base="/primer/2020/07/12/boost-log-primer/">&lt;h1 id=&quot;boost-log-&quot;&gt;Boost Log &lt;sup id=&quot;fnref:1&quot;&gt;&lt;a href=&quot;#fn:1&quot; class=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/h1&gt;
+&lt;/div&gt;</content><author><name>Mengxin Cao</name><email>mcao2 at andrew.cmu.edu</email></author><category term="Git" /><category term="SCM" /><summary type="html">Git Primer Git Commit Messages Git commit messages can help you understand why something happened months or years ago for your collaborators or yourselves. It affects a project’s maintainability, and hence plays a critical role in a project’s long-term success. This section we summarize some common techniques to write a healthy commit message. Of course there are variations on the styles and conventions adopted by different projects/orgs, you should pick one and stick to it as much as possible to reduce chaos and inconsistency.</summary></entry><entry><title type="html">Boost.Log Primer</title><link href="/primer/2020/07/12/boost-log-primer/" rel="alternate" type="text/html" title="Boost.Log Primer" /><published>2020-07-12T00:00:00+00:00</published><updated>2020-07-12T00:00:00+00:00</updated><id>/primer/2020/07/12/boost-log-primer</id><content type="html" xml:base="/primer/2020/07/12/boost-log-primer/">&lt;h1 id=&quot;boost-log-&quot;&gt;Boost Log &lt;sup id=&quot;fnref:1&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:1&quot; class=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/h1&gt;
 
 &lt;h2 id=&quot;prepare-the-namespace-aliases&quot;&gt;Prepare the namespace aliases&lt;/h2&gt;
 
@@ -1200,7 +1200,7 @@ See also: #456, #789
 
 &lt;!--more--&gt;
 
-&lt;h2 id=&quot;definitions-&quot;&gt;Definitions &lt;sup id=&quot;fnref:2&quot;&gt;&lt;a href=&quot;#fn:2&quot; class=&quot;footnote&quot;&gt;2&lt;/a&gt;&lt;/sup&gt;&lt;/h2&gt;
+&lt;h2 id=&quot;definitions-&quot;&gt;Definitions &lt;sup id=&quot;fnref:2&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:2&quot; class=&quot;footnote&quot;&gt;2&lt;/a&gt;&lt;/sup&gt;&lt;/h2&gt;
 
 &lt;ul&gt;
   &lt;li&gt;&lt;strong&gt;Log record&lt;/strong&gt;: a single bundle of info that is collected from the app and is a candidate for the log output&lt;/li&gt;
@@ -1216,7 +1216,7 @@ See also: #456, #789
   &lt;li&gt;&lt;strong&gt;TLS&lt;/strong&gt;: thread-local storage&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h2 id=&quot;architecture-&quot;&gt;Architecture &lt;sup id=&quot;fnref:3&quot;&gt;&lt;a href=&quot;#fn:3&quot; class=&quot;footnote&quot;&gt;3&lt;/a&gt;&lt;/sup&gt;&lt;/h2&gt;
+&lt;h2 id=&quot;architecture-&quot;&gt;Architecture &lt;sup id=&quot;fnref:3&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:3&quot; class=&quot;footnote&quot;&gt;3&lt;/a&gt;&lt;/sup&gt;&lt;/h2&gt;
 
 &lt;h3 id=&quot;three-layer-architecture&quot;&gt;Three-layer architecture&lt;/h3&gt;
 
@@ -1335,7 +1335,7 @@ See also: #456, #789
 
 &lt;p&gt;The lib also provides most commonly used sink backends.&lt;/p&gt;
 
-&lt;h2 id=&quot;tutorial-&quot;&gt;Tutorial &lt;sup id=&quot;fnref:4&quot;&gt;&lt;a href=&quot;#fn:4&quot; class=&quot;footnote&quot;&gt;4&lt;/a&gt;&lt;/sup&gt;&lt;/h2&gt;
+&lt;h2 id=&quot;tutorial-&quot;&gt;Tutorial &lt;sup id=&quot;fnref:4&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:4&quot; class=&quot;footnote&quot;&gt;4&lt;/a&gt;&lt;/sup&gt;&lt;/h2&gt;
 
 &lt;h3 id=&quot;trivial-logging&quot;&gt;Trivial logging&lt;/h3&gt;
 
@@ -1344,7 +1344,7 @@ See also: #456, #789
 &lt;div class=&quot;language-cpp highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cp&quot;&gt;#include &amp;lt;boost/log/trivial.hpp&amp;gt;
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;The &lt;code class=&quot;highlighter-rouge&quot;&gt;BOOST_LOG_TRIVIAL&lt;/code&gt; macro accepts a severity level and results in a stream-like objects that support insertion operator. The log msg will be printed on the console.&lt;/p&gt;
+&lt;p&gt;The &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;BOOST_LOG_TRIVIAL&lt;/code&gt; macro accepts a severity level and results in a stream-like objects that support insertion operator. The log msg will be printed on the console.&lt;/p&gt;
 
 &lt;p&gt;E.g.&lt;/p&gt;
 
@@ -1390,7 +1390,7 @@ See also: #456, #789
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;Since we are setting up a global filter, we have to acquire the logging core instance using &lt;code class=&quot;highlighter-rouge&quot;&gt;logging::core::get()&lt;/code&gt;. It returns a pointer to the core singleton instance.&lt;/p&gt;
+&lt;p&gt;Since we are setting up a global filter, we have to acquire the logging core instance using &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;logging::core::get()&lt;/code&gt;. It returns a pointer to the core singleton instance.&lt;/p&gt;
 
 &lt;p&gt;The filter in this example is built as a &lt;a href=&quot;https://www.boost.org/doc/libs/release/libs/phoenix/doc/html/index.html&quot;&gt;Boost.Phoenix&lt;/a&gt; lambda expression. The left argument is a placeholder that describes the attribute to be checked. The placeholder along with &lt;strong&gt;the ordering operator&lt;/strong&gt; creates &lt;strong&gt;a function object&lt;/strong&gt; that will be called by the logging core to filter log records and only records that pass the predicate will end up on the console.&lt;/p&gt;
 
@@ -1416,7 +1416,7 @@ See also: #456, #789
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;The &lt;code class=&quot;highlighter-rouge&quot;&gt;add_file_log&lt;/code&gt; function initializes a logging sink that stores log records into a text file. You can also customize it with additional parameters in a named form:&lt;/p&gt;
+&lt;p&gt;The &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;add_file_log&lt;/code&gt; function initializes a logging sink that stores log records into a text file. You can also customize it with additional parameters in a named form:&lt;/p&gt;
 
 &lt;div class=&quot;language-cpp highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;logging&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;add_file_log&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
@@ -1458,16 +1458,16 @@ See also: #456, #789
 &lt;span class=&quot;n&quot;&gt;BOOST_LOG_INLINE_GLOBAL_LOGGER_DEFAULT&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;my_logger&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;src&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;logger_mt&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;The &lt;code class=&quot;highlighter-rouge&quot;&gt;my_logger&lt;/code&gt; is a user-defined tag name that will be used later to retrieve the global logger object.&lt;/p&gt;
+&lt;p&gt;The &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;my_logger&lt;/code&gt; is a user-defined tag name that will be used later to retrieve the global logger object.&lt;/p&gt;
 
-&lt;p&gt;The &lt;code class=&quot;highlighter-rouge&quot;&gt;logger_mt&lt;/code&gt; is the logger type. Any logger type provided by the lib or defined by the user can participate in such declaration. But note that you will normally want to use thread-safe loggers in a multi-threaded app as global logger obj since the logger will have a single instance.&lt;/p&gt;
+&lt;p&gt;The &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;logger_mt&lt;/code&gt; is the logger type. Any logger type provided by the lib or defined by the user can participate in such declaration. But note that you will normally want to use thread-safe loggers in a multi-threaded app as global logger obj since the logger will have a single instance.&lt;/p&gt;
 
 &lt;p&gt;In other parts of your app, you can acquire the global logger like this:&lt;/p&gt;
 
 &lt;div class=&quot;language-cpp highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;src&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;logger_mt&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;lg&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;my_logger&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;The &lt;code class=&quot;highlighter-rouge&quot;&gt;lg&lt;/code&gt; will refer to the one and only instance of the global logger throughout the application. The &lt;code class=&quot;highlighter-rouge&quot;&gt;get&lt;/code&gt; function is thread-safe and hence you don’t need additional synchronization around it.&lt;/p&gt;
+&lt;p&gt;The &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;lg&lt;/code&gt; will refer to the one and only instance of the global logger throughout the application. The &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;get&lt;/code&gt; function is thread-safe and hence you don’t need additional synchronization around it.&lt;/p&gt;
 
 &lt;h4 id=&quot;writing-logs&quot;&gt;Writing logs&lt;/h4&gt;
 
@@ -1483,18 +1483,18 @@ See also: #456, #789
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;The &lt;code class=&quot;highlighter-rouge&quot;&gt;open_record&lt;/code&gt; function determines if the record to be constructed is going to be consumed by at least one sink, i.e. filtering is applied at this stage.&lt;/p&gt;
+&lt;p&gt;The &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;open_record&lt;/code&gt; function determines if the record to be constructed is going to be consumed by at least one sink, i.e. filtering is applied at this stage.&lt;/p&gt;
 
-&lt;p&gt;If the record is to be consumed, the function returns a valid record obj and we can then fill the record msg into it. The record processing can be completed with the call to &lt;code class=&quot;highlighter-rouge&quot;&gt;push_record&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;If the record is to be consumed, the function returns a valid record obj and we can then fill the record msg into it. The record processing can be completed with the call to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;push_record&lt;/code&gt;.&lt;/p&gt;
 
 &lt;p&gt;It seems complicated to use the logger even for the most simple log message… But we can easily wrap them into a macro! The log record above can be written like this:&lt;/p&gt;
 
 &lt;div class=&quot;language-cpp highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;BOOST_LOG&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;lg&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;Hello, World!&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;The &lt;code class=&quot;highlighter-rouge&quot;&gt;BOOST_LOG&lt;/code&gt; macro, along with other similar ones, is defined by the library.&lt;/p&gt;
+&lt;p&gt;The &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;BOOST_LOG&lt;/code&gt; macro, along with other similar ones, is defined by the library.&lt;/p&gt;
 
-&lt;h3 id=&quot;adding-more-info-to-log-with-attributes&quot;&gt;Adding more info to log with &lt;code class=&quot;highlighter-rouge&quot;&gt;Attributes&lt;/code&gt;&lt;/h3&gt;
+&lt;h3 id=&quot;adding-more-info-to-log-with-attributes&quot;&gt;Adding more info to log with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Attributes&lt;/code&gt;&lt;/h3&gt;
 
 &lt;p&gt;As said above, each log record can have many named attribute values attached. Attributes contain essential information about the log emit condition, like the line number in the code, executable name, current time, etc.&lt;/p&gt;
 
@@ -1521,9 +1521,9 @@ See also: #456, #789
 
 &lt;p&gt;E.g. the severity_logger registers a source-specific attribute “Severity” which can be used to add a level of emphasis for different log records.&lt;/p&gt;
 
-&lt;p&gt;The &lt;code class=&quot;highlighter-rouge&quot;&gt;BOOST_LOG_SEV&lt;/code&gt; macro acts pretty much like &lt;code class=&quot;highlighter-rouge&quot;&gt;BOOST_LOG&lt;/code&gt; except that it takes an additional argument for the &lt;code class=&quot;highlighter-rouge&quot;&gt;open_record&lt;/code&gt; method of the logger.&lt;/p&gt;
+&lt;p&gt;The &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;BOOST_LOG_SEV&lt;/code&gt; macro acts pretty much like &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;BOOST_LOG&lt;/code&gt; except that it takes an additional argument for the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;open_record&lt;/code&gt; method of the logger.&lt;/p&gt;
 
-&lt;p&gt;Usually we want to register a &lt;code class=&quot;highlighter-rouge&quot;&gt;named_scope&lt;/code&gt; attribute so that we can store scope names in log for every log record.&lt;/p&gt;
+&lt;p&gt;Usually we want to register a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;named_scope&lt;/code&gt; attribute so that we can store scope names in log for every log record.&lt;/p&gt;
 
 &lt;p&gt;E.g.&lt;/p&gt;
 
@@ -1543,7 +1543,7 @@ See also: #456, #789
 
 &lt;p&gt;Another useful attribute for performance analysis is what we call the “Timeline” attribute.&lt;/p&gt;
 
-&lt;p&gt;After registered the “Timeline” attribute e.g. through &lt;code class=&quot;highlighter-rouge&quot;&gt;BOOST_LOG_SCOPED_THREAD_ATTR(&quot;Timeline&quot;, attrs::timer());&lt;/code&gt;, every log record after this will contain the “Timeline” attribute with a high precision time duration passed since the attribute was registered.&lt;/p&gt;
+&lt;p&gt;After registered the “Timeline” attribute e.g. through &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;BOOST_LOG_SCOPED_THREAD_ATTR(&quot;Timeline&quot;, attrs::timer());&lt;/code&gt;, every log record after this will contain the “Timeline” attribute with a high precision time duration passed since the attribute was registered.&lt;/p&gt;
 
 &lt;p&gt;Based on these readings, one will be able to detect which parts of the code require more or less time to execute. This attribute will be unregistered upon leaving the scope that defined it.&lt;/p&gt;
 
@@ -1570,7 +1570,7 @@ See also: #456, #789
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;The &lt;code class=&quot;highlighter-rouge&quot;&gt;format&lt;/code&gt; parameter allows us to specify the format of the log record. If you want to set up sinks manually, you can achieve this by using the &lt;code class=&quot;highlighter-rouge&quot;&gt;set_formatter&lt;/code&gt; member function of the sink frontends.&lt;/p&gt;
+&lt;p&gt;The &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;format&lt;/code&gt; parameter allows us to specify the format of the log record. If you want to set up sinks manually, you can achieve this by using the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;set_formatter&lt;/code&gt; member function of the sink frontends.&lt;/p&gt;
 
 &lt;h4 id=&quot;lambda-style-formatters&quot;&gt;Lambda-style formatters&lt;/h4&gt;
 
@@ -1585,9 +1585,9 @@ See also: #456, #789
 &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;The &lt;code class=&quot;highlighter-rouge&quot;&gt;stream&lt;/code&gt; is a placeholder for the stream to format the record in. The insertion arguments like &lt;code class=&quot;highlighter-rouge&quot;&gt;attr&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;message&lt;/code&gt; are manipulators that define what should be stored in the stream. Note that it is possible to replace &lt;code class=&quot;highlighter-rouge&quot;&gt;severity&lt;/code&gt; with the following &lt;code class=&quot;highlighter-rouge&quot;&gt;expr::attr&amp;lt; logging::trivial::severity_level &amp;gt;(&quot;Severity&quot;)&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;The &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;stream&lt;/code&gt; is a placeholder for the stream to format the record in. The insertion arguments like &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;attr&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;message&lt;/code&gt; are manipulators that define what should be stored in the stream. Note that it is possible to replace &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;severity&lt;/code&gt; with the following &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;expr::attr&amp;lt; logging::trivial::severity_level &amp;gt;(&quot;Severity&quot;)&lt;/code&gt;.&lt;/p&gt;
 
-&lt;p&gt;It is recommended to define placeholders like &lt;code class=&quot;highlighter-rouge&quot;&gt;severity&lt;/code&gt; for user’s attributes since it provides simpler syntax in the template expressions and makes coding less error-prone.&lt;/p&gt;
+&lt;p&gt;It is recommended to define placeholders like &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;severity&lt;/code&gt; for user’s attributes since it provides simpler syntax in the template expressions and makes coding less error-prone.&lt;/p&gt;
 
 &lt;h4 id=&quot;boostformat-style-formatters&quot;&gt;Boost.Format-style formatters&lt;/h4&gt;
 
@@ -1602,11 +1602,11 @@ See also: #456, #789
 &lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;The &lt;code class=&quot;highlighter-rouge&quot;&gt;format&lt;/code&gt; placeholder accepts the format string like printf with positional specs of all arguments being formatted.&lt;/p&gt;
+&lt;p&gt;The &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;format&lt;/code&gt; placeholder accepts the format string like printf with positional specs of all arguments being formatted.&lt;/p&gt;
 
 &lt;p&gt;Note that &lt;strong&gt;only positional format is currently supported&lt;/strong&gt;, which means you cannot have all features in the Boost.Format.&lt;/p&gt;
 
-&lt;p&gt;When you call &lt;code class=&quot;highlighter-rouge&quot;&gt;format(s)&lt;/code&gt; where s is the format-string, it constructs an obj that parses the format string and looks for all directives in it and prepares internal structures for the next step.&lt;/p&gt;
+&lt;p&gt;When you call &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;format(s)&lt;/code&gt; where s is the format-string, it constructs an obj that parses the format string and looks for all directives in it and prepares internal structures for the next step.&lt;/p&gt;
 
 &lt;p&gt;Then you feed variables into the formatter.&lt;/p&gt;
 
@@ -1637,9 +1637,9 @@ See also: #456, #789
 &lt;div class=&quot;language-cpp highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;keywords&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;format&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;[%TimeStamp%]: %Message%&quot;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;The &lt;code class=&quot;highlighter-rouge&quot;&gt;format&lt;/code&gt; now accepts a format string template that contain a number of placeholders enclosed with percent signs. Each placeholder contain an attribute value name to insert instead of the placeholder.&lt;/p&gt;
+&lt;p&gt;The &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;format&lt;/code&gt; now accepts a format string template that contain a number of placeholders enclosed with percent signs. Each placeholder contain an attribute value name to insert instead of the placeholder.&lt;/p&gt;
 
-&lt;p&gt;&lt;strong&gt;Note that such format templates are not accepted by sink backends in the &lt;code class=&quot;highlighter-rouge&quot;&gt;set_formatter&lt;/code&gt; method&lt;/strong&gt;! You need to call &lt;code class=&quot;highlighter-rouge&quot;&gt;parse_formatter&lt;/code&gt; to parse textual template into a formatter function!&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Note that such format templates are not accepted by sink backends in the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;set_formatter&lt;/code&gt; method&lt;/strong&gt;! You need to call &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;parse_formatter&lt;/code&gt; to parse textual template into a formatter function!&lt;/p&gt;
 
 &lt;h4 id=&quot;custom-formatting-functions&quot;&gt;Custom formatting functions&lt;/h4&gt;
 
@@ -1649,26 +1649,26 @@ See also: #456, #789
 &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;logging&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;record_view&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;const&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;rec&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;logging&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;basic_formatting_ostream&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;CharT&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;amp;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;strm&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;The formatter will be invoked whenever a log record view &lt;code class=&quot;highlighter-rouge&quot;&gt;rec&lt;/code&gt; passes filtering and is to be stored in the log.&lt;/p&gt;
+&lt;p&gt;The formatter will be invoked whenever a log record view &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;rec&lt;/code&gt; passes filtering and is to be stored in the log.&lt;/p&gt;
 
 &lt;p&gt;I tried to customize the ThreadID attribute with the lambda style formatter but got no luck, FYI &lt;a href=&quot;https://sourceforge.net/p/boost-log/discussion/710021/thread/e90226f5/&quot;&gt;here’s a pretty old discussion about formatting ThreadID&lt;/a&gt;.&lt;/p&gt;
 
-&lt;div class=&quot;footnotes&quot;&gt;
+&lt;div class=&quot;footnotes&quot; role=&quot;doc-endnotes&quot;&gt;
   &lt;ol&gt;
-    &lt;li id=&quot;fn:1&quot;&gt;
-      &lt;p&gt;https://www.boost.org/doc/libs/1_63_0/libs/log/doc/html/index.html &lt;a href=&quot;#fnref:1&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;li id=&quot;fn:1&quot; role=&quot;doc-endnote&quot;&gt;
+      &lt;p&gt;https://www.boost.org/doc/libs/1_63_0/libs/log/doc/html/index.html &lt;a href=&quot;#fnref:1&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
     &lt;/li&gt;
-    &lt;li id=&quot;fn:2&quot;&gt;
-      &lt;p&gt;https://www.boost.org/doc/libs/1_63_0/libs/log/doc/html/log/defs.html &lt;a href=&quot;#fnref:2&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;li id=&quot;fn:2&quot; role=&quot;doc-endnote&quot;&gt;
+      &lt;p&gt;https://www.boost.org/doc/libs/1_63_0/libs/log/doc/html/log/defs.html &lt;a href=&quot;#fnref:2&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
     &lt;/li&gt;
-    &lt;li id=&quot;fn:3&quot;&gt;
-      &lt;p&gt;https://www.boost.org/doc/libs/1_63_0/libs/log/doc/html/log/design.html &lt;a href=&quot;#fnref:3&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;li id=&quot;fn:3&quot; role=&quot;doc-endnote&quot;&gt;
+      &lt;p&gt;https://www.boost.org/doc/libs/1_63_0/libs/log/doc/html/log/design.html &lt;a href=&quot;#fnref:3&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
     &lt;/li&gt;
-    &lt;li id=&quot;fn:4&quot;&gt;
-      &lt;p&gt;https://www.boost.org/doc/libs/1_63_0/libs/log/doc/html/log/tutorial.html &lt;a href=&quot;#fnref:4&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;li id=&quot;fn:4&quot; role=&quot;doc-endnote&quot;&gt;
+      &lt;p&gt;https://www.boost.org/doc/libs/1_63_0/libs/log/doc/html/log/tutorial.html &lt;a href=&quot;#fnref:4&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
     &lt;/li&gt;
   &lt;/ol&gt;
-&lt;/div&gt;</content><author><name>Mengxin Cao</name><email>mcao2 at andrew.cmu.edu</email></author><category term="Logging" /><category term="C++" /><summary type="html">Boost Log 1 Prepare the namespace aliases namespace logging = boost::log; namespace sinks = boost::log::sinks; namespace src = boost::log::sources; namespace expr = boost::log::expressions; namespace attrs = boost::log::attributes; namespace keywords = boost::log::keywords; https://www.boost.org/doc/libs/1_63_0/libs/log/doc/html/index.html &amp;#8617;</summary></entry><entry><title type="html">GoogleTest Primer</title><link href="/primer/2020/06/10/googletest-primer/" rel="alternate" type="text/html" title="GoogleTest Primer" /><published>2020-06-10T00:00:00-04:00</published><updated>2020-06-10T00:00:00-04:00</updated><id>/primer/2020/06/10/googletest-primer</id><content type="html" xml:base="/primer/2020/06/10/googletest-primer/">&lt;h1 id=&quot;googletest--primer-gtest&quot;&gt;GoogleTest &lt;sup id=&quot;fnref:1&quot;&gt;&lt;a href=&quot;#fn:1&quot; class=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt; Primer (gtest)&lt;/h1&gt;
+&lt;/div&gt;</content><author><name>Mengxin Cao</name><email>mcao2 at andrew.cmu.edu</email></author><category term="Logging" /><category term="C++" /><summary type="html">Boost Log 1 Prepare the namespace aliases namespace logging = boost::log; namespace sinks = boost::log::sinks; namespace src = boost::log::sources; namespace expr = boost::log::expressions; namespace attrs = boost::log::attributes; namespace keywords = boost::log::keywords; https://www.boost.org/doc/libs/1_63_0/libs/log/doc/html/index.html &amp;#8617;</summary></entry><entry><title type="html">GoogleTest Primer</title><link href="/primer/2020/06/10/googletest-primer/" rel="alternate" type="text/html" title="GoogleTest Primer" /><published>2020-06-10T00:00:00+00:00</published><updated>2020-06-10T00:00:00+00:00</updated><id>/primer/2020/06/10/googletest-primer</id><content type="html" xml:base="/primer/2020/06/10/googletest-primer/">&lt;h1 id=&quot;googletest--primer-gtest&quot;&gt;GoogleTest &lt;sup id=&quot;fnref:1&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:1&quot; class=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt; Primer (gtest)&lt;/h1&gt;
 
 &lt;h2 id=&quot;what-is-googletest&quot;&gt;What is GoogleTest&lt;/h2&gt;
 
@@ -1715,7 +1715,7 @@ See also: #456, #789
 &lt;h2 id=&quot;the-nomenclature&quot;&gt;The nomenclature&lt;/h2&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;&lt;strong&gt;Test&lt;/strong&gt;: gtest’s term for “Test Case” in ISTQB &lt;sup id=&quot;fnref:2&quot;&gt;&lt;a href=&quot;#fn:2&quot; class=&quot;footnote&quot;&gt;2&lt;/a&gt;&lt;/sup&gt;. Exercise a particular program path with specific input values and verify the results&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Test&lt;/strong&gt;: gtest’s term for “Test Case” in ISTQB &lt;sup id=&quot;fnref:2&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:2&quot; class=&quot;footnote&quot;&gt;2&lt;/a&gt;&lt;/sup&gt;. Exercise a particular program path with specific input values and verify the results&lt;/li&gt;
   &lt;li&gt;&lt;strong&gt;Test Suit&lt;/strong&gt;: a group of related tests&lt;/li&gt;
   &lt;li&gt;&lt;strong&gt;Test Program&lt;/strong&gt;: contains one or more test suits&lt;/li&gt;
 &lt;/ul&gt;
@@ -1740,8 +1740,8 @@ See also: #456, #789
   &lt;li&gt;When assertion fails, gtest prints the assertion’s source file, line number, along with a failure message (user can supply a custom failure message which will be appended to gtest’s msg)&lt;/li&gt;
   &lt;li&gt;Two types of assertions that differ in their effects on the code being tested
     &lt;ul&gt;
-      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;ASSERT_*&lt;/code&gt; generate fatal failures when they fail and abort the current function. The abortion may skip clean-up code that comes after it and hence may cause a space leak! (particularly if you will also use a heap checker)&lt;/li&gt;
-      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;EXPECT_*&lt;/code&gt; generate non-fatal failures, which don’t abort the current function and allow more than one failure to be reported in a test&lt;/li&gt;
+      &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ASSERT_*&lt;/code&gt; generate fatal failures when they fail and abort the current function. The abortion may skip clean-up code that comes after it and hence may cause a space leak! (particularly if you will also use a heap checker)&lt;/li&gt;
+      &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;EXPECT_*&lt;/code&gt; generate non-fatal failures, which don’t abort the current function and allow more than one failure to be reported in a test&lt;/li&gt;
     &lt;/ul&gt;
   &lt;/li&gt;
   &lt;li&gt;Syntax
@@ -1765,39 +1765,39 @@ See also: #456, #789
       &lt;/thead&gt;
       &lt;tbody&gt;
         &lt;tr&gt;
-          &lt;td style=&quot;text-align: center&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;ASSERT_TRUE(cond)&lt;/code&gt;&lt;/td&gt;
-          &lt;td style=&quot;text-align: center&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;EXPECT_TRUE(cond)&lt;/code&gt;&lt;/td&gt;
-          &lt;td style=&quot;text-align: center&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;cond&lt;/code&gt; is true&lt;/td&gt;
+          &lt;td style=&quot;text-align: center&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ASSERT_TRUE(cond)&lt;/code&gt;&lt;/td&gt;
+          &lt;td style=&quot;text-align: center&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;EXPECT_TRUE(cond)&lt;/code&gt;&lt;/td&gt;
+          &lt;td style=&quot;text-align: center&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;cond&lt;/code&gt; is true&lt;/td&gt;
         &lt;/tr&gt;
         &lt;tr&gt;
-          &lt;td style=&quot;text-align: center&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;ASSERT_FALSE(cond)&lt;/code&gt;&lt;/td&gt;
-          &lt;td style=&quot;text-align: center&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;EXPECT_FALSE(cond)&lt;/code&gt;&lt;/td&gt;
-          &lt;td style=&quot;text-align: center&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;cond&lt;/code&gt; is false&lt;/td&gt;
+          &lt;td style=&quot;text-align: center&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ASSERT_FALSE(cond)&lt;/code&gt;&lt;/td&gt;
+          &lt;td style=&quot;text-align: center&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;EXPECT_FALSE(cond)&lt;/code&gt;&lt;/td&gt;
+          &lt;td style=&quot;text-align: center&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;cond&lt;/code&gt; is false&lt;/td&gt;
         &lt;/tr&gt;
       &lt;/tbody&gt;
     &lt;/table&gt;
   &lt;/li&gt;
   &lt;li&gt;Binary Comparisons
     &lt;ul&gt;
-      &lt;li&gt;N.B. value arguments (&lt;code class=&quot;highlighter-rouge&quot;&gt;val1&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;val2&lt;/code&gt;) must &lt;strong&gt;be comparable&lt;/strong&gt; by the assertion’s comparison operator (&lt;code class=&quot;highlighter-rouge&quot;&gt;==&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;&lt;/code&gt;, etc.) or you’ll get a compilation error.&lt;/li&gt;
-      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;ASSERT_EQ(val1, val2)&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;ASSERT_NE(val1, val2)&lt;/code&gt;, etc.&lt;/li&gt;
-      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;EXPECT_EQ(val1, val2)&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;EXPECT_NE(val1, val2)&lt;/code&gt;, etc.&lt;/li&gt;
-      &lt;li&gt;You may need to use &lt;code class=&quot;highlighter-rouge&quot;&gt;ASSERT_TRUE&lt;/code&gt; or &lt;code class=&quot;highlighter-rouge&quot;&gt;EXPECT_TRUE&lt;/code&gt; to assert the equality of two objects of an user-defined type based on the Google C++ Style Guide
+      &lt;li&gt;N.B. value arguments (&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;val1&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;val2&lt;/code&gt;) must &lt;strong&gt;be comparable&lt;/strong&gt; by the assertion’s comparison operator (&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;==&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&amp;lt;&lt;/code&gt;, etc.) or you’ll get a compilation error.&lt;/li&gt;
+      &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ASSERT_EQ(val1, val2)&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ASSERT_NE(val1, val2)&lt;/code&gt;, etc.&lt;/li&gt;
+      &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;EXPECT_EQ(val1, val2)&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;EXPECT_NE(val1, val2)&lt;/code&gt;, etc.&lt;/li&gt;
+      &lt;li&gt;You may need to use &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ASSERT_TRUE&lt;/code&gt; or &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;EXPECT_TRUE&lt;/code&gt; to assert the equality of two objects of an user-defined type based on the Google C++ Style Guide
         &lt;ul&gt;
-          &lt;li&gt;but when possible, &lt;code class=&quot;highlighter-rouge&quot;&gt;ASSERT_EQ&lt;/code&gt; is preferred to &lt;code class=&quot;highlighter-rouge&quot;&gt;ASSERT_EQ(val1 == val2)&lt;/code&gt; since it tells you &lt;code class=&quot;highlighter-rouge&quot;&gt;val1&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;val2&lt;/code&gt;’s values on failure&lt;/li&gt;
+          &lt;li&gt;but when possible, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ASSERT_EQ&lt;/code&gt; is preferred to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ASSERT_EQ(val1 == val2)&lt;/code&gt; since it tells you &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;val1&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;val2&lt;/code&gt;’s values on failure&lt;/li&gt;
         &lt;/ul&gt;
       &lt;/li&gt;
     &lt;/ul&gt;
   &lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;https://github.com/google/googletest/blob/master/googletest/docs/primer.md#string-comparison&quot;&gt;String Comparisons&lt;/a&gt;
     &lt;ul&gt;
-      &lt;li&gt;use &lt;code class=&quot;highlighter-rouge&quot;&gt;ASSERT_STREQ()&lt;/code&gt; rather than &lt;code class=&quot;highlighter-rouge&quot;&gt;ASSERT_EQ&lt;/code&gt;&lt;/li&gt;
-      &lt;li&gt;to assert that a C string is NULL, use &lt;code class=&quot;highlighter-rouge&quot;&gt;ASSERT_STREQ(c_str, NULL)&lt;/code&gt; or &lt;code class=&quot;highlighter-rouge&quot;&gt;ASSERT_EQ(c_str, nullptr)&lt;/code&gt; if c++11 is supported&lt;/li&gt;
+      &lt;li&gt;use &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ASSERT_STREQ()&lt;/code&gt; rather than &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ASSERT_EQ&lt;/code&gt;&lt;/li&gt;
+      &lt;li&gt;to assert that a C string is NULL, use &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ASSERT_STREQ(c_str, NULL)&lt;/code&gt; or &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ASSERT_EQ(c_str, nullptr)&lt;/code&gt; if c++11 is supported&lt;/li&gt;
     &lt;/ul&gt;
   &lt;/li&gt;
   &lt;li&gt;Pointer Comparisons
     &lt;ul&gt;
-      &lt;li&gt;use &lt;code class=&quot;highlighter-rouge&quot;&gt;*_EQ(ptr, nullptr)&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;*_NE(ptr, nullptr)&lt;/code&gt; instead of &lt;code class=&quot;highlighter-rouge&quot;&gt;*_EQ(ptr, NULL)&lt;/code&gt;. (because &lt;code class=&quot;highlighter-rouge&quot;&gt;nullptr&lt;/code&gt; is typed)&lt;/li&gt;
+      &lt;li&gt;use &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;*_EQ(ptr, nullptr)&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;*_NE(ptr, nullptr)&lt;/code&gt; instead of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;*_EQ(ptr, NULL)&lt;/code&gt;. (because &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;nullptr&lt;/code&gt; is typed)&lt;/li&gt;
     &lt;/ul&gt;
   &lt;/li&gt;
   &lt;li&gt;Floating point Comparisons
@@ -1810,7 +1810,7 @@ See also: #456, #789
 &lt;h3 id=&quot;simple-tests&quot;&gt;Simple Tests&lt;/h3&gt;
 
 &lt;ol&gt;
-  &lt;li&gt;Use the &lt;code class=&quot;highlighter-rouge&quot;&gt;TEST()&lt;/code&gt; macro to define and name a test function
+  &lt;li&gt;Use the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;TEST()&lt;/code&gt; macro to define and name a test function
     &lt;ul&gt;
       &lt;li&gt;test functions are ordinary C++ functions that don’t return a value&lt;/li&gt;
     &lt;/ul&gt;
@@ -1848,22 +1848,22 @@ See also: #456, #789
 
 &lt;h4 id=&quot;steps-to-create-a-fixture&quot;&gt;Steps to create a fixture&lt;/h4&gt;
 &lt;ol&gt;
-  &lt;li&gt;Derive a class from &lt;code class=&quot;highlighter-rouge&quot;&gt;::testing::Test&lt;/code&gt; and start its body with &lt;code class=&quot;highlighter-rouge&quot;&gt;protected&lt;/code&gt; since we want to access the fixture members from sub-classes&lt;/li&gt;
+  &lt;li&gt;Derive a class from &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;::testing::Test&lt;/code&gt; and start its body with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;protected&lt;/code&gt; since we want to access the fixture members from sub-classes&lt;/li&gt;
   &lt;li&gt;Inside the class, declare any objects you plan to use&lt;/li&gt;
-  &lt;li&gt;If necessary, write a default constructor or &lt;code class=&quot;highlighter-rouge&quot;&gt;SetUp()&lt;/code&gt; function to prepare the objects for each test. &lt;strong&gt;Use &lt;code class=&quot;highlighter-rouge&quot;&gt;override&lt;/code&gt; in C++11 to make sure you spelled SetUp correctly!&lt;/strong&gt;&lt;/li&gt;
-  &lt;li&gt;If necessary, write a destructor or &lt;code class=&quot;highlighter-rouge&quot;&gt;TearDown()&lt;/code&gt; function to release any resources you allocated in &lt;code class=&quot;highlighter-rouge&quot;&gt;SetUp()&lt;/code&gt;.&lt;/li&gt;
+  &lt;li&gt;If necessary, write a default constructor or &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;SetUp()&lt;/code&gt; function to prepare the objects for each test. &lt;strong&gt;Use &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;override&lt;/code&gt; in C++11 to make sure you spelled SetUp correctly!&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;If necessary, write a destructor or &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;TearDown()&lt;/code&gt; function to release any resources you allocated in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;SetUp()&lt;/code&gt;.&lt;/li&gt;
   &lt;li&gt;If needed, define subroutines for your tests to share&lt;/li&gt;
 &lt;/ol&gt;
 
 &lt;h4 id=&quot;how-to-use-a-fixture&quot;&gt;How to use a fixture&lt;/h4&gt;
 &lt;ol&gt;
-  &lt;li&gt;use &lt;code class=&quot;highlighter-rouge&quot;&gt;TEST_F()&lt;/code&gt; instead of &lt;code class=&quot;highlighter-rouge&quot;&gt;TEST()&lt;/code&gt; as it allows you to access objects and subroutines in the test fixture&lt;/li&gt;
+  &lt;li&gt;use &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;TEST_F()&lt;/code&gt; instead of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;TEST()&lt;/code&gt; as it allows you to access objects and subroutines in the test fixture&lt;/li&gt;
   &lt;li&gt;the first argument defines the test suite name, and it must be the name of the test fixture class&lt;/li&gt;
-  &lt;li&gt;you must first define the test fixture class before you can actually use it in your tests! or you will get the compiler error &lt;code class=&quot;highlighter-rouge&quot;&gt;virtual outside class declaration&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;gtest will create a fresh test fixture at runtime for each test defined with &lt;code class=&quot;highlighter-rouge&quot;&gt;TEST_F()&lt;/code&gt;, then
+  &lt;li&gt;you must first define the test fixture class before you can actually use it in your tests! or you will get the compiler error &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;virtual outside class declaration&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;gtest will create a fresh test fixture at runtime for each test defined with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;TEST_F()&lt;/code&gt;, then
     &lt;ul&gt;
-      &lt;li&gt;immediately initialize it via &lt;code class=&quot;highlighter-rouge&quot;&gt;SetUp()&lt;/code&gt;&lt;/li&gt;
-      &lt;li&gt;run the test, clean up by calling &lt;code class=&quot;highlighter-rouge&quot;&gt;TearDown()&lt;/code&gt;&lt;/li&gt;
+      &lt;li&gt;immediately initialize it via &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;SetUp()&lt;/code&gt;&lt;/li&gt;
+      &lt;li&gt;run the test, clean up by calling &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;TearDown()&lt;/code&gt;&lt;/li&gt;
       &lt;li&gt;delete the test fixture&lt;/li&gt;
     &lt;/ul&gt;
   &lt;/li&gt;
@@ -1874,7 +1874,7 @@ See also: #456, #789
     &lt;/ul&gt;
   &lt;/li&gt;
   &lt;li&gt;
-    &lt;p&gt;Naming convention for fixture classes are: append the &lt;code class=&quot;highlighter-rouge&quot;&gt;Test&lt;/code&gt; to the class name. e.g. give it the name &lt;code class=&quot;highlighter-rouge&quot;&gt;FooTest&lt;/code&gt; if you want to test class &lt;code class=&quot;highlighter-rouge&quot;&gt;Foo&lt;/code&gt;&lt;/p&gt;
+    &lt;p&gt;Naming convention for fixture classes are: append the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Test&lt;/code&gt; to the class name. e.g. give it the name &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;FooTest&lt;/code&gt; if you want to test class &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Foo&lt;/code&gt;&lt;/p&gt;
 
     &lt;p&gt;e.g.&lt;/p&gt;
     &lt;pre&gt;&lt;code class=&quot;language-Cpp&quot;&gt; class QueueTest : public ::testing::Test {
@@ -1919,19 +1919,19 @@ See also: #456, #789
 &lt;h3 id=&quot;invoking-the-tests&quot;&gt;Invoking the tests&lt;/h3&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;TEST()&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;TEST_F()&lt;/code&gt; implicitly register their tests with gtest&lt;/li&gt;
-  &lt;li&gt;You can run them with &lt;code class=&quot;highlighter-rouge&quot;&gt;RUN_ALL_TESTS()&lt;/code&gt;, which returns 0 if all the tests are successful or 1 otherwise.&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;RUN_ALL_TESTS()&lt;/code&gt; runs all tests in your link unit and they can be from different test suites, or even different source files&lt;/li&gt;
-  &lt;li&gt;You should call &lt;code class=&quot;highlighter-rouge&quot;&gt;RUN_ALL_TESTS()&lt;/code&gt; only once! Calling it more than once conflicts with some advanced gtest features and thus is not supported&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;TEST()&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;TEST_F()&lt;/code&gt; implicitly register their tests with gtest&lt;/li&gt;
+  &lt;li&gt;You can run them with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;RUN_ALL_TESTS()&lt;/code&gt;, which returns 0 if all the tests are successful or 1 otherwise.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;RUN_ALL_TESTS()&lt;/code&gt; runs all tests in your link unit and they can be from different test suites, or even different source files&lt;/li&gt;
+  &lt;li&gt;You should call &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;RUN_ALL_TESTS()&lt;/code&gt; only once! Calling it more than once conflicts with some advanced gtest features and thus is not supported&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h4 id=&quot;behind-the-scenes-the-run_all_tests-macro&quot;&gt;Behind the scenes, the &lt;code class=&quot;highlighter-rouge&quot;&gt;RUN_ALL_TESTS()&lt;/code&gt; macro:&lt;/h4&gt;
+&lt;h4 id=&quot;behind-the-scenes-the-run_all_tests-macro&quot;&gt;Behind the scenes, the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;RUN_ALL_TESTS()&lt;/code&gt; macro:&lt;/h4&gt;
 &lt;ul&gt;
   &lt;li&gt;Saves the state of all gtest flags&lt;/li&gt;
   &lt;li&gt;Creates a test fixture object for the first test&lt;/li&gt;
-  &lt;li&gt;Initializes it via &lt;code class=&quot;highlighter-rouge&quot;&gt;SetUp()&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;Initializes it via &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;SetUp()&lt;/code&gt;&lt;/li&gt;
   &lt;li&gt;Runs the test on the fixture object&lt;/li&gt;
-  &lt;li&gt;Cleans up the fixture via &lt;code class=&quot;highlighter-rouge&quot;&gt;TearDown()&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;Cleans up the fixture via &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;TearDown()&lt;/code&gt;&lt;/li&gt;
   &lt;li&gt;Deletes the fixture&lt;/li&gt;
   &lt;li&gt;Restores the state of all gtest flags&lt;/li&gt;
   &lt;li&gt;Repeats the above steps for the next test, until all tests have run&lt;/li&gt;
@@ -1941,11 +1941,11 @@ See also: #456, #789
 
 &lt;h3 id=&quot;writing-the-main-function&quot;&gt;Writing the main() function&lt;/h3&gt;
 
-&lt;p&gt;Most users should not need to write their own &lt;code class=&quot;highlighter-rouge&quot;&gt;main&lt;/code&gt; function and instead they should link with &lt;code class=&quot;highlighter-rouge&quot;&gt;gtest_main()&lt;/code&gt;, which defines a suitable entry point.&lt;/p&gt;
+&lt;p&gt;Most users should not need to write their own &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;main&lt;/code&gt; function and instead they should link with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;gtest_main()&lt;/code&gt;, which defines a suitable entry point.&lt;/p&gt;
 
-&lt;p&gt;When you want to do something before the tests that cannot be expressed within the framework of fixtures and test suits, then you can consider writing your own &lt;code class=&quot;highlighter-rouge&quot;&gt;main&lt;/code&gt; function.&lt;/p&gt;
+&lt;p&gt;When you want to do something before the tests that cannot be expressed within the framework of fixtures and test suits, then you can consider writing your own &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;main&lt;/code&gt; function.&lt;/p&gt;
 
-&lt;p&gt;If you write your own &lt;code class=&quot;highlighter-rouge&quot;&gt;main&lt;/code&gt; function, it should return the value of &lt;code class=&quot;highlighter-rouge&quot;&gt;RUN_ALL_TESTS()&lt;/code&gt;!&lt;/p&gt;
+&lt;p&gt;If you write your own &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;main&lt;/code&gt; function, it should return the value of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;RUN_ALL_TESTS()&lt;/code&gt;!&lt;/p&gt;
 
 &lt;p&gt;See the starter code &lt;a href=&quot;https://github.com/google/googletest/blob/master/googletest/docs/primer.md#writing-the-main-function&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
 
@@ -1953,21 +1953,21 @@ See also: #456, #789
 
 &lt;h3 id=&quot;explicit-success-and-failure-macros&quot;&gt;Explicit Success and Failure macros&lt;/h3&gt;
 
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;SUCCEED()&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;FAIL()&lt;/code&gt; do not actually test a value or expression and they generate a success or failure directly. They supports streaming of custom &lt;strong&gt;messages&lt;/strong&gt; into them.&lt;/p&gt;
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;SUCCEED()&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;FAIL()&lt;/code&gt; do not actually test a value or expression and they generate a success or failure directly. They supports streaming of custom &lt;strong&gt;messages&lt;/strong&gt; into them.&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;SUCCEED()&lt;/code&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;SUCCEED()&lt;/code&gt;
     &lt;ul&gt;
       &lt;li&gt;it &lt;strong&gt;does not&lt;/strong&gt; make the overall test succeed and a test is considered successful only if none of its assertions fail during its execution&lt;/li&gt;
       &lt;li&gt;it is purely documentary and currently does not generate any user-visible output&lt;/li&gt;
     &lt;/ul&gt;
   &lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;FAIL()&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;ADD_FAILURE()&lt;/code&gt;, and &lt;code class=&quot;highlighter-rouge&quot;&gt;ADD_FAILURE_AT()&lt;/code&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;FAIL()&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ADD_FAILURE()&lt;/code&gt;, and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ADD_FAILURE_AT()&lt;/code&gt;
     &lt;ul&gt;
-      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;FAIL()&lt;/code&gt; generates a fatal failure&lt;/li&gt;
-      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;ADD_FAILURE()&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;ADD_FAILURE_AT()&lt;/code&gt; generate nonfatal failure&lt;/li&gt;
+      &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;FAIL()&lt;/code&gt; generates a fatal failure&lt;/li&gt;
+      &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ADD_FAILURE()&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ADD_FAILURE_AT()&lt;/code&gt; generate nonfatal failure&lt;/li&gt;
       &lt;li&gt;they are useful when the control flow (rather than the boolean expression) determines the test’s sucecss or failure&lt;/li&gt;
-      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;FAIL()&lt;/code&gt; can only be used in functions that return &lt;code class=&quot;highlighter-rouge&quot;&gt;void&lt;/code&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;FAIL()&lt;/code&gt; can only be used in functions that return &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;void&lt;/code&gt;&lt;/li&gt;
     &lt;/ul&gt;
 
     &lt;p&gt;e.g.&lt;/p&gt;
@@ -1997,19 +1997,19 @@ See also: #456, #789
   &lt;/thead&gt;
   &lt;tbody&gt;
     &lt;tr&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;ASSERT_THROW(statement, exception_type)&lt;/code&gt;&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;EXPECT_THORW(statement, exception_type)&lt;/code&gt;&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;statement&lt;/code&gt; throws an exception of the given type&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ASSERT_THROW(statement, exception_type)&lt;/code&gt;&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;EXPECT_THORW(statement, exception_type)&lt;/code&gt;&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;statement&lt;/code&gt; throws an exception of the given type&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;ASSERT_ANY_THROW(statement)&lt;/code&gt;&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;EXPECT_ANY_THROW(statement)&lt;/code&gt;&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;statement&lt;/code&gt; throws an exception of any type&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ASSERT_ANY_THROW(statement)&lt;/code&gt;&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;EXPECT_ANY_THROW(statement)&lt;/code&gt;&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;statement&lt;/code&gt; throws an exception of any type&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;ASSERT_NO_THROW(statement)&lt;/code&gt;&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;EXPECT_NO_THROW(statement)&lt;/code&gt;&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;statement&lt;/code&gt; does not throw any exception&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ASSERT_NO_THROW(statement)&lt;/code&gt;&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;EXPECT_NO_THROW(statement)&lt;/code&gt;&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;statement&lt;/code&gt; does not throw any exception&lt;/td&gt;
     &lt;/tr&gt;
   &lt;/tbody&gt;
 &lt;/table&gt;
@@ -2021,13 +2021,13 @@ See also: #456, #789
 &lt;h4 id=&quot;howto&quot;&gt;HowTo&lt;/h4&gt;
 
 &lt;ol&gt;
-  &lt;li&gt;define a fixture class that derived from both &lt;code class=&quot;highlighter-rouge&quot;&gt;testing::Test&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;testing::WithParamInterface&amp;lt;T&amp;gt;&lt;/code&gt; where &lt;code class=&quot;highlighter-rouge&quot;&gt;T&lt;/code&gt; is the type of your parameter values. &lt;strong&gt;For convenience&lt;/strong&gt;, you can just derive the fixture class from &lt;code class=&quot;highlighter-rouge&quot;&gt;testing::TestWithParam&amp;lt;T&amp;gt;&lt;/code&gt;, which itself is derived from both the required classes. &lt;code class=&quot;highlighter-rouge&quot;&gt;T&lt;/code&gt; can be any copyable type and if it is a raw pointer, you are responsible for managing the lifespan of the pointed values.&lt;/li&gt;
-  &lt;li&gt;If your test fixture defines &lt;code class=&quot;highlighter-rouge&quot;&gt;SetUpTestSuite()&lt;/code&gt; or &lt;code class=&quot;highlighter-rouge&quot;&gt;TearDownTestSuite()&lt;/code&gt; they must be declared &lt;code class=&quot;highlighter-rouge&quot;&gt;public&lt;/code&gt; rather than &lt;code class=&quot;highlighter-rouge&quot;&gt;protected&lt;/code&gt; in order to use &lt;code class=&quot;highlighter-rouge&quot;&gt;TEST_P&lt;/code&gt;.&lt;/li&gt;
-  &lt;li&gt;Use the &lt;code class=&quot;highlighter-rouge&quot;&gt;TEST_P&lt;/code&gt; macro to define as many test patterns using this fixture as you want&lt;/li&gt;
-  &lt;li&gt;Inside the test, you can access the parameter by calling &lt;code class=&quot;highlighter-rouge&quot;&gt;GetParam()&lt;/code&gt; method of the &lt;code class=&quot;highlighter-rouge&quot;&gt;TestWithParam&amp;lt;T&amp;gt;&lt;/code&gt; class&lt;/li&gt;
-  &lt;li&gt;You can then instantiate the test suite with any set of parameters using &lt;code class=&quot;highlighter-rouge&quot;&gt;INSTANTIATE_TEST_SUITE_P()&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;define a fixture class that derived from both &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;testing::Test&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;testing::WithParamInterface&amp;lt;T&amp;gt;&lt;/code&gt; where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;T&lt;/code&gt; is the type of your parameter values. &lt;strong&gt;For convenience&lt;/strong&gt;, you can just derive the fixture class from &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;testing::TestWithParam&amp;lt;T&amp;gt;&lt;/code&gt;, which itself is derived from both the required classes. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;T&lt;/code&gt; can be any copyable type and if it is a raw pointer, you are responsible for managing the lifespan of the pointed values.&lt;/li&gt;
+  &lt;li&gt;If your test fixture defines &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;SetUpTestSuite()&lt;/code&gt; or &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;TearDownTestSuite()&lt;/code&gt; they must be declared &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;public&lt;/code&gt; rather than &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;protected&lt;/code&gt; in order to use &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;TEST_P&lt;/code&gt;.&lt;/li&gt;
+  &lt;li&gt;Use the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;TEST_P&lt;/code&gt; macro to define as many test patterns using this fixture as you want&lt;/li&gt;
+  &lt;li&gt;Inside the test, you can access the parameter by calling &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;GetParam()&lt;/code&gt; method of the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;TestWithParam&amp;lt;T&amp;gt;&lt;/code&gt; class&lt;/li&gt;
+  &lt;li&gt;You can then instantiate the test suite with any set of parameters using &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;INSTANTIATE_TEST_SUITE_P()&lt;/code&gt;&lt;/li&gt;
   &lt;li&gt;
-    &lt;p&gt;You &lt;strong&gt;must&lt;/strong&gt; place the &lt;code class=&quot;highlighter-rouge&quot;&gt;INSTANTIATE_TEST_SUITE_P()&lt;/code&gt; statement at global or namespace scope, rather than function scope.&lt;/p&gt;
+    &lt;p&gt;You &lt;strong&gt;must&lt;/strong&gt; place the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;INSTANTIATE_TEST_SUITE_P()&lt;/code&gt; statement at global or namespace scope, rather than function scope.&lt;/p&gt;
 
     &lt;p&gt;e.g.&lt;/p&gt;
     &lt;pre&gt;&lt;code class=&quot;language-Cpp&quot;&gt; INSTANTIATE_TEST_SUITE_P(InstantiationName,
@@ -2038,18 +2038,18 @@ See also: #456, #789
 &lt;/ol&gt;
 
 &lt;hr /&gt;
-&lt;div class=&quot;footnotes&quot;&gt;
+&lt;div class=&quot;footnotes&quot; role=&quot;doc-endnotes&quot;&gt;
   &lt;ol&gt;
-    &lt;li id=&quot;fn:1&quot;&gt;
-      &lt;p&gt;https://github.com/google/googletest/blob/master/googletest/docs/primer.md &lt;a href=&quot;#fnref:1&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;li id=&quot;fn:1&quot; role=&quot;doc-endnote&quot;&gt;
+      &lt;p&gt;https://github.com/google/googletest/blob/master/googletest/docs/primer.md &lt;a href=&quot;#fnref:1&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
     &lt;/li&gt;
-    &lt;li id=&quot;fn:2&quot;&gt;
-      &lt;p&gt;https://glossary.istqb.org/en/search/test%20case &lt;a href=&quot;#fnref:2&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;li id=&quot;fn:2&quot; role=&quot;doc-endnote&quot;&gt;
+      &lt;p&gt;https://glossary.istqb.org/en/search/test%20case &lt;a href=&quot;#fnref:2&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
     &lt;/li&gt;
   &lt;/ol&gt;
-&lt;/div&gt;</content><author><name>Mengxin Cao</name><email>mcao2 at andrew.cmu.edu</email></author><category term="Test" /><category term="C++" /><summary type="html">GoogleTest 1 Primer (gtest) What is GoogleTest Googletest is a testing framework to help write better C++ code supports any kind of tests, not just unit tests based on the popular xUnit (e.g. JUnit, PyUnit) architecture https://github.com/google/googletest/blob/master/googletest/docs/primer.md &amp;#8617;</summary></entry><entry><title type="html">Talk UI: A Multi-Modal, Conversational Interface for UI Prototyping</title><link href="/projects/2020/05/23/talkui/" rel="alternate" type="text/html" title="Talk UI: A Multi-Modal, Conversational Interface for UI Prototyping" /><published>2020-05-23T00:00:00-04:00</published><updated>2020-05-23T00:00:00-04:00</updated><id>/projects/2020/05/23/talkui</id><content type="html" xml:base="/projects/2020/05/23/talkui/">&lt;h2 id=&quot;authors&quot;&gt;Authors&lt;/h2&gt;
+&lt;/div&gt;</content><author><name>Mengxin Cao</name><email>mcao2 at andrew.cmu.edu</email></author><category term="Test" /><category term="C++" /><summary type="html">GoogleTest 1 Primer (gtest) What is GoogleTest Googletest is a testing framework to help write better C++ code supports any kind of tests, not just unit tests based on the popular xUnit (e.g. JUnit, PyUnit) architecture https://github.com/google/googletest/blob/master/googletest/docs/primer.md &amp;#8617;</summary></entry><entry><title type="html">Talk UI: A Multi-Modal, Conversational Interface for UI Prototyping</title><link href="/projects/2020/05/23/talkui/" rel="alternate" type="text/html" title="Talk UI: A Multi-Modal, Conversational Interface for UI Prototyping" /><published>2020-05-23T00:00:00+00:00</published><updated>2020-05-23T00:00:00+00:00</updated><id>/projects/2020/05/23/talkui</id><content type="html" xml:base="/projects/2020/05/23/talkui/">&lt;h2 id=&quot;authors&quot;&gt;Authors&lt;/h2&gt;
 
-&lt;p&gt;&lt;a href=&quot;http://niwatori.io/&quot;&gt;Hongyi Zhang&lt;/a&gt;, &lt;a href=&quot;https://mxcao.me/&quot;&gt;Mengxin Cao&lt;/a&gt;, &lt;a href=&quot;linkedin.com/in/chewrongkang&quot;&gt;Ron Chew&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://niwatori.io/&quot;&gt;Hongyi Zhang&lt;/a&gt;, &lt;a href=&quot;https://mxcao.me/&quot;&gt;Mengxin Cao&lt;/a&gt;, &lt;a href=&quot;https://www.linkedin.com/in/chewrongkang/&quot;&gt;Ron Chew&lt;/a&gt;&lt;/p&gt;
 
 &lt;h2 id=&quot;demo&quot;&gt;Demo&lt;/h2&gt;
 
@@ -2073,7 +2073,7 @@ See also: #456, #789
   &lt;li&gt;Support of direct manipulation to update graphical object properties through property sheet&lt;/li&gt;
   &lt;li&gt;Display of voice command history and conversation feedbacks&lt;/li&gt;
   &lt;li&gt;Static export of the final interface&lt;/li&gt;
-&lt;/ul&gt;</content><author><name>Mengxin Cao</name><email>mcao2 at andrew.cmu.edu</email></author><category term="HCI" /><category term="NLP" /><category term="UI" /><summary type="html">Authors Hongyi Zhang, Mengxin Cao, Ron Chew Demo Introduction UI designers have long been sketching to realize the interfaces they have in mind for prototyping. However, there is still much that can be done to make designers’ life easier. Current UI design tools are time-consuming and repetitive: drawing sets of graphics and widgets, then specifying their interactions and behaviors often requires a large effort in code and configuration for small results. The iteration process cannot catch up with the speed the designer’s minds are operating at.</summary></entry><entry><title type="html">B4: Experience with a Globally-Deployed Software Defined WAN</title><link href="/papers/2020/05/02/b4-sdn/" rel="alternate" type="text/html" title="B4: Experience with a Globally-Deployed Software Defined WAN" /><published>2020-05-02T00:00:00-04:00</published><updated>2020-05-02T00:00:00-04:00</updated><id>/papers/2020/05/02/b4-sdn</id><content type="html" xml:base="/papers/2020/05/02/b4-sdn/">&lt;h2 id=&quot;paper-link&quot;&gt;Paper Link&lt;/h2&gt;
+&lt;/ul&gt;</content><author><name>Mengxin Cao</name><email>mcao2 at andrew.cmu.edu</email></author><category term="HCI" /><category term="NLP" /><category term="UI" /><summary type="html">Authors Hongyi Zhang, Mengxin Cao, Ron Chew Demo Introduction UI designers have long been sketching to realize the interfaces they have in mind for prototyping. However, there is still much that can be done to make designers’ life easier. Current UI design tools are time-consuming and repetitive: drawing sets of graphics and widgets, then specifying their interactions and behaviors often requires a large effort in code and configuration for small results. The iteration process cannot catch up with the speed the designer’s minds are operating at.</summary></entry><entry><title type="html">B4: Experience with a Globally-Deployed Software Defined WAN</title><link href="/papers/2020/05/02/b4-sdn/" rel="alternate" type="text/html" title="B4: Experience with a Globally-Deployed Software Defined WAN" /><published>2020-05-02T00:00:00+00:00</published><updated>2020-05-02T00:00:00+00:00</updated><id>/papers/2020/05/02/b4-sdn</id><content type="html" xml:base="/papers/2020/05/02/b4-sdn/">&lt;h2 id=&quot;paper-link&quot;&gt;Paper Link&lt;/h2&gt;
 
 &lt;p&gt;&lt;a href=&quot;https://cseweb.ucsd.edu/~vahdat/papers/b4-sigcomm13.pdf&quot;&gt;b4-sigcomm13&lt;/a&gt;&lt;/p&gt;
 
@@ -2089,7 +2089,7 @@ See also: #456, #789
 
 &lt;h2 id=&quot;notes&quot;&gt;Notes&lt;/h2&gt;
 
-&lt;p&gt;&lt;a href=&quot;/public/files/B4.html&quot;&gt;Link to a notes&lt;/a&gt;&lt;/p&gt;</content><author><name>Mengxin Cao</name><email>mcao2 at andrew.cmu.edu</email></author><category term="Cloud Computing" /><category term="SDN" /><summary type="html">Paper Link b4-sigcomm13 Authors Sushant Jain, Alok Kumar, Subhasree Mandal, Joon Ong, Leon Poutievski, Arjun Singh, Subbaiah Venkata, Jim Wanderer, Junlan Zhou, Min Zhu, Jonathan Zolla, Urs Hölzle, Stephen Stuart and Amin Vahdat</summary></entry><entry><title type="html">Borg, Omega, and Kubernetes</title><link href="/papers/2020/05/02/borg-omega-kubernetes/" rel="alternate" type="text/html" title="Borg, Omega, and Kubernetes" /><published>2020-05-02T00:00:00-04:00</published><updated>2020-05-02T00:00:00-04:00</updated><id>/papers/2020/05/02/borg-omega-kubernetes</id><content type="html" xml:base="/papers/2020/05/02/borg-omega-kubernetes/">&lt;h2 id=&quot;paper-link&quot;&gt;Paper Link&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&quot;/public/files/B4.html&quot;&gt;Link to a notes&lt;/a&gt;&lt;/p&gt;</content><author><name>Mengxin Cao</name><email>mcao2 at andrew.cmu.edu</email></author><category term="Cloud Computing" /><category term="SDN" /><summary type="html">Paper Link b4-sigcomm13 Authors Sushant Jain, Alok Kumar, Subhasree Mandal, Joon Ong, Leon Poutievski, Arjun Singh, Subbaiah Venkata, Jim Wanderer, Junlan Zhou, Min Zhu, Jonathan Zolla, Urs Hölzle, Stephen Stuart and Amin Vahdat</summary></entry><entry><title type="html">Borg, Omega, and Kubernetes</title><link href="/papers/2020/05/02/borg-omega-kubernetes/" rel="alternate" type="text/html" title="Borg, Omega, and Kubernetes" /><published>2020-05-02T00:00:00+00:00</published><updated>2020-05-02T00:00:00+00:00</updated><id>/papers/2020/05/02/borg-omega-kubernetes</id><content type="html" xml:base="/papers/2020/05/02/borg-omega-kubernetes/">&lt;h2 id=&quot;paper-link&quot;&gt;Paper Link&lt;/h2&gt;
 
 &lt;p&gt;&lt;a href=&quot;https://queue.acm.org/detail.cfm?id=2898444&quot;&gt;2898442.2898444&lt;/a&gt;&lt;/p&gt;
 

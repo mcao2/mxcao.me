@@ -144,9 +144,9 @@
 
 <h2 id="prepare-the-apis">Prepare the APIs</h2>
 
-<p>In this example we will add a simple getter method under the namespace of “Foo”. The only function we have is called <code class="highlighter-rouge">GetBar</code> which returns a vector of strings.</p>
+<p>In this example we will add a simple getter method under the namespace of “Foo”. The only function we have is called <code class="language-plaintext highlighter-rouge">GetBar</code> which returns a vector of strings.</p>
 
-<p>The header file <code class="highlighter-rouge">foo.h</code> contains:</p>
+<p>The header file <code class="language-plaintext highlighter-rouge">foo.h</code> contains:</p>
 
 <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">namespace</span> <span class="n">foo</span> <span class="p">{</span>
 
@@ -155,7 +155,7 @@
 <span class="p">}</span>  <span class="c1">// namespace foo</span>
 </code></pre></div></div>
 
-<p>And its implementation <code class="highlighter-rouge">foo.cpp</code> is:</p>
+<p>And its implementation <code class="language-plaintext highlighter-rouge">foo.cpp</code> is:</p>
 
 <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include "foo.h"
 </span>
@@ -170,21 +170,21 @@
 
 <h2 id="setup-the-gtest">Setup the gtest</h2>
 
-<p>I want to be as general as possible. So I setup a separate fixture for namespace <code class="highlighter-rouge">Foo</code>. If we later added more APIs under <code class="highlighter-rouge">Foo</code>, then the adaptation will be easier.</p>
+<p>I want to be as general as possible. So I setup a separate fixture for namespace <code class="language-plaintext highlighter-rouge">Foo</code>. If we later added more APIs under <code class="language-plaintext highlighter-rouge">Foo</code>, then the adaptation will be easier.</p>
 
 <p>Note that we use <a href="https://github.com/jbeder/yaml-cpp">yaml-cpp</a> to parse the config files and I will assume you already built and installed the library.</p>
 
-<p>I created a header file called <code class="highlighter-rouge">test_foo_core.h</code> to setup the test cases for <code class="highlighter-rouge">Foo</code> and defined a value-parameterized fixture class called <code class="highlighter-rouge">FooTest</code>. All the API tests can afterwards be derived from the <code class="highlighter-rouge">FooTest</code> class to reuse the settings. The value type will be a <code class="highlighter-rouge">YAML::Node</code> that include the configurations for a specific test case.</p>
+<p>I created a header file called <code class="language-plaintext highlighter-rouge">test_foo_core.h</code> to setup the test cases for <code class="language-plaintext highlighter-rouge">Foo</code> and defined a value-parameterized fixture class called <code class="language-plaintext highlighter-rouge">FooTest</code>. All the API tests can afterwards be derived from the <code class="language-plaintext highlighter-rouge">FooTest</code> class to reuse the settings. The value type will be a <code class="language-plaintext highlighter-rouge">YAML::Node</code> that include the configurations for a specific test case.</p>
 
-<p>The <code class="highlighter-rouge">SetUp</code> method of <code class="highlighter-rouge">FooTest</code> will retrieve the <code class="highlighter-rouge">YAML::Node</code> by using gtest’s <code class="highlighter-rouge">GetParam</code> method, from which we read the <code class="highlighter-rouge">case_params</code> and <code class="highlighter-rouge">case_assertion</code>.</p>
+<p>The <code class="language-plaintext highlighter-rouge">SetUp</code> method of <code class="language-plaintext highlighter-rouge">FooTest</code> will retrieve the <code class="language-plaintext highlighter-rouge">YAML::Node</code> by using gtest’s <code class="language-plaintext highlighter-rouge">GetParam</code> method, from which we read the <code class="language-plaintext highlighter-rouge">case_params</code> and <code class="language-plaintext highlighter-rouge">case_assertion</code>.</p>
 
-<p>We defined a function <code class="highlighter-rouge">ReadTestCasesFromYaml</code> to help us parse a specific test case from the test config file. You provide the fucntion test name (e.g. <code class="highlighter-rouge">GetBarTest</code> in the above example config file) and it will read all the test cases under that name and use them to run the tests.</p>
+<p>We defined a function <code class="language-plaintext highlighter-rouge">ReadTestCasesFromYaml</code> to help us parse a specific test case from the test config file. You provide the fucntion test name (e.g. <code class="language-plaintext highlighter-rouge">GetBarTest</code> in the above example config file) and it will read all the test cases under that name and use them to run the tests.</p>
 
 <p>Enough introduction and explanations! Go clone <a href="https://github.com/mcao2/value-parameterized-gtest">the tutorial repo</a> and play around the tests!</p>
 
 <h2 id="commands-to-run-the-buildtestcoverage">Commands to run the build/test/coverage</h2>
 
-<p>In the tutorial repo, I also included the option to produce a code coverage report using <code class="highlighter-rouge">gcov</code> and <code class="highlighter-rouge">lcov</code>. Check it out by running <code class="highlighter-rouge">make coverage</code> under the <code class="highlighter-rouge">build</code> directory and read the reports in the coverage folder.</p>
+<p>In the tutorial repo, I also included the option to produce a code coverage report using <code class="language-plaintext highlighter-rouge">gcov</code> and <code class="language-plaintext highlighter-rouge">lcov</code>. Check it out by running <code class="language-plaintext highlighter-rouge">make coverage</code> under the <code class="language-plaintext highlighter-rouge">build</code> directory and read the reports in the coverage folder.</p>
 
 <h3 id="clone-the-repo">Clone the repo</h3>
 
@@ -238,7 +238,7 @@ Checking <span class="nb">test </span>dependency graph end
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>make coverage
 </code></pre></div></div>
 
-<p>To view the report, go to <code class="highlighter-rouge">coverage</code> and run:</p>
+<p>To view the report, go to <code class="language-plaintext highlighter-rouge">coverage</code> and run:</p>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>python3 <span class="nt">-m</span> http.server
 </code></pre></div></div>

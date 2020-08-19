@@ -116,7 +116,7 @@
       <div class="post">
   <h1 class="post-title">Boost.Log Primer</h1>
   <span class="post-info">12 Jul 2020</span>
-  <h1 id="boost-log-">Boost Log <sup id="fnref:1"><a href="#fn:1" class="footnote">1</a></sup></h1>
+  <h1 id="boost-log-">Boost Log <sup id="fnref:1" role="doc-noteref"><a href="#fn:1" class="footnote">1</a></sup></h1>
 
 <h2 id="prepare-the-namespace-aliases">Prepare the namespace aliases</h2>
 
@@ -130,7 +130,7 @@
 
 <!--more-->
 
-<h2 id="definitions-">Definitions <sup id="fnref:2"><a href="#fn:2" class="footnote">2</a></sup></h2>
+<h2 id="definitions-">Definitions <sup id="fnref:2" role="doc-noteref"><a href="#fn:2" class="footnote">2</a></sup></h2>
 
 <ul>
   <li><strong>Log record</strong>: a single bundle of info that is collected from the app and is a candidate for the log output</li>
@@ -146,7 +146,7 @@
   <li><strong>TLS</strong>: thread-local storage</li>
 </ul>
 
-<h2 id="architecture-">Architecture <sup id="fnref:3"><a href="#fn:3" class="footnote">3</a></sup></h2>
+<h2 id="architecture-">Architecture <sup id="fnref:3" role="doc-noteref"><a href="#fn:3" class="footnote">3</a></sup></h2>
 
 <h3 id="three-layer-architecture">Three-layer architecture</h3>
 
@@ -265,7 +265,7 @@
 
 <p>The lib also provides most commonly used sink backends.</p>
 
-<h2 id="tutorial-">Tutorial <sup id="fnref:4"><a href="#fn:4" class="footnote">4</a></sup></h2>
+<h2 id="tutorial-">Tutorial <sup id="fnref:4" role="doc-noteref"><a href="#fn:4" class="footnote">4</a></sup></h2>
 
 <h3 id="trivial-logging">Trivial logging</h3>
 
@@ -274,7 +274,7 @@
 <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include &lt;boost/log/trivial.hpp&gt;
 </span></code></pre></div></div>
 
-<p>The <code class="highlighter-rouge">BOOST_LOG_TRIVIAL</code> macro accepts a severity level and results in a stream-like objects that support insertion operator. The log msg will be printed on the console.</p>
+<p>The <code class="language-plaintext highlighter-rouge">BOOST_LOG_TRIVIAL</code> macro accepts a severity level and results in a stream-like objects that support insertion operator. The log msg will be printed on the console.</p>
 
 <p>E.g.</p>
 
@@ -320,7 +320,7 @@
 <span class="p">}</span>
 </code></pre></div></div>
 
-<p>Since we are setting up a global filter, we have to acquire the logging core instance using <code class="highlighter-rouge">logging::core::get()</code>. It returns a pointer to the core singleton instance.</p>
+<p>Since we are setting up a global filter, we have to acquire the logging core instance using <code class="language-plaintext highlighter-rouge">logging::core::get()</code>. It returns a pointer to the core singleton instance.</p>
 
 <p>The filter in this example is built as a <a href="https://www.boost.org/doc/libs/release/libs/phoenix/doc/html/index.html">Boost.Phoenix</a> lambda expression. The left argument is a placeholder that describes the attribute to be checked. The placeholder along with <strong>the ordering operator</strong> creates <strong>a function object</strong> that will be called by the logging core to filter log records and only records that pass the predicate will end up on the console.</p>
 
@@ -346,7 +346,7 @@
 <span class="p">}</span>
 </code></pre></div></div>
 
-<p>The <code class="highlighter-rouge">add_file_log</code> function initializes a logging sink that stores log records into a text file. You can also customize it with additional parameters in a named form:</p>
+<p>The <code class="language-plaintext highlighter-rouge">add_file_log</code> function initializes a logging sink that stores log records into a text file. You can also customize it with additional parameters in a named form:</p>
 
 <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">logging</span><span class="o">::</span><span class="n">add_file_log</span>
 <span class="p">(</span>
@@ -388,16 +388,16 @@
 <span class="n">BOOST_LOG_INLINE_GLOBAL_LOGGER_DEFAULT</span><span class="p">(</span><span class="n">my_logger</span><span class="p">,</span> <span class="n">src</span><span class="o">::</span><span class="n">logger_mt</span><span class="p">)</span>
 </code></pre></div></div>
 
-<p>The <code class="highlighter-rouge">my_logger</code> is a user-defined tag name that will be used later to retrieve the global logger object.</p>
+<p>The <code class="language-plaintext highlighter-rouge">my_logger</code> is a user-defined tag name that will be used later to retrieve the global logger object.</p>
 
-<p>The <code class="highlighter-rouge">logger_mt</code> is the logger type. Any logger type provided by the lib or defined by the user can participate in such declaration. But note that you will normally want to use thread-safe loggers in a multi-threaded app as global logger obj since the logger will have a single instance.</p>
+<p>The <code class="language-plaintext highlighter-rouge">logger_mt</code> is the logger type. Any logger type provided by the lib or defined by the user can participate in such declaration. But note that you will normally want to use thread-safe loggers in a multi-threaded app as global logger obj since the logger will have a single instance.</p>
 
 <p>In other parts of your app, you can acquire the global logger like this:</p>
 
 <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">src</span><span class="o">::</span><span class="n">logger_mt</span><span class="o">&amp;</span> <span class="n">lg</span> <span class="o">=</span> <span class="n">my_logger</span><span class="o">::</span><span class="n">get</span><span class="p">();</span>
 </code></pre></div></div>
 
-<p>The <code class="highlighter-rouge">lg</code> will refer to the one and only instance of the global logger throughout the application. The <code class="highlighter-rouge">get</code> function is thread-safe and hence you don’t need additional synchronization around it.</p>
+<p>The <code class="language-plaintext highlighter-rouge">lg</code> will refer to the one and only instance of the global logger throughout the application. The <code class="language-plaintext highlighter-rouge">get</code> function is thread-safe and hence you don’t need additional synchronization around it.</p>
 
 <h4 id="writing-logs">Writing logs</h4>
 
@@ -413,18 +413,18 @@
 <span class="p">}</span>
 </code></pre></div></div>
 
-<p>The <code class="highlighter-rouge">open_record</code> function determines if the record to be constructed is going to be consumed by at least one sink, i.e. filtering is applied at this stage.</p>
+<p>The <code class="language-plaintext highlighter-rouge">open_record</code> function determines if the record to be constructed is going to be consumed by at least one sink, i.e. filtering is applied at this stage.</p>
 
-<p>If the record is to be consumed, the function returns a valid record obj and we can then fill the record msg into it. The record processing can be completed with the call to <code class="highlighter-rouge">push_record</code>.</p>
+<p>If the record is to be consumed, the function returns a valid record obj and we can then fill the record msg into it. The record processing can be completed with the call to <code class="language-plaintext highlighter-rouge">push_record</code>.</p>
 
 <p>It seems complicated to use the logger even for the most simple log message… But we can easily wrap them into a macro! The log record above can be written like this:</p>
 
 <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">BOOST_LOG</span><span class="p">(</span><span class="n">lg</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">"Hello, World!"</span><span class="p">;</span>
 </code></pre></div></div>
 
-<p>The <code class="highlighter-rouge">BOOST_LOG</code> macro, along with other similar ones, is defined by the library.</p>
+<p>The <code class="language-plaintext highlighter-rouge">BOOST_LOG</code> macro, along with other similar ones, is defined by the library.</p>
 
-<h3 id="adding-more-info-to-log-with-attributes">Adding more info to log with <code class="highlighter-rouge">Attributes</code></h3>
+<h3 id="adding-more-info-to-log-with-attributes">Adding more info to log with <code class="language-plaintext highlighter-rouge">Attributes</code></h3>
 
 <p>As said above, each log record can have many named attribute values attached. Attributes contain essential information about the log emit condition, like the line number in the code, executable name, current time, etc.</p>
 
@@ -451,9 +451,9 @@
 
 <p>E.g. the severity_logger registers a source-specific attribute “Severity” which can be used to add a level of emphasis for different log records.</p>
 
-<p>The <code class="highlighter-rouge">BOOST_LOG_SEV</code> macro acts pretty much like <code class="highlighter-rouge">BOOST_LOG</code> except that it takes an additional argument for the <code class="highlighter-rouge">open_record</code> method of the logger.</p>
+<p>The <code class="language-plaintext highlighter-rouge">BOOST_LOG_SEV</code> macro acts pretty much like <code class="language-plaintext highlighter-rouge">BOOST_LOG</code> except that it takes an additional argument for the <code class="language-plaintext highlighter-rouge">open_record</code> method of the logger.</p>
 
-<p>Usually we want to register a <code class="highlighter-rouge">named_scope</code> attribute so that we can store scope names in log for every log record.</p>
+<p>Usually we want to register a <code class="language-plaintext highlighter-rouge">named_scope</code> attribute so that we can store scope names in log for every log record.</p>
 
 <p>E.g.</p>
 
@@ -473,7 +473,7 @@
 
 <p>Another useful attribute for performance analysis is what we call the “Timeline” attribute.</p>
 
-<p>After registered the “Timeline” attribute e.g. through <code class="highlighter-rouge">BOOST_LOG_SCOPED_THREAD_ATTR("Timeline", attrs::timer());</code>, every log record after this will contain the “Timeline” attribute with a high precision time duration passed since the attribute was registered.</p>
+<p>After registered the “Timeline” attribute e.g. through <code class="language-plaintext highlighter-rouge">BOOST_LOG_SCOPED_THREAD_ATTR("Timeline", attrs::timer());</code>, every log record after this will contain the “Timeline” attribute with a high precision time duration passed since the attribute was registered.</p>
 
 <p>Based on these readings, one will be able to detect which parts of the code require more or less time to execute. This attribute will be unregistered upon leaving the scope that defined it.</p>
 
@@ -500,7 +500,7 @@
 <span class="p">}</span>
 </code></pre></div></div>
 
-<p>The <code class="highlighter-rouge">format</code> parameter allows us to specify the format of the log record. If you want to set up sinks manually, you can achieve this by using the <code class="highlighter-rouge">set_formatter</code> member function of the sink frontends.</p>
+<p>The <code class="language-plaintext highlighter-rouge">format</code> parameter allows us to specify the format of the log record. If you want to set up sinks manually, you can achieve this by using the <code class="language-plaintext highlighter-rouge">set_formatter</code> member function of the sink frontends.</p>
 
 <h4 id="lambda-style-formatters">Lambda-style formatters</h4>
 
@@ -515,9 +515,9 @@
 <span class="p">)</span>
 </code></pre></div></div>
 
-<p>The <code class="highlighter-rouge">stream</code> is a placeholder for the stream to format the record in. The insertion arguments like <code class="highlighter-rouge">attr</code> and <code class="highlighter-rouge">message</code> are manipulators that define what should be stored in the stream. Note that it is possible to replace <code class="highlighter-rouge">severity</code> with the following <code class="highlighter-rouge">expr::attr&lt; logging::trivial::severity_level &gt;("Severity")</code>.</p>
+<p>The <code class="language-plaintext highlighter-rouge">stream</code> is a placeholder for the stream to format the record in. The insertion arguments like <code class="language-plaintext highlighter-rouge">attr</code> and <code class="language-plaintext highlighter-rouge">message</code> are manipulators that define what should be stored in the stream. Note that it is possible to replace <code class="language-plaintext highlighter-rouge">severity</code> with the following <code class="language-plaintext highlighter-rouge">expr::attr&lt; logging::trivial::severity_level &gt;("Severity")</code>.</p>
 
-<p>It is recommended to define placeholders like <code class="highlighter-rouge">severity</code> for user’s attributes since it provides simpler syntax in the template expressions and makes coding less error-prone.</p>
+<p>It is recommended to define placeholders like <code class="language-plaintext highlighter-rouge">severity</code> for user’s attributes since it provides simpler syntax in the template expressions and makes coding less error-prone.</p>
 
 <h4 id="boostformat-style-formatters">Boost.Format-style formatters</h4>
 
@@ -532,11 +532,11 @@
 <span class="p">);</span>
 </code></pre></div></div>
 
-<p>The <code class="highlighter-rouge">format</code> placeholder accepts the format string like printf with positional specs of all arguments being formatted.</p>
+<p>The <code class="language-plaintext highlighter-rouge">format</code> placeholder accepts the format string like printf with positional specs of all arguments being formatted.</p>
 
 <p>Note that <strong>only positional format is currently supported</strong>, which means you cannot have all features in the Boost.Format.</p>
 
-<p>When you call <code class="highlighter-rouge">format(s)</code> where s is the format-string, it constructs an obj that parses the format string and looks for all directives in it and prepares internal structures for the next step.</p>
+<p>When you call <code class="language-plaintext highlighter-rouge">format(s)</code> where s is the format-string, it constructs an obj that parses the format string and looks for all directives in it and prepares internal structures for the next step.</p>
 
 <p>Then you feed variables into the formatter.</p>
 
@@ -567,9 +567,9 @@
 <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">keywords</span><span class="o">::</span><span class="n">format</span> <span class="o">=</span> <span class="s">"[%TimeStamp%]: %Message%"</span>
 </code></pre></div></div>
 
-<p>The <code class="highlighter-rouge">format</code> now accepts a format string template that contain a number of placeholders enclosed with percent signs. Each placeholder contain an attribute value name to insert instead of the placeholder.</p>
+<p>The <code class="language-plaintext highlighter-rouge">format</code> now accepts a format string template that contain a number of placeholders enclosed with percent signs. Each placeholder contain an attribute value name to insert instead of the placeholder.</p>
 
-<p><strong>Note that such format templates are not accepted by sink backends in the <code class="highlighter-rouge">set_formatter</code> method</strong>! You need to call <code class="highlighter-rouge">parse_formatter</code> to parse textual template into a formatter function!</p>
+<p><strong>Note that such format templates are not accepted by sink backends in the <code class="language-plaintext highlighter-rouge">set_formatter</code> method</strong>! You need to call <code class="language-plaintext highlighter-rouge">parse_formatter</code> to parse textual template into a formatter function!</p>
 
 <h4 id="custom-formatting-functions">Custom formatting functions</h4>
 
@@ -579,23 +579,23 @@
 <span class="kt">void</span> <span class="p">(</span><span class="n">logging</span><span class="o">::</span><span class="n">record_view</span> <span class="k">const</span><span class="o">&amp;</span> <span class="n">rec</span><span class="p">,</span> <span class="n">logging</span><span class="o">::</span><span class="n">basic_formatting_ostream</span><span class="o">&lt;</span> <span class="n">CharT</span> <span class="o">&gt;&amp;</span> <span class="n">strm</span><span class="p">);</span>
 </code></pre></div></div>
 
-<p>The formatter will be invoked whenever a log record view <code class="highlighter-rouge">rec</code> passes filtering and is to be stored in the log.</p>
+<p>The formatter will be invoked whenever a log record view <code class="language-plaintext highlighter-rouge">rec</code> passes filtering and is to be stored in the log.</p>
 
 <p>I tried to customize the ThreadID attribute with the lambda style formatter but got no luck, FYI <a href="https://sourceforge.net/p/boost-log/discussion/710021/thread/e90226f5/">here’s a pretty old discussion about formatting ThreadID</a>.</p>
 
-<div class="footnotes">
+<div class="footnotes" role="doc-endnotes">
   <ol>
-    <li id="fn:1">
-      <p>https://www.boost.org/doc/libs/1_63_0/libs/log/doc/html/index.html <a href="#fnref:1" class="reversefootnote">&#8617;</a></p>
+    <li id="fn:1" role="doc-endnote">
+      <p>https://www.boost.org/doc/libs/1_63_0/libs/log/doc/html/index.html <a href="#fnref:1" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
-    <li id="fn:2">
-      <p>https://www.boost.org/doc/libs/1_63_0/libs/log/doc/html/log/defs.html <a href="#fnref:2" class="reversefootnote">&#8617;</a></p>
+    <li id="fn:2" role="doc-endnote">
+      <p>https://www.boost.org/doc/libs/1_63_0/libs/log/doc/html/log/defs.html <a href="#fnref:2" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
-    <li id="fn:3">
-      <p>https://www.boost.org/doc/libs/1_63_0/libs/log/doc/html/log/design.html <a href="#fnref:3" class="reversefootnote">&#8617;</a></p>
+    <li id="fn:3" role="doc-endnote">
+      <p>https://www.boost.org/doc/libs/1_63_0/libs/log/doc/html/log/design.html <a href="#fnref:3" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
-    <li id="fn:4">
-      <p>https://www.boost.org/doc/libs/1_63_0/libs/log/doc/html/log/tutorial.html <a href="#fnref:4" class="reversefootnote">&#8617;</a></p>
+    <li id="fn:4" role="doc-endnote">
+      <p>https://www.boost.org/doc/libs/1_63_0/libs/log/doc/html/log/tutorial.html <a href="#fnref:4" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
   </ol>
 </div>
