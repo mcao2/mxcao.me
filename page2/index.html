@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+  <meta charset="utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Meta -->
+  <link rel="canonical" href="https://mxcao.me/">
+
+  <!-- Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-125912716-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'UA-125912716-1');
+  </script>
+
+  <title>
+    Home &middot; mxin
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/main.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700%7CSource+Sans+Pro:400,400i,700,700i&subset=greek,greek-ext,latin-ext">
+
+  <!-- Icons -->
+  <link rel="icon" href="/public/favicon.ico" type="image/x-icon" />
+  <link rel="shortcut icon" href="/public/favicon.ico" type="image/x-icon" />
+  <link rel="apple-touch-icon" sizes="144x144" href="/public/apple-touch-icon.gif">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+
+</head>
+
+  <body>
+
+    <div class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>mxin</h1>
+      <p class="tagline"># Mengxin Cao</p>
+    </div>
+
+    <input type="checkbox" id="menu-icon">
+    <label class="menu-label" for="menu-icon"></label>
+    <div class="trigger">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-item">
+          <a href="/">Home</a>
+        </li>
+        
+
+        
+        
+        
+        
+        
+        
+        
+        
+        <li class="sidebar-nav-item">
+          <a href="/about/">About</a>
+        </li>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <li class="sidebar-nav-item">
+          <a href="https://github.com/mcao2/">GitHub</a>
+        </li>
+        <li class="sidebar-nav-item">
+          <a href="https://www.linkedin.com/in/mxin/">LinkedIn</a>
+        </li>
+        <li class="sidebar-nav-item">
+          <a href="https://cs.cmu.edu/~mcao2/mengxin_cv.pdf">Curriculum Vitae</a>
+        </li>
+      </ul>
+
+      <p class="copyright">&copy; 2020. All rights reserved.</p>
+    </div>
+  </div>
+</div>
+
+    <div class="content container">
+      <div class="posts">
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/primer/2020/07/12/boost-log-primer/">
+        Boost.Log Primer
+      </a>
+    </h1>
+
+    <span class="post-info">12 Jul 2020</span>
+
+    <h1 id="boost-log-">Boost Log <sup id="fnref:1"><a href="#fn:1" class="footnote">1</a></sup></h1>
+
+<h2 id="prepare-the-namespace-aliases">Prepare the namespace aliases</h2>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">namespace</span> <span class="n">logging</span> <span class="o">=</span> <span class="n">boost</span><span class="o">::</span><span class="n">log</span><span class="p">;</span>
+<span class="k">namespace</span> <span class="n">sinks</span> <span class="o">=</span> <span class="n">boost</span><span class="o">::</span><span class="n">log</span><span class="o">::</span><span class="n">sinks</span><span class="p">;</span>
+<span class="k">namespace</span> <span class="n">src</span> <span class="o">=</span> <span class="n">boost</span><span class="o">::</span><span class="n">log</span><span class="o">::</span><span class="n">sources</span><span class="p">;</span>
+<span class="k">namespace</span> <span class="n">expr</span> <span class="o">=</span> <span class="n">boost</span><span class="o">::</span><span class="n">log</span><span class="o">::</span><span class="n">expressions</span><span class="p">;</span>
+<span class="k">namespace</span> <span class="n">attrs</span> <span class="o">=</span> <span class="n">boost</span><span class="o">::</span><span class="n">log</span><span class="o">::</span><span class="n">attributes</span><span class="p">;</span>
+<span class="k">namespace</span> <span class="n">keywords</span> <span class="o">=</span> <span class="n">boost</span><span class="o">::</span><span class="n">log</span><span class="o">::</span><span class="n">keywords</span><span class="p">;</span>
+</code></pre></div></div>
+
+<div class="footnotes">
+  <ol>
+    <li id="fn:1">
+      <p>https://www.boost.org/doc/libs/1_63_0/libs/log/doc/html/index.html <a href="#fnref:1" class="reversefootnote">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+
+
+    <div class="continue-reading-container">
+      <a class="continue-reading-link" href="/primer/2020/07/12/boost-log-primer/">Continue
+        reading &rarr;</a>
+    </div>
+
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/primer/2020/06/10/googletest-primer/">
+        GoogleTest Primer
+      </a>
+    </h1>
+
+    <span class="post-info">10 Jun 2020</span>
+
+    <h1 id="googletest--primer-gtest">GoogleTest <sup id="fnref:1"><a href="#fn:1" class="footnote">1</a></sup> Primer (gtest)</h1>
+
+<h2 id="what-is-googletest">What is GoogleTest</h2>
+
+<p>Googletest is a testing framework to help write better C++ code</p>
+<ul>
+  <li>supports any kind of tests, not just unit tests</li>
+  <li>based on the popular xUnit (e.g. JUnit, PyUnit) architecture</li>
+</ul>
+
+<div class="footnotes">
+  <ol>
+    <li id="fn:1">
+      <p>https://github.com/google/googletest/blob/master/googletest/docs/primer.md <a href="#fnref:1" class="reversefootnote">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+
+
+    <div class="continue-reading-container">
+      <a class="continue-reading-link" href="/primer/2020/06/10/googletest-primer/">Continue
+        reading &rarr;</a>
+    </div>
+
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/projects/2020/05/23/talkui/">
+        Talk UI: A Multi-Modal, Conversational Interface for UI Prototyping
+      </a>
+    </h1>
+
+    <span class="post-info">23 May 2020</span>
+
+    <h2 id="authors">Authors</h2>
+
+<p><a href="http://niwatori.io/">Hongyi Zhang</a>, <a href="https://mxcao.me/">Mengxin Cao</a>, <a href="linkedin.com/in/chewrongkang">Ron Chew</a></p>
+
+<h2 id="demo">Demo</h2>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/T39Fwn_G0DI" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
+
+<h2 id="introduction">Introduction</h2>
+
+<p>UI designers have long been <em>sketching</em> to realize the interfaces they have in mind for prototyping. However, there is still much that can be done to make designers’ life easier. Current UI design tools are time-consuming and repetitive: drawing sets of graphics and widgets, then specifying their interactions and behaviors often requires a large effort in code and configuration for small results. The iteration process cannot catch up with the speed the designer’s minds are operating at.</p>
+
+
+
+    <div class="continue-reading-container">
+      <a class="continue-reading-link" href="/projects/2020/05/23/talkui/">Continue
+        reading &rarr;</a>
+    </div>
+
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/papers/2020/05/02/yarn/">
+        Apache Hadoop YARN: Yet Another Resource Negotiator
+      </a>
+    </h1>
+
+    <span class="post-info">02 May 2020</span>
+
+    <h2 id="paper-link">Paper Link</h2>
+
+<p><a href="https://www.cse.ust.hk/~weiwa/teaching/Fall15-COMP6611B/reading_list/YARN.pdf">yarn</a></p>
+
+<h2 id="authors">Authors</h2>
+
+<p>Vinod Kumar Vavilapalli, Arun C Murthy, Chris Douglas, Sharad Agarwal, Mahadev Konar, Robert Evans, Thomas Graves, Jason Lowe, Hitesh Shah, Siddharth Seth, Bikas Saha, Carlo Curino, Owen O’Malley, Sanjay Radia, Benjamin Reed, Eric Baldeschwieler</p>
+
+
+
+    <div class="continue-reading-container">
+      <a class="continue-reading-link" href="/papers/2020/05/02/yarn/">Continue
+        reading &rarr;</a>
+    </div>
+
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/papers/2020/05/02/vmware-drs/">
+        VMware Distributed Resource Management: Design, Implementation, and Lessons Learned
+      </a>
+    </h1>
+
+    <span class="post-info">02 May 2020</span>
+
+    <h2 id="paper-link">Paper Link</h2>
+
+<p><a href="http://www.waldspurger.org/carl/papers/drs-vmtj-mar12.pdf">drs-vmtj-mar12</a></p>
+
+<h2 id="authors">Authors</h2>
+
+<p>Ajay Gulati, Anne Holler, Minwen Ji, Ganesha Shanmuganathan, Carl Waldspurger, Xiaoyun Zhu</p>
+
+
+
+    <div class="continue-reading-container">
+      <a class="continue-reading-link" href="/papers/2020/05/02/vmware-drs/">Continue
+        reading &rarr;</a>
+    </div>
+
+  </div>
+  
+</div>
+
+<div class="pagination">
+  
+  <a class="pagination-item older" href="/page3">Older</a>
+  
+  
+  
+  <a class="pagination-item newer" href="/">Newer</a>
+  
+  
+</div>
+    </div>
+
+  </body>
+</html>

@@ -1,0 +1,60 @@
+mxin
+Mengxin Cao
+Pittsburgh
+==================================================================
+https://keybase.io/mxin
+--------------------------------------------------------------------
+
+I hereby claim:
+
+  * I am an admin of https://mxcao.me
+  * I am mxin (https://keybase.io/mxin) on keybase.
+  * I have a public key ASD-TZTXaNPkC4j-Z4PYFDgwbar06nA5byO91mpSUdHLqwo
+
+To do so, I am signing this object:
+
+{
+  "body": {
+    "key": {
+      "eldest_kid": "01205fad07a87a80230a8f5b77e5b544214e38b24a86c99c0beaac43ca492cfd39510a",
+      "host": "keybase.io",
+      "kid": "0120fe4d94d768d3e40b88fe6783d81438306daaf4ea70396f23bdd66a5251d1cbab0a",
+      "uid": "29e629b096b1bb1f7b9e5c1a255e5819",
+      "username": "mxin"
+    },
+    "merkle_root": {
+      "ctime": 1590505690,
+      "hash": "6e2ea8048ef8adecc2a86f803bf256159eae4e55c0317ef8ef1065a0e2fb29eaa227214fee63cb2bab1414b2635a66165839fba872d20745a3a08fbd4fb482a5",
+      "hash_meta": "7b90767758148c3feb921eb96cb1101dcd052da9463f527c09266bab4d7d26cc",
+      "seqno": 16409761
+    },
+    "service": {
+      "entropy": "VFl8DL+/JrHp2A5jRLZ1yRij",
+      "hostname": "mxcao.me",
+      "protocol": "https:"
+    },
+    "type": "web_service_binding",
+    "version": 2
+  },
+  "client": {
+    "name": "keybase.io go client",
+    "version": "5.4.2"
+  },
+  "ctime": 1590505729,
+  "expire_in": 504576000,
+  "prev": "c7457ba1bbe1f5b743b9ca0eef41530382e987dc1eb5123f64930536cbd4de42",
+  "seqno": 19,
+  "tag": "signature"
+}
+
+which yields the signature:
+
+hKRib2R5hqhkZXRhY2hlZMOpaGFzaF90eXBlCqNrZXnEIwEg/k2U12jT5AuI/meD2BQ4MG2q9OpwOW8jvdZqUlHRy6sKp3BheWxvYWTESpcCE8Qgx0V7obvh9bdDucoO70FTA4Lph9wetRI/ZJMFNsvU3kLEIPplEFpqpbyxtAObU+X7gvPEjopV0/5BAUyViThVdPlYAgHCo3NpZ8RAqTS+wD9y3SYiAcmDJBFa9X2rfQhSm6HHuOH9fmBl3ZLRzTAChqHuk9PPtvZUZtYyF8CdxIqC9OFeNjtUXag2AahzaWdfdHlwZSCkaGFzaIKkdHlwZQildmFsdWXEIK4bIBUUN/Y7XOJn7sczqn55JXqeiHkQ16camT6c7b73o3RhZ80CAqd2ZXJzaW9uAQ==
+
+And finally, I am proving ownership of this host by posting or
+appending to this document.
+
+View my publicly-auditable identity here: https://keybase.io/mxin
+
+==================================================================
+
