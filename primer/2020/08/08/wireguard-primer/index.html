@@ -335,6 +335,22 @@ wg-quick up wg0
 
 <p>This will make the <code class="language-plaintext highlighter-rouge">wg0</code> (or whatever your WireGuard interface is) responsible for routing all IP addresses/traffic over your server. You can check this by visiting <a href="http://ping.pe/">ping.pe</a>.</p>
 
+<h3 id="forward-all-ipv6-traffic-through-the-tunnel">Forward all IPv6-traffic through the tunnel</h3>
+
+<p>I want to route all my IPv6 traffic through the tunnel but keep the IPv6 traffic untouched. At first I tried setting:</p>
+
+<pre><code class="language-txt">AllowedIPs = 10.9.0.1/32, ::/0
+</code></pre>
+
+<p>But it seems WireGuard also changed the routing table for IPv4 (checked via <code class="language-plaintext highlighter-rouge">netstat -nr</code>). I found <a href="https://www.reddit.com/r/WireGuard/comments/ewt7g0/ios_macos_route_all_traffic_through_peer_only_ipv6/">this reddit post</a> and the workaround is:</p>
+
+<pre><code class="language-txt">AllowedIPs = 10.9.0.1/32, ::/1, 8000::/1
+</code></pre>
+
+<p>It’s a clever hack to make it work but I expect a cleaner solution should exist (like the previous config).</p>
+
+<p>Now I can reach IPv6-only websites like <code class="language-plaintext highlighter-rouge">bt.byr.cn</code> while not tunneling my IPv4 traffic to the slow VPN network!</p>
+
 <h3 id="protect-your-dns-">Protect your DNS <sup id="fnref:5" role="doc-noteref"><a href="#fn:5" class="footnote">5</a></sup></h3>
 
 <p>When you use WireGuard in your machine as a client, your local network won’t be accessible, which means if the DNS servers pushed by your DHCP server are in the local network, you cannot access it! You can add a DNS entry in your client interface config like below:</p>
@@ -346,7 +362,7 @@ DNS = 176.103.130.130, 176.103.130.131
 
 [Peer]
 PublicKey = # PLACEHOLDER for your peer's public key
-AllowedIPs = 10.9.0.1/32, fd42:42:42::1/64
+AllowedIPs = 10.9.0.1/32, fd42:42:42::1/128
 Endpoint = # PLACEHOLDER for your peer's remote endpoint, be it IPv4 or IPv6
 </code></pre>
 

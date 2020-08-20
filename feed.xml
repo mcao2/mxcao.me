@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2020-08-19T19:26:53+00:00</updated><id>/feed.xml</id><title type="html">mxin</title><subtitle>mxin</subtitle><author><name>Mengxin Cao</name><email>mcao2 at andrew.cmu.edu</email></author><entry><title type="html">Use Travis CI for Jekyll site generation</title><link href="/notes/2020/08/19/jekyll-travis/" rel="alternate" type="text/html" title="Use Travis CI for Jekyll site generation" /><published>2020-08-19T00:00:00+00:00</published><updated>2020-08-19T00:00:00+00:00</updated><id>/notes/2020/08/19/jekyll-travis</id><content type="html" xml:base="/notes/2020/08/19/jekyll-travis/">&lt;h2 id=&quot;introduction&quot;&gt;Introduction&lt;/h2&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2020-08-20T22:16:34+00:00</updated><id>/feed.xml</id><title type="html">mxin</title><subtitle>mxin</subtitle><author><name>Mengxin Cao</name><email>mcao2 at andrew.cmu.edu</email></author><entry><title type="html">Use Travis CI for Jekyll site generation</title><link href="/notes/2020/08/19/jekyll-travis/" rel="alternate" type="text/html" title="Use Travis CI for Jekyll site generation" /><published>2020-08-19T00:00:00+00:00</published><updated>2020-08-19T00:00:00+00:00</updated><id>/notes/2020/08/19/jekyll-travis</id><content type="html" xml:base="/notes/2020/08/19/jekyll-travis/">&lt;h2 id=&quot;introduction&quot;&gt;Introduction&lt;/h2&gt;
 
 &lt;p&gt;I have been using &lt;a href=&quot;https://jekyllrb.com/&quot;&gt;Jekyll&lt;/a&gt; for my homepage site generation for months and I’m happy with it. Usually my workflow for posting a new page involves:&lt;/p&gt;
 
@@ -767,6 +767,22 @@ wg-quick up wg0
 
 &lt;p&gt;This will make the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;wg0&lt;/code&gt; (or whatever your WireGuard interface is) responsible for routing all IP addresses/traffic over your server. You can check this by visiting &lt;a href=&quot;http://ping.pe/&quot;&gt;ping.pe&lt;/a&gt;.&lt;/p&gt;
 
+&lt;h3 id=&quot;forward-all-ipv6-traffic-through-the-tunnel&quot;&gt;Forward all IPv6-traffic through the tunnel&lt;/h3&gt;
+
+&lt;p&gt;I want to route all my IPv6 traffic through the tunnel but keep the IPv6 traffic untouched. At first I tried setting:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-txt&quot;&gt;AllowedIPs = 10.9.0.1/32, ::/0
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;But it seems WireGuard also changed the routing table for IPv4 (checked via &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;netstat -nr&lt;/code&gt;). I found &lt;a href=&quot;https://www.reddit.com/r/WireGuard/comments/ewt7g0/ios_macos_route_all_traffic_through_peer_only_ipv6/&quot;&gt;this reddit post&lt;/a&gt; and the workaround is:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-txt&quot;&gt;AllowedIPs = 10.9.0.1/32, ::/1, 8000::/1
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;It’s a clever hack to make it work but I expect a cleaner solution should exist (like the previous config).&lt;/p&gt;
+
+&lt;p&gt;Now I can reach IPv6-only websites like &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;bt.byr.cn&lt;/code&gt; while not tunneling my IPv4 traffic to the slow VPN network!&lt;/p&gt;
+
 &lt;h3 id=&quot;protect-your-dns-&quot;&gt;Protect your DNS &lt;sup id=&quot;fnref:5&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:5&quot; class=&quot;footnote&quot;&gt;5&lt;/a&gt;&lt;/sup&gt;&lt;/h3&gt;
 
 &lt;p&gt;When you use WireGuard in your machine as a client, your local network won’t be accessible, which means if the DNS servers pushed by your DHCP server are in the local network, you cannot access it! You can add a DNS entry in your client interface config like below:&lt;/p&gt;
@@ -778,7 +794,7 @@ DNS = 176.103.130.130, 176.103.130.131
 
 [Peer]
 PublicKey = # PLACEHOLDER for your peer's public key
-AllowedIPs = 10.9.0.1/32, fd42:42:42::1/64
+AllowedIPs = 10.9.0.1/32, fd42:42:42::1/128
 Endpoint = # PLACEHOLDER for your peer's remote endpoint, be it IPv4 or IPv6
 &lt;/code&gt;&lt;/pre&gt;
 
