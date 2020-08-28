@@ -1,4 +1,194 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2020-08-20T22:16:34+00:00</updated><id>/feed.xml</id><title type="html">mxin</title><subtitle>mxin</subtitle><author><name>Mengxin Cao</name><email>mcao2 at andrew.cmu.edu</email></author><entry><title type="html">Use Travis CI for Jekyll site generation</title><link href="/notes/2020/08/19/jekyll-travis/" rel="alternate" type="text/html" title="Use Travis CI for Jekyll site generation" /><published>2020-08-19T00:00:00+00:00</published><updated>2020-08-19T00:00:00+00:00</updated><id>/notes/2020/08/19/jekyll-travis</id><content type="html" xml:base="/notes/2020/08/19/jekyll-travis/">&lt;h2 id=&quot;introduction&quot;&gt;Introduction&lt;/h2&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2020-08-28T18:46:58+00:00</updated><id>/feed.xml</id><title type="html">mxin</title><subtitle>mxin</subtitle><author><name>Mengxin Cao</name><email>mcao2 at andrew.cmu.edu</email></author><entry><title type="html">Private Docker Registry</title><link href="/infrastructure/2020/08/28/private-docker-registry/" rel="alternate" type="text/html" title="Private Docker Registry" /><published>2020-08-28T00:00:00+00:00</published><updated>2020-08-28T00:00:00+00:00</updated><id>/infrastructure/2020/08/28/private-docker-registry</id><content type="html" xml:base="/infrastructure/2020/08/28/private-docker-registry/">&lt;h2 id=&quot;motivation&quot;&gt;Motivation&lt;/h2&gt;
+
+&lt;p&gt;I have been using docker containers for a while and quite amazed by its simplicity and power. Someday in the previous week when I was migrating/re-deploying my pleroma instance from my SurfaceGo ubuntu machine to my home lab, I found I need more private repos on docker hub. Docker hub by default only provides 1 private repo for normal users, which is clearly not what I want. So I decided to build my own docker registry and deploy it as a service in my home lab machine.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;My set up is:&lt;/p&gt;
+
+&lt;p&gt;Run a front-facing machine with a public IPv4 address, and add a DNS A record (&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;registry.mxcao.me&lt;/code&gt;) to point to this address. The front-facing machine will route all valid traffic to the registry container running in my Rancher cluster.&lt;/p&gt;
+
+&lt;p&gt;Since my home lab do not have a public IPv4 address dedicated for such purpose, I use a DigitalOcean instance to serve the purpose, along with my pleroma service routing (feel free to play around &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;pleroma.mxcao.me&lt;/code&gt;).&lt;/p&gt;
+
+&lt;p&gt;To be able to route my traffic to the registry container, I use &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;WireGuard&lt;/code&gt; to connect these two services. Definitely check out my previous post about setting up &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;WireGuard&lt;/code&gt; if you are interested.&lt;/p&gt;
+
+&lt;h2 id=&quot;prerequisite&quot;&gt;Prerequisite&lt;/h2&gt;
+
+&lt;p&gt;Check you have the following items ready:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Your own domain so that it can be reached from the public Internet&lt;/li&gt;
+  &lt;li&gt;A front-facing machine with
+    &lt;ul&gt;
+      &lt;li&gt;a public IPv4 address (e.g. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;1.2.3.4&lt;/code&gt;)&lt;/li&gt;
+      &lt;li&gt;nginx&lt;/li&gt;
+      &lt;li&gt;WireGuard&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Docker (or Rancher alike) installed on the home lab to host our registry service&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;steps&quot;&gt;Steps&lt;/h2&gt;
+
+&lt;h3 id=&quot;set-up-dns-record&quot;&gt;Set up DNS record&lt;/h3&gt;
+
+&lt;p&gt;I want my registry service accessible from anywhere with a memorizable address and therefore I need to set up a A record to point &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;pleroma.mxcao.me&lt;/code&gt; to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;1.2.3.4&lt;/code&gt;. You can omit this step if you can accept the inconvenience of accessing your registry via IP addresses.&lt;/p&gt;
+
+&lt;h3 id=&quot;prepare-wireguard-for-the-service&quot;&gt;Prepare WireGuard for the service&lt;/h3&gt;
+
+&lt;p&gt;As mentioned, I decided to use WireGuard to achieve point-to-point communication between my DO machine and the container. This set up involves:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Generate private/public key-pairs for the registry service container to use&lt;/li&gt;
+  &lt;li&gt;Add a peer in the DO WireGuard configuration&lt;/li&gt;
+  &lt;li&gt;Set up WireGuard in the registry host (note here we use port forwarding to map registry service’s listening port to the node running it, therefore I can simply set up WireGuard in the node)
+    &lt;ul&gt;
+      &lt;li&gt;For my particular case, I built and deployed the WireGuard module to RancherOS following &lt;a href=&quot;https://vitobotta.com/2019/07/17/kubernetes-wireguard-vpn-rancheros/&quot;&gt;this great guide&lt;/a&gt;
+        &lt;ul&gt;
+          &lt;li&gt;I did not follow all steps in this guide, and you should decide if having the WireGuard on the host is enough.&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Now let’s assume you configured the WireGuard client with IPv4 address &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;10.9.60.5&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h3 id=&quot;prepare-nginx-for-traffic-routing&quot;&gt;Prepare NGINX for traffic routing&lt;/h3&gt;
+
+&lt;p&gt;I decided to implement basic authentication for my private registry in a reverse proxy that sits in front of the registry. This is simpler than configure the native basic auth registry feature I think, please correct me if I’m wrong.&lt;/p&gt;
+
+&lt;p&gt;I use simple &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;htpasswd&lt;/code&gt; file as an example, but as mentioned in &lt;a href=&quot;https://docs.docker.com/registry/recipes/nginx/&quot;&gt;their documentation&lt;/a&gt;, any other nginx authentication backend should be fairly easy to implement.&lt;/p&gt;
+
+&lt;p&gt;Let’s obtain a certificate for the subdomain &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;registry.mxcao.me&lt;/code&gt; via Let’s Encrypt:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;Make sure your nginx service is not running&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Setup your SSL cert, using your method of choice or certbot. If using certbot, first install it:&lt;/p&gt;
+
+    &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;apt &lt;span class=&quot;nb&quot;&gt;install &lt;/span&gt;certbot
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+
+    &lt;p&gt;Then set it up:&lt;/p&gt;
+
+    &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;sudo mkdir&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-p&lt;/span&gt; /var/lib/letsencrypt/
+&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;certbot certonly &lt;span class=&quot;nt&quot;&gt;--email&lt;/span&gt; &amp;lt;your@emailaddress&amp;gt; &lt;span class=&quot;nt&quot;&gt;-d&lt;/span&gt; registry.mxcao.me &lt;span class=&quot;nt&quot;&gt;--standalone&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;If successful, you should have your certificate and chain files in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/etc/letsencrypt/live/registry.mxcao.me&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;In your nginx configuration folder (it can be &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;conf.d&lt;/code&gt; or &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;sites-available&lt;/code&gt;), add below routing rules.&lt;/p&gt;
+
+&lt;p&gt;Remember to change the docker-registry IP address and the certificate file path to suit your needs.&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;upstream docker-registry &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+  server 10.9.60.5:5000&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;## Set a variable to help us decide if we need to add the&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;## 'Docker-Distribution-Api-Version' header.&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;## The registry always sets this header.&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;## In the case of nginx performing auth, the header is unset&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;## since nginx is auth-ing before proxying.&lt;/span&gt;
+map &lt;span class=&quot;nv&quot;&gt;$upstream_http_docker_distribution_api_version&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$docker_distribution_api_version&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;s1&quot;&gt;''&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'registry/2.0'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+server &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+  listen 80&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  listen &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;::]:80&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  server_name registry.mxcao.me&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  location / &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return &lt;/span&gt;301 https://&lt;span class=&quot;nv&quot;&gt;$server_name$request_uri&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+server &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+  server_name registry.mxcao.me&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+  listen 443 ssl&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  listen &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;::]:443 ssl&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+  &lt;span class=&quot;c&quot;&gt;# SSL&lt;/span&gt;
+  ssl_certificate /etc/letsencrypt/live/registry.mxcao.me/fullchain.pem&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  ssl_certificate_key /etc/letsencrypt/live/registry.mxcao.me/privkey.pem&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+  &lt;span class=&quot;c&quot;&gt;# Recommendations from https://raymii.org/s/tutorials/Strong_SSL_Security_On_nginx.html&lt;/span&gt;
+  ssl_protocols TLSv1.1 TLSv1.2&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  ssl_ciphers &lt;span class=&quot;s1&quot;&gt;'EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  ssl_prefer_server_ciphers on&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  ssl_session_cache shared:SSL:10m&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+  &lt;span class=&quot;c&quot;&gt;# disable any limits to avoid HTTP 413 for large image uploads&lt;/span&gt;
+  client_max_body_size 0&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+  &lt;span class=&quot;c&quot;&gt;# required to avoid HTTP 411: see Issue #1486 (https://github.com/moby/moby/issues/1486)&lt;/span&gt;
+  chunked_transfer_encoding on&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+  location /v2/ &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;c&quot;&gt;# Do not allow connections from docker 1.5 and earlier&lt;/span&gt;
+    &lt;span class=&quot;c&quot;&gt;# docker pre-1.6.0 did not properly set the user agent on ping, catch &quot;Go *&quot; user agents&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$http_user_agent&lt;/span&gt; ~ &lt;span class=&quot;s2&quot;&gt;&quot;^(docker&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\/&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\.&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;(3|4|5(?!&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\.&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;[0-9]-dev))|Go ).*$&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;k&quot;&gt;return &lt;/span&gt;404&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+    &lt;span class=&quot;c&quot;&gt;# To add basic authentication to v2 use auth_basic setting.&lt;/span&gt;
+    auth_basic &lt;span class=&quot;s2&quot;&gt;&quot;Registry realm&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    auth_basic_user_file /etc/nginx/registry_auth/nginx.htpasswd&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+    &lt;span class=&quot;c&quot;&gt;## If $docker_distribution_api_version is empty, the header is not added.&lt;/span&gt;
+    &lt;span class=&quot;c&quot;&gt;## See the map directive above where this variable is defined.&lt;/span&gt;
+    add_header &lt;span class=&quot;s1&quot;&gt;'Docker-Distribution-Api-Version'&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$docker_distribution_api_version&lt;/span&gt; always&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+    proxy_pass http://docker-registry&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;c&quot;&gt;# required for docker client's sake&lt;/span&gt;
+    proxy_set_header Host &lt;span class=&quot;nv&quot;&gt;$http_host&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;c&quot;&gt;# pass on real client's IP&lt;/span&gt;
+    proxy_set_header X-Real-IP &lt;span class=&quot;nv&quot;&gt;$remote_addr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    proxy_set_header X-Forwarded-For &lt;span class=&quot;nv&quot;&gt;$proxy_add_x_forwarded_for&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    proxy_set_header X-Forwarded-Proto &lt;span class=&quot;nv&quot;&gt;$scheme&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    proxy_read_timeout 900&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;As you can see in the above configuration, we need to put the password file &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;nginx.htpasswd&lt;/code&gt; in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/etc/nginx/registry_auth&lt;/code&gt;, create this folder if not already exist.&lt;/p&gt;
+
+&lt;p&gt;For some reason, I can’t make it work following the documentation to generate the password file. Running &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;docker run --rm --entrypoint htpasswd registry:2 -Bbn testuser testpassword &amp;gt; nginx.htpasswd&lt;/code&gt; simply not gonna work for nginx to authenticate properly.&lt;/p&gt;
+
+&lt;p&gt;A work-around is posted &lt;a href=&quot;https://github.com/nginx-proxy/nginx-proxy/issues/643#issuecomment-612912033&quot;&gt;here&lt;/a&gt;, and to summarize you can run the following commands to populate the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;nginx.htpasswd&lt;/code&gt; password file.&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;sh &lt;span class=&quot;nt&quot;&gt;-c&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;echo -n 'testuser:' &amp;gt;&amp;gt; nginx.htpasswd&quot;&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# This command will prompt you to enter the pwd&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;sh &lt;span class=&quot;nt&quot;&gt;-c&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;openssl passwd -apr1 &amp;gt;&amp;gt; nginx.htpasswd&quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;So far so good! Start your nginx service and not we are ready to spawn the actual registry service.&lt;/p&gt;
+
+&lt;h3 id=&quot;set-up-registry-service&quot;&gt;Set up registry service&lt;/h3&gt;
+
+&lt;p&gt;This is my particular set up case and you can easily port to the docker commands to serve the registry.&lt;/p&gt;
+
+&lt;p&gt;In my rancher cluster, I added another workload with the following tweaks:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Port mapping from container’s 5000/tcp to host’s 5000/tcp&lt;/li&gt;
+  &lt;li&gt;Env variable &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;REGISTRY_STORAGE_DELETE_ENABLED&lt;/code&gt; set to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;true&lt;/code&gt; to enable image deletion&lt;/li&gt;
+  &lt;li&gt;Mount a volume from the host to the container’s path &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/var/lib/registry&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Done! Now you can test your private registry set up by running &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;docker login -u=testuser -p=testpwd registry.mxcao.me&lt;/code&gt; in your own machine. The expected output should be:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;WARNING! Using &lt;span class=&quot;nt&quot;&gt;--password&lt;/span&gt; via the CLI is insecure. Use &lt;span class=&quot;nt&quot;&gt;--password-stdin&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;.&lt;/span&gt;
+Login Succeeded
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;That’s it! And you can now push unlimited number of repos/images to your own, private registry. Enjoy.&lt;/p&gt;</content><author><name>Mengxin Cao</name><email>mcao2 at andrew.cmu.edu</email></author><category term="Docker" /><category term="Privacy" /><summary type="html">Motivation I have been using docker containers for a while and quite amazed by its simplicity and power. Someday in the previous week when I was migrating/re-deploying my pleroma instance from my SurfaceGo ubuntu machine to my home lab, I found I need more private repos on docker hub. Docker hub by default only provides 1 private repo for normal users, which is clearly not what I want. So I decided to build my own docker registry and deploy it as a service in my home lab machine.</summary></entry><entry><title type="html">Use Travis CI for Jekyll site generation</title><link href="/notes/2020/08/19/jekyll-travis/" rel="alternate" type="text/html" title="Use Travis CI for Jekyll site generation" /><published>2020-08-19T00:00:00+00:00</published><updated>2020-08-19T00:00:00+00:00</updated><id>/notes/2020/08/19/jekyll-travis</id><content type="html" xml:base="/notes/2020/08/19/jekyll-travis/">&lt;h2 id=&quot;introduction&quot;&gt;Introduction&lt;/h2&gt;
 
 &lt;p&gt;I have been using &lt;a href=&quot;https://jekyllrb.com/&quot;&gt;Jekyll&lt;/a&gt; for my homepage site generation for months and I’m happy with it. Usually my workflow for posting a new page involves:&lt;/p&gt;
 
@@ -2161,20 +2351,4 @@ See also: #456, #789
   &lt;li&gt;Support of direct manipulation to update graphical object properties through property sheet&lt;/li&gt;
   &lt;li&gt;Display of voice command history and conversation feedbacks&lt;/li&gt;
   &lt;li&gt;Static export of the final interface&lt;/li&gt;
-&lt;/ul&gt;</content><author><name>Mengxin Cao</name><email>mcao2 at andrew.cmu.edu</email></author><category term="HCI" /><category term="NLP" /><category term="UI" /><summary type="html">Authors Hongyi Zhang, Mengxin Cao, Ron Chew Demo Introduction UI designers have long been sketching to realize the interfaces they have in mind for prototyping. However, there is still much that can be done to make designers’ life easier. Current UI design tools are time-consuming and repetitive: drawing sets of graphics and widgets, then specifying their interactions and behaviors often requires a large effort in code and configuration for small results. The iteration process cannot catch up with the speed the designer’s minds are operating at.</summary></entry><entry><title type="html">B4: Experience with a Globally-Deployed Software Defined WAN</title><link href="/papers/2020/05/02/b4-sdn/" rel="alternate" type="text/html" title="B4: Experience with a Globally-Deployed Software Defined WAN" /><published>2020-05-02T00:00:00+00:00</published><updated>2020-05-02T00:00:00+00:00</updated><id>/papers/2020/05/02/b4-sdn</id><content type="html" xml:base="/papers/2020/05/02/b4-sdn/">&lt;h2 id=&quot;paper-link&quot;&gt;Paper Link&lt;/h2&gt;
-
-&lt;p&gt;&lt;a href=&quot;https://cseweb.ucsd.edu/~vahdat/papers/b4-sigcomm13.pdf&quot;&gt;b4-sigcomm13&lt;/a&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;authors&quot;&gt;Authors&lt;/h2&gt;
-
-&lt;p&gt;Sushant Jain, Alok Kumar, Subhasree Mandal, Joon Ong, Leon Poutievski, Arjun Singh, Subbaiah Venkata, Jim Wanderer, Junlan Zhou, Min Zhu, Jonathan Zolla, Urs Hölzle, Stephen Stuart and Amin Vahdat&lt;/p&gt;
-
-&lt;!--more--&gt;
-
-&lt;h2 id=&quot;mindmap&quot;&gt;MindMap&lt;/h2&gt;
-
-&lt;p&gt;Click &lt;a href=&quot;/public/files/b4.png&quot;&gt;here&lt;/a&gt; to see the mind map generated via &lt;a href=&quot;http://mubu.com/&quot;&gt;Mubu&lt;/a&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;notes&quot;&gt;Notes&lt;/h2&gt;
-
-&lt;p&gt;&lt;a href=&quot;/public/files/B4.html&quot;&gt;Link to a notes&lt;/a&gt;&lt;/p&gt;</content><author><name>Mengxin Cao</name><email>mcao2 at andrew.cmu.edu</email></author><category term="Cloud Computing" /><category term="SDN" /><summary type="html">Paper Link b4-sigcomm13 Authors Sushant Jain, Alok Kumar, Subhasree Mandal, Joon Ong, Leon Poutievski, Arjun Singh, Subbaiah Venkata, Jim Wanderer, Junlan Zhou, Min Zhu, Jonathan Zolla, Urs Hölzle, Stephen Stuart and Amin Vahdat</summary></entry></feed>
+&lt;/ul&gt;</content><author><name>Mengxin Cao</name><email>mcao2 at andrew.cmu.edu</email></author><category term="HCI" /><category term="NLP" /><category term="UI" /><summary type="html">Authors Hongyi Zhang, Mengxin Cao, Ron Chew Demo Introduction UI designers have long been sketching to realize the interfaces they have in mind for prototyping. However, there is still much that can be done to make designers’ life easier. Current UI design tools are time-consuming and repetitive: drawing sets of graphics and widgets, then specifying their interactions and behaviors often requires a large effort in code and configuration for small results. The iteration process cannot catch up with the speed the designer’s minds are operating at.</summary></entry></feed>

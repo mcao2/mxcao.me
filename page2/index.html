@@ -117,6 +117,30 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/primer/2020/08/07/value-parameterized-gtest/">
+        Value-Parameterized GTest
+      </a>
+    </h1>
+
+    <span class="post-info">07 Aug 2020</span>
+
+    <h2 id="introduction">Introduction</h2>
+
+<p>Last time I talked about gtest in the <a href="/primer/2020/06/10/googletest-primer/">gtest primer</a>, and in this post we discuss the usage of <a href="https://github.com/google/googletest/blob/master/googletest/docs/advanced.md#value-parameterized-tests">“value-paramterized” tests</a>. In general, when you write a simple test case and verified it is working, what is the next step? Maybe you want to add more test cases! But how? Adding them by “hard-coding” the logics in the source files? It’s not a good idea since cases may evolve and we may later add new corner cases, maybe months later. At that time, you may already forgot how to write a test case using gtest.</p>
+
+<p>Value-parameterized tests are a good way to organize your test cases and group them in a logical manner e.g. test cases for a particular API. I use value-parameterized tests and a YAML configuration file to dynamically add/reduce my test cases, so that adding or removing a test case is as simple as updating the YAML file.</p>
+
+
+
+    <div class="continue-reading-container">
+      <a class="continue-reading-link" href="/primer/2020/08/07/value-parameterized-gtest/">Continue
+        reading &rarr;</a>
+    </div>
+
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/primer/2020/07/19/git-primer/">
         Git Primer
       </a>
@@ -238,32 +262,6 @@
 
     <div class="continue-reading-container">
       <a class="continue-reading-link" href="/projects/2020/05/23/talkui/">Continue
-        reading &rarr;</a>
-    </div>
-
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/papers/2020/05/02/yarn/">
-        Apache Hadoop YARN: Yet Another Resource Negotiator
-      </a>
-    </h1>
-
-    <span class="post-info">02 May 2020</span>
-
-    <h2 id="paper-link">Paper Link</h2>
-
-<p><a href="https://www.cse.ust.hk/~weiwa/teaching/Fall15-COMP6611B/reading_list/YARN.pdf">yarn</a></p>
-
-<h2 id="authors">Authors</h2>
-
-<p>Vinod Kumar Vavilapalli, Arun C Murthy, Chris Douglas, Sharad Agarwal, Mahadev Konar, Robert Evans, Thomas Graves, Jason Lowe, Hitesh Shah, Siddharth Seth, Bikas Saha, Carlo Curino, Owen O’Malley, Sanjay Radia, Benjamin Reed, Eric Baldeschwieler</p>
-
-
-
-    <div class="continue-reading-container">
-      <a class="continue-reading-link" href="/papers/2020/05/02/yarn/">Continue
         reading &rarr;</a>
     </div>
 
