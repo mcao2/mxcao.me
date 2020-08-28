@@ -96,6 +96,10 @@
         
         
         
+        
+        
+        
+        
         <li class="sidebar-nav-item">
           <a href="https://github.com/mcao2/">GitHub</a>
         </li>
@@ -132,6 +136,36 @@
 
     <div class="continue-reading-container">
       <a class="continue-reading-link" href="/infrastructure/2020/08/28/private-docker-registry/">Continue
+        reading &rarr;</a>
+    </div>
+
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/notes/2020/08/28/mlops/">
+        MLOps
+      </a>
+    </h1>
+
+    <span class="post-info">28 Aug 2020</span>
+
+    <h2 id="introduction">Introduction</h2>
+
+<blockquote>
+  <p>MLOps is an ML engineering culture and practice that aims at unifying ML system development (Dev) and ML system operations (Ops).</p>
+</blockquote>
+
+<blockquote>
+  <p>MLOps is the natural progression of DevOps in the context of AI… and emphasizes consistent and smooth development of models and their scalability.</p>
+</blockquote>
+
+<p>In simple words, MLOps refers to applying DevOps principles to ML systems.</p>
+
+
+
+    <div class="continue-reading-container">
+      <a class="continue-reading-link" href="/notes/2020/08/28/mlops/">Continue
         reading &rarr;</a>
     </div>
 
@@ -215,46 +249,6 @@
 
     <div class="continue-reading-container">
       <a class="continue-reading-link" href="/primer/2020/08/09/bazel-primer/">Continue
-        reading &rarr;</a>
-    </div>
-
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/primer/2020/08/08/wireguard-primer/">
-        WireGuard Primer
-      </a>
-    </h1>
-
-    <span class="post-info">08 Aug 2020</span>
-
-    <h2 id="introduction">Introduction</h2>
-
-<p>WireGuard <sup id="fnref:1" role="doc-noteref"><a href="#fn:1" class="footnote">1</a></sup> is a simple, fast, and modern <strong>VPN</strong> that utilizes cryptography.</p>
-
-<p>It encapsulates IP packets over UDP. The general workflow can be summarized as:</p>
-
-<ul>
-  <li>Install WireGuard</li>
-  <li>Add a WireGuard interface (like <code class="language-plaintext highlighter-rouge">wlan0</code>/<code class="language-plaintext highlighter-rouge">eth0</code> but named <code class="language-plaintext highlighter-rouge">wg0</code>/<code class="language-plaintext highlighter-rouge">wg1</code>…)</li>
-  <li>Configure the interface with a private key and optionally add peer’s public key(s)</li>
-  <li>Send packets to the interface</li>
-</ul>
-
-<p>It’s similar to the ssh model. Both parties have each other’s public keys and they communicate by exchanging packets encrypted by the public keys through the WireGuard interface.</p>
-
-<div class="footnotes" role="doc-endnotes">
-  <ol>
-    <li id="fn:1" role="doc-endnote">
-      <p>https://www.wireguard.com/ <a href="#fnref:1" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
-    </li>
-  </ol>
-</div>
-
-
-    <div class="continue-reading-container">
-      <a class="continue-reading-link" href="/primer/2020/08/08/wireguard-primer/">Continue
         reading &rarr;</a>
     </div>
 

@@ -96,6 +96,10 @@
         
         
         
+        
+        
+        
+        
         <li class="sidebar-nav-item">
           <a href="https://github.com/mcao2/">GitHub</a>
         </li>
@@ -114,6 +118,46 @@
 
     <div class="content container">
       <div class="posts">
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/primer/2020/08/08/wireguard-primer/">
+        WireGuard Primer
+      </a>
+    </h1>
+
+    <span class="post-info">08 Aug 2020</span>
+
+    <h2 id="introduction">Introduction</h2>
+
+<p>WireGuard <sup id="fnref:1" role="doc-noteref"><a href="#fn:1" class="footnote">1</a></sup> is a simple, fast, and modern <strong>VPN</strong> that utilizes cryptography.</p>
+
+<p>It encapsulates IP packets over UDP. The general workflow can be summarized as:</p>
+
+<ul>
+  <li>Install WireGuard</li>
+  <li>Add a WireGuard interface (like <code class="language-plaintext highlighter-rouge">wlan0</code>/<code class="language-plaintext highlighter-rouge">eth0</code> but named <code class="language-plaintext highlighter-rouge">wg0</code>/<code class="language-plaintext highlighter-rouge">wg1</code>…)</li>
+  <li>Configure the interface with a private key and optionally add peer’s public key(s)</li>
+  <li>Send packets to the interface</li>
+</ul>
+
+<p>It’s similar to the ssh model. Both parties have each other’s public keys and they communicate by exchanging packets encrypted by the public keys through the WireGuard interface.</p>
+
+<div class="footnotes" role="doc-endnotes">
+  <ol>
+    <li id="fn:1" role="doc-endnote">
+      <p>https://www.wireguard.com/ <a href="#fnref:1" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+
+
+    <div class="continue-reading-container">
+      <a class="continue-reading-link" href="/primer/2020/08/08/wireguard-primer/">Continue
+        reading &rarr;</a>
+    </div>
+
+  </div>
   
   <div class="post">
     <h1 class="post-title">
@@ -232,36 +276,6 @@
 
     <div class="continue-reading-container">
       <a class="continue-reading-link" href="/primer/2020/06/10/googletest-primer/">Continue
-        reading &rarr;</a>
-    </div>
-
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/projects/2020/05/23/talkui/">
-        Talk UI: A Multi-Modal, Conversational Interface for UI Prototyping
-      </a>
-    </h1>
-
-    <span class="post-info">23 May 2020</span>
-
-    <h2 id="authors">Authors</h2>
-
-<p><a href="http://niwatori.io/">Hongyi Zhang</a>, <a href="https://mxcao.me/">Mengxin Cao</a>, <a href="https://www.linkedin.com/in/chewrongkang/">Ron Chew</a></p>
-
-<h2 id="demo">Demo</h2>
-
-<iframe width="560" height="315" src="https://www.youtube.com/embed/T39Fwn_G0DI" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
-
-<h2 id="introduction">Introduction</h2>
-
-<p>UI designers have long been <em>sketching</em> to realize the interfaces they have in mind for prototyping. However, there is still much that can be done to make designers’ life easier. Current UI design tools are time-consuming and repetitive: drawing sets of graphics and widgets, then specifying their interactions and behaviors often requires a large effort in code and configuration for small results. The iteration process cannot catch up with the speed the designer’s minds are operating at.</p>
-
-
-
-    <div class="continue-reading-container">
-      <a class="continue-reading-link" href="/projects/2020/05/23/talkui/">Continue
         reading &rarr;</a>
     </div>
 

@@ -1,4 +1,255 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2020-08-28T18:53:26+00:00</updated><id>/feed.xml</id><title type="html">mxin</title><subtitle>mxin</subtitle><author><name>Mengxin Cao</name><email>mcao2 at andrew.cmu.edu</email></author><entry><title type="html">Private Docker Registry</title><link href="/infrastructure/2020/08/28/private-docker-registry/" rel="alternate" type="text/html" title="Private Docker Registry" /><published>2020-08-28T00:00:00+00:00</published><updated>2020-08-28T00:00:00+00:00</updated><id>/infrastructure/2020/08/28/private-docker-registry</id><content type="html" xml:base="/infrastructure/2020/08/28/private-docker-registry/">&lt;h2 id=&quot;motivation&quot;&gt;Motivation&lt;/h2&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2020-08-28T20:21:43+00:00</updated><id>/feed.xml</id><title type="html">mxin</title><subtitle>mxin</subtitle><author><name>Mengxin Cao</name><email>mcao2 at andrew.cmu.edu</email></author><entry><title type="html">MLOps</title><link href="/notes/2020/08/28/mlops/" rel="alternate" type="text/html" title="MLOps" /><published>2020-08-28T00:00:00+00:00</published><updated>2020-08-28T00:00:00+00:00</updated><id>/notes/2020/08/28/mlops</id><content type="html" xml:base="/notes/2020/08/28/mlops/">&lt;h2 id=&quot;introduction&quot;&gt;Introduction&lt;/h2&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;MLOps is an ML engineering culture and practice that aims at unifying ML system development (Dev) and ML system operations (Ops).&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;MLOps is the natural progression of DevOps in the context of AI… and emphasizes consistent and smooth development of models and their scalability.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;In simple words, MLOps refers to applying DevOps principles to ML systems.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;Practicing MLOps means advocating &lt;strong&gt;automation&lt;/strong&gt; and &lt;strong&gt;monitoring&lt;/strong&gt; at all steps (&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;integration&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;testing&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;releasing&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;deployment&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;infra mngt&lt;/code&gt;, etc.) of ML system construction.&lt;/p&gt;
+
+&lt;p&gt;The goal of MLOps is to build an integrated ML system that can continuously operate in production. As summarized by Google, only a small fraction of a real-world ML system is composed of the actual ML code, and the required surrounding elements are vast and complex, as shown below.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/public/files/mlops/mlops-continuous-delivery-and-automation-pipelines-in-machine-learning-1-elements-of-ml.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;mlops-concepts&quot;&gt;MLOps concepts&lt;/h2&gt;
+
+&lt;h3 id=&quot;cicdct&quot;&gt;CI/CD/CT&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;CI: &lt;a href=&quot;https://en.wikipedia.org/wiki/Continuous_integration&quot;&gt;Continuous Integration&lt;/a&gt;
+    &lt;ul&gt;
+      &lt;li&gt;CI in ML no longer only about testing and validating code and components, but also testing and validating &lt;strong&gt;data&lt;/strong&gt;, &lt;strong&gt;data schemas&lt;/strong&gt;, and &lt;strong&gt;models&lt;/strong&gt;.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;CD: &lt;a href=&quot;https://en.wikipedia.org/wiki/Continuous_delivery&quot;&gt;Continuous Delivery&lt;/a&gt;
+    &lt;ul&gt;
+      &lt;li&gt;CD in ML no longer only about a single software package or a service, but &lt;strong&gt;a system/pipeline&lt;/strong&gt; that should automatically deploy another service e.g. model prediction service&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;CT: Continuous Training
+    &lt;ul&gt;
+      &lt;li&gt;CT is a new property that is concerned with automatically retraining and serving the models (with new/updated data or data stream)&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;example&quot;&gt;Example&lt;/h2&gt;
+
+&lt;p&gt;Consider the typical steps for training and evaluating an ML model to serve as a prediction service.&lt;/p&gt;
+
+&lt;p&gt;After defined the use cases and established the success criteria, the process of delivering an ML model to production involves:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Data extraction: get relevant data from various sources for the ML task.&lt;/li&gt;
+  &lt;li&gt;Data analysis: perform EDA to understand the extracted data (e.g. schema, characteristics) and identify the data preparation and feature engineering that are needed.&lt;/li&gt;
+  &lt;li&gt;Data preparation/preprocessing: preprocess/clean the extracted data. Typically involves split the data into training/validating/test sets, data transformations, feature engineering. The output are the &lt;em&gt;data splits&lt;/em&gt; in the prepared format.&lt;/li&gt;
+  &lt;li&gt;Model training: ML researchers implement algorithms to train various models, perform hyper-parameter tuning, etc. The output is a trained ML model.&lt;/li&gt;
+  &lt;li&gt;Model evaluation: evaluate the trained model quality on a holdout test set. The output is a set of metrics that assess the model quality.&lt;/li&gt;
+  &lt;li&gt;Model validation: confirm that the model is adequate for deployment. In our case this means confirm that its predictive performance is better than a certain baseline.&lt;/li&gt;
+  &lt;li&gt;Model serving: deploy the validated model to a target environment (e.g. as micro services in a k8s cluster, as an embedded model in an edge device, or as part of a batch prediction system) to serve predictions.&lt;/li&gt;
+  &lt;li&gt;Model monitoring: monitor the deployed model’s prediction performance and trigger new iteration in the system&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;The above steps can be completed &lt;strong&gt;manually&lt;/strong&gt; by a single team or splitter across different teams (e.g. algorithm team, operation team, etc.), or it can be done by an &lt;strong&gt;automatic pipeline&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;We want to bring automation to the process so that we can benefit from shortened development cycles, increased deployment velocity, and dependable releases, etc.&lt;/p&gt;
+
+&lt;p&gt;The &lt;strong&gt;level of automation&lt;/strong&gt; of these steps defines the &lt;em&gt;maturity&lt;/em&gt; of the ML process and reflects the &lt;em&gt;velocity&lt;/em&gt; of model iterations (e.g. triggered by new data or new implementations).&lt;/p&gt;
+
+&lt;h2 id=&quot;mlops-automation-levels&quot;&gt;MLOps automation levels&lt;/h2&gt;
+
+&lt;h3 id=&quot;level-0-manual-labor&quot;&gt;Level 0: manual labor&lt;/h3&gt;
+
+&lt;p&gt;The below picture shows the typical workflow of this level.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/public/files/mlops/mlops-continuous-delivery-and-automation-pipelines-in-machine-learning-2-manual-ml.svg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Characteristics:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Manual, script-driven, and interactive process&lt;/li&gt;
+  &lt;li&gt;Disconnected b/w ML and operations&lt;/li&gt;
+  &lt;li&gt;Infrequent release iterations&lt;/li&gt;
+  &lt;li&gt;No CI/CD&lt;/li&gt;
+  &lt;li&gt;Deployment is a single service (e.g. prediction) rather than the entire ML system&lt;/li&gt;
+  &lt;li&gt;No active performance monitoring&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;This approach may be sufficient when models are rarely changed/re-trained. But real-world environment is full of dynamics and models that fail to quickly adapt to changes may decrease in value rapidly.&lt;/p&gt;
+
+&lt;h3 id=&quot;level-1-ml-pipeline-automation&quot;&gt;Level 1: ML pipeline automation&lt;/h3&gt;
+
+&lt;p&gt;The goal of this level is to enable &lt;strong&gt;continuous training&lt;/strong&gt; of the model by automating the ML pipeline, and thus achieve &lt;strong&gt;continuous delivery&lt;/strong&gt; of model prediction service for users.&lt;/p&gt;
+
+&lt;p&gt;This level of automation typically involves:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Automated data validation&lt;/li&gt;
+  &lt;li&gt;Automated model validation&lt;/li&gt;
+  &lt;li&gt;Pipeline triggers for another iteration&lt;/li&gt;
+  &lt;li&gt;Metadata management (explained later)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;The following figure is a schematic representation of an automated ML pipeline for CT.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/public/files/mlops/mlops-continuous-delivery-and-automation-pipelines-in-machine-learning-3-ml-automation-ct.svg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Characteristics:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Rapid experiment&lt;/li&gt;
+  &lt;li&gt;CT of the model in production with fresh data based on live triggers&lt;/li&gt;
+  &lt;li&gt;Experimental-Operational symmetry (as seen in the above diagram)&lt;/li&gt;
+  &lt;li&gt;Modularized code for components and pipelines&lt;/li&gt;
+  &lt;li&gt;CD of models (and thus predictive services)&lt;/li&gt;
+  &lt;li&gt;Deployment is a ML pipeline rather than only a prediction service&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h4 id=&quot;transition-from-level-0-to-level-1&quot;&gt;Transition from level 0 to level 1&lt;/h4&gt;
+
+&lt;p&gt;To transition to level 1, we need to add new components to the architecture:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Automated data and model validation&lt;/li&gt;
+  &lt;li&gt;Optional feature store: a centralized repo where we standardize the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;definition&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;storage&lt;/code&gt;, and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;access&lt;/code&gt; of features for training and serving. This is the data source for experimentation, CT, and online serving.&lt;/li&gt;
+  &lt;li&gt;Metadata management: we record information about each execution of the pipeline in order to help with &lt;strong&gt;data and artifacts lineage&lt;/strong&gt;, &lt;strong&gt;reproducibility&lt;/strong&gt;, &lt;strong&gt;comparisons&lt;/strong&gt;, &lt;strong&gt;debugging&lt;/strong&gt;, &lt;strong&gt;anomaly detection&lt;/strong&gt;, etc. Metadata can include:
+    &lt;ul&gt;
+      &lt;li&gt;versioning: of pipeline, or of individual components in the pipeline&lt;/li&gt;
+      &lt;li&gt;timing: start/end date, duration time, etc.&lt;/li&gt;
+      &lt;li&gt;pipeline executor(s)&lt;/li&gt;
+      &lt;li&gt;parameter args&lt;/li&gt;
+      &lt;li&gt;pointer to artifacts produced by each pipeline step (e.g. location of prepared data, computed statistics, etc.)&lt;/li&gt;
+      &lt;li&gt;pointer to previous trained model (this enables model roll-back)&lt;/li&gt;
+      &lt;li&gt;model evaluation metrics (can be thought of as part of the produced pipeline artifacts), which enable model comparison and benchmarking&lt;/li&gt;
+      &lt;li&gt;etc.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Pipeline triggers: e.g. on-data-availability, on-demand, on-schedule, on-model-perf-degradation, on-data-drift, etc.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;This approach is sufficient if new pipeline implementations are rare deployed and only a few pipelines are managed.&lt;/p&gt;
+
+&lt;p&gt;The pipeline and its components are usually &lt;strong&gt;manually tested and deployed&lt;/strong&gt;. This is not a good solution if you want to deploy new models based on &lt;strong&gt;new ML ideas&lt;/strong&gt; since manual labor still involved to deploy the pipeline itself, or you are managing many ML pipelines in production.&lt;/p&gt;
+
+&lt;p&gt;You need a CI/CD setup to automate the &lt;strong&gt;build/test/deployment of ML pipelines&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;h3 id=&quot;level-2-cicd-pipeline-automation&quot;&gt;Level 2: CI/CD pipeline automation&lt;/h3&gt;
+
+&lt;p&gt;A robust automated CI/CD system allows data scientists rapidly explore new ML ideas around &lt;strong&gt;feature engineering&lt;/strong&gt;, &lt;strong&gt;model architecture&lt;/strong&gt;, &lt;strong&gt;hyper-parameters&lt;/strong&gt;, etc.&lt;/p&gt;
+
+&lt;p&gt;Data scientists can implement new ideas and the &lt;strong&gt;new pipeline&lt;/strong&gt; will be automatically built, tested, and deployed to the target environment.&lt;/p&gt;
+
+&lt;p&gt;We can see the updated diagram with CI/CD added for the pipeline.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/public/files/mlops/mlops-continuous-delivery-and-automation-pipelines-in-machine-learning-4-ml-automation-ci-cd.svg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;This level typically involves:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Source control&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Test and build services&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Deployment services&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;Model registry&lt;/li&gt;
+  &lt;li&gt;Feature store&lt;/li&gt;
+  &lt;li&gt;Metadata management&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Pipeline orchestrator&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Characteristics:&lt;/p&gt;
+
+&lt;p&gt;Stages for CI/CD automation pipeline:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/public/files/mlops/mlops-continuous-delivery-and-automation-pipelines-in-machine-learning-5-stages.svg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Manual labors cannot be eliminated for the data analysis and model analysis steps.&lt;/p&gt;
+
+&lt;h4 id=&quot;ci&quot;&gt;CI&lt;/h4&gt;
+
+&lt;p&gt;The pipeline and its components are built, tested, and packaged when new code is committed or pushed to the VCS.&lt;/p&gt;
+
+&lt;p&gt;E.g. unit testing for the feature engineering logic, for different implemented methods; testing that the model training converges; testing that each component in the pipeline produces the expected artifacts, etc.&lt;/p&gt;
+
+&lt;h4 id=&quot;cd&quot;&gt;CD&lt;/h4&gt;
+
+&lt;p&gt;The new pipeline implementation is continuously deployed to the target environment, and in turn delivers new/updated prediction services.&lt;/p&gt;
+
+&lt;p&gt;Rapid and reliable pipeline delivery usually involves:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;verification of the model compatibility with the target infrastructure before deployment actually happens&lt;/li&gt;
+  &lt;li&gt;test the prediction service with expected inputs and make sure you get expected response within the expected time&lt;/li&gt;
+  &lt;li&gt;test the service performance e.g. QPS, latency, etc.&lt;/li&gt;
+  &lt;li&gt;automated deployment to a test environment&lt;/li&gt;
+  &lt;li&gt;semi-automated deployment to a pre-production environment&lt;/li&gt;
+  &lt;li&gt;manual deployment to a production environment after several successful runs of the pipeline on the pre-production environment&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;The following diagram shows the relationship b/w the CI/CD pipeline and the CT pipeline in a ML system:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/public/files/mlops/architecture-for-mlops-using-tfx-kubeflow-pipelines-and-cloud-build-1-ci-cd-ct-pipelines.svg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Given new model implementation (e.g. new ML ideas/architecture), a successful CI/CD pipeline deploys a new CT pipeline.&lt;/p&gt;
+
+&lt;p&gt;Given new data, a successful CT pipeline should serve a new model prediction service.&lt;/p&gt;
+
+&lt;h4 id=&quot;example-architecture-for-mlops-using-tfx-kubeflow-pipelines-and-cloud-build&quot;&gt;Example: Architecture for MLOps using TFX, Kubeflow Pipelines, and Cloud Build&lt;/h4&gt;
+
+&lt;p&gt;TFX stands for “TensorFlow Extended” and is an integrated ML platform for developing and deploying production ML systems.&lt;/p&gt;
+
+&lt;p&gt;A TFX pipeline is a sequence of components that implement an ML system (modeling, training, validation, serving inference, deployment management, etc.).&lt;/p&gt;
+
+&lt;p&gt;Key libraries of TFX including:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;TFT (TensorFlow Transform): data preparation, feature engineering tasks&lt;/li&gt;
+  &lt;li&gt;TFDV (TensorFlow Data Validation): data anomaly detection&lt;/li&gt;
+  &lt;li&gt;TensorFlow Estimators and Keras: model building and training&lt;/li&gt;
+  &lt;li&gt;TFMA (TensorFlow Model Analysis): model evaluation and analysis&lt;/li&gt;
+  &lt;li&gt;TFServing (TensorFlow Serving): serve model in the target environment (e.g. as REST and gRPC APIs)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;The following diagram shows the architecture of an integrated ML system built from the various TFX libraries (i.e. &lt;em&gt;the design of a TFX-based integrated ML system&lt;/em&gt;).&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/public/files/mlops/architecture-for-mlops-using-tfx-kubeflow-pipelines-and-cloud-build-2-tfx-libraries.svg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;With the designed architecture, the next question is &lt;em&gt;how to run each component of the system at scale&lt;/em&gt;. Commercial cloud platforms like GCP can help us run the system at scale in a reliable fashion with managed cloud services (e.g. cloud storage, AI hub, dataflow).&lt;/p&gt;
+
+&lt;p&gt;With the individual components mapped to a managed service in the cloud platform, the next question is &lt;em&gt;how to connect these two pieces together and automate the entire pipeline&lt;/em&gt;. An &lt;strong&gt;orchestrator&lt;/strong&gt; performs such tasks and glues our high-level architecture and the underlying individual components. It’s useful for both dev and production phases as it facilitates automation and reduces manual labors.&lt;/p&gt;
+
+&lt;p&gt;The orchestrator runs the pipeline in sequence and automatically move forward based on the defined conditions (e.g. execute the model serving step after model evaluation finished and the metrics meet predefined thresholds).&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Kubeflow&lt;/strong&gt; is the &lt;em&gt;ML Toolkit for Kubernetes&lt;/em&gt;. &lt;strong&gt;Kubeflow Pipeline&lt;/strong&gt; is a Kubeflow service that lets you compose, orchestrate, and automate ML systems, where each component of the system can run on various infrastructures (e.g. GCP, local, etc.). Sounds familiar? Yes! It is an orchestrator that we want.&lt;/p&gt;
+
+&lt;p&gt;A Kubeflow pipeline involves:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;A set of containerized tasks/components packed as a docker image. These components can execute any data-related and compute-related services, e.g. &lt;strong&gt;Dataproc&lt;/strong&gt; for SparkML jobs, &lt;strong&gt;AutoML&lt;/strong&gt;, etc.&lt;/li&gt;
+  &lt;li&gt;A sequence of tasks defined by a Python DSL, i.e. the topology of the workflow&lt;/li&gt;
+  &lt;li&gt;A set of pipeline input parameters&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;/public/files/mlops/architecture-for-mlops-using-tfx-kubeflow-pipelines-and-cloud-build-6-ci-cd-kubeflow.svg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;The above diagram shows a high-level overview of integrating CI/CD with Kubeflow pipelines in GCP. At the heart of this architecture is Cloud Build, a managed service that executes your builds on GCP. Essentially, the cloud build process performs the required CI/CD for our integrated ML system.&lt;/p&gt;
+
+&lt;p&gt;The build can be triggered manually or through automated build triggers.&lt;/p&gt;
+
+&lt;p&gt;For a comprehensive Cloud Build example that covers most of these steps, see &lt;a href=&quot;https://github.com/ksalama/kubeflow-examples/tree/master/kfp-cloudbuild&quot;&gt;A Simple CI/CD Example with Kubeflow Pipelines and Cloud Build&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;references&quot;&gt;References&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://cloud.google.com/solutions/machine-learning/mlops-continuous-delivery-and-automation-pipelines-in-machine-learning&quot;&gt;MLOps: Continuous delivery and automation pipelines in machine learning&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.forbes.com/sites/tomtaulli/2020/08/01/mlops-what-you-need-to-know/#3bd1c4241214&quot;&gt;MLOps: What You Need To Know&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://cloud.google.com/solutions/machine-learning/architecture-for-mlops-using-tfx-kubeflow-pipelines-and-cloud-build&quot;&gt;Architecture for MLOps using TFX, Kubeflow Pipelines, and Cloud Build&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content><author><name>Mengxin Cao</name><email>mcao2 at andrew.cmu.edu</email></author><category term="Machine Learning" /><summary type="html">Introduction MLOps is an ML engineering culture and practice that aims at unifying ML system development (Dev) and ML system operations (Ops). MLOps is the natural progression of DevOps in the context of AI… and emphasizes consistent and smooth development of models and their scalability. In simple words, MLOps refers to applying DevOps principles to ML systems.</summary></entry><entry><title type="html">Private Docker Registry</title><link href="/infrastructure/2020/08/28/private-docker-registry/" rel="alternate" type="text/html" title="Private Docker Registry" /><published>2020-08-28T00:00:00+00:00</published><updated>2020-08-28T00:00:00+00:00</updated><id>/infrastructure/2020/08/28/private-docker-registry</id><content type="html" xml:base="/infrastructure/2020/08/28/private-docker-registry/">&lt;h2 id=&quot;motivation&quot;&gt;Motivation&lt;/h2&gt;
 
 &lt;p&gt;I have been using docker containers for a while and quite amazed by its simplicity and power. Someday in the previous week when I was migrating/re-deploying my pleroma instance from my SurfaceGo ubuntu machine to my home lab, I found I need more private repos on docker hub. Docker hub by default only provides 1 private repo for normal users, which is clearly not what I want. So I decided to build my own docker registry and deploy it as a service in my home lab machine.&lt;/p&gt;
 
@@ -2325,30 +2576,4 @@ See also: #456, #789
       &lt;p&gt;https://glossary.istqb.org/en/search/test%20case &lt;a href=&quot;#fnref:2&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
     &lt;/li&gt;
   &lt;/ol&gt;
-&lt;/div&gt;</content><author><name>Mengxin Cao</name><email>mcao2 at andrew.cmu.edu</email></author><category term="Test" /><category term="C++" /><summary type="html">GoogleTest 1 Primer (gtest) What is GoogleTest Googletest is a testing framework to help write better C++ code supports any kind of tests, not just unit tests based on the popular xUnit (e.g. JUnit, PyUnit) architecture https://github.com/google/googletest/blob/master/googletest/docs/primer.md &amp;#8617;</summary></entry><entry><title type="html">Talk UI: A Multi-Modal, Conversational Interface for UI Prototyping</title><link href="/projects/2020/05/23/talkui/" rel="alternate" type="text/html" title="Talk UI: A Multi-Modal, Conversational Interface for UI Prototyping" /><published>2020-05-23T00:00:00+00:00</published><updated>2020-05-23T00:00:00+00:00</updated><id>/projects/2020/05/23/talkui</id><content type="html" xml:base="/projects/2020/05/23/talkui/">&lt;h2 id=&quot;authors&quot;&gt;Authors&lt;/h2&gt;
-
-&lt;p&gt;&lt;a href=&quot;http://niwatori.io/&quot;&gt;Hongyi Zhang&lt;/a&gt;, &lt;a href=&quot;https://mxcao.me/&quot;&gt;Mengxin Cao&lt;/a&gt;, &lt;a href=&quot;https://www.linkedin.com/in/chewrongkang/&quot;&gt;Ron Chew&lt;/a&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;demo&quot;&gt;Demo&lt;/h2&gt;
-
-&lt;iframe width=&quot;560&quot; height=&quot;315&quot; src=&quot;https://www.youtube.com/embed/T39Fwn_G0DI&quot; frameborder=&quot;0&quot; allow=&quot;accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture&quot; allowfullscreen=&quot;&quot;&gt;&lt;/iframe&gt;
-
-&lt;h2 id=&quot;introduction&quot;&gt;Introduction&lt;/h2&gt;
-
-&lt;p&gt;UI designers have long been &lt;em&gt;sketching&lt;/em&gt; to realize the interfaces they have in mind for prototyping. However, there is still much that can be done to make designers’ life easier. Current UI design tools are time-consuming and repetitive: drawing sets of graphics and widgets, then specifying their interactions and behaviors often requires a large effort in code and configuration for small results. The iteration process cannot catch up with the speed the designer’s minds are operating at.&lt;/p&gt;
-
-&lt;!--more--&gt;
-
-&lt;p&gt;In this project, we propose “Talk UI”, a rapid multi-modal prototyping tool that takes advantage of natural language to facilitate the design process and accelerate prototype iteration. With Talk UI, designers will be able to create graphical interfaces as well as specify interactive outcomes through talking and demonstration. No more sketching is needed, and the UI design process will be as natural as having a conversation.&lt;/p&gt;
-
-&lt;h2 id=&quot;features&quot;&gt;Features&lt;/h2&gt;
-
-&lt;p&gt;Our Talk UI leverages natural language and voice input from users and supports the following features that we would like to highlight:&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;Continuous listening of user voice input without necessity of the user specifying start and stop of a conversation&lt;/li&gt;
-  &lt;li&gt;Instantiation of graphical objects and widgets through natural language&lt;/li&gt;
-  &lt;li&gt;Attaching interactive behaviors to existing graphical objects through demonstration&lt;/li&gt;
-  &lt;li&gt;Support of direct manipulation to update graphical object properties through property sheet&lt;/li&gt;
-  &lt;li&gt;Display of voice command history and conversation feedbacks&lt;/li&gt;
-  &lt;li&gt;Static export of the final interface&lt;/li&gt;
-&lt;/ul&gt;</content><author><name>Mengxin Cao</name><email>mcao2 at andrew.cmu.edu</email></author><category term="HCI" /><category term="NLP" /><category term="UI" /><summary type="html">Authors Hongyi Zhang, Mengxin Cao, Ron Chew Demo Introduction UI designers have long been sketching to realize the interfaces they have in mind for prototyping. However, there is still much that can be done to make designers’ life easier. Current UI design tools are time-consuming and repetitive: drawing sets of graphics and widgets, then specifying their interactions and behaviors often requires a large effort in code and configuration for small results. The iteration process cannot catch up with the speed the designer’s minds are operating at.</summary></entry></feed>
+&lt;/div&gt;</content><author><name>Mengxin Cao</name><email>mcao2 at andrew.cmu.edu</email></author><category term="Test" /><category term="C++" /><summary type="html">GoogleTest 1 Primer (gtest) What is GoogleTest Googletest is a testing framework to help write better C++ code supports any kind of tests, not just unit tests based on the popular xUnit (e.g. JUnit, PyUnit) architecture https://github.com/google/googletest/blob/master/googletest/docs/primer.md &amp;#8617;</summary></entry></feed>
