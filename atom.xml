@@ -4,13 +4,51 @@
  <title>mxin</title>
  <link href="/atom.xml" rel="self"/>
  <link href="/"/>
- <updated>2021-05-16T17:11:12+00:00</updated>
+ <updated>2021-05-23T22:37:00+00:00</updated>
  <id></id>
  <author>
    <name>Mengxin Cao</name>
    <email>mcao2 at andrew.cmu.edu</email>
  </author>
 
+ 
+ <entry>
+   <title>Notes on OCI (Oracle Cloud Infrastructure)</title>
+   <link href="/infrastructure/2021/05/23/notes-on-oci-usage/"/>
+   <updated>2021-05-23T00:00:00+00:00</updated>
+   <id>/infrastructure/2021/05/23/notes-on-oci-usage</id>
+   <content type="html">&lt;h2 id=&quot;motivation&quot;&gt;Motivation&lt;/h2&gt;
+
+&lt;p&gt;Some of my services are too light that I don’t want to run them endlessly on my beefy home server. One reason is that I want better availability and clearly it’s hard (a better word probably is expensive) to achieve that in my current set up. So I decided to go for the Cloud, after all… I was a cloud TA!&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;I chose OCI because they offer two always-free machines and it seems they are serious about this offer. So I migrated several of my services to OCI instances. This post is a summary of the quirks that I want to note down for future reference.&lt;/p&gt;
+
+&lt;h2 id=&quot;firewall&quot;&gt;Firewall&lt;/h2&gt;
+
+&lt;p&gt;I don’t know why they make it so hard to achieve the same effect as AWS security groups… But anyway, here’s what I need to do to reach my service via the public Internet.&lt;/p&gt;
+
+&lt;h3 id=&quot;set-up-vpc-rules-through-the-portal&quot;&gt;Set up VPC rules through the portal&lt;/h3&gt;
+
+&lt;p&gt;In the instance detail page, click &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Attached VNICs&lt;/code&gt; under the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Resources&lt;/code&gt; tab. Then find the subnet of VLAN that this instance is attached with. You will be directed to the subnet detail page, where you can find the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Security Lists&lt;/code&gt;, and that is our target (the equivalent of AWS security group). Then you can add/remove any rules you want.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/public/files/oci-security-list-under-vcn.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;set-up-iptable-rules-via-command-line&quot;&gt;Set up iptable rules via command line&lt;/h3&gt;
+
+&lt;p&gt;This iptable thing actually confuses me a lot. I don’t know why they enforce iptable rules together with the security list set up.&lt;/p&gt;
+
+&lt;p&gt;SSH into the instance and run the following commands. These commands are taken from &lt;a href=&quot;https://stackoverflow.com/questions/54794217/opening-port-80-on-oracle-cloud-infrastructure-compute-node&quot;&gt;this SO post&lt;/a&gt;&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  &lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;iptables-save &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; ~/iptables-rules &lt;span class=&quot;c&quot;&gt;# backup&lt;/span&gt;
+  &lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;iptables &lt;span class=&quot;nt&quot;&gt;-P&lt;/span&gt; INPUT ACCEPT &lt;span class=&quot;c&quot;&gt;# the following commands effectively disable iptables by allowing all traffic&lt;/span&gt;
+  &lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;iptables &lt;span class=&quot;nt&quot;&gt;-P&lt;/span&gt; OUTPUT ACCEPT
+  &lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;iptables &lt;span class=&quot;nt&quot;&gt;-P&lt;/span&gt; FORWARD ACCEPT
+  &lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;iptables &lt;span class=&quot;nt&quot;&gt;-F&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+</content>
+ </entry>
  
  <entry>
    <title>Private Docker Registry</title>
