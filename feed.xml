@@ -1,4 +1,138 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2021-05-23T22:37:00+00:00</updated><id>/feed.xml</id><title type="html">mxin</title><subtitle>mxin</subtitle><author><name>Mengxin Cao</name><email>mcao2 at andrew.cmu.edu</email></author><entry><title type="html">Notes on OCI (Oracle Cloud Infrastructure)</title><link href="/infrastructure/2021/05/23/notes-on-oci-usage/" rel="alternate" type="text/html" title="Notes on OCI (Oracle Cloud Infrastructure)" /><published>2021-05-23T00:00:00+00:00</published><updated>2021-05-23T00:00:00+00:00</updated><id>/infrastructure/2021/05/23/notes-on-oci-usage</id><content type="html" xml:base="/infrastructure/2021/05/23/notes-on-oci-usage/">&lt;h2 id=&quot;motivation&quot;&gt;Motivation&lt;/h2&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2021-05-29T04:09:13+00:00</updated><id>/feed.xml</id><title type="html">mxin</title><subtitle>mxin</subtitle><author><name>Mengxin Cao</name><email>mcao2 at andrew.cmu.edu</email></author><entry><title type="html">Set up IKEv2 VPN on a Mikrotik Router</title><link href="/tools/2021/05/28/setup-mikrotik-ike2/" rel="alternate" type="text/html" title="Set up IKEv2 VPN on a Mikrotik Router" /><published>2021-05-28T00:00:00+00:00</published><updated>2021-05-28T00:00:00+00:00</updated><id>/tools/2021/05/28/setup-mikrotik-ike2</id><content type="html" xml:base="/tools/2021/05/28/setup-mikrotik-ike2/">&lt;h2 id=&quot;motivation&quot;&gt;Motivation&lt;/h2&gt;
+
+&lt;p&gt;I got rid of my AT&amp;amp;T router a few days back and managed to have a Mikrotik router &lt;a href=&quot;https://mikrotik.com/product/hap_ac2&quot;&gt;hAP ac²&lt;/a&gt; as an alternative. One benefit of using a mikrotik router, specifically, its RouterOS, is the customizability to add cool features to my home network. I have very slow traffic when using the AT&amp;amp;T home network when visiting some websites, e.g., weibo, so I want to route them via a VPN running on oracle cloud.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;Check out my previous post about setting up an OCI instance if you are interested.&lt;/p&gt;
+
+&lt;h2 id=&quot;set-up-an-ipsec-vpn&quot;&gt;Set up an IPSec VPN&lt;/h2&gt;
+
+&lt;p&gt;I usually use Tailscale for VPNs but seems mikrotik does not have it for now. So I found an IPSec VPN auto setup script to ease the burden. Please checkout &lt;a href=&quot;https://github.com/hwdsl2/setup-ipsec-vpn&quot;&gt;this repo&lt;/a&gt; for a detailed walkthrough.&lt;/p&gt;
+
+&lt;p&gt;For Ubuntu &amp;amp; Debian, the one-liner script is:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  wget https://git.io/vpnsetup &lt;span class=&quot;nt&quot;&gt;-O&lt;/span&gt; vpn.sh &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;sh vpn.sh &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;ikev2.sh &lt;span class=&quot;nt&quot;&gt;--auto&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;set-up-an-ikev2-client-on-the-mikrotik-router&quot;&gt;Set up an IKEv2 client on the Mikrotik router&lt;/h2&gt;
+
+&lt;p&gt;You can find some tutorials on setting up a NordVPN on a RouterOS, like &lt;a href=&quot;https://wiki.mikrotik.com/wiki/IKEv2_EAP_between_NordVPN_and_RouterOS&quot;&gt;this one&lt;/a&gt; and most of the steps are similar to what we need to do.&lt;/p&gt;
+
+&lt;h3 id=&quot;step-0-import-your-p12-file&quot;&gt;Step 0: Import your &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.p12&lt;/code&gt; file&lt;/h3&gt;
+
+&lt;p&gt;This &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.p12&lt;/code&gt; file acts like the all-in-one cert and is usually encrypted with a passphrase. You can find it in the output of the previous step when you setting up the VPN server.&lt;/p&gt;
+
+&lt;p&gt;Upload your &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.p12&lt;/code&gt; file to the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Files&lt;/code&gt; of the mikrotik router. You can verify the file is accessible by using the following command:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  /file print
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;And you will find something like this:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  &lt;span class=&quot;c&quot;&gt;# NAME                                       TYPE                                            SIZE CREATION-TIME&lt;/span&gt;
+  0 vpnclient.p12                              .p12 file                                       4425 may/27/2021 22:00:00
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Next import this &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.p12&lt;/code&gt; file via:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  /certificate import file-name&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;vpnclient.p12 &lt;span class=&quot;nv&quot;&gt;passphrase&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;YOUR_PASSPHRASE
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Remember to substitute your passphrase in the above command. And you probably need to run this command twice until you see the number of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;private-keys-imported&lt;/code&gt; is &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;1&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Then go to the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;certificates&lt;/code&gt; tab of the web portal, check the one with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;KT&lt;/code&gt; marker, note it down and it will be the one we will use in the next steps.&lt;/p&gt;
+
+&lt;h3 id=&quot;step-1-set-up-the-ikev2-client-&quot;&gt;Step 1: Set up the IKEv2 client &lt;sup id=&quot;fnref:1&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:1&quot; class=&quot;footnote&quot; rel=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/h3&gt;
+
+&lt;p&gt;Create a separate Phase 1 profile and Phase 2 proposal configurations to not interfere with any existing IPsec configuration:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  /ip ipsec profile
+  add &lt;span class=&quot;nv&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;ike2-oracle-vpn
+  /ip ipsec proposal
+  add &lt;span class=&quot;nv&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;ike2-oracle-vpn pfs-group&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;none
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Create a new policy group and template to separate this configuration from any other IPsec configuration:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  /ip ipsec policy group
+  add &lt;span class=&quot;nv&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;ike2-oracle-vpn
+  /ip ipsec policy
+  add &lt;span class=&quot;nv&quot;&gt;group&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;ike2-oracle-vpn &lt;span class=&quot;nv&quot;&gt;proposal&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;ike2-oracle-vpn &lt;span class=&quot;nv&quot;&gt;template&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;yes &lt;/span&gt;dst-address&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;0.0.0.0/0 src-address&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;0.0.0.0/0
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Create a new mode config entry with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;responder=no&lt;/code&gt; that will request configuration parameters from the server:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  /ip ipsec mode-config
+  add &lt;span class=&quot;nv&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;ike2-oracle-vpn &lt;span class=&quot;nv&quot;&gt;responder&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;no
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Create peer and identity configurations, remember to substitute yoru server IP and the correct certificate filename in the following command:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  /ip ipsec peer
+  add &lt;span class=&quot;nv&quot;&gt;address&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;123.123.123.123/32 exchange-mode&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;ike2 &lt;span class=&quot;nv&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;ike2-oracle-vpn &lt;span class=&quot;nv&quot;&gt;profile&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;ike2-oracle-vpn
+
+  /ip ipsec identity
+  &lt;span class=&quot;c&quot;&gt;# vpnclient.p12_1 is the one with `KT` marker on it&lt;/span&gt;
+  add auth-method&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;digital-signature &lt;span class=&quot;nv&quot;&gt;certificate&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;vpnclient.p12_1 generate-policy&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;port-strict mode-config&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;ike2-oracle-vpn &lt;span class=&quot;nv&quot;&gt;peer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;ike2-oracle-vpn policy-template-group&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;ike2-oracle-vpn
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Verify that the connection is successfully established:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  /ip ipsec
+  active-peers print
+  installed-sa print
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;You should see an established connection to your VPN server.&lt;/p&gt;
+
+&lt;h3 id=&quot;step-2-prepare-the-list-of-ips-to-be-sent-over-the-tunnel&quot;&gt;Step 2: Prepare the list of IPs to be sent over the tunnel&lt;/h3&gt;
+
+&lt;p&gt;Grab some existing IP-list and wrangle it to fit RouterOS. The following command will get a list of China IP ranges &lt;sup id=&quot;fnref:2&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:2&quot; class=&quot;footnote&quot; rel=&quot;footnote&quot;&gt;2&lt;/a&gt;&lt;/sup&gt;, add them to a list named &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;CNIP&lt;/code&gt;, and prepare them so that they can be easily imported to the mikrotik router.&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  curl &lt;span class=&quot;nt&quot;&gt;-s&lt;/span&gt; https://raw.githubusercontent.com/17mon/china_ip_list/master/china_ip_list.txt |sed &lt;span class=&quot;nt&quot;&gt;-e&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'s/^/add address=/g'&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-e&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'s/$/ list=CNIP/g'&lt;/span&gt;|sed &lt;span class=&quot;nt&quot;&gt;-e&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;$'1i&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\\\n&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;/ip firewall address-list'&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-e&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;$'1i&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\\\n&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;remove [/ip firewall address-list find list=CNIP]'&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;cnip.rsc
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Now same trick: upload this file to the router, and import it via &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/import cnip.rsc&lt;/code&gt;. Note that this list is huge and it may take a while to ingest it.&lt;/p&gt;
+
+&lt;h3 id=&quot;step-3-tag-traffic-that-match-the-list-in-mangle-firewall&quot;&gt;Step 3: Tag traffic that match the list in &lt;a href=&quot;https://wiki.mikrotik.com/wiki/Manual:IP/Firewall/Mangle&quot;&gt;Mangle Firewall&lt;/a&gt;&lt;/h3&gt;
+
+&lt;p&gt;Set the connection-mark under your mode config configuration:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  /ip ipsec mode-config
+  &lt;span class=&quot;nb&quot;&gt;set&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt; find &lt;span class=&quot;nv&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;ike2-oracle-vpn &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; connection-mark&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;ike2-oracle-vpn
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;When it is done, a NAT rule is generated with the dynamic address provided by the server:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;admin@MikroTik] /ip firewall mangle&amp;gt; /ip firewall nat print
+  Flags: X - disabled, I - invalid, D - dynamic
+   0  D &lt;span class=&quot;p&quot;&gt;;;;&lt;/span&gt; ipsec mode-config
+        &lt;span class=&quot;nv&quot;&gt;chain&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;srcnat &lt;span class=&quot;nv&quot;&gt;action&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;src-nat to-addresses&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;192.168.43.10 connection-mark&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;ike2-oracle-vpn
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Apply connection-mark to traffic matching the created address list:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  /ip firewall mangle
+  add &lt;span class=&quot;nv&quot;&gt;action&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;mark-connection &lt;span class=&quot;nv&quot;&gt;chain&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;prerouting dst-address-list&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;CNIP new-connection-mark&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;ike2-oracle-vpn &lt;span class=&quot;nv&quot;&gt;passthrough&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;yes&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;/public/files/mikrotik_ikev2/mikrotik-after-setup-ike2-mangled-traffic.png&quot; alt=&quot;Marked traffic that match the address list&quot; /&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;references&quot;&gt;References&lt;/h2&gt;
+
+&lt;div class=&quot;footnotes&quot; role=&quot;doc-endnotes&quot;&gt;
+  &lt;ol&gt;
+    &lt;li id=&quot;fn:1&quot; role=&quot;doc-endnote&quot;&gt;
+      &lt;p&gt;https://wiki.mikrotik.com/wiki/Manual:IP/IPsec#RouterOS_client_configuration &lt;a href=&quot;#fnref:1&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li id=&quot;fn:2&quot; role=&quot;doc-endnote&quot;&gt;
+      &lt;p&gt;https://www.willnet.net/index.php/archives/369/ &lt;a href=&quot;#fnref:2&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/div&gt;</content><author><name>Mengxin Cao</name><email>mcao2 at andrew.cmu.edu</email></author><category term="Tools" /><category term="Cloud" /><category term="Mikrotik" /><category term="Network" /><summary type="html">Motivation I got rid of my AT&amp;amp;T router a few days back and managed to have a Mikrotik router hAP ac² as an alternative. One benefit of using a mikrotik router, specifically, its RouterOS, is the customizability to add cool features to my home network. I have very slow traffic when using the AT&amp;amp;T home network when visiting some websites, e.g., weibo, so I want to route them via a VPN running on oracle cloud.</summary></entry><entry><title type="html">Notes on OCI (Oracle Cloud Infrastructure)</title><link href="/infrastructure/2021/05/23/notes-on-oci-usage/" rel="alternate" type="text/html" title="Notes on OCI (Oracle Cloud Infrastructure)" /><published>2021-05-23T00:00:00+00:00</published><updated>2021-05-23T00:00:00+00:00</updated><id>/infrastructure/2021/05/23/notes-on-oci-usage</id><content type="html" xml:base="/infrastructure/2021/05/23/notes-on-oci-usage/">&lt;h2 id=&quot;motivation&quot;&gt;Motivation&lt;/h2&gt;
 
 &lt;p&gt;Some of my services are too light that I don’t want to run them endlessly on my beefy home server. One reason is that I want better availability and clearly it’s hard (a better word probably is expensive) to achieve that in my current set up. So I decided to go for the Cloud, after all… I was a cloud TA!&lt;/p&gt;
 
@@ -14,7 +148,7 @@
 
 &lt;p&gt;In the instance detail page, click &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Attached VNICs&lt;/code&gt; under the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Resources&lt;/code&gt; tab. Then find the subnet of VLAN that this instance is attached with. You will be directed to the subnet detail page, where you can find the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Security Lists&lt;/code&gt;, and that is our target (the equivalent of AWS security group). Then you can add/remove any rules you want.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;/public/files/oci-security-list-under-vcn.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/public/files/oci/oci-security-list-under-vcn.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;h3 id=&quot;set-up-iptable-rules-via-command-line&quot;&gt;Set up iptable rules via command line&lt;/h3&gt;
 
@@ -1744,486 +1878,4 @@ See also: #456, #789
       &lt;p&gt;https://git-scm.com/book/en/v2/Git-Basics-Undoing-Things &lt;a href=&quot;#fnref:3&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
     &lt;/li&gt;
   &lt;/ol&gt;
-&lt;/div&gt;</content><author><name>Mengxin Cao</name><email>mcao2 at andrew.cmu.edu</email></author><category term="Primer" /><category term="Git" /><category term="SCM" /><summary type="html">Git Primer Git Commit Messages Git commit messages can help you understand why something happened months or years ago for your collaborators or yourselves. It affects a project’s maintainability, and hence plays a critical role in a project’s long-term success. This section we summarize some common techniques to write a healthy commit message. Of course there are variations on the styles and conventions adopted by different projects/orgs, you should pick one and stick to it as much as possible to reduce chaos and inconsistency.</summary></entry><entry><title type="html">Boost.Log Primer</title><link href="/primer/2020/07/12/boost-log-primer/" rel="alternate" type="text/html" title="Boost.Log Primer" /><published>2020-07-12T00:00:00+00:00</published><updated>2020-07-12T00:00:00+00:00</updated><id>/primer/2020/07/12/boost-log-primer</id><content type="html" xml:base="/primer/2020/07/12/boost-log-primer/">&lt;h1 id=&quot;boost-log-&quot;&gt;Boost Log &lt;sup id=&quot;fnref:1&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:1&quot; class=&quot;footnote&quot; rel=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/h1&gt;
-
-&lt;h2 id=&quot;prepare-the-namespace-aliases&quot;&gt;Prepare the namespace aliases&lt;/h2&gt;
-
-&lt;div class=&quot;language-cpp highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;namespace&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;logging&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;boost&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;namespace&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sinks&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;boost&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sinks&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;namespace&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;src&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;boost&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sources&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;namespace&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;expr&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;boost&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;expressions&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;namespace&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;attrs&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;boost&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;attributes&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;namespace&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;keywords&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;boost&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;keywords&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;!--more--&gt;
-
-&lt;h2 id=&quot;definitions-&quot;&gt;Definitions &lt;sup id=&quot;fnref:2&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:2&quot; class=&quot;footnote&quot; rel=&quot;footnote&quot;&gt;2&lt;/a&gt;&lt;/sup&gt;&lt;/h2&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;strong&gt;Log record&lt;/strong&gt;: a single bundle of info that is collected from the app and is a candidate for the log output&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;Attribute&lt;/strong&gt;: a piece of meta-info that can be used to specialize a log record e.g. ThreadID, Timestamp, etc.&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;Attribute value&lt;/strong&gt;: the actual data acquired from attributes and is attached to a specific log record. Values can have different types&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;Attribute value visitation&lt;/strong&gt;: a way of processing the attribute value, which involves applying a “visitor” (a function obj) to the attribute value&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;Attribute value extraction&lt;/strong&gt;: a way of processing the attribute value when the caller attempts to obtain a reference to the stored value. The caller should know the stored type of the attr value in order to be able to extract it&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;Log sink&lt;/strong&gt;: a target to which all log records are fed after being collected from the user’s app&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;Log source&lt;/strong&gt;: an entry point for the user’s app to put log records to&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;Log filter&lt;/strong&gt;: a predicate that takes a log record and tells whether this record should be kept or discarded&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;Log formatter&lt;/strong&gt;: a function obj that generates the final textual output from a log record&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;Logging core&lt;/strong&gt;: the global entity that maintains connections b/w sources and sinks and applies filters to records. usually used at the logging init&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;TLS&lt;/strong&gt;: thread-local storage&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;architecture-&quot;&gt;Architecture &lt;sup id=&quot;fnref:3&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:3&quot; class=&quot;footnote&quot; rel=&quot;footnote&quot;&gt;3&lt;/a&gt;&lt;/sup&gt;&lt;/h2&gt;
-
-&lt;h3 id=&quot;three-layer-architecture&quot;&gt;Three-layer architecture&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Data collection layer&lt;/li&gt;
-  &lt;li&gt;(Connection layer) Central-hub that interconnects the collection and the processing layers&lt;/li&gt;
-  &lt;li&gt;Data processing layer&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h4 id=&quot;visualization&quot;&gt;Visualization&lt;/h4&gt;
-
-&lt;p&gt;&lt;img src=&quot;/public/files/boost-log-arch.png&quot; alt=&quot;boost-log-arch&quot; /&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Arrows show the info flow direction
-    &lt;ul&gt;
-      &lt;li&gt;the left-most is our application (log sources)&lt;/li&gt;
-      &lt;li&gt;the right-most is the final storage if any
-        &lt;ul&gt;
-          &lt;li&gt;storage is optional because the processed log may include some actions without actual data persisting&lt;/li&gt;
-          &lt;li&gt;e.g. the app can emit a special log record that will be processed s.t. the user sees the error msg as a tool-tip notification over the app icon and hears an alarming sound&lt;/li&gt;
-          &lt;li&gt;this allows boost log be used not only for classic logging, but also to indicate some important events to the app user and accumulate statistical data&lt;/li&gt;
-        &lt;/ul&gt;
-      &lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;log-sources&quot;&gt;Log sources&lt;/h3&gt;
-
-&lt;p&gt;A log source is an entity that initiates logging by constructing a log record. In general, boost log lib does not require the use of loggers to write logs. But loggers are the most common kind of log sources.&lt;/p&gt;
-
-&lt;p&gt;In the left-most of the arch, our application &lt;strong&gt;emits log records&lt;/strong&gt; with the help of &lt;strong&gt;loggers&lt;/strong&gt;, which are special obj that provide streams to format msgs that will eventually be put to log&lt;/p&gt;
-
-&lt;p&gt;Boost log lib provides many different logger types and you can craft your own by extending the existing ones.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Loggers&lt;/strong&gt; are designed as a mixture of distinct features s.t. they can be used in combination.&lt;/p&gt;
-
-&lt;p&gt;You can embed the logger into your application classes or create and use a global instance of the logger.&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Embedding a logger provides a way to differentiate logs from different instances of the class&lt;/li&gt;
-  &lt;li&gt;A single global logger instance is more convenient like in functional-style programming&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;attributes-and-attribute-values&quot;&gt;Attributes and attribute values&lt;/h3&gt;
-
-&lt;p&gt;A &lt;strong&gt;log source&lt;/strong&gt; must pass all &lt;strong&gt;data&lt;/strong&gt; associated with the log record to the &lt;strong&gt;logging core&lt;/strong&gt;. This data is represented with a set of named attributes and each one is a function whose result is what we call “attribute values”. The attribute values are processed on further stages.&lt;/p&gt;
-
-&lt;p&gt;An example attribute is a function that returns the current timestamp, and its result (i.e. its value) is the particular time point.&lt;/p&gt;
-
-&lt;p&gt;We can classify attributes into 3 categories, &lt;strong&gt;ordered by increasing priority&lt;/strong&gt;:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Global attributes&lt;/li&gt;
-  &lt;li&gt;Thread-specific attributes&lt;/li&gt;
-  &lt;li&gt;Source-specific attributes&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;The &lt;strong&gt;global and thread-specific&lt;/strong&gt; attributes are maintained by the logging core, as shown in the architecture figure, and therefore these attributes need not be passed by the log source in order to initiate logging.&lt;/p&gt;
-
-&lt;p&gt;The global attributes are attached to any log record ever made.&lt;/p&gt;
-
-&lt;p&gt;Thread-specific attributes are attached only to the records made from the thread in which they were registered in the set.&lt;/p&gt;
-
-&lt;p&gt;Source-specific attributes are maintained by the source that initiates logging, and attached only to the records being made through that particular source.&lt;/p&gt;
-
-&lt;p&gt;When a log source &lt;strong&gt;initiates logging&lt;/strong&gt;, it acquire &lt;strong&gt;attribute values&lt;/strong&gt; from all three attribute sets. These values form a single set of named attribute values, and is then processed further.&lt;/p&gt;
-
-&lt;p&gt;It’s possible that a &lt;strong&gt;same-named attribute&lt;/strong&gt; that appear in several attribute sets. Such conflicts are solved on &lt;strong&gt;priority&lt;/strong&gt; basis. The global attributes have the least priority and the source-specific attributes have the highest.&lt;/p&gt;
-
-&lt;h3 id=&quot;logging-core-and-filtering&quot;&gt;Logging core and filtering&lt;/h3&gt;
-
-&lt;p&gt;&lt;strong&gt;Filtering&lt;/strong&gt;: After the &lt;strong&gt;logging source&lt;/strong&gt; composed the named attribute values set, the &lt;strong&gt;logging core&lt;/strong&gt; decides if this log record is going to be processed in sinks.&lt;/p&gt;
-
-&lt;p&gt;Two layers of filtering:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;strong&gt;Global filtering&lt;/strong&gt; is applied first within the logging core and allows quickly wiping away unneeded log records&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;Sink-specific filtering&lt;/strong&gt; is applied second within each sink separately and allows directing log records to particular sinks.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;It is not significant where the log record comes from (i.e. regardless the logging source that emit them), the filtering relies solely on the set of named attribute values attached to the record.&lt;/p&gt;
-
-&lt;p&gt;For a given log record, the filtering is &lt;strong&gt;performed only once&lt;/strong&gt; and only those attribute values that are attached to the record before the filtering starts can participate in filtering. We say this because some named attribute values, like the “log record message”, are typically &lt;strong&gt;attached to the log record after the filtering is done&lt;/strong&gt;, which means these values cannot be used in filters!&lt;/p&gt;
-
-&lt;h3 id=&quot;sinks-and-formatting&quot;&gt;Sinks and formatting&lt;/h3&gt;
-
-&lt;p&gt;A log record that passes filtering for &lt;strong&gt;at least one sink&lt;/strong&gt; is considered as &lt;strong&gt;consumable&lt;/strong&gt;.&lt;/p&gt;
-
-&lt;p&gt;If the sink supports formatted output, this is the point when log msg formatting takes place. Note that formatting is done on a per-sink basis s.t. each sink can have its own specific output format.&lt;/p&gt;
-
-&lt;p&gt;The formatted msg along with the composed set of named attribute values are passed to the accepting sinks.&lt;/p&gt;
-
-&lt;p&gt;As shown in the arch figure, a sink consists of two parts:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Sink frontend&lt;/li&gt;
-  &lt;li&gt;Sink backend&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;The division is made &lt;strong&gt;to extract the common functionality of sinks&lt;/strong&gt; like filtering, formatting, thread sync &lt;strong&gt;into separate entities&lt;/strong&gt; (frontends).&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Sink frontends&lt;/strong&gt; are provided by the lib and usually users won’t have to reimplement them.
-&lt;strong&gt;Sink backends&lt;/strong&gt; are one of the most likely places for extending the library. The backends do the actual data processing.&lt;/p&gt;
-
-&lt;p&gt;There can be multiple sinks in a single app.&lt;/p&gt;
-
-&lt;p&gt;E.g.&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;a sink that stores processed log records into a file&lt;/li&gt;
-  &lt;li&gt;another sink that sends the processed log records over the network to the remote log processing node&lt;/li&gt;
-  &lt;li&gt;another sink that puts record msgs into tool-tip notifications&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;The lib also provides most commonly used sink backends.&lt;/p&gt;
-
-&lt;h2 id=&quot;tutorial-&quot;&gt;Tutorial &lt;sup id=&quot;fnref:4&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:4&quot; class=&quot;footnote&quot; rel=&quot;footnote&quot;&gt;4&lt;/a&gt;&lt;/sup&gt;&lt;/h2&gt;
-
-&lt;h3 id=&quot;trivial-logging&quot;&gt;Trivial logging&lt;/h3&gt;
-
-&lt;p&gt;Necessary headers:&lt;/p&gt;
-
-&lt;div class=&quot;language-cpp highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cp&quot;&gt;#include &amp;lt;boost/log/trivial.hpp&amp;gt;
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;The &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;BOOST_LOG_TRIVIAL&lt;/code&gt; macro accepts a severity level and results in a stream-like objects that support insertion operator. The log msg will be printed on the console.&lt;/p&gt;
-
-&lt;p&gt;E.g.&lt;/p&gt;
-
-&lt;div class=&quot;language-cpp highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cp&quot;&gt;#include &amp;lt;boost/log/trivial.hpp&amp;gt;
-&lt;/span&gt;
-&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[])&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;BOOST_LOG_TRIVIAL&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;trace&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;A trace severity message&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;BOOST_LOG_TRIVIAL&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;debug&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;A debug severity message&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Features:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Each log record in the output msg contains a timestamp, a thread ID and the severity level&lt;/li&gt;
-  &lt;li&gt;It is safe to write logs from multiple threads concurrently and log msgs will not be corrupted&lt;/li&gt;
-  &lt;li&gt;Filtering can be applied&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h4 id=&quot;add-filters-to-the-trivial-logging&quot;&gt;Add filters to the trivial logging&lt;/h4&gt;
-
-&lt;p&gt;You will normally want to apply filters to output only significant records and ignore the rest.&lt;/p&gt;
-
-&lt;p&gt;Let’s do this by setting a &lt;strong&gt;global filter&lt;/strong&gt; in the &lt;strong&gt;logging core&lt;/strong&gt;.&lt;/p&gt;
-
-&lt;div class=&quot;language-cpp highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;init&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;logging&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;core&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;set_filter&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;logging&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;trivial&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;severity&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;logging&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;trivial&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;info&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-
-&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[])&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;init&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;BOOST_LOG_TRIVIAL&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;trace&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;A trace severity message will be ignored&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;BOOST_LOG_TRIVIAL&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;debug&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;A debug severity message will be ignored&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;BOOST_LOG_TRIVIAL&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;info&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;An informational severity message&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Since we are setting up a global filter, we have to acquire the logging core instance using &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;logging::core::get()&lt;/code&gt;. It returns a pointer to the core singleton instance.&lt;/p&gt;
-
-&lt;p&gt;The filter in this example is built as a &lt;a href=&quot;https://www.boost.org/doc/libs/release/libs/phoenix/doc/html/index.html&quot;&gt;Boost.Phoenix&lt;/a&gt; lambda expression. The left argument is a placeholder that describes the attribute to be checked. The placeholder along with &lt;strong&gt;the ordering operator&lt;/strong&gt; creates &lt;strong&gt;a function object&lt;/strong&gt; that will be called by the logging core to filter log records and only records that pass the predicate will end up on the console.&lt;/p&gt;
-
-&lt;h4 id=&quot;setting-up-sinks&quot;&gt;Setting up sinks&lt;/h4&gt;
-
-&lt;p&gt;The lib contains a default sink that is used as a fallback when the user did not set up any sinks. This is why our previous trivial logging example worked. This default sink always print log records to the console in a fixed format and is mostly provided to allow trivial logging to be used right away.&lt;/p&gt;
-
-&lt;p&gt;Sometimes trivial logging does not provide enough flexibility like when one wants to apply complex log processing logic. You need to &lt;strong&gt;construct&lt;/strong&gt; logging sinks and &lt;strong&gt;register&lt;/strong&gt; them with the logging core in order to customize this. This only needs to be done once somewhere in the startup code.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Note that once you add any sinks to the logging core, the default sink will no longer be used!&lt;/strong&gt; You will still be able to use trivial logging macros though.&lt;/p&gt;
-
-&lt;h5 id=&quot;logging-to-files&quot;&gt;Logging to files&lt;/h5&gt;
-
-&lt;p&gt;E.g.&lt;/p&gt;
-
-&lt;div class=&quot;language-cpp highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;init&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;logging&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;add_file_log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;sample.log&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;logging&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;core&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;set_filter&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;logging&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;trivial&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;severity&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;logging&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;trivial&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;info&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;The &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;add_file_log&lt;/code&gt; function initializes a logging sink that stores log records into a text file. You can also customize it with additional parameters in a named form:&lt;/p&gt;
-
-&lt;div class=&quot;language-cpp highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;logging&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;add_file_log&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;keywords&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;file_name&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;sample_%N.log&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// file name pattern&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;keywords&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rotation_size&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1024&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1024&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// rotate files every 10 MiB&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;keywords&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;time_based_rotation&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sinks&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;file&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rotation_at_time_point&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// or at midnight&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;keywords&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;format&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;[%TimeStamp%]: %Message%&quot;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// log record format&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h3 id=&quot;creating-loggers-and-writing-logs&quot;&gt;Creating loggers and writing logs&lt;/h3&gt;
-
-&lt;p&gt;The logger object is a logging source that can be used to emit logs records.&lt;/p&gt;
-
-&lt;p&gt;The &lt;strong&gt;trivial logging&lt;/strong&gt; example we seen above uses the logger provided by the lib and is used behind the scenes through the macro.&lt;/p&gt;
-
-&lt;p&gt;Unlike sinks, logging sources (loggers) need not be registered since they interact with the logging core directly.&lt;/p&gt;
-
-&lt;p&gt;Boost log lib provides two types of loggers:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Thread-safe loggers&lt;/li&gt;
-  &lt;li&gt;Non-thread-safe loggers&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;It is safe for different threads to write logs through &lt;strong&gt;different instances&lt;/strong&gt; of the non-thread-safe logger, which means a separate logger for each thread to write logs.&lt;/p&gt;
-
-&lt;p&gt;The thread-safe logger can be accessed from different threads concurrently and the thread-safety is protected by using locks, which means worse performance incase of intense logging compared to the non-thread-safe counterparts.&lt;/p&gt;
-
-&lt;p&gt;Regardless of the thread safety, all lib-provided loggers are default and copy-constructible and support swapping, so there should be no problem in making a logger a member of your class.&lt;/p&gt;
-
-&lt;p&gt;The lib provides many loggers with different features, such as severity and channel support. These features can be combined with each other in order to construct more complex loggers.&lt;/p&gt;
-
-&lt;h4 id=&quot;global-logger-object&quot;&gt;Global logger object&lt;/h4&gt;
-
-&lt;p&gt;In case you cannot put a logger into your class (suppose you don’t have one), the library provides a way of &lt;strong&gt;declaring global loggers&lt;/strong&gt; like this:&lt;/p&gt;
-
-&lt;div class=&quot;language-cpp highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;// Remember that we defined namespace src = boost::log::sources;&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;BOOST_LOG_INLINE_GLOBAL_LOGGER_DEFAULT&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;my_logger&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;src&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;logger_mt&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;The &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;my_logger&lt;/code&gt; is a user-defined tag name that will be used later to retrieve the global logger object.&lt;/p&gt;
-
-&lt;p&gt;The &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;logger_mt&lt;/code&gt; is the logger type. Any logger type provided by the lib or defined by the user can participate in such declaration. But note that you will normally want to use thread-safe loggers in a multi-threaded app as global logger obj since the logger will have a single instance.&lt;/p&gt;
-
-&lt;p&gt;In other parts of your app, you can acquire the global logger like this:&lt;/p&gt;
-
-&lt;div class=&quot;language-cpp highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;src&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;logger_mt&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;lg&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;my_logger&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;The &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;lg&lt;/code&gt; will refer to the one and only instance of the global logger throughout the application. The &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;get&lt;/code&gt; function is thread-safe and hence you don’t need additional synchronization around it.&lt;/p&gt;
-
-&lt;h4 id=&quot;writing-logs&quot;&gt;Writing logs&lt;/h4&gt;
-
-&lt;p&gt;E.g.&lt;/p&gt;
-
-&lt;div class=&quot;language-cpp highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;logging&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;record&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;rec&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;lg&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;open_record&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rec&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;logging&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;record_ostream&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;strm&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rec&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;strm&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;Hello, World!&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;strm&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;flush&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;lg&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;push_record&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;boost&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;move&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rec&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;));&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;The &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;open_record&lt;/code&gt; function determines if the record to be constructed is going to be consumed by at least one sink, i.e. filtering is applied at this stage.&lt;/p&gt;
-
-&lt;p&gt;If the record is to be consumed, the function returns a valid record obj and we can then fill the record msg into it. The record processing can be completed with the call to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;push_record&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;It seems complicated to use the logger even for the most simple log message… But we can easily wrap them into a macro! The log record above can be written like this:&lt;/p&gt;
-
-&lt;div class=&quot;language-cpp highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;BOOST_LOG&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;lg&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;Hello, World!&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;The &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;BOOST_LOG&lt;/code&gt; macro, along with other similar ones, is defined by the library.&lt;/p&gt;
-
-&lt;h3 id=&quot;adding-more-info-to-log-with-attributes&quot;&gt;Adding more info to log with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Attributes&lt;/code&gt;&lt;/h3&gt;
-
-&lt;p&gt;As said above, each log record can have many named attribute values attached. Attributes contain essential information about the log emit condition, like the line number in the code, executable name, current time, etc.&lt;/p&gt;
-
-&lt;p&gt;An attribute may behave as a &lt;strong&gt;value generator&lt;/strong&gt;, i.e. it may return a different value for each log record it is involved in. As soon as the attribute generates the value, the value becomes independent from the creator and can be used by filters, formatters and sinks.&lt;/p&gt;
-
-&lt;p&gt;In order to properly use attributes in your code, you need to know its &lt;strong&gt;name&lt;/strong&gt; and &lt;strong&gt;type&lt;/strong&gt; (or at least a set of types it may have).&lt;/p&gt;
-
-&lt;p&gt;As discussed in the previous sections, attributes can be classified into 3 scopes: global, thread-specific, and source-specific. When a log record is made, attribute values from these 3 sets are joined into a single set and passed to sinks. This implies that &lt;strong&gt;the origin of the attribute makes no difference for sinks&lt;/strong&gt;!&lt;/p&gt;
-
-&lt;p&gt;Any attribute can be registered in any scope. An attribute is given a unique name upon registration in order to make it possible to search for it. As mentioned earlier, conflicts resolution is based on priority.&lt;/p&gt;
-
-&lt;h4 id=&quot;attribute-registration&quot;&gt;Attribute registration&lt;/h4&gt;
-
-&lt;p&gt;There are common attributes that are likely to be used in nearly any application.&lt;/p&gt;
-
-&lt;p&gt;Here we take the log record counter attribute and the timestamp attribute for example. Such commonly used attributes can be registered with a single function call:&lt;/p&gt;
-
-&lt;div class=&quot;language-cpp highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;logging&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;add_common_attributes&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Common attributes like “LineID”, “Timestamp”, “ProcessID”, and “ThreadID” are registered globally.&lt;/p&gt;
-
-&lt;p&gt;Some special attributes are registered automatically for you on logger construction.&lt;/p&gt;
-
-&lt;p&gt;E.g. the severity_logger registers a source-specific attribute “Severity” which can be used to add a level of emphasis for different log records.&lt;/p&gt;
-
-&lt;p&gt;The &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;BOOST_LOG_SEV&lt;/code&gt; macro acts pretty much like &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;BOOST_LOG&lt;/code&gt; except that it takes an additional argument for the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;open_record&lt;/code&gt; method of the logger.&lt;/p&gt;
-
-&lt;p&gt;Usually we want to register a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;named_scope&lt;/code&gt; attribute so that we can store scope names in log for every log record.&lt;/p&gt;
-
-&lt;p&gt;E.g.&lt;/p&gt;
-
-&lt;div class=&quot;language-cpp highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;// some where in logger init&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;core&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;add_global_attribute&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Scope&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;attrs&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;named_scope&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;());&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;...&lt;/span&gt;
-&lt;span class=&quot;c1&quot;&gt;// some where in usage&lt;/span&gt;
-&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;named_scope_logging&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;BOOST_LOG_NAMED_SCOPE&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;named_scope_logging&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-
-    &lt;span class=&quot;n&quot;&gt;src&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;severity_logger&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;severity_level&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;slg&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-
-    &lt;span class=&quot;n&quot;&gt;BOOST_LOG_SEV&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;slg&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;normal&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;Hello from the function named_scope_logging!&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Another useful attribute for performance analysis is what we call the “Timeline” attribute.&lt;/p&gt;
-
-&lt;p&gt;After registered the “Timeline” attribute e.g. through &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;BOOST_LOG_SCOPED_THREAD_ATTR(&quot;Timeline&quot;, attrs::timer());&lt;/code&gt;, every log record after this will contain the “Timeline” attribute with a high precision time duration passed since the attribute was registered.&lt;/p&gt;
-
-&lt;p&gt;Based on these readings, one will be able to detect which parts of the code require more or less time to execute. This attribute will be unregistered upon leaving the scope that defined it.&lt;/p&gt;
-
-&lt;h3 id=&quot;log-record-formatting&quot;&gt;Log record formatting&lt;/h3&gt;
-
-&lt;p&gt;After adding/registering attributes, you need to specify a formatter that will use these attribute values in order to have them reach the output.&lt;/p&gt;
-
-&lt;p&gt;As we have seen in the tutorial about writing logs to files, we defined a formatter that used the “TimeStamp” and “Message” attributes.&lt;/p&gt;
-
-&lt;div class=&quot;language-cpp highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;init&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;logging&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;add_file_log&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;keywords&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;file_name&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;sample_%N.log&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;keywords&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rotation_size&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1024&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1024&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;keywords&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;time_based_rotation&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sinks&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;file&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rotation_at_time_point&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;keywords&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;format&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;[%TimeStamp%]: %Message%&quot;&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-
-    &lt;span class=&quot;n&quot;&gt;logging&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;core&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;set_filter&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;logging&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;trivial&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;severity&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;logging&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;trivial&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;info&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;The &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;format&lt;/code&gt; parameter allows us to specify the format of the log record. If you want to set up sinks manually, you can achieve this by using the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;set_formatter&lt;/code&gt; member function of the sink frontends.&lt;/p&gt;
-
-&lt;h4 id=&quot;lambda-style-formatters&quot;&gt;Lambda-style formatters&lt;/h4&gt;
-
-&lt;p&gt;E.g.&lt;/p&gt;
-
-&lt;div class=&quot;language-cpp highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;keywords&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;format&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;expr&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;stream&lt;/span&gt;
-        &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;expr&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;attr&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;unsigned&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;LineID&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-        &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;: &amp;lt;&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;logging&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;trivial&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;severity&lt;/span&gt;
-        &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;&amp;gt; &quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;expr&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;smessage&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;The &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;stream&lt;/code&gt; is a placeholder for the stream to format the record in. The insertion arguments like &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;attr&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;message&lt;/code&gt; are manipulators that define what should be stored in the stream. Note that it is possible to replace &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;severity&lt;/code&gt; with the following &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;expr::attr&amp;lt; logging::trivial::severity_level &amp;gt;(&quot;Severity&quot;)&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;It is recommended to define placeholders like &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;severity&lt;/code&gt; for user’s attributes since it provides simpler syntax in the template expressions and makes coding less error-prone.&lt;/p&gt;
-
-&lt;h4 id=&quot;boostformat-style-formatters&quot;&gt;Boost.Format-style formatters&lt;/h4&gt;
-
-&lt;p&gt;E.g.&lt;/p&gt;
-
-&lt;div class=&quot;language-cpp highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;sink&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;set_formatter&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;expr&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;format&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;%1%: &amp;lt;%2%&amp;gt; %3%&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-        &lt;span class=&quot;o&quot;&gt;%&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;expr&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;attr&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;unsigned&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;LineID&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-        &lt;span class=&quot;o&quot;&gt;%&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;logging&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;trivial&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;severity&lt;/span&gt;
-        &lt;span class=&quot;o&quot;&gt;%&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;expr&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;smessage&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;The &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;format&lt;/code&gt; placeholder accepts the format string like printf with positional specs of all arguments being formatted.&lt;/p&gt;
-
-&lt;p&gt;Note that &lt;strong&gt;only positional format is currently supported&lt;/strong&gt;, which means you cannot have all features in the Boost.Format.&lt;/p&gt;
-
-&lt;p&gt;When you call &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;format(s)&lt;/code&gt; where s is the format-string, it constructs an obj that parses the format string and looks for all directives in it and prepares internal structures for the next step.&lt;/p&gt;
-
-&lt;p&gt;Then you feed variables into the formatter.&lt;/p&gt;
-
-&lt;p&gt;Once all args have been fed you can dump the format obj to a stream.&lt;/p&gt;
-
-&lt;p&gt;All in all, the format class translates a format-string into operations on an internal stream, and finally returns the result of the formatting as a string or directly into an output stream.&lt;/p&gt;
-
-&lt;h4 id=&quot;specialized-formatters&quot;&gt;Specialized formatters&lt;/h4&gt;
-
-&lt;p&gt;These specialized formatters are designed for a number of special types like date, time, named scope. They provide extended control over the formatted values.&lt;/p&gt;
-
-&lt;p&gt;E.g. You can describe date and time format with a format string compatible with Boost.DateTime&lt;/p&gt;
-
-&lt;div class=&quot;language-cpp highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;expr&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;stream&lt;/span&gt;
-    &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;expr&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;format_date_time&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;boost&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;posix_time&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ptime&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;TimeStamp&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;%Y-%m-%d %H:%M:%S&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-    &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;: &amp;lt;&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;logging&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;trivial&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;severity&lt;/span&gt;
-    &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;&amp;gt; &quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;expr&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;smessage&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h4 id=&quot;string-templates-as-formatters&quot;&gt;String templates as formatters&lt;/h4&gt;
-
-&lt;p&gt;In some contexts, textual templates are accepted as formatters and the lib init support code is invoked to parse the template and reconstruct the appropriate formatter.&lt;/p&gt;
-
-&lt;p&gt;It’s suitable for simple formatting needs but keep in mind when using this approach there are a number of caveats and you should be careful if you want to use it in a complex formatting need.&lt;/p&gt;
-
-&lt;p&gt;E.g.&lt;/p&gt;
-
-&lt;div class=&quot;language-cpp highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;keywords&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;format&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;[%TimeStamp%]: %Message%&quot;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;The &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;format&lt;/code&gt; now accepts a format string template that contain a number of placeholders enclosed with percent signs. Each placeholder contain an attribute value name to insert instead of the placeholder.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Note that such format templates are not accepted by sink backends in the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;set_formatter&lt;/code&gt; method&lt;/strong&gt;! You need to call &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;parse_formatter&lt;/code&gt; to parse textual template into a formatter function!&lt;/p&gt;
-
-&lt;h4 id=&quot;custom-formatting-functions&quot;&gt;Custom formatting functions&lt;/h4&gt;
-
-&lt;p&gt;You can add a custom formatter to a sink backend that supports formatting. The formatter is actually a function obj that supports the following signature:&lt;/p&gt;
-
-&lt;div class=&quot;language-cpp highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;// CharT is the target character type&lt;/span&gt;
-&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;logging&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;record_view&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;const&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;rec&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;logging&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;basic_formatting_ostream&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;CharT&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;amp;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;strm&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;The formatter will be invoked whenever a log record view &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;rec&lt;/code&gt; passes filtering and is to be stored in the log.&lt;/p&gt;
-
-&lt;p&gt;I tried to customize the ThreadID attribute with the lambda style formatter but got no luck, FYI &lt;a href=&quot;https://sourceforge.net/p/boost-log/discussion/710021/thread/e90226f5/&quot;&gt;here’s a pretty old discussion about formatting ThreadID&lt;/a&gt;.&lt;/p&gt;
-
-&lt;div class=&quot;footnotes&quot; role=&quot;doc-endnotes&quot;&gt;
-  &lt;ol&gt;
-    &lt;li id=&quot;fn:1&quot; role=&quot;doc-endnote&quot;&gt;
-      &lt;p&gt;https://www.boost.org/doc/libs/1_63_0/libs/log/doc/html/index.html &lt;a href=&quot;#fnref:1&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
-    &lt;/li&gt;
-    &lt;li id=&quot;fn:2&quot; role=&quot;doc-endnote&quot;&gt;
-      &lt;p&gt;https://www.boost.org/doc/libs/1_63_0/libs/log/doc/html/log/defs.html &lt;a href=&quot;#fnref:2&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
-    &lt;/li&gt;
-    &lt;li id=&quot;fn:3&quot; role=&quot;doc-endnote&quot;&gt;
-      &lt;p&gt;https://www.boost.org/doc/libs/1_63_0/libs/log/doc/html/log/design.html &lt;a href=&quot;#fnref:3&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
-    &lt;/li&gt;
-    &lt;li id=&quot;fn:4&quot; role=&quot;doc-endnote&quot;&gt;
-      &lt;p&gt;https://www.boost.org/doc/libs/1_63_0/libs/log/doc/html/log/tutorial.html &lt;a href=&quot;#fnref:4&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
-    &lt;/li&gt;
-  &lt;/ol&gt;
-&lt;/div&gt;</content><author><name>Mengxin Cao</name><email>mcao2 at andrew.cmu.edu</email></author><category term="Primer" /><category term="Logging" /><category term="C++" /><summary type="html">Boost Log 1 Prepare the namespace aliases namespace logging = boost::log; namespace sinks = boost::log::sinks; namespace src = boost::log::sources; namespace expr = boost::log::expressions; namespace attrs = boost::log::attributes; namespace keywords = boost::log::keywords; https://www.boost.org/doc/libs/1_63_0/libs/log/doc/html/index.html &amp;#8617;</summary></entry></feed>
+&lt;/div&gt;</content><author><name>Mengxin Cao</name><email>mcao2 at andrew.cmu.edu</email></author><category term="Primer" /><category term="Git" /><category term="SCM" /><summary type="html">Git Primer Git Commit Messages Git commit messages can help you understand why something happened months or years ago for your collaborators or yourselves. It affects a project’s maintainability, and hence plays a critical role in a project’s long-term success. This section we summarize some common techniques to write a healthy commit message. Of course there are variations on the styles and conventions adopted by different projects/orgs, you should pick one and stick to it as much as possible to reduce chaos and inconsistency.</summary></entry></feed>

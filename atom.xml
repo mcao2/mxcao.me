@@ -4,13 +4,156 @@
  <title>mxin</title>
  <link href="/atom.xml" rel="self"/>
  <link href="/"/>
- <updated>2021-05-23T22:37:00+00:00</updated>
+ <updated>2021-05-29T04:09:13+00:00</updated>
  <id></id>
  <author>
    <name>Mengxin Cao</name>
    <email>mcao2 at andrew.cmu.edu</email>
  </author>
 
+ 
+ <entry>
+   <title>Set up IKEv2 VPN on a Mikrotik Router</title>
+   <link href="/tools/2021/05/28/setup-mikrotik-ike2/"/>
+   <updated>2021-05-28T00:00:00+00:00</updated>
+   <id>/tools/2021/05/28/setup-mikrotik-ike2</id>
+   <content type="html">&lt;h2 id=&quot;motivation&quot;&gt;Motivation&lt;/h2&gt;
+
+&lt;p&gt;I got rid of my AT&amp;amp;T router a few days back and managed to have a Mikrotik router &lt;a href=&quot;https://mikrotik.com/product/hap_ac2&quot;&gt;hAP ac²&lt;/a&gt; as an alternative. One benefit of using a mikrotik router, specifically, its RouterOS, is the customizability to add cool features to my home network. I have very slow traffic when using the AT&amp;amp;T home network when visiting some websites, e.g., weibo, so I want to route them via a VPN running on oracle cloud.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;Check out my previous post about setting up an OCI instance if you are interested.&lt;/p&gt;
+
+&lt;h2 id=&quot;set-up-an-ipsec-vpn&quot;&gt;Set up an IPSec VPN&lt;/h2&gt;
+
+&lt;p&gt;I usually use Tailscale for VPNs but seems mikrotik does not have it for now. So I found an IPSec VPN auto setup script to ease the burden. Please checkout &lt;a href=&quot;https://github.com/hwdsl2/setup-ipsec-vpn&quot;&gt;this repo&lt;/a&gt; for a detailed walkthrough.&lt;/p&gt;
+
+&lt;p&gt;For Ubuntu &amp;amp; Debian, the one-liner script is:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  wget https://git.io/vpnsetup &lt;span class=&quot;nt&quot;&gt;-O&lt;/span&gt; vpn.sh &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;sh vpn.sh &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;ikev2.sh &lt;span class=&quot;nt&quot;&gt;--auto&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;set-up-an-ikev2-client-on-the-mikrotik-router&quot;&gt;Set up an IKEv2 client on the Mikrotik router&lt;/h2&gt;
+
+&lt;p&gt;You can find some tutorials on setting up a NordVPN on a RouterOS, like &lt;a href=&quot;https://wiki.mikrotik.com/wiki/IKEv2_EAP_between_NordVPN_and_RouterOS&quot;&gt;this one&lt;/a&gt; and most of the steps are similar to what we need to do.&lt;/p&gt;
+
+&lt;h3 id=&quot;step-0-import-your-p12-file&quot;&gt;Step 0: Import your &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.p12&lt;/code&gt; file&lt;/h3&gt;
+
+&lt;p&gt;This &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.p12&lt;/code&gt; file acts like the all-in-one cert and is usually encrypted with a passphrase. You can find it in the output of the previous step when you setting up the VPN server.&lt;/p&gt;
+
+&lt;p&gt;Upload your &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.p12&lt;/code&gt; file to the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Files&lt;/code&gt; of the mikrotik router. You can verify the file is accessible by using the following command:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  /file print
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;And you will find something like this:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  &lt;span class=&quot;c&quot;&gt;# NAME                                       TYPE                                            SIZE CREATION-TIME&lt;/span&gt;
+  0 vpnclient.p12                              .p12 file                                       4425 may/27/2021 22:00:00
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Next import this &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.p12&lt;/code&gt; file via:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  /certificate import file-name&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;vpnclient.p12 &lt;span class=&quot;nv&quot;&gt;passphrase&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;YOUR_PASSPHRASE
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Remember to substitute your passphrase in the above command. And you probably need to run this command twice until you see the number of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;private-keys-imported&lt;/code&gt; is &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;1&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Then go to the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;certificates&lt;/code&gt; tab of the web portal, check the one with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;KT&lt;/code&gt; marker, note it down and it will be the one we will use in the next steps.&lt;/p&gt;
+
+&lt;h3 id=&quot;step-1-set-up-the-ikev2-client-&quot;&gt;Step 1: Set up the IKEv2 client &lt;sup id=&quot;fnref:1&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:1&quot; class=&quot;footnote&quot; rel=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/h3&gt;
+
+&lt;p&gt;Create a separate Phase 1 profile and Phase 2 proposal configurations to not interfere with any existing IPsec configuration:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  /ip ipsec profile
+  add &lt;span class=&quot;nv&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;ike2-oracle-vpn
+  /ip ipsec proposal
+  add &lt;span class=&quot;nv&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;ike2-oracle-vpn pfs-group&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;none
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Create a new policy group and template to separate this configuration from any other IPsec configuration:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  /ip ipsec policy group
+  add &lt;span class=&quot;nv&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;ike2-oracle-vpn
+  /ip ipsec policy
+  add &lt;span class=&quot;nv&quot;&gt;group&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;ike2-oracle-vpn &lt;span class=&quot;nv&quot;&gt;proposal&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;ike2-oracle-vpn &lt;span class=&quot;nv&quot;&gt;template&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;yes &lt;/span&gt;dst-address&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;0.0.0.0/0 src-address&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;0.0.0.0/0
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Create a new mode config entry with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;responder=no&lt;/code&gt; that will request configuration parameters from the server:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  /ip ipsec mode-config
+  add &lt;span class=&quot;nv&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;ike2-oracle-vpn &lt;span class=&quot;nv&quot;&gt;responder&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;no
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Create peer and identity configurations, remember to substitute yoru server IP and the correct certificate filename in the following command:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  /ip ipsec peer
+  add &lt;span class=&quot;nv&quot;&gt;address&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;123.123.123.123/32 exchange-mode&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;ike2 &lt;span class=&quot;nv&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;ike2-oracle-vpn &lt;span class=&quot;nv&quot;&gt;profile&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;ike2-oracle-vpn
+
+  /ip ipsec identity
+  &lt;span class=&quot;c&quot;&gt;# vpnclient.p12_1 is the one with `KT` marker on it&lt;/span&gt;
+  add auth-method&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;digital-signature &lt;span class=&quot;nv&quot;&gt;certificate&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;vpnclient.p12_1 generate-policy&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;port-strict mode-config&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;ike2-oracle-vpn &lt;span class=&quot;nv&quot;&gt;peer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;ike2-oracle-vpn policy-template-group&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;ike2-oracle-vpn
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Verify that the connection is successfully established:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  /ip ipsec
+  active-peers print
+  installed-sa print
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;You should see an established connection to your VPN server.&lt;/p&gt;
+
+&lt;h3 id=&quot;step-2-prepare-the-list-of-ips-to-be-sent-over-the-tunnel&quot;&gt;Step 2: Prepare the list of IPs to be sent over the tunnel&lt;/h3&gt;
+
+&lt;p&gt;Grab some existing IP-list and wrangle it to fit RouterOS. The following command will get a list of China IP ranges &lt;sup id=&quot;fnref:2&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:2&quot; class=&quot;footnote&quot; rel=&quot;footnote&quot;&gt;2&lt;/a&gt;&lt;/sup&gt;, add them to a list named &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;CNIP&lt;/code&gt;, and prepare them so that they can be easily imported to the mikrotik router.&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  curl &lt;span class=&quot;nt&quot;&gt;-s&lt;/span&gt; https://raw.githubusercontent.com/17mon/china_ip_list/master/china_ip_list.txt |sed &lt;span class=&quot;nt&quot;&gt;-e&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'s/^/add address=/g'&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-e&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'s/$/ list=CNIP/g'&lt;/span&gt;|sed &lt;span class=&quot;nt&quot;&gt;-e&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;$'1i&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\\\n&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;/ip firewall address-list'&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-e&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;$'1i&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\\\n&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;remove [/ip firewall address-list find list=CNIP]'&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;cnip.rsc
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Now same trick: upload this file to the router, and import it via &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/import cnip.rsc&lt;/code&gt;. Note that this list is huge and it may take a while to ingest it.&lt;/p&gt;
+
+&lt;h3 id=&quot;step-3-tag-traffic-that-match-the-list-in-mangle-firewall&quot;&gt;Step 3: Tag traffic that match the list in &lt;a href=&quot;https://wiki.mikrotik.com/wiki/Manual:IP/Firewall/Mangle&quot;&gt;Mangle Firewall&lt;/a&gt;&lt;/h3&gt;
+
+&lt;p&gt;Set the connection-mark under your mode config configuration:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  /ip ipsec mode-config
+  &lt;span class=&quot;nb&quot;&gt;set&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt; find &lt;span class=&quot;nv&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;ike2-oracle-vpn &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; connection-mark&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;ike2-oracle-vpn
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;When it is done, a NAT rule is generated with the dynamic address provided by the server:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;admin@MikroTik] /ip firewall mangle&amp;gt; /ip firewall nat print
+  Flags: X - disabled, I - invalid, D - dynamic
+   0  D &lt;span class=&quot;p&quot;&gt;;;;&lt;/span&gt; ipsec mode-config
+        &lt;span class=&quot;nv&quot;&gt;chain&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;srcnat &lt;span class=&quot;nv&quot;&gt;action&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;src-nat to-addresses&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;192.168.43.10 connection-mark&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;ike2-oracle-vpn
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Apply connection-mark to traffic matching the created address list:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  /ip firewall mangle
+  add &lt;span class=&quot;nv&quot;&gt;action&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;mark-connection &lt;span class=&quot;nv&quot;&gt;chain&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;prerouting dst-address-list&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;CNIP new-connection-mark&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;ike2-oracle-vpn &lt;span class=&quot;nv&quot;&gt;passthrough&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;yes&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;/public/files/mikrotik_ikev2/mikrotik-after-setup-ike2-mangled-traffic.png&quot; alt=&quot;Marked traffic that match the address list&quot; /&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;references&quot;&gt;References&lt;/h2&gt;
+
+&lt;div class=&quot;footnotes&quot; role=&quot;doc-endnotes&quot;&gt;
+  &lt;ol&gt;
+    &lt;li id=&quot;fn:1&quot; role=&quot;doc-endnote&quot;&gt;
+      &lt;p&gt;https://wiki.mikrotik.com/wiki/Manual:IP/IPsec#RouterOS_client_configuration &lt;a href=&quot;#fnref:1&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li id=&quot;fn:2&quot; role=&quot;doc-endnote&quot;&gt;
+      &lt;p&gt;https://www.willnet.net/index.php/archives/369/ &lt;a href=&quot;#fnref:2&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/div&gt;
+</content>
+ </entry>
  
  <entry>
    <title>Notes on OCI (Oracle Cloud Infrastructure)</title>
@@ -33,7 +176,7 @@
 
 &lt;p&gt;In the instance detail page, click &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Attached VNICs&lt;/code&gt; under the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Resources&lt;/code&gt; tab. Then find the subnet of VLAN that this instance is attached with. You will be directed to the subnet detail page, where you can find the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Security Lists&lt;/code&gt;, and that is our target (the equivalent of AWS security group). Then you can add/remove any rules you want.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;/public/files/oci-security-list-under-vcn.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/public/files/oci/oci-security-list-under-vcn.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;h3 id=&quot;set-up-iptable-rules-via-command-line&quot;&gt;Set up iptable rules via command line&lt;/h3&gt;
 
