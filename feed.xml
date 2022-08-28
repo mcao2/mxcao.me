@@ -1,4 +1,247 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.2">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2022-08-28T17:57:15+00:00</updated><id>/feed.xml</id><title type="html">mxin</title><subtitle>mxin</subtitle><author><name>Mengxin Cao</name><email>me at mxcao.me</email></author><entry><title type="html">Set up IKEv2 VPN on a Mikrotik Router</title><link href="/tools/2021/05/28/setup-mikrotik-ike2/" rel="alternate" type="text/html" title="Set up IKEv2 VPN on a Mikrotik Router" /><published>2021-05-28T00:00:00+00:00</published><updated>2021-05-28T00:00:00+00:00</updated><id>/tools/2021/05/28/setup-mikrotik-ike2</id><content type="html" xml:base="/tools/2021/05/28/setup-mikrotik-ike2/">&lt;h2 id=&quot;motivation&quot;&gt;Motivation&lt;/h2&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.2">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2022-08-28T18:23:50+00:00</updated><id>/feed.xml</id><title type="html">mxin</title><subtitle>mxin</subtitle><author><name>Mengxin Cao</name><email>me at mxcao.me</email></author><entry><title type="html">Set up network edge router via V2Ray</title><link href="/tools/2022/08/28/setup-vmess-edge/" rel="alternate" type="text/html" title="Set up network edge router via V2Ray" /><published>2022-08-28T00:00:00+00:00</published><updated>2022-08-28T00:00:00+00:00</updated><id>/tools/2022/08/28/setup-vmess-edge</id><content type="html" xml:base="/tools/2022/08/28/setup-vmess-edge/">&lt;h2 id=&quot;motivation&quot;&gt;Motivation&lt;/h2&gt;
+
+&lt;p&gt;Hello! Long time no see! I have been heavily using an iOS app called “Quantumult X” (a.k.a. QX) these days, mainly for the following reasons:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Easy to setup and lots of tutorials/scripts online that you can add and learn&lt;/li&gt;
+  &lt;li&gt;You can add VPN servers, add flexible routing rules e.g., SSID-based switching, and subscribe to public servers (not recommended out of privacy/security concerns)&lt;/li&gt;
+  &lt;li&gt;You can do MITM rewrites that enable you to have premium features on other apps for free&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Overall I’m very happy with this app but I do find some limitations:&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;The set of protocols supported by QX is limited. According to their &lt;a href=&quot;https://github.com/crossutility/Quantumult-X/blob/d30a160eb093b3be175ea5eeeff0648db50b2a20/sample.conf#L129&quot;&gt;sample.conf&lt;/a&gt;, it only supports &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;shadowsocks&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;vmess&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;http&lt;/code&gt;, and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;trojan&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;For me I do have some proxy servers using &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;shadowsocks&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;vmess&lt;/code&gt;, but I also have other types up and running such as &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;wireguard&lt;/code&gt;. So natively there’s no way you can add a wireguard server to this list of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;server_local&lt;/code&gt; in QX.&lt;/p&gt;
+
+&lt;p&gt;Besides that I have other good-to-have features that I wish I can use within a single app:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;iOS only supports 1 VPN up and running and therefore if I connect to QX then my tailscale connection is down. This is okay but it would be great if I can access my services deployed within the tailscale subnet.&lt;/li&gt;
+  &lt;li&gt;Even if this single app QX is capable to handle all the protocols, it is still limited to my mobile devices and I wish I can have some sort of routing done on the server side rather than on this app, so that if I switch to another app or a different platform then I can still have the same set of routing rules and servers. This is what I call the “network edge router” which is simply a VPS server that helps me route my traffic to different VPN servers.
+    &lt;ul&gt;
+      &lt;li&gt;The added benefit of this approach is that the VPS server is much more performant and flexible since it is a Linux machine so it can do much complicated things like multi-hop connections (e.g., device A -&amp;gt; Network Edge Router -&amp;gt; VPN@Server1 -&amp;gt; VPN@Server2), which will greatly improve your anonymity.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;In this post I will share how I set up such a network edge router with the help of V2Ray. Specifically I’m deploying this service to my OCI Ampere machine (arm64). Check out my previous post about setting up an OCI instance if you are interested.&lt;/p&gt;
+
+&lt;p&gt;Before we come to the v2ray server config itself, let’s add a few VPN servers that we will use later.&lt;/p&gt;
+
+&lt;h2 id=&quot;set-up-a-cloudfare-warp-vpn-or-any-wireguard-server&quot;&gt;Set up a Cloudfare Warp+ VPN (or any wireguard server)&lt;/h2&gt;
+
+&lt;p&gt;One thing great about &lt;a href=&quot;https://blog.cloudflare.com/1111-warp-better-vpn/&quot;&gt;Cloudfare Warp+&lt;/a&gt; is that you can convert it to a wireguard server with the help of &lt;a href=&quot;https://github.com/ViRb3/wgcf&quot;&gt;wgcf&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;The conversion steps are simple and straightforward, just follow their official README and you should be good to go. Below is my steps for my future reference&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;wget https://github.com/ViRb3/wgcf/releases/download/v2.2.15/wgcf_2.2.15_linux_arm64
+&lt;span class=&quot;nb&quot;&gt;ln&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-s&lt;/span&gt; wgcf_2.2.15_linux_arm64 wgcf
+./wgcf register &lt;span class=&quot;nt&quot;&gt;-n&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'&amp;lt;machine name&amp;gt;'&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--accept-tos&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;WGCF_LICENSE_KEY&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&amp;lt;your license key&amp;gt;&quot;&lt;/span&gt; ./wgcf update
+./wgcf generate
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;After the above steps you should have a wireguard conf file named &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;wgcf-profile.conf&lt;/code&gt; by default.&lt;/p&gt;
+
+&lt;h3 id=&quot;use-wireguard-as-a-socks5-server&quot;&gt;Use wireguard as a socks5 server&lt;/h3&gt;
+
+&lt;p&gt;We don’t want to directly use the generated wireguard config because it will route all our VPS traffic through Cloudfare. What we want is an application-based proxy. So here I will convert it into a socks5 proxy server by using a docker container. I know this is not the most efficient approach but this is simpler and easy to follow.&lt;/p&gt;
+
+&lt;p&gt;First check out the content of the generated wireguard conf file in the previous step and &lt;strong&gt;remove all the IPv6 contents within this file&lt;/strong&gt; e.g., your wireguard IPv6 address, and the IPv6 CIDR in the AllowedIPs. This step is necesssary because our wireguard-socks5 docker container cannot process such rules.&lt;/p&gt;
+
+&lt;p&gt;Clone &lt;a href=&quot;https://github.com/mcao2/wireguard-socks5&quot;&gt;this repo&lt;/a&gt; and build your own wireguard-socks5 image. Note that you may want to change the network interface &lt;a href=&quot;https://github.com/mcao2/wireguard-socks5/blob/7996c5cb0889467c37de6cfc1ed2e7d9a684f778/sockd.conf#L3&quot;&gt;here&lt;/a&gt; used in the container if you encounter any issues (e.g., change it to eth0). Note that after the change you should rebuild the docker image.&lt;/p&gt;
+
+&lt;p&gt;Below is my steps:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git clone git@github.com:mcao2/wireguard-socks5.git
+podman build &lt;span class=&quot;nt&quot;&gt;-t&lt;/span&gt; wireguard-socks5:latest-arm &lt;span class=&quot;nb&quot;&gt;.&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# First run an interactive container to check if there's any errors&lt;/span&gt;
+podman run &lt;span class=&quot;nt&quot;&gt;--rm&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-it&lt;/span&gt; &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;--name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;wireguard-socks-proxy &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;--device&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/dev/net/tun &lt;span class=&quot;nt&quot;&gt;--cap-add&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;NET_ADMIN &lt;span class=&quot;nt&quot;&gt;--privileged&lt;/span&gt; &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;--publish&lt;/span&gt; 127.0.0.1:1080:1080 &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;--volume&lt;/span&gt; /my/dir/to/wireguard:/etc/wireguard:z &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+  wireguard-socks5:latest-arm
+&lt;span class=&quot;c&quot;&gt;# If you encounter network interface name resolution error then change it in https://github.com/mcao2/wireguard-socks5/blob/master/sockd.conf and rebuild the docker&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# Now start our proxy server in detach mode&lt;/span&gt;
+podman run &lt;span class=&quot;nt&quot;&gt;--rm&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-d&lt;/span&gt; &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;--name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;wireguard-socks-proxy &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;--device&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/dev/net/tun &lt;span class=&quot;nt&quot;&gt;--cap-add&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;NET_ADMIN &lt;span class=&quot;nt&quot;&gt;--privileged&lt;/span&gt; &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;--publish&lt;/span&gt; 127.0.0.1:1080:1080 &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;--volume&lt;/span&gt; /my/dir/to/wireguard:/etc/wireguard:z &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+  wireguard-socks5:latest-arm
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;By now you should have a socks5 server up and running in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;127.0.0.1:1080&lt;/code&gt;, verify this by using &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;curl --proxy socks5h://127.0.0.1:1080 ipinfo.io&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h3 id=&quot;auto-start-container-on-restart&quot;&gt;Auto start container on restart&lt;/h3&gt;
+
+&lt;p&gt;Podman provides command to generate a systemd unit file that you can enable for this purpose. Below is my steps to enable this:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;su
+setsebool &lt;span class=&quot;nt&quot;&gt;-P&lt;/span&gt; container_manage_cgroup on
+&lt;span class=&quot;c&quot;&gt;# `--name` is the container name&lt;/span&gt;
+podman generate systemd &lt;span class=&quot;nt&quot;&gt;--files&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--name&lt;/span&gt; wireguard-socks-proxy &lt;span class=&quot;nt&quot;&gt;--new&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;mv &lt;/span&gt;container-wireguard-socks-proxy.service /etc/systemd/system/container-wireguard-socks-proxy.service
+systemctl &lt;span class=&quot;nb&quot;&gt;enable &lt;/span&gt;container-wireguard-socks-proxy.service
+&lt;span class=&quot;c&quot;&gt;# Stop your existing container first&lt;/span&gt;
+podman &lt;span class=&quot;nb&quot;&gt;rm&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-f&lt;/span&gt; wireguard-socks-proxy
+&lt;span class=&quot;c&quot;&gt;# Start your new container via systemd&lt;/span&gt;
+systemctl start container-wireguard-socks-proxy.service
+&lt;span class=&quot;c&quot;&gt;# Check its static&lt;/span&gt;
+systemctl status container-wireguard-socks-proxy.service
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;v2ray-rules&quot;&gt;V2Ray rules&lt;/h2&gt;
+
+&lt;p&gt;Now is the fun part! Install the latest V2Ray service following &lt;a href=&quot;https://github.com/v2fly/fhs-install-v2ray&quot;&gt;their guides&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Edit the config file &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/usr/local/etc/v2ray/config.json&lt;/code&gt; and add the following contents:&lt;/p&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;s2&quot;&gt;&quot;log&quot;&lt;/span&gt;: &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;s2&quot;&gt;&quot;loglevel&quot;&lt;/span&gt;: &lt;span class=&quot;s2&quot;&gt;&quot;warning&quot;&lt;/span&gt;,
+    &lt;span class=&quot;s2&quot;&gt;&quot;access&quot;&lt;/span&gt;: &lt;span class=&quot;s2&quot;&gt;&quot;/var/log/v2ray/access.log&quot;&lt;/span&gt;,
+    &lt;span class=&quot;s2&quot;&gt;&quot;error&quot;&lt;/span&gt;: &lt;span class=&quot;s2&quot;&gt;&quot;/var/log/v2ray/error.log&quot;&lt;/span&gt;
+  &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;,
+  &lt;span class=&quot;s2&quot;&gt;&quot;inbounds&quot;&lt;/span&gt;: &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;s2&quot;&gt;&quot;tag&quot;&lt;/span&gt;: &lt;span class=&quot;s2&quot;&gt;&quot;vmess-in&quot;&lt;/span&gt;,
+      // CHANGE ME!
+      &lt;span class=&quot;s2&quot;&gt;&quot;port&quot;&lt;/span&gt;: &amp;lt;YOUR_PORT_1&amp;gt;,
+      &lt;span class=&quot;s2&quot;&gt;&quot;listen&quot;&lt;/span&gt;: &lt;span class=&quot;s2&quot;&gt;&quot;0.0.0.0&quot;&lt;/span&gt;,
+      &lt;span class=&quot;s2&quot;&gt;&quot;protocol&quot;&lt;/span&gt;: &lt;span class=&quot;s2&quot;&gt;&quot;vmess&quot;&lt;/span&gt;,
+      &lt;span class=&quot;s2&quot;&gt;&quot;settings&quot;&lt;/span&gt;: &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;s2&quot;&gt;&quot;clients&quot;&lt;/span&gt;: &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt; // An array &lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;valid user accounts
+          &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+            // CHANGE ME!
+            &lt;span class=&quot;s2&quot;&gt;&quot;id&quot;&lt;/span&gt;: &lt;span class=&quot;s2&quot;&gt;&quot;&amp;lt;YOUR_UUID_1&amp;gt;&quot;&lt;/span&gt;, // User ID, &lt;span class=&quot;k&quot;&gt;in &lt;/span&gt;the form of a UUID
+            &lt;span class=&quot;s2&quot;&gt;&quot;alterId&quot;&lt;/span&gt;: 64, // Number of alternative IDs, which will be generated &lt;span class=&quot;k&quot;&gt;in &lt;/span&gt;a deterministic way
+            &lt;span class=&quot;s2&quot;&gt;&quot;level&quot;&lt;/span&gt;: 0 // V2Ray will apply different policies based on user level
+          &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;,
+        &lt;span class=&quot;s2&quot;&gt;&quot;disableInsecureEncryption&quot;&lt;/span&gt;: &lt;span class=&quot;nb&quot;&gt;true&lt;/span&gt; // Forbids client &lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;using insecure encryption methods
+      &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;,
+    &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;s2&quot;&gt;&quot;tag&quot;&lt;/span&gt;: &lt;span class=&quot;s2&quot;&gt;&quot;telegram-in&quot;&lt;/span&gt;,
+      // CHANGE ME!
+      &lt;span class=&quot;s2&quot;&gt;&quot;port&quot;&lt;/span&gt;: &amp;lt;YOUR_PORT_2&amp;gt;,
+      &lt;span class=&quot;s2&quot;&gt;&quot;listen&quot;&lt;/span&gt;: &lt;span class=&quot;s2&quot;&gt;&quot;0.0.0.0&quot;&lt;/span&gt;,
+      &lt;span class=&quot;s2&quot;&gt;&quot;protocol&quot;&lt;/span&gt;: &lt;span class=&quot;s2&quot;&gt;&quot;mtproto&quot;&lt;/span&gt;,
+      &lt;span class=&quot;s2&quot;&gt;&quot;settings&quot;&lt;/span&gt;: &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;s2&quot;&gt;&quot;users&quot;&lt;/span&gt;: &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;
+          &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;s2&quot;&gt;&quot;level&quot;&lt;/span&gt;: 0,
+            // CHANGE ME!
+            &lt;span class=&quot;s2&quot;&gt;&quot;secret&quot;&lt;/span&gt;: &lt;span class=&quot;s2&quot;&gt;&quot;&amp;lt;YOUR_SECRET_2&amp;gt;&quot;&lt;/span&gt; // User secret. In Telegram, user secret must be 32 characters long, and only contains characters between 0 to 9, and ato f. You may use the following &lt;span class=&quot;nb&quot;&gt;command &lt;/span&gt;to generate MTProto secret: &lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;openssl rand &lt;span class=&quot;nt&quot;&gt;-hex&lt;/span&gt; 16&lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;
+          &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
+      &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;,
+    &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;s2&quot;&gt;&quot;tag&quot;&lt;/span&gt;: &lt;span class=&quot;s2&quot;&gt;&quot;vmess-in-cloudfare&quot;&lt;/span&gt;,
+      // CHANGE ME!
+      &lt;span class=&quot;s2&quot;&gt;&quot;port&quot;&lt;/span&gt;: &amp;lt;YOUR_PORT_3&amp;gt;,
+      &lt;span class=&quot;s2&quot;&gt;&quot;listen&quot;&lt;/span&gt;: &lt;span class=&quot;s2&quot;&gt;&quot;0.0.0.0&quot;&lt;/span&gt;,
+      &lt;span class=&quot;s2&quot;&gt;&quot;protocol&quot;&lt;/span&gt;: &lt;span class=&quot;s2&quot;&gt;&quot;vmess&quot;&lt;/span&gt;,
+      &lt;span class=&quot;s2&quot;&gt;&quot;settings&quot;&lt;/span&gt;: &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;s2&quot;&gt;&quot;clients&quot;&lt;/span&gt;: &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;
+          &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+            // CHANGE ME!
+            &lt;span class=&quot;s2&quot;&gt;&quot;id&quot;&lt;/span&gt;: &lt;span class=&quot;s2&quot;&gt;&quot;&amp;lt;YOUR_UUID_3&amp;gt;&quot;&lt;/span&gt;,
+            &lt;span class=&quot;s2&quot;&gt;&quot;alterId&quot;&lt;/span&gt;: 64,
+            &lt;span class=&quot;s2&quot;&gt;&quot;level&quot;&lt;/span&gt;: 0
+          &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;,
+        &lt;span class=&quot;s2&quot;&gt;&quot;disableInsecureEncryption&quot;&lt;/span&gt;: &lt;span class=&quot;nb&quot;&gt;true&lt;/span&gt;
+      &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+  &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;,
+  &lt;span class=&quot;s2&quot;&gt;&quot;outbounds&quot;&lt;/span&gt;: &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;s2&quot;&gt;&quot;tag&quot;&lt;/span&gt;: &lt;span class=&quot;s2&quot;&gt;&quot;default-out&quot;&lt;/span&gt;,
+      &lt;span class=&quot;s2&quot;&gt;&quot;protocol&quot;&lt;/span&gt;: &lt;span class=&quot;s2&quot;&gt;&quot;freedom&quot;&lt;/span&gt;,
+      &lt;span class=&quot;s2&quot;&gt;&quot;settings&quot;&lt;/span&gt;: &lt;span class=&quot;o&quot;&gt;{}&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;,
+    &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;s2&quot;&gt;&quot;tag&quot;&lt;/span&gt;: &lt;span class=&quot;s2&quot;&gt;&quot;telegram-out&quot;&lt;/span&gt;,
+      &lt;span class=&quot;s2&quot;&gt;&quot;protocol&quot;&lt;/span&gt;: &lt;span class=&quot;s2&quot;&gt;&quot;mtproto&quot;&lt;/span&gt;,
+      &lt;span class=&quot;s2&quot;&gt;&quot;settings&quot;&lt;/span&gt;: &lt;span class=&quot;o&quot;&gt;{}&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;,
+    &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;s2&quot;&gt;&quot;tag&quot;&lt;/span&gt;: &lt;span class=&quot;s2&quot;&gt;&quot;tailscale-out&quot;&lt;/span&gt;,
+      &lt;span class=&quot;s2&quot;&gt;&quot;protocol&quot;&lt;/span&gt;: &lt;span class=&quot;s2&quot;&gt;&quot;freedom&quot;&lt;/span&gt;,
+      &lt;span class=&quot;s2&quot;&gt;&quot;settings&quot;&lt;/span&gt;: &lt;span class=&quot;o&quot;&gt;{}&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;,
+    &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;s2&quot;&gt;&quot;tag&quot;&lt;/span&gt;: &lt;span class=&quot;s2&quot;&gt;&quot;cloudfare-out&quot;&lt;/span&gt;,
+      &lt;span class=&quot;s2&quot;&gt;&quot;protocol&quot;&lt;/span&gt;: &lt;span class=&quot;s2&quot;&gt;&quot;socks&quot;&lt;/span&gt;,
+      &lt;span class=&quot;s2&quot;&gt;&quot;settings&quot;&lt;/span&gt;: &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;s2&quot;&gt;&quot;servers&quot;&lt;/span&gt;: &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;
+          &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;s2&quot;&gt;&quot;address&quot;&lt;/span&gt;: &lt;span class=&quot;s2&quot;&gt;&quot;127.0.0.1&quot;&lt;/span&gt;,
+            &lt;span class=&quot;s2&quot;&gt;&quot;port&quot;&lt;/span&gt;: 1080
+          &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
+      &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+  &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;,
+  &lt;span class=&quot;s2&quot;&gt;&quot;routing&quot;&lt;/span&gt;: &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; // Configuration &lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;internal Routing strategy
+    &lt;span class=&quot;s2&quot;&gt;&quot;domainStrategy&quot;&lt;/span&gt;: &lt;span class=&quot;s2&quot;&gt;&quot;AsIs&quot;&lt;/span&gt;, // domain resolution strategy
+    &lt;span class=&quot;s2&quot;&gt;&quot;rules&quot;&lt;/span&gt;: &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt; // &lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;each inbound connection, v2ray tries these rules from top down one by one. If a rule takes effect, the connection will be routed to the &lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;outboundTag&lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt; or &lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;balanceTag&lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt; of the rule
+      &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; // Route traffic &lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;the &lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;mtproto&lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt; protocol
+        &lt;span class=&quot;s2&quot;&gt;&quot;type&quot;&lt;/span&gt;: &lt;span class=&quot;s2&quot;&gt;&quot;field&quot;&lt;/span&gt;,
+        &lt;span class=&quot;s2&quot;&gt;&quot;inboundTag&quot;&lt;/span&gt;: &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;
+          &lt;span class=&quot;s2&quot;&gt;&quot;telegram-in&quot;&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;,
+        &lt;span class=&quot;s2&quot;&gt;&quot;outboundTag&quot;&lt;/span&gt;: &lt;span class=&quot;s2&quot;&gt;&quot;telegram-out&quot;&lt;/span&gt;
+      &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;,
+      &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; // Route traffic &lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;tailscale
+        &lt;span class=&quot;s2&quot;&gt;&quot;type&quot;&lt;/span&gt;: &lt;span class=&quot;s2&quot;&gt;&quot;field&quot;&lt;/span&gt;,
+        &lt;span class=&quot;s2&quot;&gt;&quot;ip&quot;&lt;/span&gt;: &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;
+          &lt;span class=&quot;s2&quot;&gt;&quot;100.64.0.0/10&quot;&lt;/span&gt; // tailscale subnet
+        &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;,
+        &lt;span class=&quot;s2&quot;&gt;&quot;outboundTag&quot;&lt;/span&gt;: &lt;span class=&quot;s2&quot;&gt;&quot;tailscale-out&quot;&lt;/span&gt;
+      &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;,
+      &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; // Route vmess-in via default out
+        &lt;span class=&quot;s2&quot;&gt;&quot;type&quot;&lt;/span&gt;: &lt;span class=&quot;s2&quot;&gt;&quot;field&quot;&lt;/span&gt;,
+        &lt;span class=&quot;s2&quot;&gt;&quot;inboundTag&quot;&lt;/span&gt;: &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;
+          &lt;span class=&quot;s2&quot;&gt;&quot;vmess-in&quot;&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;,
+        &lt;span class=&quot;s2&quot;&gt;&quot;outboundTag&quot;&lt;/span&gt;: &lt;span class=&quot;s2&quot;&gt;&quot;default-out&quot;&lt;/span&gt;
+      &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;,
+      &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; // Route vmess-in-cloudfare via cloudfare wireguard interface
+        &lt;span class=&quot;s2&quot;&gt;&quot;type&quot;&lt;/span&gt;: &lt;span class=&quot;s2&quot;&gt;&quot;field&quot;&lt;/span&gt;,
+        &lt;span class=&quot;s2&quot;&gt;&quot;inboundTag&quot;&lt;/span&gt;: &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;
+          &lt;span class=&quot;s2&quot;&gt;&quot;vmess-in-cloudfare&quot;&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;,
+        &lt;span class=&quot;s2&quot;&gt;&quot;outboundTag&quot;&lt;/span&gt;: &lt;span class=&quot;s2&quot;&gt;&quot;cloudfare-out&quot;&lt;/span&gt;
+      &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
+  &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;The config file is self-explanatory and you definitely need to change all the fields marked with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;// CHANGE ME!&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;In this config file I also added a mtproto server for my telegram client to use. You can choose not to add this and
+safely remove all associated routing rules.&lt;/p&gt;
+
+&lt;p&gt;That’s it! In your QX config add the following:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;vmess&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&amp;lt;YOUR_VPS_IP&amp;gt;:&amp;lt;YOUR_PORT_1&amp;gt;, &lt;span class=&quot;nv&quot;&gt;method&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;chacha20-poly1305, &lt;span class=&quot;nv&quot;&gt;password&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&amp;lt;YOUR_UUID_1&amp;gt;, fast-open&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;false&lt;/span&gt;, udp-relay&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;false&lt;/span&gt;, &lt;span class=&quot;nv&quot;&gt;tag&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;vmess-ampere
+&lt;span class=&quot;nv&quot;&gt;vmess&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&amp;lt;YOUR_VPS_IP&amp;gt;:&amp;lt;YOUR_PORT_3&amp;gt;, &lt;span class=&quot;nv&quot;&gt;method&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;chacha20-poly1305, &lt;span class=&quot;nv&quot;&gt;password&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&amp;lt;YOUR_UUID_3&amp;gt;, fast-open&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;false&lt;/span&gt;, udp-relay&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;false&lt;/span&gt;, &lt;span class=&quot;nv&quot;&gt;tag&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;vmess-ampere-cloudfare
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Enjoy!&lt;/p&gt;
+
+&lt;hr /&gt;</content><author><name>Mengxin Cao</name><email>me at mxcao.me</email></author><category term="Tools" /><category term="VPN" /><category term="V2Ray" /><category term="Network" /><category term="VMess" /><category term="WireGuard" /><category term="Mullvad" /><category term="Quantumult X" /><summary type="html">Motivation Hello! Long time no see! I have been heavily using an iOS app called “Quantumult X” (a.k.a. QX) these days, mainly for the following reasons: Easy to setup and lots of tutorials/scripts online that you can add and learn You can add VPN servers, add flexible routing rules e.g., SSID-based switching, and subscribe to public servers (not recommended out of privacy/security concerns) You can do MITM rewrites that enable you to have premium features on other apps for free Overall I’m very happy with this app but I do find some limitations:</summary></entry><entry><title type="html">Set up IKEv2 VPN on a Mikrotik Router</title><link href="/tools/2021/05/28/setup-mikrotik-ike2/" rel="alternate" type="text/html" title="Set up IKEv2 VPN on a Mikrotik Router" /><published>2021-05-28T00:00:00+00:00</published><updated>2021-05-28T00:00:00+00:00</updated><id>/tools/2021/05/28/setup-mikrotik-ike2</id><content type="html" xml:base="/tools/2021/05/28/setup-mikrotik-ike2/">&lt;h2 id=&quot;motivation&quot;&gt;Motivation&lt;/h2&gt;
 
 &lt;p&gt;I got rid of my AT&amp;amp;T router a few days back and managed to have a Mikrotik router &lt;a href=&quot;https://mikrotik.com/product/hap_ac2&quot;&gt;hAP ac²&lt;/a&gt; as an alternative. One benefit of using a mikrotik router, specifically, its RouterOS, is the customizability to add cool features to my home network. I have very slow traffic when using the AT&amp;amp;T home network when visiting some websites, e.g., weibo, so I want to route them via a VPN running on oracle cloud.&lt;/p&gt;
 
@@ -1557,325 +1800,4 @@ Checking &lt;span class=&quot;nb&quot;&gt;test &lt;/span&gt;dependency graph end
 
 &lt;hr /&gt;
 
-&lt;p&gt;Thank you and I hope this is useful :)&lt;/p&gt;</content><author><name>Mengxin Cao</name><email>me at mxcao.me</email></author><category term="Primer" /><category term="Test" /><category term="C++" /><summary type="html">Introduction Last time I talked about gtest in the gtest primer, and in this post we discuss the usage of “value-paramterized” tests. In general, when you write a simple test case and verified it is working, what is the next step? Maybe you want to add more test cases! But how? Adding them by “hard-coding” the logics in the source files? It’s not a good idea since cases may evolve and we may later add new corner cases, maybe months later. At that time, you may already forgot how to write a test case using gtest. Value-parameterized tests are a good way to organize your test cases and group them in a logical manner e.g. test cases for a particular API. I use value-parameterized tests and a YAML configuration file to dynamically add/reduce my test cases, so that adding or removing a test case is as simple as updating the YAML file.</summary></entry><entry><title type="html">Git Primer</title><link href="/primer/2020/07/19/git-primer/" rel="alternate" type="text/html" title="Git Primer" /><published>2020-07-19T00:00:00+00:00</published><updated>2020-07-19T00:00:00+00:00</updated><id>/primer/2020/07/19/git-primer</id><content type="html" xml:base="/primer/2020/07/19/git-primer/">&lt;h1 id=&quot;git-primer&quot;&gt;Git Primer&lt;/h1&gt;
-
-&lt;h2 id=&quot;git-commit-messages&quot;&gt;Git Commit Messages&lt;/h2&gt;
-
-&lt;p&gt;Git commit messages can help you understand why something happened months or years ago for your collaborators or yourselves. It affects a project’s maintainability, and hence plays a critical role in a project’s long-term success.&lt;/p&gt;
-
-&lt;p&gt;This section we summarize some common techniques to write a healthy commit message. Of course there are variations on the styles and conventions adopted by different projects/orgs, you should pick one and stick to it as much as possible to reduce chaos and inconsistency.&lt;/p&gt;
-
-&lt;!--more--&gt;
-
-&lt;p&gt;A commit message is nothing but some plain texts explaining the changes you made. We can describe a &lt;strong&gt;git commit msg convention&lt;/strong&gt; from several perspectives:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Style: e.g. capitalization, punctuation&lt;/li&gt;
-  &lt;li&gt;Content: info that the commit msg body should or should not contain&lt;/li&gt;
-  &lt;li&gt;Metadata: e.g. reference PR numbers, issue tracking IDs&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Fortunately, well-established conventions exist and you don’t need to re-invent the wheel.&lt;/p&gt;
-
-&lt;h3 id=&quot;several-rules-of-a-great-git-commit-msg-&quot;&gt;Several rules of a great git commit msg &lt;sup id=&quot;fnref:1&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:1&quot; class=&quot;footnote&quot; rel=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/h3&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;Separate &lt;strong&gt;subject&lt;/strong&gt; from &lt;strong&gt;body&lt;/strong&gt; with a blank line&lt;/li&gt;
-  &lt;li&gt;Limit the &lt;strong&gt;subject&lt;/strong&gt; line to 50 characters&lt;/li&gt;
-  &lt;li&gt;Capitalize the subject line&lt;/li&gt;
-  &lt;li&gt;Do not end the subject line with a period&lt;/li&gt;
-  &lt;li&gt;Use the &lt;strong&gt;imperative mood&lt;/strong&gt; in the subject line&lt;/li&gt;
-  &lt;li&gt;Wrap the body at 72 characters&lt;/li&gt;
-  &lt;li&gt;Use the body to explain what and why vs. how&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;E.g.&lt;/p&gt;
-
-&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Summarize changes in around 50 characters or less
-
-More detailed explanatory text, if necessary. Wrap it to about 72
-characters or so. In some contexts, the first line is treated as the
-subject of the commit and the rest of the text as the body. The
-blank line separating the summary from the body is critical (unless
-you omit the body entirely); various tools like &lt;span class=&quot;sb&quot;&gt;`log`&lt;/span&gt;, &lt;span class=&quot;sb&quot;&gt;`shortlog`&lt;/span&gt;
-and &lt;span class=&quot;sb&quot;&gt;`rebase`&lt;/span&gt; can get confused if you run the two together.
-
-Explain the problem that this commit is solving. Focus on why you
-are making this change as opposed to how (the code explains that).
-Are there side effects or other unintuitive consequences of this
-change? Here's the place to explain them.
-
-Further paragraphs come after blank lines.
-&lt;span class=&quot;p&quot;&gt;
- -&lt;/span&gt; Bullet points are okay, too
-&lt;span class=&quot;p&quot;&gt;
- -&lt;/span&gt; Typically a hyphen or asterisk is used for the bullet, preceded
-   by a single space, with blank lines in between, but conventions
-   vary here
-
-If you use an issue tracker, put references to them at the bottom,
-like this:
-
-Resolves: #123
-See also: #456, #789
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h3 id=&quot;notes&quot;&gt;Notes&lt;/h3&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;
-    &lt;p&gt;Not every commit msg needs both a subject and a body and sometimes a single line is fine for simple changes&lt;/p&gt;
-
-    &lt;p&gt;E.g.&lt;/p&gt;
-
-    &lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; git commit -m &quot;Fix typo in introduction to user guide&quot;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;Commit msgs with a subject and a body are not easy to write with the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;-m&lt;/code&gt; option. You should configure an editor for use with git. You can also define a commit msg template in the git config like below to remind you of the proper format and style when creating a commit msg:&lt;/p&gt;
-
-    &lt;p&gt;E.g. Consider a template file at &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;~/.gitmessage.txt&lt;/code&gt; that looks like this&lt;/p&gt;
-
-    &lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; Subject line (try to keep under 50 characters)
-
- Multi-line description of commit,
- feel free to be detailed.
-
- [Ticket: X]
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
-
-    &lt;p&gt;To tell Git to use it as the default message that appears in your editor when you run git commit, set the commit.template configuration value:&lt;/p&gt;
-
-    &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;git config &lt;span class=&quot;nt&quot;&gt;--global&lt;/span&gt; commit.template ~/.gitmessage.txt
- &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;git commit
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;The blank line b/w the subject and body is essential and there’re a number of contexts in git like &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;git log --oneline&lt;/code&gt; or &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;git shortlog&lt;/code&gt; that the distinction b/w subject and body matter&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;The 50 characters limit for the subject line forces the author to think about the most concise way to express his ideas. It also ensures that they are readable from the GitHub WebUI&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;Your subject line should always be able to complete the following sentence:&lt;/p&gt;
-
-    &lt;blockquote&gt;
-      &lt;p&gt;If applied, this commit will &lt;em&gt;your subject line here&lt;/em&gt;&lt;/p&gt;
-    &lt;/blockquote&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;When you write the git msg body if needed, be mindful about its right margin and wrap text at 72 characters. Consider to set up a good text editor that automatically wrap texts for you&lt;/p&gt;
-
-    &lt;p&gt;If you are using VSCode, the below settings can be a starting point:&lt;/p&gt;
-
-    &lt;ul&gt;
-      &lt;li&gt;
-        &lt;p&gt;Set VSCode as your default editor for git&lt;/p&gt;
-
-        &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  &lt;span class=&quot;c&quot;&gt;# '--wait': Wait for the files to be closed before returning.&lt;/span&gt;
-  &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;git config &lt;span class=&quot;nt&quot;&gt;--global&lt;/span&gt; core.editor &lt;span class=&quot;s2&quot;&gt;&quot;code --wait&quot;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;        &lt;/div&gt;
-      &lt;/li&gt;
-      &lt;li&gt;
-        &lt;p&gt;In your VSCode user &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;settings.json&lt;/code&gt;, add the following wrap rule:&lt;/p&gt;
-
-        &lt;div class=&quot;language-json highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;w&quot;&gt;  &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;[git-commit]&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-      &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;editor.rulers&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-          &lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;72&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-      &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-      &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;editor.wordWrapColumn&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;72&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-      &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;editor.wordWrap&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;wordWrapColumn&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-      &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;editor.wrappingIndent&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;same&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-  &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;        &lt;/div&gt;
-
-        &lt;p&gt;More customizations can be found &lt;a href=&quot;https://code.visualstudio.com/docs/getstarted/settings#_language-specific-editor-settings&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
-      &lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h2 id=&quot;git-commands-&quot;&gt;Git Commands &lt;sup id=&quot;fnref:2&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:2&quot; class=&quot;footnote&quot; rel=&quot;footnote&quot;&gt;2&lt;/a&gt;&lt;/sup&gt;&lt;/h2&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;strong&gt;Commit changes&lt;/strong&gt;
-    &lt;ul&gt;
-      &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;git commit -m 'Simple msg goes here'&lt;/code&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;git commit --amend&lt;/code&gt; &lt;sup id=&quot;fnref:3&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:3&quot; class=&quot;footnote&quot; rel=&quot;footnote&quot;&gt;3&lt;/a&gt;&lt;/sup&gt;
-        &lt;ul&gt;
-          &lt;li&gt;Sometimes we commit too early and possibly forget to add some files, or you mess up your commit msg format, you want to undo that commit, make additional changes you forgot, stage and commit again. Now this time use the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;--amend&lt;/code&gt; option!&lt;/li&gt;
-          &lt;li&gt;This will take you staging area and uses it for the commit. The same commit msg will pop up and you can update this msg and it will overwrites your previous commit&lt;/li&gt;
-          &lt;li&gt;You end up with a single commit, the one amended will &lt;strong&gt;replace&lt;/strong&gt; the results of the first&lt;/li&gt;
-        &lt;/ul&gt;
-      &lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;Create a new branch&lt;/strong&gt;
-    &lt;ul&gt;
-      &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;git branch bugFix&lt;/code&gt; (Note that this does not set the HEAD at the new branch)&lt;/li&gt;
-      &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;git checkout -b bugFix&lt;/code&gt;&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;Combine changes&lt;/strong&gt;
-    &lt;ul&gt;
-      &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;merge&lt;/code&gt;
-        &lt;ul&gt;
-          &lt;li&gt;Create a special commit that has two unique parents:
-            &lt;ul&gt;
-              &lt;li&gt;
-                &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;git merge bugFix&lt;/code&gt;
-&lt;img src=&quot;/public/files/git_primer/15951758006949.jpg&quot; alt=&quot;git merge bugFix&quot; /&gt;&lt;/p&gt;
-              &lt;/li&gt;
-              &lt;li&gt;
-                &lt;p&gt;If you want to keep the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;bugFix&lt;/code&gt; branch up to date and continue work on it, we can merge the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;master&lt;/code&gt; branch to the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;bugFix&lt;/code&gt; branch. Since &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;bugFix&lt;/code&gt; was an ancestor of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;master&lt;/code&gt; after the above merge, it simply move the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;bugFix&lt;/code&gt; to the same commit as &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;master&lt;/code&gt;: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;git checkout bugFix; git merge master&lt;/code&gt;
-&lt;img src=&quot;/public/files/git_primer/15951774331718.jpg&quot; alt=&quot;keep bugFix up to date with master&quot; /&gt;&lt;/p&gt;
-              &lt;/li&gt;
-            &lt;/ul&gt;
-          &lt;/li&gt;
-          &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;rebase&lt;/code&gt;
-            &lt;ul&gt;
-              &lt;li&gt;Explanations:
-                &lt;ul&gt;
-                  &lt;li&gt;Take a set of commits, copy them and paste them down somewhere else. It can be used to make a nice linear sequence of commits and the commit history will be much cleaner.&lt;/li&gt;
-                  &lt;li&gt;Take all the changes that were committed on one branch and &lt;strong&gt;reply&lt;/strong&gt; them on a different branch.&lt;/li&gt;
-                &lt;/ul&gt;
-              &lt;/li&gt;
-              &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;git rebase target_branch_to_reply_changes_to&lt;/code&gt;
-                &lt;ul&gt;
-                  &lt;li&gt;E.g. If you are on branch &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;bugFix&lt;/code&gt; and want to move work from &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;bugFix&lt;/code&gt; directly onto the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;master&lt;/code&gt;. That way the commit history will looks like these two features were developed sequentially, when in reality they were developed in parallel.&lt;/li&gt;
-                  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;git checkout bugFix; git rebase master&lt;/code&gt;
-&lt;img src=&quot;/public/files/git_primer/15951781011384.jpg&quot; alt=&quot;rebase bugFix changes to master&quot; /&gt;
-                    &lt;ul&gt;
-                      &lt;li&gt;Now you can go back to the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;master&lt;/code&gt; and do a fast-forward merge to keep the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;master&lt;/code&gt; up to date: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;git checkout master; git merge/rebase bugFix&lt;/code&gt;&lt;/li&gt;
-                    &lt;/ul&gt;
-                  &lt;/li&gt;
-                &lt;/ul&gt;
-              &lt;/li&gt;
-            &lt;/ul&gt;
-          &lt;/li&gt;
-        &lt;/ul&gt;
-      &lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;Moving around commits&lt;/strong&gt;
-    &lt;ul&gt;
-      &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;HEAD&lt;/code&gt;: the symbolic name for the currently checked out commit. It always points to the most recent commit which is reflected in the working tree.&lt;/li&gt;
-      &lt;li&gt;Detaching &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;HEAD&lt;/code&gt;: attach &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;HEAD&lt;/code&gt; to a commit instead of a branch, e.g. when you checkout a particular commit rather than a branch. Typically you find the commit by using &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;git log&lt;/code&gt; to find the right hash.
-&lt;img src=&quot;/public/files/git_primer/15951786444183.jpg&quot; alt=&quot;detach HEAD&quot; /&gt;
-        &lt;ul&gt;
-          &lt;li&gt;&lt;strong&gt;Relative Refs&lt;/strong&gt;
-            &lt;ul&gt;
-              &lt;li&gt;Start from somewhere memorable e.g. branch &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;bugFix&lt;/code&gt; or the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;HEAD&lt;/code&gt;, and move from there
-                &lt;ul&gt;
-                  &lt;li&gt;moving upwards, 1 commit at a time: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;^&lt;/code&gt; (Caret operator)
-                    &lt;ul&gt;
-                      &lt;li&gt;e.g.
-                        &lt;ul&gt;
-                          &lt;li&gt;detach head to its parent: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;git checkout HEAD^1&lt;/code&gt;, or&lt;/li&gt;
-                          &lt;li&gt;checkout to the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;master&lt;/code&gt;’s grandparent: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;git checkout master^^&lt;/code&gt;&lt;/li&gt;
-                        &lt;/ul&gt;
-                      &lt;/li&gt;
-                    &lt;/ul&gt;
-                  &lt;/li&gt;
-                  &lt;li&gt;moving upwards for &amp;lt;num&amp;gt; commits: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;~&amp;lt;num&amp;gt;&lt;/code&gt; (Tilde operator)
-                    &lt;ul&gt;
-                      &lt;li&gt;e.g.
-                        &lt;ul&gt;
-                          &lt;li&gt;detach head and move upward 4 commits: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;git checkout HEAD~4&lt;/code&gt;&lt;/li&gt;
-                        &lt;/ul&gt;
-                      &lt;/li&gt;
-                    &lt;/ul&gt;
-                  &lt;/li&gt;
-                &lt;/ul&gt;
-              &lt;/li&gt;
-              &lt;li&gt;Branch forcing:
-                &lt;ul&gt;
-                  &lt;li&gt;Reassign a branch to a particular commit&lt;/li&gt;
-                  &lt;li&gt;E.g. move the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;master&lt;/code&gt; branch to 3 parents behind HEAD: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;git branch -f master HEAD~3&lt;/code&gt;&lt;/li&gt;
-                &lt;/ul&gt;
-              &lt;/li&gt;
-            &lt;/ul&gt;
-          &lt;/li&gt;
-        &lt;/ul&gt;
-      &lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;Reversing changes&lt;/strong&gt;
-    &lt;ul&gt;
-      &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;git reset&lt;/code&gt;
-        &lt;ul&gt;
-          &lt;li&gt;&lt;strong&gt;Rewriting history&lt;/strong&gt;: revert changes by moving a branch reference backwards in time to an older commit&lt;/li&gt;
-          &lt;li&gt;&lt;strong&gt;Warning&lt;/strong&gt;: This cmd is great for &lt;strong&gt;local branches on your own machine&lt;/strong&gt;, not good for remote branches that others are using!&lt;/li&gt;
-          &lt;li&gt;E.g. move the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;master&lt;/code&gt; branch to the parent of HEAD: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;git reset HEAD^&lt;/code&gt;, or you can achieve this via &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;branch forcing&lt;/code&gt;: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;git branch -f master HEAD^&lt;/code&gt;&lt;/li&gt;
-          &lt;li&gt;Modes
-            &lt;ul&gt;
-              &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;--soft&lt;/code&gt;
-                &lt;ul&gt;
-                  &lt;li&gt;does not touch the index file or the working tree at all but resets the head to the given &amp;lt;commit&amp;gt;&lt;/li&gt;
-                &lt;/ul&gt;
-              &lt;/li&gt;
-              &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;--mixed&lt;/code&gt;
-                &lt;ul&gt;
-                  &lt;li&gt;default mode, resets the index file but not the working tree, i.e. preserve changes but not marked for commit&lt;/li&gt;
-                &lt;/ul&gt;
-              &lt;/li&gt;
-              &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;--hard&lt;/code&gt;
-                &lt;ul&gt;
-                  &lt;li&gt;resets the index and working tree and any changes to tracked files are discarded&lt;/li&gt;
-                &lt;/ul&gt;
-              &lt;/li&gt;
-              &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;--merge&lt;/code&gt;&lt;/li&gt;
-              &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;--keep&lt;/code&gt;&lt;/li&gt;
-            &lt;/ul&gt;
-          &lt;/li&gt;
-        &lt;/ul&gt;
-      &lt;/li&gt;
-      &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;git revert&lt;/code&gt;
-        &lt;ul&gt;
-          &lt;li&gt;Revert changes and share those reversed changes with others by creating a new commit, whose effect is to revert a particular commit&lt;/li&gt;
-        &lt;/ul&gt;
-      &lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;Move works around&lt;/strong&gt;
-    &lt;ul&gt;
-      &lt;li&gt;i.e. “Move this commit here, that commit there”&lt;/li&gt;
-      &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;git cherry-pick &amp;lt;commit1&amp;gt; &amp;lt;commit2&amp;gt; &amp;lt;...&amp;gt;&lt;/code&gt;
-        &lt;ul&gt;
-          &lt;li&gt;A way of saying that you want to copy the provided commits below your current location i.e. below the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;HEAD&lt;/code&gt;&lt;/li&gt;
-          &lt;li&gt;Surely you may be able to achieve the same goal by using &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;git rebase&lt;/code&gt;, but &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;cherry-pick&lt;/code&gt; is kinda of magic and easier to achieve this goal…&lt;/li&gt;
-        &lt;/ul&gt;
-      &lt;/li&gt;
-      &lt;li&gt;Interactive rebasing &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;git rebase -i target_branch_to_replay_changes_to&lt;/code&gt;
-        &lt;ul&gt;
-          &lt;li&gt;Cover the situation where you don’t know what commits you want: review a series of commits you’re about to rebase&lt;/li&gt;
-          &lt;li&gt;Git will open up a UI to show you which commits are about to be copied below the target of the rebase (i.e. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;target_branch_to_replay_changes_to&lt;/code&gt;).
-            &lt;ul&gt;
-              &lt;li&gt;You can reorder commits by changing their order in the UI&lt;/li&gt;
-              &lt;li&gt;You can choose to completely omit some commits&lt;/li&gt;
-              &lt;li&gt;And many more…&lt;/li&gt;
-            &lt;/ul&gt;
-          &lt;/li&gt;
-        &lt;/ul&gt;
-      &lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;hr /&gt;
-
-&lt;h3 id=&quot;references&quot;&gt;References&lt;/h3&gt;
-
-&lt;div class=&quot;footnotes&quot; role=&quot;doc-endnotes&quot;&gt;
-  &lt;ol&gt;
-    &lt;li id=&quot;fn:1&quot; role=&quot;doc-endnote&quot;&gt;
-      &lt;p&gt;https://chris.beams.io/posts/git-commit/ &lt;a href=&quot;#fnref:1&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
-    &lt;/li&gt;
-    &lt;li id=&quot;fn:2&quot; role=&quot;doc-endnote&quot;&gt;
-      &lt;p&gt;https://learngitbranching.js.org/?locale=en_US &lt;a href=&quot;#fnref:2&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
-    &lt;/li&gt;
-    &lt;li id=&quot;fn:3&quot; role=&quot;doc-endnote&quot;&gt;
-      &lt;p&gt;https://git-scm.com/book/en/v2/Git-Basics-Undoing-Things &lt;a href=&quot;#fnref:3&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
-    &lt;/li&gt;
-  &lt;/ol&gt;
-&lt;/div&gt;</content><author><name>Mengxin Cao</name><email>me at mxcao.me</email></author><category term="Primer" /><category term="Git" /><category term="SCM" /><summary type="html">Git Primer Git Commit Messages Git commit messages can help you understand why something happened months or years ago for your collaborators or yourselves. It affects a project’s maintainability, and hence plays a critical role in a project’s long-term success. This section we summarize some common techniques to write a healthy commit message. Of course there are variations on the styles and conventions adopted by different projects/orgs, you should pick one and stick to it as much as possible to reduce chaos and inconsistency.</summary></entry></feed>
+&lt;p&gt;Thank you and I hope this is useful :)&lt;/p&gt;</content><author><name>Mengxin Cao</name><email>me at mxcao.me</email></author><category term="Primer" /><category term="Test" /><category term="C++" /><summary type="html">Introduction Last time I talked about gtest in the gtest primer, and in this post we discuss the usage of “value-paramterized” tests. In general, when you write a simple test case and verified it is working, what is the next step? Maybe you want to add more test cases! But how? Adding them by “hard-coding” the logics in the source files? It’s not a good idea since cases may evolve and we may later add new corner cases, maybe months later. At that time, you may already forgot how to write a test case using gtest. Value-parameterized tests are a good way to organize your test cases and group them in a logical manner e.g. test cases for a particular API. I use value-parameterized tests and a YAML configuration file to dynamically add/reduce my test cases, so that adding or removing a test case is as simple as updating the YAML file.</summary></entry></feed>
