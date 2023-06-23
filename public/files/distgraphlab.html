@@ -1,0 +1,2039 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Distributed GraphLab - Transno</title>
+  <meta charset="utf-8" />
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="renderer" content="webkit" />
+  <meta name="author" content="transno.com" />
+</head>
+
+<body
+  style="margin: 50px 20px;color: #333; font-family: SourceSansPro,-apple-system,BlinkMacSystemFont,PingFang SC,Helvetica,Arial,Microsoft YaHei,微软雅黑,黑体,Heiti,sans-serif,SimSun,宋体,serif">
+  <div style="font-size: 22px; padding: 0 15px 0; margin-bottom: 20px;">
+    <div style="padding-bottom: 24px;">Distributed GraphLab</div>
+    <div style="background: #e5e6e8; height: 1px;"></div>
+  </div>
+  <ul style="padding: 16px 0px 0px 40px; margin: 0px; list-style: outside disc;">
+    <li style="line-height: 24px; list-style: none; position: relative;">
+      <div class="bullet-wrapper"
+        style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+        <div class="bullet-dot"
+          style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+        </div>
+      </div><span class="content mubu-node"
+        style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>Motivations:
+        </span></span>
+      <ul class="children"
+        style="list-style: outside disc; padding-inline-start: 30px; padding: 0px 0px 4px 40px; margin-left: 13px; position: relative; left: -30px; border-left: 1px solid rgb(235, 235, 235);">
+        <li style="line-height: 24px; list-style: none; position: relative;">
+          <div class="bullet-wrapper"
+            style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+            <div class="bullet-dot"
+              style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+            </div>
+          </div><span class="content mubu-node"
+            style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>Existing
+              high-level data-parallel frameworks (e.g. MapReduce) do not fit many data mining and machine learning
+              paradigm and can usually lead to inefficient learning systems </span></span>
+        </li>
+      </ul>
+    </li>
+    <li style="line-height: 24px; list-style: none; position: relative;">
+      <div class="bullet-wrapper"
+        style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+        <div class="bullet-dot"
+          style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+        </div>
+      </div><span class="content mubu-node"
+        style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>Preliminary
+          Works:</span></span>
+      <ul class="children"
+        style="list-style: outside disc; padding-inline-start: 30px; padding: 0px 0px 4px 40px; margin-left: 13px; position: relative; left: -30px; border-left: 1px solid rgb(235, 235, 235);">
+        <li style="line-height: 24px; list-style: none; position: relative;">
+          <div class="bullet-wrapper"
+            style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+            <div class="bullet-dot"
+              style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+            </div>
+          </div><span class="content mubu-node"
+            style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>GraphLab:
+              asynchronous, dynamic, graph-parallel, shared-memory, strong data consistency guarantee but </span><span
+              class="bold" style="font-weight: bold;">standalone</span></span>
+        </li>
+      </ul>
+    </li>
+    <li style="line-height: 24px; list-style: none; position: relative;">
+      <div class="bullet-wrapper"
+        style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+        <div class="bullet-dot"
+          style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+        </div>
+      </div><span class="content mubu-node"
+        style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>Contributions:
+        </span><span class="bold" style="font-weight: bold;">Distributed GraphLab</span></span>
+      <ul class="children"
+        style="list-style: outside disc; padding-inline-start: 30px; padding: 0px 0px 4px 40px; margin-left: 13px; position: relative; left: -30px; border-left: 1px solid rgb(235, 235, 235);">
+        <li style="line-height: 24px; list-style: none; position: relative;">
+          <div class="bullet-wrapper"
+            style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+            <div class="bullet-dot"
+              style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+            </div>
+          </div><span class="content mubu-node" color="#dc2d1e"
+            style="color: rgb(220, 45, 30); line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>Summarized
+              common properties of MLDM algorithms and existing frameworks' limitations</span></span>
+          <ul class="children"
+            style="list-style: outside disc; padding-inline-start: 30px; padding: 0px 0px 4px 40px; margin-left: 13px; position: relative; left: -30px; border-left: 1px solid rgb(235, 235, 235);">
+            <li style="line-height: 24px; list-style: none; position: relative;">
+              <div class="bullet-wrapper"
+                style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                <div class="bullet-dot"
+                  style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                </div>
+              </div><span class="content mubu-node"
+                style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>Graph
+                  Structured Computation </span></span>
+              <ul class="children"
+                style="list-style: outside disc; padding-inline-start: 30px; padding: 0px 0px 4px 40px; margin-left: 13px; position: relative; left: -30px; border-left: 1px solid rgb(235, 235, 235);">
+                <li style="line-height: 24px; list-style: none; position: relative;">
+                  <div class="bullet-wrapper"
+                    style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                    <div class="bullet-dot"
+                      style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                    </div>
+                  </div><span class="content mubu-node"
+                    style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>enable
+                      dependent computation</span></span>
+                </li>
+                <li style="line-height: 24px; list-style: none; position: relative;">
+                  <div class="bullet-wrapper"
+                    style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                    <div class="bullet-dot"
+                      style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                    </div>
+                  </div><span class="content mubu-node"
+                    style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>computation
+                      is defined as kernels that run on each vertex </span></span>
+                </li>
+                <li style="line-height: 24px; list-style: none; position: relative;">
+                  <div class="bullet-wrapper"
+                    style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                    <div class="bullet-dot"
+                      style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                    </div>
+                  </div><span class="content mubu-node"
+                    style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>e.g.
+                      Pregel, GraphLab</span></span>
+                </li>
+              </ul>
+            </li>
+            <li style="line-height: 24px; list-style: none; position: relative;">
+              <div class="bullet-wrapper"
+                style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                <div class="bullet-dot"
+                  style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                </div>
+              </div><span class="content mubu-node"
+                style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>Asynchronous
+                  Iterative Computation </span></span>
+            </li>
+            <li style="line-height: 24px; list-style: none; position: relative;">
+              <div class="bullet-wrapper"
+                style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                <div class="bullet-dot"
+                  style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                </div>
+              </div><span class="content mubu-node"
+                style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>Dynamic
+                  Computation </span></span>
+              <ul class="children"
+                style="list-style: outside disc; padding-inline-start: 30px; padding: 0px 0px 4px 40px; margin-left: 13px; position: relative; left: -30px; border-left: 1px solid rgb(235, 235, 235);">
+                <li style="line-height: 24px; list-style: none; position: relative;">
+                  <div class="bullet-wrapper"
+                    style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                    <div class="bullet-dot"
+                      style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                    </div>
+                  </div><span class="content mubu-node"
+                    style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>Prioritizing
+                      computation can further accelerate the convergence </span></span>
+                </li>
+                <li style="line-height: 24px; list-style: none; position: relative;">
+                  <div class="bullet-wrapper"
+                    style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                    <div class="bullet-dot"
+                      style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                    </div>
+                  </div><span class="content mubu-node"
+                    style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>e.g.
+                      Pregel allow a limited form of dynamic computation by allowing some vertices to skip computation
+                      on each super-step; GraphLab allows adaptively prioritize computation </span></span>
+                </li>
+              </ul>
+            </li>
+            <li style="line-height: 24px; list-style: none; position: relative;">
+              <div class="bullet-wrapper"
+                style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                <div class="bullet-dot"
+                  style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                </div>
+              </div><span class="content mubu-node"
+                style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>Serializability</span></span>
+              <ul class="children"
+                style="list-style: outside disc; padding-inline-start: 30px; padding: 0px 0px 4px 40px; margin-left: 13px; position: relative; left: -30px; border-left: 1px solid rgb(235, 235, 235);">
+                <li style="line-height: 24px; list-style: none; position: relative;">
+                  <div class="bullet-wrapper"
+                    style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                    <div class="bullet-dot"
+                      style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                    </div>
+                  </div><span class="content mubu-node"
+                    style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>reduce
+                      the complexity introduced by concurrency </span></span>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li style="line-height: 24px; list-style: none; position: relative;">
+          <div class="bullet-wrapper"
+            style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+            <div class="bullet-dot"
+              style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+            </div>
+          </div><span class="content mubu-node" color="#dc2d1e"
+            style="color: rgb(220, 45, 30); line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>Extended
+              GraphLab to distributed setting with 2 different implementations, while preserving strong data consistency
+              guarantee </span></span>
+        </li>
+        <li style="line-height: 24px; list-style: none; position: relative;">
+          <div class="bullet-wrapper"
+            style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+            <div class="bullet-dot"
+              style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+            </div>
+          </div><span class="content mubu-node" color="#dc2d1e"
+            style="color: rgb(220, 45, 30); line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>Reduced
+              network congestion and network latency effects with Graph-based pipeline locking, data
+              versioning</span></span>
+        </li>
+        <li style="line-height: 24px; list-style: none; position: relative;">
+          <div class="bullet-wrapper"
+            style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+            <div class="bullet-dot"
+              style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+            </div>
+          </div><span class="content mubu-node" color="#dc2d1e"
+            style="color: rgb(220, 45, 30); line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>Fault
+              tolerance with adapted Chandy-Lamport snapshot algorithm </span></span>
+        </li>
+        <li style="line-height: 24px; list-style: none; position: relative;">
+          <div class="bullet-wrapper"
+            style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+            <div class="bullet-dot"
+              style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+            </div>
+          </div><span class="content mubu-node" color="#dc2d1e"
+            style="color: rgb(220, 45, 30); line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>Evaluated
+              on large scale EC2 deployment and achieved 1-2 orders of magnitude performance gain over Hadoop-based
+              implementations </span></span>
+        </li>
+      </ul>
+    </li>
+    <li style="line-height: 24px; list-style: none; position: relative;">
+      <div class="bullet-wrapper"
+        style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+        <div class="bullet-dot"
+          style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+        </div>
+      </div><span class="content mubu-node"
+        style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>Terminologies:</span></span>
+      <ul class="children"
+        style="list-style: outside disc; padding-inline-start: 30px; padding: 0px 0px 4px 40px; margin-left: 13px; position: relative; left: -30px; border-left: 1px solid rgb(235, 235, 235);">
+        <li style="line-height: 24px; list-style: none; position: relative;">
+          <div class="bullet-wrapper"
+            style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+            <div class="bullet-dot"
+              style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+            </div>
+          </div><span class="content mubu-node"
+            style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>MLDM:
+              Machine Learning and Data Mining </span></span>
+        </li>
+        <li style="line-height: 24px; list-style: none; position: relative;">
+          <div class="bullet-wrapper"
+            style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+            <div class="bullet-dot"
+              style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+            </div>
+          </div><span class="content mubu-node"
+            style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>data
+              versioning</span></span>
+        </li>
+        <li style="line-height: 24px; list-style: none; position: relative;">
+          <div class="bullet-wrapper"
+            style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+            <div class="bullet-dot"
+              style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+            </div>
+          </div><span class="content mubu-node"
+            style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>pipelined
+              distributed locking </span></span>
+        </li>
+        <li style="line-height: 24px; list-style: none; position: relative;">
+          <div class="bullet-wrapper"
+            style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+            <div class="bullet-dot"
+              style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+            </div>
+          </div><span class="content mubu-node"
+            style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>BSP:
+              Bulk Synchronous Parallel abstraction</span></span>
+          <ul class="children"
+            style="list-style: outside disc; padding-inline-start: 30px; padding: 0px 0px 4px 40px; margin-left: 13px; position: relative; left: -30px; border-left: 1px solid rgb(235, 235, 235);">
+            <li style="line-height: 24px; list-style: none; position: relative;">
+              <div class="bullet-wrapper"
+                style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                <div class="bullet-dot"
+                  style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                </div>
+              </div><span class="content mubu-node"
+                style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>e.g.
+                  Pregel</span></span>
+            </li>
+          </ul>
+        </li>
+        <li style="line-height: 24px; list-style: none; position: relative;">
+          <div class="bullet-wrapper"
+            style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+            <div class="bullet-dot"
+              style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+            </div>
+          </div><span class="content mubu-node"
+            style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>scope
+              of a vertex v: is the data stored in v, as well as the data stored in all adjacent vertices and adjacent
+              edges</span></span>
+          <ul class="children"
+            style="list-style: outside disc; padding-inline-start: 30px; padding: 0px 0px 4px 40px; margin-left: 13px; position: relative; left: -30px; border-left: 1px solid rgb(235, 235, 235);">
+            <li style="line-height: 24px; list-style: none; position: relative;">
+              <div class="bullet-wrapper"
+                style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                <div class="bullet-dot"
+                  style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                </div>
+              </div><span class="content mubu-node"
+                style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"></span>
+              <div style="padding: 3px 0px 0px 17px; margin-left: -17px; border-left: 1px solid rgb(235, 235, 235);">
+                <img src="distgraphlab/124e2eb5-c127-425e-a79e-c6c88d45a567-5150716.jpg"
+                  style="max-width: 720px; width: 200px;" crossorigin="anonymous" class="attach-img"></div>
+            </li>
+          </ul>
+        </li>
+        <li style="line-height: 24px; list-style: none; position: relative;">
+          <div class="bullet-wrapper"
+            style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+            <div class="bullet-dot"
+              style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+            </div>
+          </div><span class="content mubu-node"
+            style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>serializable
+              execution: there exists a corresponding serial schedule of update functions that when executed, it
+              produces the same values in the data graph</span></span>
+        </li>
+        <li style="line-height: 24px; list-style: none; position: relative;">
+          <div class="bullet-wrapper"
+            style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+            <div class="bullet-dot"
+              style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+            </div>
+          </div><span class="content mubu-node"
+            style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>atom:
+              each part of the k over-partitioned data graph</span></span>
+        </li>
+        <li style="line-height: 24px; list-style: none; position: relative;">
+          <div class="bullet-wrapper"
+            style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+            <div class="bullet-dot"
+              style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+            </div>
+          </div><span class="content mubu-node"
+            style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>ghost:
+              the set of vertices and edges adjacent to the partition boundary </span></span>
+        </li>
+      </ul>
+    </li>
+    <li style="line-height: 24px; list-style: none; position: relative;">
+      <div class="bullet-wrapper"
+        style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+        <div class="bullet-dot"
+          style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+        </div>
+      </div><span class="content mubu-node"
+        style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span
+          class="bold" style="font-weight: bold;">Distributed GraphLab abstraction components</span></span>
+      <ul class="children"
+        style="list-style: outside disc; padding-inline-start: 30px; padding: 0px 0px 4px 40px; margin-left: 13px; position: relative; left: -30px; border-left: 1px solid rgb(235, 235, 235);">
+        <li style="line-height: 24px; list-style: none; position: relative;">
+          <div class="bullet-wrapper"
+            style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+            <div class="bullet-dot"
+              style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+            </div>
+          </div><span class="content mubu-node"
+            style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>3
+              main parts: </span></span>
+          <ul class="children"
+            style="list-style: outside disc; padding-inline-start: 30px; padding: 0px 0px 4px 40px; margin-left: 13px; position: relative; left: -30px; border-left: 1px solid rgb(235, 235, 235);">
+            <li style="line-height: 24px; list-style: none; position: relative;">
+              <div class="bullet-wrapper"
+                style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                <div class="bullet-dot"
+                  style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                </div>
+              </div><span class="content mubu-node"
+                style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>Data
+                  Graph G = (V,E,D)</span></span>
+              <ul class="children"
+                style="list-style: outside disc; padding-inline-start: 30px; padding: 0px 0px 4px 40px; margin-left: 13px; position: relative; left: -30px; border-left: 1px solid rgb(235, 235, 235);">
+                <li style="line-height: 24px; list-style: none; position: relative;">
+                  <div class="bullet-wrapper"
+                    style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                    <div class="bullet-dot"
+                      style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                    </div>
+                  </div><span class="content mubu-node"
+                    style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>repr
+                      the user-modifiable program state, stores both the mutable user-defined data and encodes the
+                      sparse computational dependencies </span></span>
+                </li>
+                <li style="line-height: 24px; list-style: none; position: relative;">
+                  <div class="bullet-wrapper"
+                    style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                    <div class="bullet-dot"
+                      style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                    </div>
+                  </div><span class="content mubu-node"
+                    style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>D:
+                      user-defined data, e.g. model parameters, algorithm state, statistical data, etc. and can be
+                      associated with each vertex or each edge in the graph</span></span>
+                </li>
+                <li style="line-height: 24px; list-style: none; position: relative;">
+                  <div class="bullet-wrapper"
+                    style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                    <div class="bullet-dot"
+                      style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                    </div>
+                  </div><span class="content mubu-node"
+                    style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span
+                      class="bold" style="font-weight: bold;">Caveats</span><span>: While the graph data is mutable, the
+                    </span><span class="bold" style="font-weight: bold;">structure is static</span><span> and cannot be
+                      changed during execution</span></span>
+                </li>
+              </ul>
+            </li>
+            <li style="line-height: 24px; list-style: none; position: relative;">
+              <div class="bullet-wrapper"
+                style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                <div class="bullet-dot"
+                  style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                </div>
+              </div><span class="content mubu-node"
+                style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>Update
+                  Function</span></span>
+              <ul class="children"
+                style="list-style: outside disc; padding-inline-start: 30px; padding: 0px 0px 4px 40px; margin-left: 13px; position: relative; left: -30px; border-left: 1px solid rgb(235, 235, 235);">
+                <li style="line-height: 24px; list-style: none; position: relative;">
+                  <div class="bullet-wrapper"
+                    style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                    <div class="bullet-dot"
+                      style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                    </div>
+                  </div><span class="content mubu-node"
+                    style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>repr
+                    </span><span class="bold" style="font-weight: bold;">user computation</span><span> and operate on
+                      the </span><span class="bold" style="font-weight: bold;">data graph</span><span> by transforming
+                      data in small overlapping contexts called </span><span class="bold"
+                      style="font-weight: bold;">scopes</span><span> </span></span>
+                </li>
+                <li style="line-height: 24px; list-style: none; position: relative;">
+                  <div class="bullet-wrapper"
+                    style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                    <div class="bullet-dot"
+                      style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                    </div>
+                  </div><span class="content mubu-node"
+                    style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>a
+                    </span><span class="bold" style="font-weight: bold;">stateless procedure</span><span> that modifies
+                      the data within the scope of a vertex and schedules the future execution of update functions on
+                      other vertices </span></span>
+                </li>
+                <li style="line-height: 24px; list-style: none; position: relative;">
+                  <div class="bullet-wrapper"
+                    style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                    <div class="bullet-dot"
+                      style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                    </div>
+                  </div><span class="content mubu-node"
+                    style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>Take
+                      input of a vertex and its scope, Output the new version of the data in the scope as well as a set
+                      of vertices T, each vertex of T will eventually execute the update function</span></span>
+                  <div
+                    style="padding: 3px 0px 0px 17px; margin-left: -17px; border-left: 1px solid rgb(235, 235, 235);">
+                    <img src="distgraphlab/be415796-651d-4bfd-a262-546f9083de78-5150716.jpg"
+                      style="max-width: 720px; width: 238px;" crossorigin="anonymous" class="attach-img"></div>
+                </li>
+                <li style="line-height: 24px; list-style: none; position: relative;">
+                  <div class="bullet-wrapper"
+                    style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                    <div class="bullet-dot"
+                      style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                    </div>
+                  </div><span class="content mubu-node"
+                    style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>By
+                      controlling the return value of T, GraphLab update function can efficiently express adaptive
+                      computation e.g. return neighbors only when it has made a substantial change to its local
+                      data</span></span>
+                </li>
+              </ul>
+            </li>
+            <li style="line-height: 24px; list-style: none; position: relative;">
+              <div class="bullet-wrapper"
+                style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                <div class="bullet-dot"
+                  style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                </div>
+              </div><span class="content mubu-node"
+                style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>Sync
+                  Operation </span></span>
+              <ul class="children"
+                style="list-style: outside disc; padding-inline-start: 30px; padding: 0px 0px 4px 40px; margin-left: 13px; position: relative; left: -30px; border-left: 1px solid rgb(235, 235, 235);">
+                <li style="line-height: 24px; list-style: none; position: relative;">
+                  <div class="bullet-wrapper"
+                    style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                    <div class="bullet-dot"
+                      style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                    </div>
+                  </div><span class="content mubu-node"
+                    style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>concurrently
+                      maintains global aggregates </span></span>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li style="line-height: 24px; list-style: none; position: relative;">
+          <div class="bullet-wrapper"
+            style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+            <div class="bullet-dot"
+              style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+            </div>
+          </div><span class="content mubu-node"
+            style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>GraphLab
+            </span><span class="bold" style="font-weight: bold;">Execution Model</span></span>
+          <ul class="children"
+            style="list-style: outside disc; padding-inline-start: 30px; padding: 0px 0px 4px 40px; margin-left: 13px; position: relative; left: -30px; border-left: 1px solid rgb(235, 235, 235);">
+            <li style="line-height: 24px; list-style: none; position: relative;">
+              <div class="bullet-wrapper"
+                style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                <div class="bullet-dot"
+                  style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                </div>
+              </div><span class="content mubu-node"
+                style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span
+                  class="bold" style="font-weight: bold;">Input</span><span>: data graph G = (V,E,D), update function,
+                  initial set of vertices T to be executed </span></span>
+            </li>
+            <li style="line-height: 24px; list-style: none; position: relative;">
+              <div class="bullet-wrapper"
+                style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                <div class="bullet-dot"
+                  style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                </div>
+              </div><span class="content mubu-node"
+                style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span
+                  class="bold" style="font-weight: bold;">Return</span><span> on completion: resulting data graph and
+                  global values </span></span>
+            </li>
+            <li style="line-height: 24px; list-style: none; position: relative;">
+              <div class="bullet-wrapper"
+                style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                <div class="bullet-dot"
+                  style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                </div>
+              </div><span class="content mubu-node"
+                style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>Optimizations:</span></span>
+              <ul class="children"
+                style="list-style: outside disc; padding-inline-start: 30px; padding: 0px 0px 4px 40px; margin-left: 13px; position: relative; left: -30px; border-left: 1px solid rgb(235, 235, 235);">
+                <li style="line-height: 24px; list-style: none; position: relative;">
+                  <div class="bullet-wrapper"
+                    style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                    <div class="bullet-dot"
+                      style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                    </div>
+                  </div><span class="content mubu-node"
+                    style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>relax
+                      the execution ordering requirements of the shared memory GraphLab (standalone) and allow the
+                      run-time to determine the </span><span class="bold" style="font-weight: bold;">best
+                      order</span><span> of execution [</span><span class="underline"
+                      style="text-decoration: underline;">as long as all vertices in T are eventually
+                      executetd</span><span>]</span></span>
+                  <ul class="children"
+                    style="list-style: outside disc; padding-inline-start: 30px; padding: 0px 0px 4px 40px; margin-left: 13px; position: relative; left: -30px; border-left: 1px solid rgb(235, 235, 235);">
+                    <li style="line-height: 24px; list-style: none; position: relative;">
+                      <div class="bullet-wrapper"
+                        style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                        <div class="bullet-dot"
+                          style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                        </div>
+                      </div><span class="content mubu-node"
+                        style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>e.g.
+                          account for network communication latency</span></span>
+                    </li>
+                  </ul>
+                </li>
+                <li style="line-height: 24px; list-style: none; position: relative;">
+                  <div class="bullet-wrapper"
+                    style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                    <div class="bullet-dot"
+                      style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                    </div>
+                  </div><span class="content mubu-node"
+                    style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>allow
+                      prioritization over vertices in T, the run-time may use these priorities with system-level
+                      objectives to optimize the execution order </span></span>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li style="line-height: 24px; list-style: none; position: relative;">
+          <div class="bullet-wrapper"
+            style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+            <div class="bullet-dot"
+              style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+            </div>
+          </div><span class="content mubu-node"
+            style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>About
+            </span><span class="bold" style="font-weight: bold;">Serializability</span><span> </span></span>
+          <ul class="children"
+            style="list-style: outside disc; padding-inline-start: 30px; padding: 0px 0px 4px 40px; margin-left: 13px; position: relative; left: -30px; border-left: 1px solid rgb(235, 235, 235);">
+            <li style="line-height: 24px; list-style: none; position: relative;">
+              <div class="bullet-wrapper"
+                style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                <div class="bullet-dot"
+                  style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                </div>
+              </div><span class="content mubu-node"
+                style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>achieve
+                  parallel execution by allowing multiple processors to execute the same loop on the same graph,
+                  removing and executing different vertices simultaneously while ensuring isolation of overlapping
+                  computation</span></span>
+            </li>
+            <li style="line-height: 24px; list-style: none; position: relative;">
+              <div class="bullet-wrapper"
+                style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                <div class="bullet-dot"
+                  style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                </div>
+              </div><span class="content mubu-node"
+                style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>Consistency
+                  Models </span></span>
+              <ul class="children"
+                style="list-style: outside disc; padding-inline-start: 30px; padding: 0px 0px 4px 40px; margin-left: 13px; position: relative; left: -30px; border-left: 1px solid rgb(235, 235, 235);">
+                <li style="line-height: 24px; list-style: none; position: relative;">
+                  <div class="bullet-wrapper"
+                    style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                    <div class="bullet-dot"
+                      style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                    </div>
+                  </div><span class="content mubu-node"
+                    style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>Full
+                      Consistency</span></span>
+                  <ul class="children"
+                    style="list-style: outside disc; padding-inline-start: 30px; padding: 0px 0px 4px 40px; margin-left: 13px; position: relative; left: -30px; border-left: 1px solid rgb(235, 235, 235);">
+                    <li style="line-height: 24px; list-style: none; position: relative;">
+                      <div class="bullet-wrapper"
+                        style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                        <div class="bullet-dot"
+                          style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                        </div>
+                      </div><span class="content mubu-node"
+                        style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>ensure
+                          that the scopes of concurrently executing update functions do not overlap</span></span>
+                    </li>
+                    <li style="line-height: 24px; list-style: none; position: relative;">
+                      <div class="bullet-wrapper"
+                        style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                        <div class="bullet-dot"
+                          style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                        </div>
+                      </div><span class="content mubu-node"
+                        style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>limits
+                          the potential parallelism as it implicitly imposes the constraint that concurrently executing
+                          update functions must be at least two vertices apart</span></span>
+                    </li>
+                    <li style="line-height: 24px; list-style: none; position: relative;">
+                      <div class="bullet-wrapper"
+                        style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                        <div class="bullet-dot"
+                          style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                        </div>
+                      </div><span class="content mubu-node"
+                        style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"></span>
+                      <div
+                        style="padding: 3px 0px 0px 17px; margin-left: -17px; border-left: 1px solid rgb(235, 235, 235);">
+                        <img src="distgraphlab/70d96f23-7dfb-4f42-8973-48139d0d2e32-5150716.jpg"
+                          style="max-width: 720px; width: 516px;" crossorigin="anonymous" class="attach-img"></div>
+                      <div
+                        style="padding: 3px 0px 0px 17px; margin-left: -17px; border-left: 1px solid rgb(235, 235, 235);">
+                        <img src="distgraphlab/cade905c-b2a6-491c-9bdb-bb259fe5ef80-5150716.jpg"
+                          style="max-width: 720px; width: 509px;" crossorigin="anonymous" class="attach-img"></div>
+                    </li>
+                  </ul>
+                </li>
+                <li style="line-height: 24px; list-style: none; position: relative;">
+                  <div class="bullet-wrapper"
+                    style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                    <div class="bullet-dot"
+                      style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                    </div>
+                  </div><span class="content mubu-node"
+                    style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>Edge
+                      Consistency </span></span>
+                  <ul class="children"
+                    style="list-style: outside disc; padding-inline-start: 30px; padding: 0px 0px 4px 40px; margin-left: 13px; position: relative; left: -30px; border-left: 1px solid rgb(235, 235, 235);">
+                    <li style="line-height: 24px; list-style: none; position: relative;">
+                      <div class="bullet-wrapper"
+                        style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                        <div class="bullet-dot"
+                          style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                        </div>
+                      </div><span class="content mubu-node"
+                        style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>ensures
+                          each update function has exclusive </span><span class="bold"
+                          style="font-weight: bold;">read-write access</span><span> to its </span><span class="bold"
+                          style="font-weight: bold;">vertex and adjacent edges</span><span>, but </span><span
+                          class="bold" style="font-weight: bold;">read-only access</span><span> to </span><span
+                          class="bold" style="font-weight: bold;">adjacent vertices</span><span> </span></span>
+                    </li>
+                    <li style="line-height: 24px; list-style: none; position: relative;">
+                      <div class="bullet-wrapper"
+                        style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                        <div class="bullet-dot"
+                          style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                        </div>
+                      </div><span class="content mubu-node"
+                        style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>increase
+                          parallelism by allowing update functions with slightly overlapping scopes to safely run in
+                          parallel </span></span>
+                    </li>
+                    <li style="line-height: 24px; list-style: none; position: relative;">
+                      <div class="bullet-wrapper"
+                        style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                        <div class="bullet-dot"
+                          style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                        </div>
+                      </div><span class="content mubu-node"
+                        style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"></span>
+                      <div
+                        style="padding: 3px 0px 0px 17px; margin-left: -17px; border-left: 1px solid rgb(235, 235, 235);">
+                        <img src="distgraphlab/34f3f530-1b5a-407e-9cb4-6e13680d8275-5150716.jpg"
+                          style="max-width: 720px; width: 473px;" crossorigin="anonymous" class="attach-img"></div>
+                      <div
+                        style="padding: 3px 0px 0px 17px; margin-left: -17px; border-left: 1px solid rgb(235, 235, 235);">
+                        <img src="distgraphlab/4da1ea10-1188-49a5-a7be-4eecd8f5bcd8-5150716.jpg"
+                          style="max-width: 720px; width: 484px;" crossorigin="anonymous" class="attach-img"></div>
+                    </li>
+                  </ul>
+                </li>
+                <li style="line-height: 24px; list-style: none; position: relative;">
+                  <div class="bullet-wrapper"
+                    style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                    <div class="bullet-dot"
+                      style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                    </div>
+                  </div><span class="content mubu-node"
+                    style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>Vertex
+                      Consistency</span></span>
+                  <ul class="children"
+                    style="list-style: outside disc; padding-inline-start: 30px; padding: 0px 0px 4px 40px; margin-left: 13px; position: relative; left: -30px; border-left: 1px solid rgb(235, 235, 235);">
+                    <li style="line-height: 24px; list-style: none; position: relative;">
+                      <div class="bullet-wrapper"
+                        style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                        <div class="bullet-dot"
+                          style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                        </div>
+                      </div><span class="content mubu-node"
+                        style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>allow
+                          all update functions to be run in parallel and hence provides maximum parallelism
+                        </span></span>
+                    </li>
+                    <li style="line-height: 24px; list-style: none; position: relative;">
+                      <div class="bullet-wrapper"
+                        style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                        <div class="bullet-dot"
+                          style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                        </div>
+                      </div><span class="content mubu-node"
+                        style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"></span>
+                      <div
+                        style="padding: 3px 0px 0px 17px; margin-left: -17px; border-left: 1px solid rgb(235, 235, 235);">
+                        <img src="distgraphlab/00574dc9-1395-48f0-a75a-3aa0c9047ef9-5150716.jpg"
+                          style="max-width: 720px; width: 424px;" crossorigin="anonymous" class="attach-img"></div>
+                      <div
+                        style="padding: 3px 0px 0px 17px; margin-left: -17px; border-left: 1px solid rgb(235, 235, 235);">
+                        <img src="distgraphlab/0b0f4f9c-785e-42fb-bf54-1776d4f7145f-5150716.jpg"
+                          style="max-width: 720px; width: 447px;" crossorigin="anonymous" class="attach-img"></div>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li style="line-height: 24px; list-style: none; position: relative;">
+          <div class="bullet-wrapper"
+            style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+            <div class="bullet-dot"
+              style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+            </div>
+          </div><span class="content mubu-node"
+            style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>About
+            </span><span class="bold" style="font-weight: bold;">sync operation</span><span> and </span><span
+              class="bold" style="font-weight: bold;">global values</span></span>
+          <ul class="children"
+            style="list-style: outside disc; padding-inline-start: 30px; padding: 0px 0px 4px 40px; margin-left: 13px; position: relative; left: -30px; border-left: 1px solid rgb(235, 235, 235);">
+            <li style="line-height: 24px; list-style: none; position: relative;">
+              <div class="bullet-wrapper"
+                style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                <div class="bullet-dot"
+                  style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                </div>
+              </div><span class="content mubu-node"
+                style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>global
+                  values can be read by update functions but have to be written using "sync operations" </span></span>
+            </li>
+            <li style="line-height: 24px; list-style: none; position: relative;">
+              <div class="bullet-wrapper"
+                style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                <div class="bullet-dot"
+                  style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                </div>
+              </div><span class="content mubu-node"
+                style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>Sync
+                  operation [one of the 3 components in the abstraction model]</span></span>
+              <ul class="children"
+                style="list-style: outside disc; padding-inline-start: 30px; padding: 0px 0px 4px 40px; margin-left: 13px; position: relative; left: -30px; border-left: 1px solid rgb(235, 235, 235);">
+                <li style="line-height: 24px; list-style: none; position: relative;">
+                  <div class="bullet-wrapper"
+                    style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                    <div class="bullet-dot"
+                      style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                    </div>
+                  </div><span class="content mubu-node"
+                    style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>an
+                      associative commutative sum defined over </span><span class="bold" style="font-weight: bold;">all
+                      the scopes</span><span> in the graph and </span><span class="bold" style="font-weight: bold;">runs
+                      continuously in the background</span><span> to maintain updated estimates of the global value
+                    </span></span>
+                </li>
+                <li style="line-height: 24px; list-style: none; position: relative;">
+                  <div class="bullet-wrapper"
+                    style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                    <div class="bullet-dot"
+                      style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                    </div>
+                  </div><span class="content mubu-node"
+                    style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>the
+                      "finalize" phase enable tasks like normalization</span></span>
+                </li>
+                <li style="line-height: 24px; list-style: none; position: relative;">
+                  <div class="bullet-wrapper"
+                    style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                    <div class="bullet-dot"
+                      style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                    </div>
+                  </div><span class="content mubu-node"
+                    style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>ensuring
+                      serializability of the sync operation wrt to update functions are costly, GraphLab provides two
+                      options: </span><span class="bold" style="font-weight: bold;">Consistent Sync
+                      Computation</span><span> and </span><span class="bold" style="font-weight: bold;">Inconsistent
+                      Sync Computation</span><span> </span></span>
+                </li>
+                <li style="line-height: 24px; list-style: none; position: relative;">
+                  <div class="bullet-wrapper"
+                    style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                    <div class="bullet-dot"
+                      style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                    </div>
+                  </div><span class="content mubu-node"
+                    style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"></span>
+                  <div
+                    style="padding: 3px 0px 0px 17px; margin-left: -17px; border-left: 1px solid rgb(235, 235, 235);">
+                    <img src="distgraphlab/406d3782-13e4-4748-a7ad-fb498eb4a3b7-5150716.jpg"
+                      style="max-width: 720px; width: 286px;" crossorigin="anonymous" class="attach-img"></div>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li style="line-height: 24px; list-style: none; position: relative;">
+      <div class="bullet-wrapper"
+        style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+        <div class="bullet-dot"
+          style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+        </div>
+      </div><span class="content mubu-node"
+        style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>Distributed
+          GraphLab </span><span class="bold" style="font-weight: bold;">Design</span></span>
+      <ul class="children"
+        style="list-style: outside disc; padding-inline-start: 30px; padding: 0px 0px 4px 40px; margin-left: 13px; position: relative; left: -30px; border-left: 1px solid rgb(235, 235, 235);">
+        <li style="line-height: 24px; list-style: none; position: relative;">
+          <div class="bullet-wrapper"
+            style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+            <div class="bullet-dot"
+              style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+            </div>
+          </div><span class="content mubu-node"
+            style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>Focused
+              on distributed in-memory setting</span></span>
+          <ul class="children"
+            style="list-style: outside disc; padding-inline-start: 30px; padding: 0px 0px 4px 40px; margin-left: 13px; position: relative; left: -30px; border-left: 1px solid rgb(235, 235, 235);">
+            <li style="line-height: 24px; list-style: none; position: relative;">
+              <div class="bullet-wrapper"
+                style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                <div class="bullet-dot"
+                  style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                </div>
+              </div><span class="content mubu-node"
+                style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>require
+                  entire graph and all program states to reside in RAM</span></span>
+            </li>
+            <li style="line-height: 24px; list-style: none; position: relative;">
+              <div class="bullet-wrapper"
+                style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                <div class="bullet-dot"
+                  style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                </div>
+              </div><span class="content mubu-node"
+                style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>because
+                  of the inherently random memory access pattern common to dynamic async graph algorithms </span></span>
+            </li>
+          </ul>
+        </li>
+        <li style="line-height: 24px; list-style: none; position: relative;">
+          <div class="bullet-wrapper"
+            style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+            <div class="bullet-dot"
+              style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+            </div>
+          </div><span class="content mubu-node"
+            style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>Written
+              in C++</span></span>
+        </li>
+        <li style="line-height: 24px; list-style: none; position: relative;">
+          <div class="bullet-wrapper"
+            style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+            <div class="bullet-dot"
+              style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+            </div>
+          </div><span class="content mubu-node"
+            style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>1.
+              The </span><span class="bold" style="font-weight: bold;">distributed data graph</span></span>
+          <ul class="children"
+            style="list-style: outside disc; padding-inline-start: 30px; padding: 0px 0px 4px 40px; margin-left: 13px; position: relative; left: -30px; border-left: 1px solid rgb(235, 235, 235);">
+            <li style="line-height: 24px; list-style: none; position: relative;">
+              <div class="bullet-wrapper"
+                style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                <div class="bullet-dot"
+                  style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                </div>
+              </div><span class="content mubu-node"
+                style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>Challenges</span></span>
+              <ul class="children"
+                style="list-style: outside disc; padding-inline-start: 30px; padding: 0px 0px 4px 40px; margin-left: 13px; position: relative; left: -30px; border-left: 1px solid rgb(235, 235, 235);">
+                <li style="line-height: 24px; list-style: none; position: relative;">
+                  <div class="bullet-wrapper"
+                    style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                    <div class="bullet-dot"
+                      style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                    </div>
+                  </div><span class="content mubu-node"
+                    style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>balance
+                      computation, communication, storage </span></span>
+                  <ul class="children"
+                    style="list-style: outside disc; padding-inline-start: 30px; padding: 0px 0px 4px 40px; margin-left: 13px; position: relative; left: -30px; border-left: 1px solid rgb(235, 235, 235);">
+                    <li style="line-height: 24px; list-style: none; position: relative;">
+                      <div class="bullet-wrapper"
+                        style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                        <div class="bullet-dot"
+                          style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                        </div>
+                      </div><span class="content mubu-node"
+                        style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>i.e.
+                          need to construct </span><span class="bold" style="font-weight: bold;">balanced partitioning
+                          of the data graph</span><span> that </span><span class="underline"
+                          style="text-decoration: underline;">minimize # of edges</span><span> that cross between
+                          machines </span></span>
+                    </li>
+                  </ul>
+                </li>
+                <li style="line-height: 24px; list-style: none; position: relative;">
+                  <div class="bullet-wrapper"
+                    style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                    <div class="bullet-dot"
+                      style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                    </div>
+                  </div><span class="content mubu-node"
+                    style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>be
+                      able to quickly load the data graph on varying sized cloud deployments </span></span>
+                </li>
+              </ul>
+            </li>
+            <li style="line-height: 24px; list-style: none; position: relative;">
+              <div class="bullet-wrapper"
+                style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                <div class="bullet-dot"
+                  style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                </div>
+              </div><span class="content mubu-node"
+                style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>Solution</span></span>
+              <ul class="children"
+                style="list-style: outside disc; padding-inline-start: 30px; padding: 0px 0px 4px 40px; margin-left: 13px; position: relative; left: -30px; border-left: 1px solid rgb(235, 235, 235);">
+                <li style="line-height: 24px; list-style: none; position: relative;">
+                  <div class="bullet-wrapper"
+                    style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                    <div class="bullet-dot"
+                      style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                    </div>
+                  </div><span class="content mubu-node"
+                    style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>A
+                      graph representation based on </span><span class="bold" style="font-weight: bold;">two-phased
+                      partitioning</span><span> which can be efficiently load-balanced on arbitrary cluster sizes
+                    </span></span>
+                  <ul class="children"
+                    style="list-style: outside disc; padding-inline-start: 30px; padding: 0px 0px 4px 40px; margin-left: 13px; position: relative; left: -30px; border-left: 1px solid rgb(235, 235, 235);">
+                    <li style="line-height: 24px; list-style: none; position: relative;">
+                      <div class="bullet-wrapper"
+                        style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                        <div class="bullet-dot"
+                          style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                        </div>
+                      </div><span class="content mubu-node"
+                        style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>Benefits:</span></span>
+                      <ul class="children"
+                        style="list-style: outside disc; padding-inline-start: 30px; padding: 0px 0px 4px 40px; margin-left: 13px; position: relative; left: -30px; border-left: 1px solid rgb(235, 235, 235);">
+                        <li style="line-height: 24px; list-style: none; position: relative;">
+                          <div class="bullet-wrapper"
+                            style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                            <div class="bullet-dot"
+                              style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                            </div>
+                          </div><span class="content mubu-node"
+                            style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>allow
+                              reuse of the same graph partition computation for different # of machines without a full
+                              repartition step</span></span>
+                        </li>
+                      </ul>
+                    </li>
+                    <li style="line-height: 24px; list-style: none; position: relative;">
+                      <div class="bullet-wrapper"
+                        style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                        <div class="bullet-dot"
+                          style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                        </div>
+                      </div><span class="content mubu-node"
+                        style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>Phase
+                          1: Initialization Phase: </span></span>
+                      <ul class="children"
+                        style="list-style: outside disc; padding-inline-start: 30px; padding: 0px 0px 4px 40px; margin-left: 13px; position: relative; left: -30px; border-left: 1px solid rgb(235, 235, 235);">
+                        <li style="line-height: 24px; list-style: none; position: relative;">
+                          <div class="bullet-wrapper"
+                            style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                            <div class="bullet-dot"
+                              style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                            </div>
+                          </div><span class="content mubu-node"
+                            style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>Over-partition
+                              the graph using [domain specific knowledge or a distributed graph partitioning heuristic]
+                              into k parts, k is much larger than # of machines [which is why we call it
+                              "over-partitioning"]</span></span>
+                          <ul class="children"
+                            style="list-style: outside disc; padding-inline-start: 30px; padding: 0px 0px 4px 40px; margin-left: 13px; position: relative; left: -30px; border-left: 1px solid rgb(235, 235, 235);">
+                            <li style="line-height: 24px; list-style: none; position: relative;">
+                              <div class="bullet-wrapper"
+                                style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                                <div class="bullet-dot"
+                                  style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                                </div>
+                              </div><span class="content mubu-node"
+                                style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>each
+                                  of the k parts is called an "</span><span class="bold"
+                                  style="font-weight: bold;">atom</span><span>"</span></span>
+                            </li>
+                            <li style="line-height: 24px; list-style: none; position: relative;">
+                              <div class="bullet-wrapper"
+                                style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                                <div class="bullet-dot"
+                                  style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                                </div>
+                              </div><span class="content mubu-node"
+                                style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>Each
+                                  atom</span></span>
+                              <ul class="children"
+                                style="list-style: outside disc; padding-inline-start: 30px; padding: 0px 0px 4px 40px; margin-left: 13px; position: relative; left: -30px; border-left: 1px solid rgb(235, 235, 235);">
+                                <li style="line-height: 24px; list-style: none; position: relative;">
+                                  <div class="bullet-wrapper"
+                                    style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                                    <div class="bullet-dot"
+                                      style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                                    </div>
+                                  </div><span class="content mubu-node"
+                                    style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>is
+                                      stored as a separate file on a distributed storage system e.g. HDFS, AWS
+                                      S3</span></span>
+                                </li>
+                                <li style="line-height: 24px; list-style: none; position: relative;">
+                                  <div class="bullet-wrapper"
+                                    style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                                    <div class="bullet-dot"
+                                      style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                                    </div>
+                                  </div><span class="content mubu-node"
+                                    style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>the
+                                      atom file is a simple binary compressed journal of </span><span class="bold"
+                                      style="font-weight: bold;">graph generating commands</span><span> </span></span>
+                                </li>
+                                <li style="line-height: 24px; list-style: none; position: relative;">
+                                  <div class="bullet-wrapper"
+                                    style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                                    <div class="bullet-dot"
+                                      style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                                    </div>
+                                  </div><span class="content mubu-node"
+                                    style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>stores
+                                      the information regarding "</span><span class="bold"
+                                      style="font-weight: bold;">ghosts</span><span>": the set of vertices and edges
+                                      adjacent to the partition boundary </span></span>
+                                </li>
+                              </ul>
+                            </li>
+                            <li style="line-height: 24px; list-style: none; position: relative;">
+                              <div class="bullet-wrapper"
+                                style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                                <div class="bullet-dot"
+                                  style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                                </div>
+                              </div><span class="content mubu-node"
+                                style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>The
+                                </span><span class="bold" style="font-weight: bold;">connectivity structure</span><span>
+                                  and </span><span class="bold" style="font-weight: bold;">file locations</span><span>
+                                  of the k atoms are stored in an "</span><span class="bold italic"
+                                  style="font-weight: bold; font-style: italic;">atom index</span><span>" file as a
+                                </span><span class="bold italic"
+                                  style="font-weight: bold; font-style: italic;">meta-graph </span><span>with k vertices
+                                  and edges encoding the connectivity of the atoms </span></span>
+                            </li>
+                          </ul>
+                        </li>
+                      </ul>
+                    </li>
+                    <li style="line-height: 24px; list-style: none; position: relative;">
+                      <div class="bullet-wrapper"
+                        style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                        <div class="bullet-dot"
+                          style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                        </div>
+                      </div><span class="content mubu-node"
+                        style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>Phase
+                          2: GraphLab Execution Phase</span></span>
+                      <ul class="children"
+                        style="list-style: outside disc; padding-inline-start: 30px; padding: 0px 0px 4px 40px; margin-left: 13px; position: relative; left: -30px; border-left: 1px solid rgb(235, 235, 235);">
+                        <li style="line-height: 24px; list-style: none; position: relative;">
+                          <div class="bullet-wrapper"
+                            style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                            <div class="bullet-dot"
+                              style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                            </div>
+                          </div><span class="content mubu-node"
+                            style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>Perform
+                              a </span><span class="bold" style="font-weight: bold;">fast balanced
+                              partition</span><span> of the </span><span class="bold"
+                              style="font-weight: bold;">meta-graph</span><span> over the number of physical
+                              machines</span></span>
+                          <ul class="children"
+                            style="list-style: outside disc; padding-inline-start: 30px; padding: 0px 0px 4px 40px; margin-left: 13px; position: relative; left: -30px; border-left: 1px solid rgb(235, 235, 235);">
+                            <li style="line-height: 24px; list-style: none; position: relative;">
+                              <div class="bullet-wrapper"
+                                style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                                <div class="bullet-dot"
+                                  style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                                </div>
+                              </div><span class="content mubu-node"
+                                style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>the
+                                  process of "distributed loading"</span></span>
+                            </li>
+                          </ul>
+                        </li>
+                        <li style="line-height: 24px; list-style: none; position: relative;">
+                          <div class="bullet-wrapper"
+                            style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                            <div class="bullet-dot"
+                              style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                            </div>
+                          </div><span class="content mubu-node"
+                            style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>Each
+                              machine then constructs its </span><span class="bold" style="font-weight: bold;">local
+                              portion of the graph</span><span> by </span><span class="bold"
+                              style="font-weight: bold;">replay</span><span> the journal from each of its assigned atoms
+                            </span></span>
+                          <ul class="children"
+                            style="list-style: outside disc; padding-inline-start: 30px; padding: 0px 0px 4px 40px; margin-left: 13px; position: relative; left: -30px; border-left: 1px solid rgb(235, 235, 235);">
+                            <li style="line-height: 24px; list-style: none; position: relative;">
+                              <div class="bullet-wrapper"
+                                style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                                <div class="bullet-dot"
+                                  style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                                </div>
+                              </div><span class="content mubu-node"
+                                style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>the
+                                  playback procedure also instantiates the ghost of the local partition in
+                                  memory</span></span>
+                            </li>
+                            <li style="line-height: 24px; list-style: none; position: relative;">
+                              <div class="bullet-wrapper"
+                                style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                                <div class="bullet-dot"
+                                  style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                                </div>
+                              </div><span class="content mubu-node"
+                                style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>the
+                                  instantiated ghosts are used as caches for the true counterparts across the
+                                  network</span></span>
+                            </li>
+                            <li style="line-height: 24px; list-style: none; position: relative;">
+                              <div class="bullet-wrapper"
+                                style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                                <div class="bullet-dot"
+                                  style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                                </div>
+                              </div><span class="content mubu-node"
+                                style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>cache
+                                  coherence is managed by versioning tools and therefore eliminate the transmission of
+                                  unchanged/constant data </span></span>
+                            </li>
+                          </ul>
+                        </li>
+                      </ul>
+                    </li>
+                    <li style="line-height: 24px; list-style: none; position: relative;">
+                      <div class="bullet-wrapper"
+                        style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                        <div class="bullet-dot"
+                          style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                        </div>
+                      </div><span class="content mubu-node"
+                        style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"></span>
+                      <div
+                        style="padding: 3px 0px 0px 17px; margin-left: -17px; border-left: 1px solid rgb(235, 235, 235);">
+                        <img src="distgraphlab/3697bb81-ae4f-4ae0-bf8c-8bbcabe528fd-5150716.jpg"
+                          style="max-width: 720px;" crossorigin="anonymous" class="attach-img"></div>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li style="line-height: 24px; list-style: none; position: relative;">
+          <div class="bullet-wrapper"
+            style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+            <div class="bullet-dot"
+              style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+            </div>
+          </div><span class="content mubu-node"
+            style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>2.
+              The distributed GraphLab </span><span class="bold" style="font-weight: bold;">Engine</span><span>
+              (</span><span class="bold" style="font-weight: bold;">distributed execution
+              model</span><span>)</span></span>
+          <ul class="children"
+            style="list-style: outside disc; padding-inline-start: 30px; padding: 0px 0px 4px 40px; margin-left: 13px; position: relative; left: -30px; border-left: 1px solid rgb(235, 235, 235);">
+            <li style="line-height: 24px; list-style: none; position: relative;">
+              <div class="bullet-wrapper"
+                style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                <div class="bullet-dot"
+                  style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                </div>
+              </div><span class="content mubu-node"
+                style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>OBJ</span></span>
+              <ul class="children"
+                style="list-style: outside disc; padding-inline-start: 30px; padding: 0px 0px 4px 40px; margin-left: 13px; position: relative; left: -30px; border-left: 1px solid rgb(235, 235, 235);">
+                <li style="line-height: 24px; list-style: none; position: relative;">
+                  <div class="bullet-wrapper"
+                    style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                    <div class="bullet-dot"
+                      style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                    </div>
+                  </div><span class="content mubu-node"
+                    style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>Execute
+                      update functions and sync operations</span></span>
+                </li>
+                <li style="line-height: 24px; list-style: none; position: relative;">
+                  <div class="bullet-wrapper"
+                    style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                    <div class="bullet-dot"
+                      style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                    </div>
+                  </div><span class="content mubu-node"
+                    style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>Maintain
+                      the set of scheduled vertices T</span></span>
+                </li>
+                <li style="line-height: 24px; list-style: none; position: relative;">
+                  <div class="bullet-wrapper"
+                    style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                    <div class="bullet-dot"
+                      style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                    </div>
+                  </div><span class="content mubu-node"
+                    style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>Ensure
+                      Serializability wrt the appropriate consistency model [full/edge/vertex]</span></span>
+                </li>
+              </ul>
+            </li>
+            <li style="line-height: 24px; list-style: none; position: relative;">
+              <div class="bullet-wrapper"
+                style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                <div class="bullet-dot"
+                  style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                </div>
+              </div><span class="content mubu-node"
+                style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>Tradeoffs
+                  b/w </span><span class="bold" style="font-weight: bold;">performance</span><span> and </span><span
+                  class="bold" style="font-weight: bold;">expressiveness</span><span> </span></span>
+              <ul class="children"
+                style="list-style: outside disc; padding-inline-start: 30px; padding: 0px 0px 4px 40px; margin-left: 13px; position: relative; left: -30px; border-left: 1px solid rgb(235, 235, 235);">
+                <li style="line-height: 24px; list-style: none; position: relative;">
+                  <div class="bullet-wrapper"
+                    style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                    <div class="bullet-dot"
+                      style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                    </div>
+                  </div><span class="content mubu-node"
+                    style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>relaxed
+                      execution ordering enables more efficient distributed execution</span></span>
+                </li>
+                <li style="line-height: 24px; list-style: none; position: relative;">
+                  <div class="bullet-wrapper"
+                    style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                    <div class="bullet-dot"
+                      style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                    </div>
+                  </div><span class="content mubu-node"
+                    style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>evaluated
+                      using two different Engines: Chromatic Engine and Locking Engine</span></span>
+                </li>
+              </ul>
+            </li>
+            <li style="line-height: 24px; list-style: none; position: relative;">
+              <div class="bullet-wrapper"
+                style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                <div class="bullet-dot"
+                  style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                </div>
+              </div><span class="content mubu-node"
+                style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>Chromatic
+                  Engine</span></span>
+              <ul class="children"
+                style="list-style: outside disc; padding-inline-start: 30px; padding: 0px 0px 4px 40px; margin-left: 13px; position: relative; left: -30px; border-left: 1px solid rgb(235, 235, 235);">
+                <li style="line-height: 24px; list-style: none; position: relative;">
+                  <div class="bullet-wrapper"
+                    style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                    <div class="bullet-dot"
+                      style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                    </div>
+                  </div><span class="content mubu-node"
+                    style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>low-overhead
+                    </span><span class="bold" style="font-weight: bold;">but</span><span> does not provide sufficient
+                      scheduling flexibility and presupposes the availability of a graph coloring</span></span>
+                </li>
+                <li style="line-height: 24px; list-style: none; position: relative;">
+                  <div class="bullet-wrapper"
+                    style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                    <div class="bullet-dot"
+                      style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                    </div>
+                  </div><span class="content mubu-node"
+                    style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>executes
+                      the vertex set T </span><span class="bold" style="font-weight: bold;">partially
+                      asynchronous</span><span> by using vertex coloring, still operate in </span><span class="bold"
+                      style="font-weight: bold;">synchronous color-steps</span></span>
+                  <ul class="children"
+                    style="list-style: outside disc; padding-inline-start: 30px; padding: 0px 0px 4px 40px; margin-left: 13px; position: relative; left: -30px; border-left: 1px solid rgb(235, 235, 235);">
+                    <li style="line-height: 24px; list-style: none; position: relative;">
+                      <div class="bullet-wrapper"
+                        style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                        <div class="bullet-dot"
+                          style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                        </div>
+                      </div><span class="content mubu-node"
+                        style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>Vertex
+                          coloring assigns a color to each vertex s.t. no adjacent vertices share the same
+                          color</span></span>
+                    </li>
+                    <li style="line-height: 24px; list-style: none; position: relative;">
+                      <div class="bullet-wrapper"
+                        style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                        <div class="bullet-dot"
+                          style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                        </div>
+                      </div><span class="content mubu-node"
+                        style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>"Color-Step"
+                          is defined in analogy to the super-step in the BSP model to describe the process of
+                        </span><span class="underline italic"
+                          style="text-decoration: underline; font-style: italic;">updating all the vertices within the
+                          single color and communicating all changes</span><span> </span></span>
+                      <ul class="children"
+                        style="list-style: outside disc; padding-inline-start: 30px; padding: 0px 0px 4px 40px; margin-left: 13px; position: relative; left: -30px; border-left: 1px solid rgb(235, 235, 235);">
+                        <li style="line-height: 24px; list-style: none; position: relative;">
+                          <div class="bullet-wrapper"
+                            style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                            <div class="bullet-dot"
+                              style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                            </div>
+                          </div><span class="content mubu-node"
+                            style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>Within
+                              each color-step, communicate changes </span><span class="bold"
+                              style="font-weight: bold;">asynchronously as they are made</span><span>, thus efficiently
+                              use both network bandwidth and processor time </span></span>
+                        </li>
+                        <li style="line-height: 24px; list-style: none; position: relative;">
+                          <div class="bullet-wrapper"
+                            style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                            <div class="bullet-dot"
+                              style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                            </div>
+                          </div><span class="content mubu-node"
+                            style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>Have
+                              to ensure all modifications are communicated before moving to the next color</span></span>
+                          <ul class="children"
+                            style="list-style: outside disc; padding-inline-start: 30px; padding: 0px 0px 4px 40px; margin-left: 13px; position: relative; left: -30px; border-left: 1px solid rgb(235, 235, 235);">
+                            <li style="line-height: 24px; list-style: none; position: relative;">
+                              <div class="bullet-wrapper"
+                                style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                                <div class="bullet-dot"
+                                  style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                                </div>
+                              </div><span class="content mubu-node"
+                                style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>"Full
+                                  communication barrier" b/w color-steps</span></span>
+                            </li>
+                          </ul>
+                        </li>
+                      </ul>
+                    </li>
+                    <li style="line-height: 24px; list-style: none; position: relative;">
+                      <div class="bullet-wrapper"
+                        style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                        <div class="bullet-dot"
+                          style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                        </div>
+                      </div><span class="content mubu-node"
+                        style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span
+                          class="bold" style="font-weight: bold;">Sync operation</span><span> can then be run safely b/w
+                          color steps </span></span>
+                    </li>
+                    <li style="line-height: 24px; list-style: none; position: relative;">
+                      <div class="bullet-wrapper"
+                        style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                        <div class="bullet-dot"
+                          style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                        </div>
+                      </div><span class="content mubu-node"
+                        style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>To
+                          satisfy </span><span class="bold italic" style="font-weight: bold; font-style: italic;">Edge
+                          Consisency Model</span></span>
+                      <ul class="children"
+                        style="list-style: outside disc; padding-inline-start: 30px; padding: 0px 0px 4px 40px; margin-left: 13px; position: relative; left: -30px; border-left: 1px solid rgb(235, 235, 235);">
+                        <li style="line-height: 24px; list-style: none; position: relative;">
+                          <div class="bullet-wrapper"
+                            style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                            <div class="bullet-dot"
+                              style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                            </div>
+                          </div><span class="content mubu-node"
+                            style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>Given
+                              a vertex coloring scheme of the data graph, we can satisfy the "</span><span class="bold"
+                              style="font-weight: bold;">edge consistency</span><span>" </span><span class="italic"
+                              style="font-style: italic;">by</span><span> executing </span><span class="bold"
+                              style="font-weight: bold;">synchronously</span><span> all vertices of the </span><span
+                              class="bold" style="font-weight: bold;">same</span><span> </span><span class="bold"
+                              style="font-weight: bold;">color</span><span> in the vertex set T before proceeding to the
+                              next color</span></span>
+                        </li>
+                      </ul>
+                    </li>
+                    <li style="line-height: 24px; list-style: none; position: relative;">
+                      <div class="bullet-wrapper"
+                        style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                        <div class="bullet-dot"
+                          style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                        </div>
+                      </div><span class="content mubu-node"
+                        style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>To
+                          satisfy </span><span class="bold italic" style="font-weight: bold; font-style: italic;">Full
+                          Consistency Model</span></span>
+                      <ul class="children"
+                        style="list-style: outside disc; padding-inline-start: 30px; padding: 0px 0px 4px 40px; margin-left: 13px; position: relative; left: -30px; border-left: 1px solid rgb(235, 235, 235);">
+                        <li style="line-height: 24px; list-style: none; position: relative;">
+                          <div class="bullet-wrapper"
+                            style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                            <div class="bullet-dot"
+                              style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                            </div>
+                          </div><span class="content mubu-node"
+                            style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>Change
+                              coloring scheme by constructing a </span><span class="bold"
+                              style="font-weight: bold;">second-order vertex coloring</span><span> [i.e. no vertex
+                              shares the same color as any of its </span><span class="bold"
+                              style="font-weight: bold;">two-hop neighbors</span><span>]</span></span>
+                        </li>
+                      </ul>
+                    </li>
+                    <li style="line-height: 24px; list-style: none; position: relative;">
+                      <div class="bullet-wrapper"
+                        style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                        <div class="bullet-dot"
+                          style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                        </div>
+                      </div><span class="content mubu-node"
+                        style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>To
+                          satisfy </span><span class="bold italic" style="font-weight: bold; font-style: italic;">Vertex
+                          Consistency Model</span></span>
+                      <ul class="children"
+                        style="list-style: outside disc; padding-inline-start: 30px; padding: 0px 0px 4px 40px; margin-left: 13px; position: relative; left: -30px; border-left: 1px solid rgb(235, 235, 235);">
+                        <li style="line-height: 24px; list-style: none; position: relative;">
+                          <div class="bullet-wrapper"
+                            style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                            <div class="bullet-dot"
+                              style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                            </div>
+                          </div><span class="content mubu-node"
+                            style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>Assign
+                              all vertices the same color</span></span>
+                        </li>
+                      </ul>
+                    </li>
+                  </ul>
+                </li>
+                <li style="line-height: 24px; list-style: none; position: relative;">
+                  <div class="bullet-wrapper"
+                    style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                    <div class="bullet-dot"
+                      style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                    </div>
+                  </div><span class="content mubu-node"
+                    style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>A
+                      reasonable quality vertex coloring scheme can be constructed quickly using graph coloring
+                      heuristics e.g. greedy coloring</span></span>
+                </li>
+              </ul>
+            </li>
+            <li style="line-height: 24px; list-style: none; position: relative;">
+              <div class="bullet-wrapper"
+                style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                <div class="bullet-dot"
+                  style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                </div>
+              </div><span class="content mubu-node"
+                style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>Locking
+                  Engine</span></span>
+              <ul class="children"
+                style="list-style: outside disc; padding-inline-start: 30px; padding: 0px 0px 4px 40px; margin-left: 13px; position: relative; left: -30px; border-left: 1px solid rgb(235, 235, 235);">
+                <li style="line-height: 24px; list-style: none; position: relative;">
+                  <div class="bullet-wrapper"
+                    style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                    <div class="bullet-dot"
+                      style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                    </div>
+                  </div><span class="content mubu-node"
+                    style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>more
+                      expressive</span></span>
+                </li>
+                <li style="line-height: 24px; list-style: none; position: relative;">
+                  <div class="bullet-wrapper"
+                    style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                    <div class="bullet-dot"
+                      style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                    </div>
+                  </div><span class="content mubu-node"
+                    style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>executes
+                      T fully asynchronous and support vertex priorities </span></span>
+                </li>
+                <li style="line-height: 24px; list-style: none; position: relative;">
+                  <div class="bullet-wrapper"
+                    style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                    <div class="bullet-dot"
+                      style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                    </div>
+                  </div><span class="content mubu-node"
+                    style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>achieve
+                      distributed mutual exclusion by associating a reader-writer lock with each vertex</span></span>
+                </li>
+                <li style="line-height: 24px; list-style: none; position: relative;">
+                  <div class="bullet-wrapper"
+                    style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                    <div class="bullet-dot"
+                      style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                    </div>
+                  </div><span class="content mubu-node"
+                    style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>To
+                      satisfy Full Consistency Model</span></span>
+                  <ul class="children"
+                    style="list-style: outside disc; padding-inline-start: 30px; padding: 0px 0px 4px 40px; margin-left: 13px; position: relative; left: -30px; border-left: 1px solid rgb(235, 235, 235);">
+                    <li style="line-height: 24px; list-style: none; position: relative;">
+                      <div class="bullet-wrapper"
+                        style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                        <div class="bullet-dot"
+                          style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                        </div>
+                      </div><span class="content mubu-node"
+                        style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>acquire
+                          a write lock on the central vertex and all adjacent vertices </span></span>
+                    </li>
+                  </ul>
+                </li>
+                <li style="line-height: 24px; list-style: none; position: relative;">
+                  <div class="bullet-wrapper"
+                    style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                    <div class="bullet-dot"
+                      style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                    </div>
+                  </div><span class="content mubu-node"
+                    style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>To
+                      satisfy Edge Consistency Model</span></span>
+                  <ul class="children"
+                    style="list-style: outside disc; padding-inline-start: 30px; padding: 0px 0px 4px 40px; margin-left: 13px; position: relative; left: -30px; border-left: 1px solid rgb(235, 235, 235);">
+                    <li style="line-height: 24px; list-style: none; position: relative;">
+                      <div class="bullet-wrapper"
+                        style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                        <div class="bullet-dot"
+                          style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                        </div>
+                      </div><span class="content mubu-node"
+                        style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>acquire
+                          a write lock on the central vertex and read lock on each of the adjacent vertex</span></span>
+                    </li>
+                  </ul>
+                </li>
+                <li style="line-height: 24px; list-style: none; position: relative;">
+                  <div class="bullet-wrapper"
+                    style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                    <div class="bullet-dot"
+                      style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                    </div>
+                  </div><span class="content mubu-node"
+                    style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>To
+                      satisfy Vertex Consistency Model</span></span>
+                  <ul class="children"
+                    style="list-style: outside disc; padding-inline-start: 30px; padding: 0px 0px 4px 40px; margin-left: 13px; position: relative; left: -30px; border-left: 1px solid rgb(235, 235, 235);">
+                    <li style="line-height: 24px; list-style: none; position: relative;">
+                      <div class="bullet-wrapper"
+                        style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                        <div class="bullet-dot"
+                          style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                        </div>
+                      </div><span class="content mubu-node"
+                        style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>acquire
+                          a write-lock on the central vertex of each requested scope</span></span>
+                    </li>
+                  </ul>
+                </li>
+                <li style="line-height: 24px; list-style: none; position: relative;">
+                  <div class="bullet-wrapper"
+                    style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                    <div class="bullet-dot"
+                      style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                    </div>
+                  </div><span class="content mubu-node"
+                    style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>To
+                      avoid deadlocks... </span></span>
+                  <ul class="children"
+                    style="list-style: outside disc; padding-inline-start: 30px; padding: 0px 0px 4px 40px; margin-left: 13px; position: relative; left: -30px; border-left: 1px solid rgb(235, 235, 235);">
+                    <li style="line-height: 24px; list-style: none; position: relative;">
+                      <div class="bullet-wrapper"
+                        style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                        <div class="bullet-dot"
+                          style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                        </div>
+                      </div><span class="content mubu-node"
+                        style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>need
+                          to acquire locks sequentially following a canonical order induced by (owner(vid),
+                          vid)</span></span>
+                    </li>
+                  </ul>
+                </li>
+                <li style="line-height: 24px; list-style: none; position: relative;">
+                  <div class="bullet-wrapper"
+                    style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                    <div class="bullet-dot"
+                      style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                    </div>
+                  </div><span class="content mubu-node"
+                    style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>Updates
+                      are restricted to the local machine</span></span>
+                </li>
+                <li style="line-height: 24px; list-style: none; position: relative;">
+                  <div class="bullet-wrapper"
+                    style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                    <div class="bullet-dot"
+                      style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                    </div>
+                  </div><span class="content mubu-node"
+                    style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>Each
+                      worker thread on each machine evaluates the loop until the scheduler is empty and terminate using
+                      the distributed consensus algorithm </span></span>
+                </li>
+                <li style="line-height: 24px; list-style: none; position: relative;">
+                  <div class="bullet-wrapper"
+                    style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                    <div class="bullet-dot"
+                      style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                    </div>
+                  </div><span class="content mubu-node"
+                    style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>Rely
+                      on optimization techniques to </span><span class="bold" style="font-weight: bold;">reduce latency
+                      and hide effects </span></span>
+                  <ul class="children"
+                    style="list-style: outside disc; padding-inline-start: 30px; padding: 0px 0px 4px 40px; margin-left: 13px; position: relative; left: -30px; border-left: 1px solid rgb(235, 235, 235);">
+                    <li style="line-height: 24px; list-style: none; position: relative;">
+                      <div class="bullet-wrapper"
+                        style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                        <div class="bullet-dot"
+                          style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                        </div>
+                      </div><span class="content mubu-node"
+                        style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>1.
+                          ghosting provides </span><span class="bold" style="font-weight: bold;">caching
+                          capability</span><span> eliminates the need to transmit or wait on data that has not changed
+                          remotely</span></span>
+                    </li>
+                    <li style="line-height: 24px; list-style: none; position: relative;">
+                      <div class="bullet-wrapper"
+                        style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                        <div class="bullet-dot"
+                          style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                        </div>
+                      </div><span class="content mubu-node"
+                        style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>2.
+                        </span><span class="bold" style="font-weight: bold;">pipelined locking and
+                          prefetching</span><span>: all lock requests and sync calls are </span><span class="bold"
+                          style="font-weight: bold;">pipelined</span><span> s.t. allow each machine to request locks and
+                          data for many scopes simultaneously and evaluate the update function only when the scope is
+                          ready</span></span>
+                    </li>
+                  </ul>
+                </li>
+                <li style="line-height: 24px; list-style: none; position: relative;">
+                  <div class="bullet-wrapper"
+                    style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                    <div class="bullet-dot"
+                      style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                    </div>
+                  </div><span class="content mubu-node"
+                    style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>Experimental
+                      results show that this engine provides strong, nearly linear scalability, and increasing pipeline
+                      length will reduce runtime</span></span>
+                </li>
+                <li style="line-height: 24px; list-style: none; position: relative;">
+                  <div class="bullet-wrapper"
+                    style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                    <div class="bullet-dot"
+                      style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                    </div>
+                  </div><span class="content mubu-node"
+                    style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"></span>
+                  <div
+                    style="padding: 3px 0px 0px 17px; margin-left: -17px; border-left: 1px solid rgb(235, 235, 235);">
+                    <img src="distgraphlab/8fe01f8b-d73b-4210-909e-d73ba47a04e0-5150716.jpg"
+                      style="max-width: 720px; width: 438px;" crossorigin="anonymous" class="attach-img"></div>
+                </li>
+              </ul>
+            </li>
+            <li style="line-height: 24px; list-style: none; position: relative;">
+              <div class="bullet-wrapper"
+                style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                <div class="bullet-dot"
+                  style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                </div>
+              </div><span class="content mubu-node"
+                style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>Fault
+                  Tolerance</span></span>
+              <ul class="children"
+                style="list-style: outside disc; padding-inline-start: 30px; padding: 0px 0px 4px 40px; margin-left: 13px; position: relative; left: -30px; border-left: 1px solid rgb(235, 235, 235);">
+                <li style="line-height: 24px; list-style: none; position: relative;">
+                  <div class="bullet-wrapper"
+                    style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                    <div class="bullet-dot"
+                      style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                    </div>
+                  </div><span class="content mubu-node"
+                    style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>use
+                      a distributed checkpoint mechanism </span></span>
+                  <ul class="children"
+                    style="list-style: outside disc; padding-inline-start: 30px; padding: 0px 0px 4px 40px; margin-left: 13px; position: relative; left: -30px; border-left: 1px solid rgb(235, 235, 235);">
+                    <li style="line-height: 24px; list-style: none; position: relative;">
+                      <div class="bullet-wrapper"
+                        style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                        <div class="bullet-dot"
+                          style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                        </div>
+                      </div><span class="content mubu-node"
+                        style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>in
+                          the event of failure, recover from the last checkpoint </span></span>
+                    </li>
+                  </ul>
+                </li>
+                <li style="line-height: 24px; list-style: none; position: relative;">
+                  <div class="bullet-wrapper"
+                    style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                    <div class="bullet-dot"
+                      style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                    </div>
+                  </div><span class="content mubu-node"
+                    style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>two
+                      strategies to construct distributed snapshots: Sync Method and Async Method</span></span>
+                  <ul class="children"
+                    style="list-style: outside disc; padding-inline-start: 30px; padding: 0px 0px 4px 40px; margin-left: 13px; position: relative; left: -30px; border-left: 1px solid rgb(235, 235, 235);">
+                    <li style="line-height: 24px; list-style: none; position: relative;">
+                      <div class="bullet-wrapper"
+                        style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                        <div class="bullet-dot"
+                          style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                        </div>
+                      </div><span class="content mubu-node"
+                        style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>Synchronous
+                          Snapshot</span></span>
+                      <ul class="children"
+                        style="list-style: outside disc; padding-inline-start: 30px; padding: 0px 0px 4px 40px; margin-left: 13px; position: relative; left: -30px; border-left: 1px solid rgb(235, 235, 235);">
+                        <li style="line-height: 24px; list-style: none; position: relative;">
+                          <div class="bullet-wrapper"
+                            style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                            <div class="bullet-dot"
+                              style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                            </div>
+                          </div><span class="content mubu-node"
+                            style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>suspend
+                              execution of update functions</span></span>
+                        </li>
+                        <li style="line-height: 24px; list-style: none; position: relative;">
+                          <div class="bullet-wrapper"
+                            style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                            <div class="bullet-dot"
+                              style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                            </div>
+                          </div><span class="content mubu-node"
+                            style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>flush
+                              all communication channels</span></span>
+                        </li>
+                        <li style="line-height: 24px; list-style: none; position: relative;">
+                          <div class="bullet-wrapper"
+                            style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                            <div class="bullet-dot"
+                              style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                            </div>
+                          </div><span class="content mubu-node"
+                            style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>save
+                              all modified data since the last snapshot into DFS</span></span>
+                        </li>
+                        <li style="line-height: 24px; list-style: none; position: relative;">
+                          <div class="bullet-wrapper"
+                            style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                            <div class="bullet-dot"
+                              style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                            </div>
+                          </div><span class="content mubu-node"
+                            style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>Inefficient
+                              as of the synchronous computation</span></span>
+                        </li>
+                      </ul>
+                    </li>
+                    <li style="line-height: 24px; list-style: none; position: relative;">
+                      <div class="bullet-wrapper"
+                        style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                        <div class="bullet-dot"
+                          style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                        </div>
+                      </div><span class="content mubu-node"
+                        style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>Asynchronous
+                          Snapshot based on Chandy-Lamport algorithm </span></span>
+                      <ul class="children"
+                        style="list-style: outside disc; padding-inline-start: 30px; padding: 0px 0px 4px 40px; margin-left: 13px; position: relative; left: -30px; border-left: 1px solid rgb(235, 235, 235);">
+                        <li style="line-height: 24px; list-style: none; position: relative;">
+                          <div class="bullet-wrapper"
+                            style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                            <div class="bullet-dot"
+                              style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                            </div>
+                          </div><span class="content mubu-node"
+                            style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>expressed
+                            </span><span class="bold" style="font-weight: bold;">as an update function</span><span> and
+                              guarantee a consistent snapshot under the following conditions</span></span>
+                          <ul class="children"
+                            style="list-style: outside disc; padding-inline-start: 30px; padding: 0px 0px 4px 40px; margin-left: 13px; position: relative; left: -30px; border-left: 1px solid rgb(235, 235, 235);">
+                            <li style="line-height: 24px; list-style: none; position: relative;">
+                              <div class="bullet-wrapper"
+                                style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                                <div class="bullet-dot"
+                                  style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                                </div>
+                              </div><span class="content mubu-node"
+                                style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>edge
+                                  consistency is used on all update functions </span></span>
+                            </li>
+                            <li style="line-height: 24px; list-style: none; position: relative;">
+                              <div class="bullet-wrapper"
+                                style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                                <div class="bullet-dot"
+                                  style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                                </div>
+                              </div><span class="content mubu-node"
+                                style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>Schedule
+                                  completes before the scope is unlocked </span></span>
+                            </li>
+                            <li style="line-height: 24px; list-style: none; position: relative;">
+                              <div class="bullet-wrapper"
+                                style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                                <div class="bullet-dot"
+                                  style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                                </div>
+                              </div><span class="content mubu-node"
+                                style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>the
+                                  snapshot update is prioritized over other update functions </span></span>
+                            </li>
+                          </ul>
+                        </li>
+                      </ul>
+                    </li>
+                    <li style="line-height: 24px; list-style: none; position: relative;">
+                      <div class="bullet-wrapper"
+                        style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                        <div class="bullet-dot"
+                          style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                        </div>
+                      </div><span class="content mubu-node"
+                        style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>Both
+                          sync and async method are initiated att fixed intervals </span></span>
+                      <ul class="children"
+                        style="list-style: outside disc; padding-inline-start: 30px; padding: 0px 0px 4px 40px; margin-left: 13px; position: relative; left: -30px; border-left: 1px solid rgb(235, 235, 235);">
+                        <li style="line-height: 24px; list-style: none; position: relative;">
+                          <div class="bullet-wrapper"
+                            style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                            <div class="bullet-dot"
+                              style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                            </div>
+                          </div><span class="content mubu-node"
+                            style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>interval
+                              is chosen to balance the cost of constructing the checkpoint and the computation lost
+                              since the last checkpoint in the event of failure</span></span>
+                        </li>
+                      </ul>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li style="line-height: 24px; list-style: none; position: relative;">
+      <div class="bullet-wrapper"
+        style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+        <div class="bullet-dot"
+          style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+        </div>
+      </div><span class="content mubu-node"
+        style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>Applications
+        </span></span>
+      <ul class="children"
+        style="list-style: outside disc; padding-inline-start: 30px; padding: 0px 0px 4px 40px; margin-left: 13px; position: relative; left: -30px; border-left: 1px solid rgb(235, 235, 235);">
+        <li style="line-height: 24px; list-style: none; position: relative;">
+          <div class="bullet-wrapper"
+            style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+            <div class="bullet-dot"
+              style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+            </div>
+          </div><span class="content mubu-node"
+            style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>Collaborative
+              filtering for Netflix movie recommendation </span></span>
+          <ul class="children"
+            style="list-style: outside disc; padding-inline-start: 30px; padding: 0px 0px 4px 40px; margin-left: 13px; position: relative; left: -30px; border-left: 1px solid rgb(235, 235, 235);">
+            <li style="line-height: 24px; list-style: none; position: relative;">
+              <div class="bullet-wrapper"
+                style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                <div class="bullet-dot"
+                  style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                </div>
+              </div><span class="content mubu-node"
+                style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>Chromatic
+                  Engine</span></span>
+            </li>
+          </ul>
+        </li>
+        <li style="line-height: 24px; list-style: none; position: relative;">
+          <div class="bullet-wrapper"
+            style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+            <div class="bullet-dot"
+              style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+            </div>
+          </div><span class="content mubu-node"
+            style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>Video
+              Co-Segmentation (CoSeg)</span></span>
+          <ul class="children"
+            style="list-style: outside disc; padding-inline-start: 30px; padding: 0px 0px 4px 40px; margin-left: 13px; position: relative; left: -30px; border-left: 1px solid rgb(235, 235, 235);">
+            <li style="line-height: 24px; list-style: none; position: relative;">
+              <div class="bullet-wrapper"
+                style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                <div class="bullet-dot"
+                  style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                </div>
+              </div><span class="content mubu-node"
+                style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>Locking
+                  Engine </span></span>
+            </li>
+          </ul>
+        </li>
+        <li style="line-height: 24px; list-style: none; position: relative;">
+          <div class="bullet-wrapper"
+            style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+            <div class="bullet-dot"
+              style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+            </div>
+          </div><span class="content mubu-node"
+            style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>Named
+              Entity Recognition (NER)</span></span>
+          <ul class="children"
+            style="list-style: outside disc; padding-inline-start: 30px; padding: 0px 0px 4px 40px; margin-left: 13px; position: relative; left: -30px; border-left: 1px solid rgb(235, 235, 235);">
+            <li style="line-height: 24px; list-style: none; position: relative;">
+              <div class="bullet-wrapper"
+                style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                <div class="bullet-dot"
+                  style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                </div>
+              </div><span class="content mubu-node"
+                style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>Chromatic
+                  Engine</span></span>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+
+</body>
+
+</html>

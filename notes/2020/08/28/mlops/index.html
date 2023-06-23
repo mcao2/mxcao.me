@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+  <meta charset="utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Meta -->
+  <link rel="canonical" href="https://mxcao.me/">
+
+  <!-- Analytics -->
+  <script async src="https://umami.mxcao.me/script.js" data-website-id="4c2d93d9-a90e-41c6-bc74-d2f96994b1e9"></script>
+
+  <!-- Christmax Snow -->
+  <!-- <script src="https://app.embed.im/snow.js" defer></script> -->
+
+  <title>
+    MLOps &middot; mxin
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/main.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700%7CSource+Sans+Pro:400,400i,700,700i&subset=greek,greek-ext,latin-ext">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon" sizes="180x180" href="/public/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/public/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/public/favicon-16x16.png">
+  <link rel="manifest" href="/public/site.webmanifest">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+
+</head>
+
+  <body>
+
+    <div class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>mxin</h1>
+      <p class="tagline"># Mengxin Cao</p>
+    </div>
+
+    <input type="checkbox" id="menu-icon">
+    <label class="menu-label" for="menu-icon"></label>
+    <div class="trigger">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-item">
+          <a href="/">Home</a>
+        </li>
+        
+
+        
+        
+        
+        
+        
+        
+        
+        
+        <li class="sidebar-nav-item">
+          <a href="/about/">About</a>
+        </li>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <li class="sidebar-nav-item">
+          <a href="/posts/">Posts</a>
+        </li>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <li class="sidebar-nav-item">
+          <a href="https://github.com/mcao2/">GitHub</a>
+        </li>
+        <li class="sidebar-nav-item">
+          <a href="https://www.linkedin.com/in/mxin/">LinkedIn</a>
+        </li>
+        <!-- <li class="sidebar-nav-item">
+          <a href="https://cs.cmu.edu/~mcao2/mengxin_cv.pdf">Curriculum Vitae</a>
+        </li> -->
+      </ul>
+
+      <p class="copyright">&copy; 2023. All rights reserved.</p>
+    </div>
+  </div>
+</div>
+
+    <div class="content container">
+      <div class="post">
+  <h1 class="post-title">MLOps</h1>
+  <span class="post-info">28 Aug 2020</span>
+  <h2 id="introduction">Introduction</h2>
+
+<blockquote>
+  <p>MLOps is an ML engineering culture and practice that aims at unifying ML system development (Dev) and ML system operations (Ops).</p>
+</blockquote>
+
+<blockquote>
+  <p>MLOps is the natural progression of DevOps in the context of AI… and emphasizes consistent and smooth development of models and their scalability.</p>
+</blockquote>
+
+<p>In simple words, MLOps refers to applying DevOps principles to ML systems.</p>
+
+<!--more-->
+
+<p>Practicing MLOps means advocating <strong>automation</strong> and <strong>monitoring</strong> at all steps (<code class="language-plaintext highlighter-rouge">integration</code>, <code class="language-plaintext highlighter-rouge">testing</code>, <code class="language-plaintext highlighter-rouge">releasing</code>, <code class="language-plaintext highlighter-rouge">deployment</code>, <code class="language-plaintext highlighter-rouge">infra mngt</code>, etc.) of ML system construction.</p>
+
+<p>The goal of MLOps is to build an integrated ML system that can continuously operate in production. As summarized by Google, only a small fraction of a real-world ML system is composed of the actual ML code, and the required surrounding elements are vast and complex, as shown below.</p>
+
+<p><img src="/public/files/mlops/mlops-continuous-delivery-and-automation-pipelines-in-machine-learning-1-elements-of-ml.png" alt="" /></p>
+
+<h2 id="mlops-concepts">MLOps concepts</h2>
+
+<h3 id="cicdct">CI/CD/CT</h3>
+
+<ul>
+  <li>CI: <a href="https://en.wikipedia.org/wiki/Continuous_integration">Continuous Integration</a>
+    <ul>
+      <li>CI in ML no longer only about testing and validating code and components, but also testing and validating <strong>data</strong>, <strong>data schemas</strong>, and <strong>models</strong>.</li>
+    </ul>
+  </li>
+  <li>CD: <a href="https://en.wikipedia.org/wiki/Continuous_delivery">Continuous Delivery</a>
+    <ul>
+      <li>CD in ML no longer only about a single software package or a service, but <strong>a system/pipeline</strong> that should automatically deploy another service e.g. model prediction service</li>
+    </ul>
+  </li>
+  <li>CT: Continuous Training
+    <ul>
+      <li>CT is a new property that is concerned with automatically retraining and serving the models (with new/updated data or data stream)</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="example">Example</h2>
+
+<p>Consider the typical steps for training and evaluating an ML model to serve as a prediction service.</p>
+
+<p>After defined the use cases and established the success criteria, the process of delivering an ML model to production involves:</p>
+
+<ol>
+  <li>Data extraction: get relevant data from various sources for the ML task.</li>
+  <li>Data analysis: perform EDA to understand the extracted data (e.g. schema, characteristics) and identify the data preparation and feature engineering that are needed.</li>
+  <li>Data preparation/preprocessing: preprocess/clean the extracted data. Typically involves split the data into training/validating/test sets, data transformations, feature engineering. The output are the <em>data splits</em> in the prepared format.</li>
+  <li>Model training: ML researchers implement algorithms to train various models, perform hyper-parameter tuning, etc. The output is a trained ML model.</li>
+  <li>Model evaluation: evaluate the trained model quality on a holdout test set. The output is a set of metrics that assess the model quality.</li>
+  <li>Model validation: confirm that the model is adequate for deployment. In our case this means confirm that its predictive performance is better than a certain baseline.</li>
+  <li>Model serving: deploy the validated model to a target environment (e.g. as micro services in a k8s cluster, as an embedded model in an edge device, or as part of a batch prediction system) to serve predictions.</li>
+  <li>Model monitoring: monitor the deployed model’s prediction performance and trigger new iteration in the system</li>
+</ol>
+
+<p>The above steps can be completed <strong>manually</strong> by a single team or splitter across different teams (e.g. algorithm team, operation team, etc.), or it can be done by an <strong>automatic pipeline</strong>.</p>
+
+<p>We want to bring automation to the process so that we can benefit from shortened development cycles, increased deployment velocity, and dependable releases, etc.</p>
+
+<p>The <strong>level of automation</strong> of these steps defines the <em>maturity</em> of the ML process and reflects the <em>velocity</em> of model iterations (e.g. triggered by new data or new implementations).</p>
+
+<h2 id="mlops-automation-levels">MLOps automation levels</h2>
+
+<h3 id="level-0-manual-labor">Level 0: manual labor</h3>
+
+<p>The below picture shows the typical workflow of this level.</p>
+
+<p><img src="/public/files/mlops/mlops-continuous-delivery-and-automation-pipelines-in-machine-learning-2-manual-ml.svg" alt="" /></p>
+
+<p>Characteristics:</p>
+
+<ol>
+  <li>Manual, script-driven, and interactive process</li>
+  <li>Disconnected b/w ML and operations</li>
+  <li>Infrequent release iterations</li>
+  <li>No CI/CD</li>
+  <li>Deployment is a single service (e.g. prediction) rather than the entire ML system</li>
+  <li>No active performance monitoring</li>
+</ol>
+
+<p>This approach may be sufficient when models are rarely changed/re-trained. But real-world environment is full of dynamics and models that fail to quickly adapt to changes may decrease in value rapidly.</p>
+
+<h3 id="level-1-ml-pipeline-automation">Level 1: ML pipeline automation</h3>
+
+<p>The goal of this level is to enable <strong>continuous training</strong> of the model by automating the ML pipeline, and thus achieve <strong>continuous delivery</strong> of model prediction service for users.</p>
+
+<p>This level of automation typically involves:</p>
+
+<ul>
+  <li>Automated data validation</li>
+  <li>Automated model validation</li>
+  <li>Pipeline triggers for another iteration</li>
+  <li>Metadata management (explained later)</li>
+</ul>
+
+<p>The following figure is a schematic representation of an automated ML pipeline for CT.</p>
+
+<p><img src="/public/files/mlops/mlops-continuous-delivery-and-automation-pipelines-in-machine-learning-3-ml-automation-ct.svg" alt="" /></p>
+
+<p>Characteristics:</p>
+
+<ol>
+  <li>Rapid experiment</li>
+  <li>CT of the model in production with fresh data based on live triggers</li>
+  <li>Experimental-Operational symmetry (as seen in the above diagram)</li>
+  <li>Modularized code for components and pipelines</li>
+  <li>CD of models (and thus predictive services)</li>
+  <li>Deployment is a ML pipeline rather than only a prediction service</li>
+</ol>
+
+<h4 id="transition-from-level-0-to-level-1">Transition from level 0 to level 1</h4>
+
+<p>To transition to level 1, we need to add new components to the architecture:</p>
+
+<ul>
+  <li>Automated data and model validation</li>
+  <li>Optional feature store: a centralized repo where we standardize the <code class="language-plaintext highlighter-rouge">definition</code>, <code class="language-plaintext highlighter-rouge">storage</code>, and <code class="language-plaintext highlighter-rouge">access</code> of features for training and serving. This is the data source for experimentation, CT, and online serving.</li>
+  <li>Metadata management: we record information about each execution of the pipeline in order to help with <strong>data and artifacts lineage</strong>, <strong>reproducibility</strong>, <strong>comparisons</strong>, <strong>debugging</strong>, <strong>anomaly detection</strong>, etc. Metadata can include:
+    <ul>
+      <li>versioning: of pipeline, or of individual components in the pipeline</li>
+      <li>timing: start/end date, duration time, etc.</li>
+      <li>pipeline executor(s)</li>
+      <li>parameter args</li>
+      <li>pointer to artifacts produced by each pipeline step (e.g. location of prepared data, computed statistics, etc.)</li>
+      <li>pointer to previous trained model (this enables model roll-back)</li>
+      <li>model evaluation metrics (can be thought of as part of the produced pipeline artifacts), which enable model comparison and benchmarking</li>
+      <li>etc.</li>
+    </ul>
+  </li>
+  <li>Pipeline triggers: e.g. on-data-availability, on-demand, on-schedule, on-model-perf-degradation, on-data-drift, etc.</li>
+</ul>
+
+<p>This approach is sufficient if new pipeline implementations are rare deployed and only a few pipelines are managed.</p>
+
+<p>The pipeline and its components are usually <strong>manually tested and deployed</strong>. This is not a good solution if you want to deploy new models based on <strong>new ML ideas</strong> since manual labor still involved to deploy the pipeline itself, or you are managing many ML pipelines in production.</p>
+
+<p>You need a CI/CD setup to automate the <strong>build/test/deployment of ML pipelines</strong>.</p>
+
+<h3 id="level-2-cicd-pipeline-automation">Level 2: CI/CD pipeline automation</h3>
+
+<p>A robust automated CI/CD system allows data scientists rapidly explore new ML ideas around <strong>feature engineering</strong>, <strong>model architecture</strong>, <strong>hyper-parameters</strong>, etc.</p>
+
+<p>Data scientists can implement new ideas and the <strong>new pipeline</strong> will be automatically built, tested, and deployed to the target environment.</p>
+
+<p>We can see the updated diagram with CI/CD added for the pipeline.</p>
+
+<p><img src="/public/files/mlops/mlops-continuous-delivery-and-automation-pipelines-in-machine-learning-4-ml-automation-ci-cd.svg" alt="" /></p>
+
+<p>This level typically involves:</p>
+
+<ul>
+  <li>Source control</li>
+  <li><strong>Test and build services</strong></li>
+  <li><strong>Deployment services</strong></li>
+  <li>Model registry</li>
+  <li>Feature store</li>
+  <li>Metadata management</li>
+  <li><strong>Pipeline orchestrator</strong></li>
+</ul>
+
+<p>Characteristics:</p>
+
+<p>Stages for CI/CD automation pipeline:</p>
+
+<p><img src="/public/files/mlops/mlops-continuous-delivery-and-automation-pipelines-in-machine-learning-5-stages.svg" alt="" /></p>
+
+<p>Manual labors cannot be eliminated for the data analysis and model analysis steps.</p>
+
+<h4 id="ci">CI</h4>
+
+<p>The pipeline and its components are built, tested, and packaged when new code is committed or pushed to the VCS.</p>
+
+<p>E.g. unit testing for the feature engineering logic, for different implemented methods; testing that the model training converges; testing that each component in the pipeline produces the expected artifacts, etc.</p>
+
+<h4 id="cd">CD</h4>
+
+<p>The new pipeline implementation is continuously deployed to the target environment, and in turn delivers new/updated prediction services.</p>
+
+<p>Rapid and reliable pipeline delivery usually involves:</p>
+
+<ul>
+  <li>verification of the model compatibility with the target infrastructure before deployment actually happens</li>
+  <li>test the prediction service with expected inputs and make sure you get expected response within the expected time</li>
+  <li>test the service performance e.g. QPS, latency, etc.</li>
+  <li>automated deployment to a test environment</li>
+  <li>semi-automated deployment to a pre-production environment</li>
+  <li>manual deployment to a production environment after several successful runs of the pipeline on the pre-production environment</li>
+</ul>
+
+<p>The following diagram shows the relationship b/w the CI/CD pipeline and the CT pipeline in a ML system:</p>
+
+<p><img src="/public/files/mlops/architecture-for-mlops-using-tfx-kubeflow-pipelines-and-cloud-build-1-ci-cd-ct-pipelines.svg" alt="" /></p>
+
+<p>Given new model implementation (e.g. new ML ideas/architecture), a successful CI/CD pipeline deploys a new CT pipeline.</p>
+
+<p>Given new data, a successful CT pipeline should serve a new model prediction service.</p>
+
+<h4 id="example-architecture-for-mlops-using-tfx-kubeflow-pipelines-and-cloud-build">Example: Architecture for MLOps using TFX, Kubeflow Pipelines, and Cloud Build</h4>
+
+<p>TFX stands for “TensorFlow Extended” and is an integrated ML platform for developing and deploying production ML systems.</p>
+
+<p>A TFX pipeline is a sequence of components that implement an ML system (modeling, training, validation, serving inference, deployment management, etc.).</p>
+
+<p>Key libraries of TFX including:</p>
+
+<ul>
+  <li>TFT (TensorFlow Transform): data preparation, feature engineering tasks</li>
+  <li>TFDV (TensorFlow Data Validation): data anomaly detection</li>
+  <li>TensorFlow Estimators and Keras: model building and training</li>
+  <li>TFMA (TensorFlow Model Analysis): model evaluation and analysis</li>
+  <li>TFServing (TensorFlow Serving): serve model in the target environment (e.g. as REST and gRPC APIs)</li>
+</ul>
+
+<p>The following diagram shows the architecture of an integrated ML system built from the various TFX libraries (i.e. <em>the design of a TFX-based integrated ML system</em>).</p>
+
+<p><img src="/public/files/mlops/architecture-for-mlops-using-tfx-kubeflow-pipelines-and-cloud-build-2-tfx-libraries.svg" alt="" /></p>
+
+<p>With the designed architecture, the next question is <em>how to run each component of the system at scale</em>. Commercial cloud platforms like GCP can help us run the system at scale in a reliable fashion with managed cloud services (e.g. cloud storage, AI hub, dataflow).</p>
+
+<p>With the individual components mapped to a managed service in the cloud platform, the next question is <em>how to connect these two pieces together and automate the entire pipeline</em>. An <strong>orchestrator</strong> performs such tasks and glues our high-level architecture and the underlying individual components. It’s useful for both dev and production phases as it facilitates automation and reduces manual labors.</p>
+
+<p>The orchestrator runs the pipeline in sequence and automatically move forward based on the defined conditions (e.g. execute the model serving step after model evaluation finished and the metrics meet predefined thresholds).</p>
+
+<p><strong>Kubeflow</strong> is the <em>ML Toolkit for Kubernetes</em>. <strong>Kubeflow Pipeline</strong> is a Kubeflow service that lets you compose, orchestrate, and automate ML systems, where each component of the system can run on various infrastructures (e.g. GCP, local, etc.). Sounds familiar? Yes! It is an orchestrator that we want.</p>
+
+<p>A Kubeflow pipeline involves:</p>
+
+<ul>
+  <li>A set of containerized tasks/components packed as a docker image. These components can execute any data-related and compute-related services, e.g. <strong>Dataproc</strong> for SparkML jobs, <strong>AutoML</strong>, etc.</li>
+  <li>A sequence of tasks defined by a Python DSL, i.e. the topology of the workflow</li>
+  <li>A set of pipeline input parameters</li>
+</ul>
+
+<p><img src="/public/files/mlops/architecture-for-mlops-using-tfx-kubeflow-pipelines-and-cloud-build-6-ci-cd-kubeflow.svg" alt="" /></p>
+
+<p>The above diagram shows a high-level overview of integrating CI/CD with Kubeflow pipelines in GCP. At the heart of this architecture is Cloud Build, a managed service that executes your builds on GCP. Essentially, the cloud build process performs the required CI/CD for our integrated ML system.</p>
+
+<p>The build can be triggered manually or through automated build triggers.</p>
+
+<p>For a comprehensive Cloud Build example that covers most of these steps, see <a href="https://github.com/ksalama/kubeflow-examples/tree/master/kfp-cloudbuild">A Simple CI/CD Example with Kubeflow Pipelines and Cloud Build</a>.</p>
+
+<h2 id="references">References</h2>
+
+<ul>
+  <li><a href="https://cloud.google.com/solutions/machine-learning/mlops-continuous-delivery-and-automation-pipelines-in-machine-learning">MLOps: Continuous delivery and automation pipelines in machine learning</a></li>
+  <li><a href="https://www.forbes.com/sites/tomtaulli/2020/08/01/mlops-what-you-need-to-know/#3bd1c4241214">MLOps: What You Need To Know</a></li>
+  <li><a href="https://cloud.google.com/solutions/machine-learning/architecture-for-mlops-using-tfx-kubeflow-pipelines-and-cloud-build">Architecture for MLOps using TFX, Kubeflow Pipelines, and Cloud Build</a></li>
+</ul>
+
+</div>
+
+<div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+    <li>
+      <h3>
+        <a href="/2023/06/22/how-to-setup-ptr-record-in-oci/">
+          How to setup PTR record in Oracle Cloud Infrastructure (OCI)
+          <small>22 Jun 2023</small>
+        </a>
+      </h3>
+    </li>
+    
+    <li>
+      <h3>
+        <a href="/2023/06/21/Debug-resource-deadlock-avoided/">
+          Debug Resource Deadlock Avoided Error
+          <small>21 Jun 2023</small>
+        </a>
+      </h3>
+    </li>
+    
+    <li>
+      <h3>
+        <a href="/tools/2022/08/28/setup-vmess-edge/">
+          Set up network edge router via V2Ray
+          <small>28 Aug 2022</small>
+        </a>
+      </h3>
+    </li>
+    
+  </ul>
+</div>
+    </div>
+
+  </body>
+</html>

@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+  <meta charset="utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Meta -->
+  <link rel="canonical" href="https://mxcao.me/">
+
+  <!-- Analytics -->
+  <script async src="https://umami.mxcao.me/script.js" data-website-id="4c2d93d9-a90e-41c6-bc74-d2f96994b1e9"></script>
+
+  <!-- Christmax Snow -->
+  <!-- <script src="https://app.embed.im/snow.js" defer></script> -->
+
+  <title>
+    How to setup PTR record in Oracle Cloud Infrastructure (OCI) &middot; mxin
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/main.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700%7CSource+Sans+Pro:400,400i,700,700i&subset=greek,greek-ext,latin-ext">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon" sizes="180x180" href="/public/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/public/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/public/favicon-16x16.png">
+  <link rel="manifest" href="/public/site.webmanifest">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+
+</head>
+
+  <body>
+
+    <div class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>mxin</h1>
+      <p class="tagline"># Mengxin Cao</p>
+    </div>
+
+    <input type="checkbox" id="menu-icon">
+    <label class="menu-label" for="menu-icon"></label>
+    <div class="trigger">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-item">
+          <a href="/">Home</a>
+        </li>
+        
+
+        
+        
+        
+        
+        
+        
+        
+        
+        <li class="sidebar-nav-item">
+          <a href="/about/">About</a>
+        </li>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <li class="sidebar-nav-item">
+          <a href="/posts/">Posts</a>
+        </li>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <li class="sidebar-nav-item">
+          <a href="https://github.com/mcao2/">GitHub</a>
+        </li>
+        <li class="sidebar-nav-item">
+          <a href="https://www.linkedin.com/in/mxin/">LinkedIn</a>
+        </li>
+        <!-- <li class="sidebar-nav-item">
+          <a href="https://cs.cmu.edu/~mcao2/mengxin_cv.pdf">Curriculum Vitae</a>
+        </li> -->
+      </ul>
+
+      <p class="copyright">&copy; 2023. All rights reserved.</p>
+    </div>
+  </div>
+</div>
+
+    <div class="content container">
+      <div class="post">
+  <h1 class="post-title">How to setup PTR record in Oracle Cloud Infrastructure (OCI)</h1>
+  <span class="post-info">22 Jun 2023</span>
+  <h2 id="introduction">Introduction</h2>
+
+<p>One of my VPS machines use <a href="https://www.cloudron.io/">Cloudron</a> to easily self-host apps. And I always receive a notification from my Cloudron instance saying:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>PTR DNS record (PTR) did not match.
+    Hostname: &lt;IP&gt;
+    Expected: &lt;My Domain Name&gt;
+    Actual: null
+</code></pre></div></div>
+
+<!--more-->
+
+<blockquote>
+  <p>PTR: A Pointer record reverse maps an IP address to a hostname. This behavior is the opposite of an A Record, which forward maps a hostname to an IP address. PTR records are commonly found in reverse DNS zones. For more information about PTR records, see RFC 1035.<sup id="fnref:1" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup></p>
+</blockquote>
+
+<p>So I looked it up and it takes me to <a href="https://docs.oracle.com/en-us/iaas/Content/DNS/Tasks/reversedns.htm">OCI’s Reverse DNS</a>. As it says, reverse DNS maps an IP to a hostname.</p>
+
+<p>Even though my DNS records are managed by Cloudflare, the IP belongs to OCI. PTR records are primarily used for reverse DNS lookup, and their management is typically handled by the owner of the IP address range, which, in this case, is OCI.</p>
+
+<h2 id="how-to">How-to<sup id="fnref:2" role="doc-noteref"><a href="#fn:2" class="footnote" rel="footnote">2</a></sup></h2>
+
+<ol>
+  <li>
+    <p>Create an A (IPv4) or AAAA (IPv6) forward record that points your FQDN to the IP.</p>
+  </li>
+  <li>
+    <p>Open a service ticket for OCI and include the IP and FQDN that you want in the PTR. Note that you need to explicitly mention that you have finished step 1 in the ticket.</p>
+  </li>
+</ol>
+
+<h2 id="verification">Verification</h2>
+
+<p>After OCI team added the PTR record, we can verify by executing <code class="language-plaintext highlighter-rouge">dig -x &lt;IP&gt;</code> and check the <code class="language-plaintext highlighter-rouge">ANSWER SECTION</code> contains the PTR record.</p>
+
+<p>E.g. if your IP is <code class="language-plaintext highlighter-rouge">1.2.3.4</code> and the mapped FQDN is <code class="language-plaintext highlighter-rouge">example.com</code>, then <code class="language-plaintext highlighter-rouge">dig -x 1.2.3.4</code> would return the following in the <code class="language-plaintext highlighter-rouge">ANSWER SECTION</code>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>4.3.2.1.in-addr.arpa. 3600 IN	PTR	example.com.
+</code></pre></div></div>
+
+<h2 id="references">References</h2>
+
+<div class="footnotes" role="doc-endnotes">
+  <ol>
+    <li id="fn:1" role="doc-endnote">
+      <p>https://docs.oracle.com/en-us/iaas/Content/DNS/Reference/supporteddnsresource.htm#types__dlentry_ptr <a href="#fnref:1" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:2" role="doc-endnote">
+      <p>https://docs.oracle.com/en-us/iaas/Content/Network/Concepts/reverse_dns.htm <a href="#fnref:2" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+
+</div>
+
+<div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+    <li>
+      <h3>
+        <a href="/2023/06/21/Debug-resource-deadlock-avoided/">
+          Debug Resource Deadlock Avoided Error
+          <small>21 Jun 2023</small>
+        </a>
+      </h3>
+    </li>
+    
+    <li>
+      <h3>
+        <a href="/tools/2022/08/28/setup-vmess-edge/">
+          Set up network edge router via V2Ray
+          <small>28 Aug 2022</small>
+        </a>
+      </h3>
+    </li>
+    
+    <li>
+      <h3>
+        <a href="/tools/2021/05/28/setup-mikrotik-ike2/">
+          Set up IKEv2 VPN on a Mikrotik Router
+          <small>28 May 2021</small>
+        </a>
+      </h3>
+    </li>
+    
+  </ul>
+</div>
+    </div>
+
+  </body>
+</html>

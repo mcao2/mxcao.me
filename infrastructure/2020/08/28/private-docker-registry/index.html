@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+  <meta charset="utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Meta -->
+  <link rel="canonical" href="https://mxcao.me/">
+
+  <!-- Analytics -->
+  <script async src="https://umami.mxcao.me/script.js" data-website-id="4c2d93d9-a90e-41c6-bc74-d2f96994b1e9"></script>
+
+  <!-- Christmax Snow -->
+  <!-- <script src="https://app.embed.im/snow.js" defer></script> -->
+
+  <title>
+    Private Docker Registry &middot; mxin
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/main.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700%7CSource+Sans+Pro:400,400i,700,700i&subset=greek,greek-ext,latin-ext">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon" sizes="180x180" href="/public/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/public/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/public/favicon-16x16.png">
+  <link rel="manifest" href="/public/site.webmanifest">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+
+</head>
+
+  <body>
+
+    <div class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>mxin</h1>
+      <p class="tagline"># Mengxin Cao</p>
+    </div>
+
+    <input type="checkbox" id="menu-icon">
+    <label class="menu-label" for="menu-icon"></label>
+    <div class="trigger">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-item">
+          <a href="/">Home</a>
+        </li>
+        
+
+        
+        
+        
+        
+        
+        
+        
+        
+        <li class="sidebar-nav-item">
+          <a href="/about/">About</a>
+        </li>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <li class="sidebar-nav-item">
+          <a href="/posts/">Posts</a>
+        </li>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <li class="sidebar-nav-item">
+          <a href="https://github.com/mcao2/">GitHub</a>
+        </li>
+        <li class="sidebar-nav-item">
+          <a href="https://www.linkedin.com/in/mxin/">LinkedIn</a>
+        </li>
+        <!-- <li class="sidebar-nav-item">
+          <a href="https://cs.cmu.edu/~mcao2/mengxin_cv.pdf">Curriculum Vitae</a>
+        </li> -->
+      </ul>
+
+      <p class="copyright">&copy; 2023. All rights reserved.</p>
+    </div>
+  </div>
+</div>
+
+    <div class="content container">
+      <div class="post">
+  <h1 class="post-title">Private Docker Registry</h1>
+  <span class="post-info">28 Aug 2020</span>
+  <h2 id="motivation">Motivation</h2>
+
+<p>I have been using docker containers for a while and quite amazed by its simplicity and power. Someday in the previous week when I was migrating/re-deploying my pleroma instance from my SurfaceGo ubuntu machine to my home lab, I found I need more private repos on docker hub. Docker hub by default only provides 1 private repo for normal users, which is clearly not what I want. So I decided to build my own docker registry and deploy it as a service in my home lab machine.</p>
+
+<!--more-->
+
+<p>My set up is:</p>
+
+<p>Run a front-facing machine with a public IPv4 address, and add a DNS A record (<code class="language-plaintext highlighter-rouge">registry.mxcao.me</code>) to point to this address. The front-facing machine will route all valid traffic to the registry container running in my Rancher cluster.</p>
+
+<p>Since my home lab do not have a public IPv4 address dedicated for such purpose, I use a DigitalOcean instance to serve the purpose, along with my pleroma service routing (feel free to play around <code class="language-plaintext highlighter-rouge">pleroma.mxcao.me</code>).</p>
+
+<p>To be able to route my traffic to the registry container, I use <code class="language-plaintext highlighter-rouge">WireGuard</code> to connect these two services. Definitely check out my previous post about setting up <code class="language-plaintext highlighter-rouge">WireGuard</code> if you are interested.</p>
+
+<h2 id="prerequisite">Prerequisite</h2>
+
+<p>Check you have the following items ready:</p>
+
+<ul>
+  <li>Your own domain so that it can be reached from the public Internet</li>
+  <li>A front-facing machine with
+    <ul>
+      <li>a public IPv4 address (e.g. <code class="language-plaintext highlighter-rouge">1.2.3.4</code>)</li>
+      <li>nginx</li>
+      <li>WireGuard</li>
+    </ul>
+  </li>
+  <li>Docker (or Rancher alike) installed on the home lab to host our registry service</li>
+</ul>
+
+<h2 id="steps">Steps</h2>
+
+<h3 id="set-up-dns-record">Set up DNS record</h3>
+
+<p>I want my registry service accessible from anywhere with a memorizable address and therefore I need to set up a A record to point <code class="language-plaintext highlighter-rouge">pleroma.mxcao.me</code> to <code class="language-plaintext highlighter-rouge">1.2.3.4</code>. You can omit this step if you can accept the inconvenience of accessing your registry via IP addresses.</p>
+
+<h3 id="prepare-wireguard-for-the-service">Prepare WireGuard for the service</h3>
+
+<p>As mentioned, I decided to use WireGuard to achieve point-to-point communication between my DO machine and the container. This set up involves:</p>
+
+<ul>
+  <li>Generate private/public key-pairs for the registry service container to use</li>
+  <li>Add a peer in the DO WireGuard configuration</li>
+  <li>Set up WireGuard in the registry host (note here we use port forwarding to map registry service’s listening port to the node running it, therefore I can simply set up WireGuard in the node)
+    <ul>
+      <li>For my particular case, I built and deployed the WireGuard module to RancherOS following <a href="https://vitobotta.com/2019/07/17/kubernetes-wireguard-vpn-rancheros/">this great guide</a>
+        <ul>
+          <li>I did not follow all steps in this guide, and you should decide if having the WireGuard on the host is enough.</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<p>Now let’s assume you configured the WireGuard client with IPv4 address <code class="language-plaintext highlighter-rouge">10.9.60.5</code>.</p>
+
+<h3 id="prepare-nginx-for-traffic-routing">Prepare NGINX for traffic routing</h3>
+
+<p>I decided to implement basic authentication for my private registry in a reverse proxy that sits in front of the registry. This is simpler than configure the native basic auth registry feature I think, please correct me if I’m wrong.</p>
+
+<p>I use simple <code class="language-plaintext highlighter-rouge">htpasswd</code> file as an example, but as mentioned in <a href="https://docs.docker.com/registry/recipes/nginx/">their documentation</a>, any other nginx authentication backend should be fairly easy to implement.</p>
+
+<p>Let’s obtain a certificate for the subdomain <code class="language-plaintext highlighter-rouge">registry.mxcao.me</code> via Let’s Encrypt:</p>
+
+<ul>
+  <li>
+    <p>Make sure your nginx service is not running</p>
+  </li>
+  <li>
+    <p>Setup your SSL cert, using your method of choice or certbot. If using certbot, first install it:</p>
+
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>apt <span class="nb">install </span>certbot
+</code></pre></div>    </div>
+
+    <p>Then set it up:</p>
+
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo mkdir</span> <span class="nt">-p</span> /var/lib/letsencrypt/
+<span class="nb">sudo </span>certbot certonly <span class="nt">--email</span> &lt;your@emailaddress&gt; <span class="nt">-d</span> registry.mxcao.me <span class="nt">--standalone</span>
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<p>If successful, you should have your certificate and chain files in <code class="language-plaintext highlighter-rouge">/etc/letsencrypt/live/registry.mxcao.me</code></p>
+
+<p>In your nginx configuration folder (it can be <code class="language-plaintext highlighter-rouge">conf.d</code> or <code class="language-plaintext highlighter-rouge">sites-available</code>), add below routing rules.</p>
+
+<p>Remember to change the docker-registry IP address and the certificate file path to suit your needs.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>upstream docker-registry <span class="o">{</span>
+  server 10.9.60.5:5000<span class="p">;</span>
+<span class="o">}</span>
+
+<span class="c">## Set a variable to help us decide if we need to add the</span>
+<span class="c">## 'Docker-Distribution-Api-Version' header.</span>
+<span class="c">## The registry always sets this header.</span>
+<span class="c">## In the case of nginx performing auth, the header is unset</span>
+<span class="c">## since nginx is auth-ing before proxying.</span>
+map <span class="nv">$upstream_http_docker_distribution_api_version</span> <span class="nv">$docker_distribution_api_version</span> <span class="o">{</span>
+  <span class="s1">''</span> <span class="s1">'registry/2.0'</span><span class="p">;</span>
+<span class="o">}</span>
+
+server <span class="o">{</span>
+  listen 80<span class="p">;</span>
+  listen <span class="o">[</span>::]:80<span class="p">;</span>
+  server_name registry.mxcao.me<span class="p">;</span>
+  location / <span class="o">{</span>
+    <span class="k">return </span>301 https://<span class="nv">$server_name$request_uri</span><span class="p">;</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+
+server <span class="o">{</span>
+  server_name registry.mxcao.me<span class="p">;</span>
+
+  listen 443 ssl<span class="p">;</span>
+  listen <span class="o">[</span>::]:443 ssl<span class="p">;</span>
+
+  <span class="c"># SSL</span>
+  ssl_certificate /etc/letsencrypt/live/registry.mxcao.me/fullchain.pem<span class="p">;</span>
+  ssl_certificate_key /etc/letsencrypt/live/registry.mxcao.me/privkey.pem<span class="p">;</span>
+
+  <span class="c"># Recommendations from https://raymii.org/s/tutorials/Strong_SSL_Security_On_nginx.html</span>
+  ssl_protocols TLSv1.1 TLSv1.2<span class="p">;</span>
+  ssl_ciphers <span class="s1">'EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH'</span><span class="p">;</span>
+  ssl_prefer_server_ciphers on<span class="p">;</span>
+  ssl_session_cache shared:SSL:10m<span class="p">;</span>
+
+  <span class="c"># disable any limits to avoid HTTP 413 for large image uploads</span>
+  client_max_body_size 0<span class="p">;</span>
+
+  <span class="c"># required to avoid HTTP 411: see Issue #1486 (https://github.com/moby/moby/issues/1486)</span>
+  chunked_transfer_encoding on<span class="p">;</span>
+
+  location /v2/ <span class="o">{</span>
+    <span class="c"># Do not allow connections from docker 1.5 and earlier</span>
+    <span class="c"># docker pre-1.6.0 did not properly set the user agent on ping, catch "Go *" user agents</span>
+    <span class="k">if</span> <span class="o">(</span><span class="nv">$http_user_agent</span> ~ <span class="s2">"^(docker</span><span class="se">\/</span><span class="s2">1</span><span class="se">\.</span><span class="s2">(3|4|5(?!</span><span class="se">\.</span><span class="s2">[0-9]-dev))|Go ).*$"</span> <span class="o">)</span> <span class="o">{</span>
+      <span class="k">return </span>404<span class="p">;</span>
+    <span class="o">}</span>
+
+    <span class="c"># To add basic authentication to v2 use auth_basic setting.</span>
+    auth_basic <span class="s2">"Registry realm"</span><span class="p">;</span>
+    auth_basic_user_file /etc/nginx/registry_auth/nginx.htpasswd<span class="p">;</span>
+
+    <span class="c">## If $docker_distribution_api_version is empty, the header is not added.</span>
+    <span class="c">## See the map directive above where this variable is defined.</span>
+    add_header <span class="s1">'Docker-Distribution-Api-Version'</span> <span class="nv">$docker_distribution_api_version</span> always<span class="p">;</span>
+
+    proxy_pass http://docker-registry<span class="p">;</span>
+    <span class="c"># required for docker client's sake</span>
+    proxy_set_header Host <span class="nv">$http_host</span><span class="p">;</span>
+    <span class="c"># pass on real client's IP</span>
+    proxy_set_header X-Real-IP <span class="nv">$remote_addr</span><span class="p">;</span>
+    proxy_set_header X-Forwarded-For <span class="nv">$proxy_add_x_forwarded_for</span><span class="p">;</span>
+    proxy_set_header X-Forwarded-Proto <span class="nv">$scheme</span><span class="p">;</span>
+    proxy_read_timeout 900<span class="p">;</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>As you can see in the above configuration, we need to put the password file <code class="language-plaintext highlighter-rouge">nginx.htpasswd</code> in <code class="language-plaintext highlighter-rouge">/etc/nginx/registry_auth</code>, create this folder if not already exist.</p>
+
+<p>For some reason, I can’t make it work following the documentation to generate the password file. Running <code class="language-plaintext highlighter-rouge">docker run --rm --entrypoint htpasswd registry:2 -Bbn testuser testpassword &gt; nginx.htpasswd</code> simply not gonna work for nginx to authenticate properly.</p>
+
+<p>A work-around is posted <a href="https://github.com/nginx-proxy/nginx-proxy/issues/643#issuecomment-612912033">here</a>, and to summarize you can run the following commands to populate the <code class="language-plaintext highlighter-rouge">nginx.htpasswd</code> password file.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>sh <span class="nt">-c</span> <span class="s2">"echo -n 'testuser:' &gt;&gt; nginx.htpasswd"</span>
+<span class="c"># This command will prompt you to enter the pwd</span>
+<span class="nb">sudo </span>sh <span class="nt">-c</span> <span class="s2">"openssl passwd -apr1 &gt;&gt; nginx.htpasswd"</span>
+</code></pre></div></div>
+
+<p>So far so good! Start your nginx service and now we are ready to spawn the actual registry service.</p>
+
+<h3 id="set-up-registry-service">Set up registry service</h3>
+
+<p>This is my particular set up case and you can easily port to the docker commands to serve the registry.</p>
+
+<p>In my rancher cluster, I added another workload with the following tweaks:</p>
+
+<ul>
+  <li>Port mapping from container’s 5000/tcp to host’s 5000/tcp</li>
+  <li>Env variable <code class="language-plaintext highlighter-rouge">REGISTRY_STORAGE_DELETE_ENABLED</code> set to <code class="language-plaintext highlighter-rouge">true</code> to enable image deletion</li>
+  <li>Mount a volume from the host to the container’s path <code class="language-plaintext highlighter-rouge">/var/lib/registry</code></li>
+</ul>
+
+<p>Done! Now you can test your private registry set up by running <code class="language-plaintext highlighter-rouge">docker login -u=testuser -p=testpwd registry.mxcao.me</code> in your own machine. The expected output should be:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>WARNING! Using <span class="nt">--password</span> via the CLI is insecure. Use <span class="nt">--password-stdin</span><span class="nb">.</span>
+Login Succeeded
+</code></pre></div></div>
+
+<p>That’s it! And you can now push unlimited number of repos/images to your own, private registry. Enjoy.</p>
+
+</div>
+
+<div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+    <li>
+      <h3>
+        <a href="/2023/06/22/how-to-setup-ptr-record-in-oci/">
+          How to setup PTR record in Oracle Cloud Infrastructure (OCI)
+          <small>22 Jun 2023</small>
+        </a>
+      </h3>
+    </li>
+    
+    <li>
+      <h3>
+        <a href="/2023/06/21/Debug-resource-deadlock-avoided/">
+          Debug Resource Deadlock Avoided Error
+          <small>21 Jun 2023</small>
+        </a>
+      </h3>
+    </li>
+    
+    <li>
+      <h3>
+        <a href="/tools/2022/08/28/setup-vmess-edge/">
+          Set up network edge router via V2Ray
+          <small>28 Aug 2022</small>
+        </a>
+      </h3>
+    </li>
+    
+  </ul>
+</div>
+    </div>
+
+  </body>
+</html>

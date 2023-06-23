@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+  <meta charset="utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Meta -->
+  <link rel="canonical" href="https://mxcao.me/">
+
+  <!-- Analytics -->
+  <script async src="https://umami.mxcao.me/script.js" data-website-id="4c2d93d9-a90e-41c6-bc74-d2f96994b1e9"></script>
+
+  <!-- Christmax Snow -->
+  <!-- <script src="https://app.embed.im/snow.js" defer></script> -->
+
+  <title>
+    Value-Parameterized GTest &middot; mxin
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/main.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700%7CSource+Sans+Pro:400,400i,700,700i&subset=greek,greek-ext,latin-ext">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon" sizes="180x180" href="/public/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/public/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/public/favicon-16x16.png">
+  <link rel="manifest" href="/public/site.webmanifest">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+
+</head>
+
+  <body>
+
+    <div class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>mxin</h1>
+      <p class="tagline"># Mengxin Cao</p>
+    </div>
+
+    <input type="checkbox" id="menu-icon">
+    <label class="menu-label" for="menu-icon"></label>
+    <div class="trigger">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-item">
+          <a href="/">Home</a>
+        </li>
+        
+
+        
+        
+        
+        
+        
+        
+        
+        
+        <li class="sidebar-nav-item">
+          <a href="/about/">About</a>
+        </li>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <li class="sidebar-nav-item">
+          <a href="/posts/">Posts</a>
+        </li>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <li class="sidebar-nav-item">
+          <a href="https://github.com/mcao2/">GitHub</a>
+        </li>
+        <li class="sidebar-nav-item">
+          <a href="https://www.linkedin.com/in/mxin/">LinkedIn</a>
+        </li>
+        <!-- <li class="sidebar-nav-item">
+          <a href="https://cs.cmu.edu/~mcao2/mengxin_cv.pdf">Curriculum Vitae</a>
+        </li> -->
+      </ul>
+
+      <p class="copyright">&copy; 2023. All rights reserved.</p>
+    </div>
+  </div>
+</div>
+
+    <div class="content container">
+      <div class="post">
+  <h1 class="post-title">Value-Parameterized GTest</h1>
+  <span class="post-info">07 Aug 2020</span>
+  <h2 id="introduction">Introduction</h2>
+
+<p>Last time I talked about gtest in the <a href="/primer/2020/06/10/googletest-primer/">gtest primer</a>, and in this post we discuss the usage of <a href="https://github.com/google/googletest/blob/master/googletest/docs/advanced.md#value-parameterized-tests">“value-paramterized” tests</a>. In general, when you write a simple test case and verified it is working, what is the next step? Maybe you want to add more test cases! But how? Adding them by “hard-coding” the logics in the source files? It’s not a good idea since cases may evolve and we may later add new corner cases, maybe months later. At that time, you may already forgot how to write a test case using gtest.</p>
+
+<p>Value-parameterized tests are a good way to organize your test cases and group them in a logical manner e.g. test cases for a particular API. I use value-parameterized tests and a YAML configuration file to dynamically add/reduce my test cases, so that adding or removing a test case is as simple as updating the YAML file.</p>
+
+<!--more-->
+
+<h2 id="problem-setting">Problem setting</h2>
+
+<p>I finished writing test cases for the new APIs using gtest and I felt great! During the meeting, my mentor raised a question: “How can I add a new test case when you finished your internship? Do I need to learn gtest from scratch to do that?”. Definitely “yes” is not a good option, so I decided to update existing test implementations and use an easier approach to add/remove test cases. That is using value-parameterized tests together with a test config file written in YAML.</p>
+
+<p>An example test config file should be like:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">Foo</span><span class="pi">:</span>
+  <span class="c1"># Read-oriented API tests</span>
+  <span class="na">GetBarTest</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="na">case_name</span><span class="pi">:</span> <span class="s">TestEmptyParams</span>
+      <span class="na">case_assertion</span><span class="pi">:</span> <span class="s">EXPECT_EQ</span>
+      <span class="na">case_description</span><span class="pi">:</span> <span class="s2">"</span><span class="s">Test</span><span class="nv"> </span><span class="s">if</span><span class="nv"> </span><span class="s">right</span><span class="nv"> </span><span class="s">value</span><span class="nv"> </span><span class="s">returned</span><span class="nv"> </span><span class="s">when</span><span class="nv"> </span><span class="s">no</span><span class="nv"> </span><span class="s">arg</span><span class="nv"> </span><span class="s">is</span><span class="nv"> </span><span class="s">given"</span>
+      <span class="na">case_params</span><span class="pi">:</span>
+        <span class="na">name</span><span class="pi">:</span> <span class="s2">"</span><span class="s">barbar"</span>
+        <span class="na">verbose</span><span class="pi">:</span> <span class="no">true</span>
+      <span class="na">case_expected_result</span><span class="pi">:</span> <span class="pi">[]</span>
+</code></pre></div></div>
+
+<h2 id="prepare-the-apis">Prepare the APIs</h2>
+
+<p>In this example we will add a simple getter method under the namespace of “Foo”. The only function we have is called <code class="language-plaintext highlighter-rouge">GetBar</code> which returns a vector of strings.</p>
+
+<p>The header file <code class="language-plaintext highlighter-rouge">foo.h</code> contains:</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">namespace</span> <span class="n">foo</span> <span class="p">{</span>
+
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">GetBar</span><span class="p">();</span>
+
+<span class="p">}</span>  <span class="c1">// namespace foo</span>
+</code></pre></div></div>
+
+<p>And its implementation <code class="language-plaintext highlighter-rouge">foo.cpp</code> is:</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include "foo.h"
+</span>
+<span class="k">namespace</span> <span class="n">foo</span> <span class="p">{</span>
+
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">GetBar</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span><span class="p">{</span><span class="s">"hello"</span><span class="p">,</span> <span class="s">"world"</span><span class="p">};</span>
+<span class="p">}</span>
+
+<span class="p">}</span>  <span class="c1">// namespace foo</span>
+</code></pre></div></div>
+
+<h2 id="setup-the-gtest">Setup the gtest</h2>
+
+<p>I want to be as general as possible. So I setup a separate fixture for namespace <code class="language-plaintext highlighter-rouge">Foo</code>. If we later added more APIs under <code class="language-plaintext highlighter-rouge">Foo</code>, then the adaptation will be easier.</p>
+
+<p>Note that we use <a href="https://github.com/jbeder/yaml-cpp">yaml-cpp</a> to parse the config files and I will assume you already built and installed the library.</p>
+
+<p>I created a header file called <code class="language-plaintext highlighter-rouge">test_foo_core.h</code> to setup the test cases for <code class="language-plaintext highlighter-rouge">Foo</code> and defined a value-parameterized fixture class called <code class="language-plaintext highlighter-rouge">FooTest</code>. All the API tests can afterwards be derived from the <code class="language-plaintext highlighter-rouge">FooTest</code> class to reuse the settings. The value type will be a <code class="language-plaintext highlighter-rouge">YAML::Node</code> that include the configurations for a specific test case.</p>
+
+<p>The <code class="language-plaintext highlighter-rouge">SetUp</code> method of <code class="language-plaintext highlighter-rouge">FooTest</code> will retrieve the <code class="language-plaintext highlighter-rouge">YAML::Node</code> by using gtest’s <code class="language-plaintext highlighter-rouge">GetParam</code> method, from which we read the <code class="language-plaintext highlighter-rouge">case_params</code> and <code class="language-plaintext highlighter-rouge">case_assertion</code>.</p>
+
+<p>We defined a function <code class="language-plaintext highlighter-rouge">ReadTestCasesFromYaml</code> to help us parse a specific test case from the test config file. You provide the fucntion test name (e.g. <code class="language-plaintext highlighter-rouge">GetBarTest</code> in the above example config file) and it will read all the test cases under that name and use them to run the tests.</p>
+
+<p>Enough introduction and explanations! Go clone <a href="https://github.com/mcao2/value-parameterized-gtest">the tutorial repo</a> and play around the tests!</p>
+
+<h2 id="commands-to-run-the-buildtestcoverage">Commands to run the build/test/coverage</h2>
+
+<p>In the tutorial repo, I also included the option to produce a code coverage report using <code class="language-plaintext highlighter-rouge">gcov</code> and <code class="language-plaintext highlighter-rouge">lcov</code>. Check it out by running <code class="language-plaintext highlighter-rouge">make coverage</code> under the <code class="language-plaintext highlighter-rouge">build</code> directory and read the reports in the coverage folder.</p>
+
+<h3 id="clone-the-repo">Clone the repo</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git clone git@github.com:mcao2/value-parameterized-gtest.git
+</code></pre></div></div>
+
+<h3 id="build-the-source-files-and-tests">Build the source files and tests</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">mkdir </span>build <span class="o">&amp;&amp;</span> <span class="nb">cd </span>build
+cmake <span class="nt">-DBUILD_TEST</span><span class="o">=</span>ON .. <span class="o">&amp;&amp;</span> make <span class="nt">-j4</span>
+</code></pre></div></div>
+
+<h3 id="run-the-gtest">Run the gtest</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctest <span class="nt">-V</span>
+</code></pre></div></div>
+
+<h4 id="sample-output">Sample output</h4>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Constructing a list of tests
+Done constructing a list of tests
+Updating <span class="nb">test </span>list <span class="k">for </span>fixtures
+Added 0 tests to meet fixture requirements
+Checking <span class="nb">test </span>dependency graph...
+Checking <span class="nb">test </span>dependency graph end
+<span class="nb">test </span>1
+    Start 1: test_foo
+
+1: Test <span class="nb">command</span>: value-parameterized-gtest/build/test/test_foo
+1: Environment variables:
+1:  <span class="nv">TEST_FOO_CONFIG_PATH</span><span class="o">=</span>value-parameterized-gtest/test/test_foo.yaml
+1:  <span class="nv">GTEST_OUTPUT</span><span class="o">=</span>xml:value-parameterized-gtest/build/reports/gtest_test_foo.xml
+1: Test <span class="nb">timeout </span>computed to be: 10000000
+1: <span class="o">[</span>GetBarTest] Num cases: 1
+1: Read <span class="k">case</span> TestEmptyParams
+1: <span class="o">[==========]</span> Running 1 <span class="nb">test </span>from 1 <span class="nb">test </span>suite.
+1: <span class="o">[</span><span class="nt">----------</span><span class="o">]</span> Global <span class="nb">test </span>environment set-up.
+1: <span class="o">[</span><span class="nt">----------</span><span class="o">]</span> 1 <span class="nb">test </span>from GetBarTestInstantiation/GetBarTest
+1: <span class="o">[</span> RUN      <span class="o">]</span> GetBarTestInstantiation/GetBarTest.GetBar/TestEmptyParams
+1: <span class="o">[</span>       OK <span class="o">]</span> GetBarTestInstantiation/GetBarTest.GetBar/TestEmptyParams <span class="o">(</span>0 ms<span class="p">)</span>
+1: <span class="o">[</span><span class="nt">----------</span><span class="o">]</span> 1 <span class="nb">test </span>from GetBarTestInstantiation/GetBarTest <span class="o">(</span>0 ms total<span class="o">)</span>
+1:
+1: <span class="o">[</span><span class="nt">----------</span><span class="o">]</span> Global <span class="nb">test </span>environment tear-down
+1: <span class="o">[==========]</span> 1 <span class="nb">test </span>from 1 <span class="nb">test </span>suite ran. <span class="o">(</span>1 ms total<span class="o">)</span>
+1: <span class="o">[</span>  PASSED  <span class="o">]</span> 1 test.
+1/1 Test <span class="c">#1: test_foo .........................   Passed    0.48 sec</span>
+</code></pre></div></div>
+
+<h3 id="create-code-coverage-report">Create code coverage report</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>make coverage
+</code></pre></div></div>
+
+<p>To view the report, go to <code class="language-plaintext highlighter-rouge">coverage</code> and run:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>python3 <span class="nt">-m</span> http.server
+</code></pre></div></div>
+
+<p>And you can view your report from 127.0.0.1:8000.</p>
+
+<h4 id="sample-output-1">Sample output</h4>
+
+<p><img src="/public/files/gtest_adv/lcov_report.png" alt="code coverage" /></p>
+
+<hr />
+
+<p>Thank you and I hope this is useful :)</p>
+
+</div>
+
+<div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+    <li>
+      <h3>
+        <a href="/2023/06/22/how-to-setup-ptr-record-in-oci/">
+          How to setup PTR record in Oracle Cloud Infrastructure (OCI)
+          <small>22 Jun 2023</small>
+        </a>
+      </h3>
+    </li>
+    
+    <li>
+      <h3>
+        <a href="/2023/06/21/Debug-resource-deadlock-avoided/">
+          Debug Resource Deadlock Avoided Error
+          <small>21 Jun 2023</small>
+        </a>
+      </h3>
+    </li>
+    
+    <li>
+      <h3>
+        <a href="/tools/2022/08/28/setup-vmess-edge/">
+          Set up network edge router via V2Ray
+          <small>28 Aug 2022</small>
+        </a>
+      </h3>
+    </li>
+    
+  </ul>
+</div>
+    </div>
+
+  </body>
+</html>

@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+  <meta charset="utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Meta -->
+  <link rel="canonical" href="https://mxcao.me/">
+
+  <!-- Analytics -->
+  <script async src="https://umami.mxcao.me/script.js" data-website-id="4c2d93d9-a90e-41c6-bc74-d2f96994b1e9"></script>
+
+  <!-- Christmax Snow -->
+  <!-- <script src="https://app.embed.im/snow.js" defer></script> -->
+
+  <title>
+    Bazel Primer &middot; mxin
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/main.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700%7CSource+Sans+Pro:400,400i,700,700i&subset=greek,greek-ext,latin-ext">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon" sizes="180x180" href="/public/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/public/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/public/favicon-16x16.png">
+  <link rel="manifest" href="/public/site.webmanifest">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+
+</head>
+
+  <body>
+
+    <div class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>mxin</h1>
+      <p class="tagline"># Mengxin Cao</p>
+    </div>
+
+    <input type="checkbox" id="menu-icon">
+    <label class="menu-label" for="menu-icon"></label>
+    <div class="trigger">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-item">
+          <a href="/">Home</a>
+        </li>
+        
+
+        
+        
+        
+        
+        
+        
+        
+        
+        <li class="sidebar-nav-item">
+          <a href="/about/">About</a>
+        </li>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <li class="sidebar-nav-item">
+          <a href="/posts/">Posts</a>
+        </li>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <li class="sidebar-nav-item">
+          <a href="https://github.com/mcao2/">GitHub</a>
+        </li>
+        <li class="sidebar-nav-item">
+          <a href="https://www.linkedin.com/in/mxin/">LinkedIn</a>
+        </li>
+        <!-- <li class="sidebar-nav-item">
+          <a href="https://cs.cmu.edu/~mcao2/mengxin_cv.pdf">Curriculum Vitae</a>
+        </li> -->
+      </ul>
+
+      <p class="copyright">&copy; 2023. All rights reserved.</p>
+    </div>
+  </div>
+</div>
+
+    <div class="content container">
+      <div class="post">
+  <h1 class="post-title">Bazel Primer</h1>
+  <span class="post-info">09 Aug 2020</span>
+  <h2 id="introduction-">Introduction <sup id="fnref:1" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup></h2>
+
+<p>Bazel is an open-source build/test framework similar to Maven, Make, and Gradle.</p>
+
+<p>It features:</p>
+
+<ul>
+  <li>Human-readable, high-level build language</li>
+  <li>Fast and reliable via caching</li>
+  <li>Scalable</li>
+  <li>Extensible for other language or framework</li>
+</ul>
+
+<p>This post is a reading notes about the official documentation on Bazel version 3.4.0. You can skip these intros and jump directly to the sample repo to get started.</p>
+
+<!--more-->
+
+<h2 id="bazel-setup">Bazel Setup</h2>
+
+<p>Follow the instructions <a href="https://docs.bazel.build/versions/3.4.0/install.html">here</a> to install the latest release for your system.</p>
+
+<h2 id="concepts">Concepts</h2>
+
+<p>In general, Bazel builds software from source code organized in a directory called a <strong>workspace</strong>.</p>
+
+<p>Source files in the workspace are organized in a nested hierarchy of <strong>packages</strong>.</p>
+
+<p>Each <strong>package</strong> is a directory containing a set of related source files + one <strong>BUILD</strong> file for that package.</p>
+
+<p>A simple example of a C++ project structure for one package is shown below:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">.</span>
+├── README.md
+├── WORKSPACE
+└── main
+    ├── BUILD
+    └── hello-world.cc
+</code></pre></div></div>
+
+<h3 id="workspace">Workspace</h3>
+
+<p>A <em>workspace</em> is a directory containing your source files and symbolic links to other directories that contain the build output.</p>
+
+<p>Have a look at the following project structure after bazel built the target:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">.</span>
+├── README.md
+├── WORKSPACE
+├── bazel-bin -&gt; /private/var/tmp/_bazel_mxin/a122b7b4d9e8cf33d3804073143b4e06/execroot/__main__/bazel-out/darwin-fastbuild/bin
+├── bazel-out -&gt; /private/var/tmp/_bazel_mxin/a122b7b4d9e8cf33d3804073143b4e06/execroot/__main__/bazel-out
+├── bazel-stage1 -&gt; /private/var/tmp/_bazel_mxin/a122b7b4d9e8cf33d3804073143b4e06/execroot/__main__
+├── bazel-testlogs -&gt; /private/var/tmp/_bazel_mxin/a122b7b4d9e8cf33d3804073143b4e06/execroot/__main__/bazel-out/darwin-fastbuild/testlogs
+└── main
+    ├── BUILD
+    └── hello-world.cc
+</code></pre></div></div>
+
+<p>Note the new symbolic links created from that build.</p>
+
+<p>Bazel identify a directory as a <em>workspace root</em> by searching for a file named <code class="language-plaintext highlighter-rouge">WORKSPACE</code> or <code class="language-plaintext highlighter-rouge">WORKSPACE.bazel</code>. It may be empty or may contain references to external dependencies required to build the outputs. If both <code class="language-plaintext highlighter-rouge">WORKSPACE</code> and <code class="language-plaintext highlighter-rouge">WORKSPACE.bazel</code> exist, Bazel will ignore the <code class="language-plaintext highlighter-rouge">WORKSPACE</code> file.</p>
+
+<p>If there’s another subdirectory under the workspace root and it contains a file called <strong>WORKSPACE</strong>, Bazel simply ignores them. In other words, Bazel does not support nested workspaces.</p>
+
+<h3 id="packages">Packages</h3>
+
+<p>As mentioned earlier, source files usually organized in nested hierarchy called <strong>packages</strong>.</p>
+
+<p>Conceptually, a package is</p>
+
+<ul>
+  <li>the primary unit of code organization in a <strong>repository</strong></li>
+  <li>a collection of logically related files</li>
+  <li>a specification of the dependencies among these files</li>
+</ul>
+
+<p>In reality (ps: joking), it is a subdirectory containing a <code class="language-plaintext highlighter-rouge">BUILD</code> or <code class="language-plaintext highlighter-rouge">BUILD.bazel</code> file beneath the workspace root. A package includes all files + all subdirectories beneath the package root, except those themselves contain a <code class="language-plaintext highlighter-rouge">BUILD</code> (or <code class="language-plaintext highlighter-rouge">BUILD.bazel</code>), which become <strong>subpackages</strong> in this case.</p>
+
+<p>For example, the below directory tree contains two packages: <code class="language-plaintext highlighter-rouge">my/app</code> and its subpackage <code class="language-plaintext highlighter-rouge">my/app/test</code>.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>src/my/app/BUILD
+src/my/app/app.cc
+src/my/app/data/input.txt
+src/my/app/tests/BUILD
+src/my/app/tests/test.cc
+</code></pre></div></div>
+
+<h3 id="repositories">Repositories</h3>
+
+<p>In the above introduction of packages, we mentioned <strong>repository</strong>, so what is it? We know GitHub repos, and it’s a way of organizing source code. Bazel repository is a similar concept.</p>
+
+<p>Bazel defines <strong>the root of the main repository</strong> as the directory containing the <code class="language-plaintext highlighter-rouge">WORKSPACE</code> file, also called <code class="language-plaintext highlighter-rouge">@</code>.</p>
+
+<p>We can have dependent external repositories like googletest and these external repos are defined in the main repo’s <code class="language-plaintext highlighter-rouge">WORKSPACE</code> file using workspace rules.</p>
+
+<p>Note that external repos are repos themselves, which means they have their own <code class="language-plaintext highlighter-rouge">WORKSPACE</code> file as well! However, these <code class="language-plaintext highlighter-rouge">WORKSPACE</code> files are ignored by Bazel and hence those transitively dependent repos are not added automatically.</p>
+
+<h3 id="targets">Targets</h3>
+
+<p>Within a package, we define elements as <strong>targets</strong>. The name of a target is referred as its <strong>label</strong>.</p>
+
+<p>Target categories include:</p>
+
+<ul>
+  <li>files</li>
+  <li>rules</li>
+  <li>package groups (less nemerous)</li>
+</ul>
+
+<h4 id="files">Files</h4>
+
+<p>We can further divide files as:</p>
+
+<ul>
+  <li>Source files
+    <ul>
+      <li>usually written by the efforts of people and checked in to the repo</li>
+    </ul>
+  </li>
+  <li>Generated files (or Derived files)
+    <ul>
+      <li>not checked in to the repo but are generated by the build tool from source files according to specific <strong>rules</strong></li>
+    </ul>
+  </li>
+</ul>
+
+<h4 id="rules">Rules</h4>
+
+<p>A <strong>rule</strong> specifies the relationship between inputs and outputs and the necessary steps to derive the outputs from the inputs.</p>
+
+<h5 id="attributes">Attributes</h5>
+
+<p>Each rule has a set of <strong>attributes</strong> and the applicable attributes for a given rule and the significance/semantics of each attribute are a function of the rule’s <strong>class</strong>. Each attribute has a <code class="language-plaintext highlighter-rouge">name</code> and a <code class="language-plaintext highlighter-rouge">type</code>.</p>
+
+<p>For example, common attribute types are:</p>
+
+<ul>
+  <li>integers</li>
+  <li>label</li>
+  <li>list of labels</li>
+  <li>string</li>
+  <li>list of strings</li>
+  <li>output label</li>
+  <li>list of output labels</li>
+</ul>
+
+<p>Not all attributes need to be specified in every rule (i.e. some attributes are <em>optional</em>). Attributes thus form a dictionary from keys (names) to optional, typed values.</p>
+
+<p>Below we introduce several common attributes.</p>
+
+<h6 id="name-attribute"><code class="language-plaintext highlighter-rouge">name</code> attribute</h6>
+
+<p>Every rule has a <code class="language-plaintext highlighter-rouge">name</code> attribute of type <code class="language-plaintext highlighter-rouge">string</code> and must be <strong>syntactically valid</strong> target name as explained below (<strong>labels</strong> section).</p>
+
+<p>In some cases, a rule’s <code class="language-plaintext highlighter-rouge">name</code> is somewhat arbitrary such as for <code class="language-plaintext highlighter-rouge">genrules</code>.</p>
+
+<p>In other cases, the <code class="language-plaintext highlighter-rouge">name</code> is significant. For example, for <code class="language-plaintext highlighter-rouge">*_binary</code> and <code class="language-plaintext highlighter-rouge">*_test</code> rules, the <code class="language-plaintext highlighter-rouge">name</code> attribute determines the produced executable’s name by the build.</p>
+
+<h6 id="srcs-attribute"><code class="language-plaintext highlighter-rouge">srcs</code> attribute</h6>
+
+<p>This attribute has type <code class="language-plaintext highlighter-rouge">list of labels</code>, which means its value, if present, is a list of labels with each being the name of a target that is an input to this rule.</p>
+
+<h6 id="outs-attribute"><code class="language-plaintext highlighter-rouge">outs</code> attribute</h6>
+
+<p>This attribute has type <code class="language-plaintext highlighter-rouge">list of output labels</code>. It is similar to the <code class="language-plaintext highlighter-rouge">srcs</code> attribute but differs in two significant ways:</p>
+
+<ol>
+  <li>due to the invariant that <strong>the outputs of a rule belong to the same package as the rule itself</strong> (mentioned earlier), output labels cannot include a package component and must be in one of the “relative” forms (discussed below in the <strong>labels</strong> section)</li>
+  <li>the relationship implied by an (ordinary) label attribute is <strong>inverse</strong> to that implied by an output label: a rule <em>depends on</em> its <code class="language-plaintext highlighter-rouge">srcs</code>, whereas a rule <em>is depended on by</em> its <code class="language-plaintext highlighter-rouge">outs</code>.</li>
+</ol>
+
+<blockquote>
+  <p>The two types of label attributes (<code class="language-plaintext highlighter-rouge">srcs</code> and <code class="language-plaintext highlighter-rouge">outs</code>) thus assign direction to the edges b/w targets, giving rise to a <strong>dependency graph</strong> (DAG over targets, a.k.a <code class="language-plaintext highlighter-rouge">target graph</code> or <code class="language-plaintext highlighter-rouge">build dependency graph</code>), which is the domain over which the <a href="https://docs.bazel.build/versions/3.4.0/query.html">Bazel Query tool</a> operates.</p>
+</blockquote>
+
+<h5 id="inputs">Inputs</h5>
+
+<p>The <strong>inputs</strong> may be source files, generated files, or even other rules. Allowing generated files as the inputs means outputs of one rule may be the inputs to another rule, thus allowing <strong>rule chaining</strong>. Allowing other rules to be the inputs of one rule is more complex and language/rule-dependent.</p>
+
+<p>For example, a C++ library rule <code class="language-plaintext highlighter-rouge">A</code> may have another C++ library rule <code class="language-plaintext highlighter-rouge">B</code> as input. The effect of this dependency is that <code class="language-plaintext highlighter-rouge">B</code>’s <em>header files</em> are available to <code class="language-plaintext highlighter-rouge">A</code> during compilation, <code class="language-plaintext highlighter-rouge">B</code>’s <em>symbols</em> are available to <code class="language-plaintext highlighter-rouge">A</code> during linking, and <code class="language-plaintext highlighter-rouge">B</code>’s <em>runtime data</em> is available to <code class="language-plaintext highlighter-rouge">A</code> during execution.</p>
+
+<p>Note that a rule’s inputs may come from another package.</p>
+
+<h5 id="outputs">Outputs</h5>
+
+<p>The <strong>outputs</strong> are usually generated files and these files are always belong to the <strong>same package</strong> as the rule itself.</p>
+
+<h5 id="class-or-categories">Class (or Categories)</h5>
+
+<p>A rule can be of one of many different kinds or classes based on the output type. Such as rules that produce compiled executables and libs, test executables and other supported outputs.</p>
+
+<h4 id="package-groups">Package groups</h4>
+
+<p>A package group is a set of packages whose purpose is to limit accessibility of certain rules.</p>
+
+<p>It is defined by the <code class="language-plaintext highlighter-rouge">package_group</code> function and does not generate nor consume files.</p>
+
+<h3 id="labels">Labels</h3>
+
+<p>As mentioned in the <strong>targets</strong> intro above, a target’s name is its <strong>label</strong> and the label uniquely identifies the target.</p>
+
+<p>A typical label in <strong>canonical form</strong> looks like:</p>
+
+<pre><code class="language-txt">@myrepo//my/app/main:app_binary
+</code></pre>
+
+<p>Note that <code class="language-plaintext highlighter-rouge">@myrepo</code> is the repo’s identifier.</p>
+
+<p>Usually a label refers to a target in the same repo, and hence we can omit the repo identifier and written it as:</p>
+
+<pre><code class="language-txt">//my/app/main:app_binary
+</code></pre>
+
+<p>A label starts with <code class="language-plaintext highlighter-rouge">//</code> and consists of two parts separated by a <code class="language-plaintext highlighter-rouge">:</code>:</p>
+
+<ul>
+  <li>package name
+    <ul>
+      <li>e.g. <code class="language-plaintext highlighter-rouge">my/app/main</code> in the above example</li>
+    </ul>
+  </li>
+  <li>target name
+    <ul>
+      <li>e.g. <code class="language-plaintext highlighter-rouge">app_binary</code> in the above example</li>
+    </ul>
+  </li>
+</ul>
+
+<p>A label’s second part (i.e. the target name) can be omitted if the target name is the same as the last component of the package name. Such <strong>short-form labels</strong> are just an abbreviation and these two forms are equivalent.</p>
+
+<p>For example, if we have label <code class="language-plaintext highlighter-rouge">//my/app:app</code>, we can also write it as <code class="language-plaintext highlighter-rouge">//my/app</code>.</p>
+
+<hr />
+
+<p><strong>Quick quiz</strong>:</p>
+
+<p>What are the types of the following representations:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">my/app</code>
+    <ul>
+      <li>a package named <code class="language-plaintext highlighter-rouge">my/app</code></li>
+    </ul>
+  </li>
+  <li><code class="language-plaintext highlighter-rouge">//my/app</code>
+    <ul>
+      <li>a target under <code class="language-plaintext highlighter-rouge">my/app</code> package, with its label in short-form and target name is assumed to be <code class="language-plaintext highlighter-rouge">app</code></li>
+    </ul>
+  </li>
+  <li><code class="language-plaintext highlighter-rouge">//my/app:app</code>
+    <ul>
+      <li>a target under <code class="language-plaintext highlighter-rouge">my/app</code> package, with target name <code class="language-plaintext highlighter-rouge">app</code></li>
+    </ul>
+  </li>
+  <li><code class="language-plaintext highlighter-rouge">@myrepo//my/app/main:app_binary</code>
+    <ul>
+      <li>a target under repo <code class="language-plaintext highlighter-rouge">myrepo</code>, package <code class="language-plaintext highlighter-rouge">my/app/main</code>, target name <code class="language-plaintext highlighter-rouge">app_binary</code></li>
+    </ul>
+  </li>
+</ul>
+
+<hr />
+
+<p>We can shorten the label identifier even further! Within the <code class="language-plaintext highlighter-rouge">BUILD</code> file for package <code class="language-plaintext highlighter-rouge">my/app</code>, we can omit the package-name part of labels for this package’s targets, similar to relative paths…</p>
+
+<p>For example, if we have targets <code class="language-plaintext highlighter-rouge">//my/app</code>, <code class="language-plaintext highlighter-rouge">//my/app:app_binary</code>, we can refer to them in the file <code class="language-plaintext highlighter-rouge">my/app/BUILD</code> as</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">//my/app:app</code> or <code class="language-plaintext highlighter-rouge">//my/app</code> or <code class="language-plaintext highlighter-rouge">:app</code> or <code class="language-plaintext highlighter-rouge">app</code></li>
+  <li><code class="language-plaintext highlighter-rouge">//my/app:app_binary</code> or <code class="language-plaintext highlighter-rouge">:app_binary</code> or <code class="language-plaintext highlighter-rouge">app_binary</code></li>
+</ul>
+
+<p>Don’t be confused with all these forms of representations! Remember to be consistent with your styles of using labels.</p>
+
+<p>Usually the colon <code class="language-plaintext highlighter-rouge">:</code> is omitted for <code class="language-plaintext highlighter-rouge">file</code> targets, but retained for <code class="language-plaintext highlighter-rouge">rule</code> targets. This allows us to reference files by their unadorned name relative to the package directory in the package’s <code class="language-plaintext highlighter-rouge">BUILD</code> file, e.g.</p>
+
+<pre><code class="language-txt">generate.cc
+testdata/input.txt
+</code></pre>
+
+<p>If you want to reference targets outside current package in the <code class="language-plaintext highlighter-rouge">BUILD</code> file, you need to refer to them using their complete label.</p>
+
+<p>For example, with another package named <code class="language-plaintext highlighter-rouge">my/test</code> and you want to refer a file in the package <code class="language-plaintext highlighter-rouge">my/app</code> in <code class="language-plaintext highlighter-rouge">my/test</code>’s <code class="language-plaintext highlighter-rouge">BUILD</code> file, you need to use <code class="language-plaintext highlighter-rouge">//my/app:generate.cc</code>.</p>
+
+<p>If you refer to a target with incorrect label, you may get errors like <code class="language-plaintext highlighter-rouge">crosses a package boundary</code>.</p>
+
+<p>Labels starting with <code class="language-plaintext highlighter-rouge">@//</code> are <strong>references to the main repo</strong> and still work even from external repos.</p>
+
+<p>Therefore <code class="language-plaintext highlighter-rouge">@//a/b/c</code> is different from <code class="language-plaintext highlighter-rouge">//a/b/c</code> when referenced from an external repo. The former refers back to the main repo while the latter looks for target <code class="language-plaintext highlighter-rouge">//a/b/c</code> in the current external repo itself.</p>
+
+<p>Such nuance difference can be especially important when you write rules in the main repo that refer to targets in the main repo, but these rules <strong>will be used from external repos</strong>.</p>
+
+<p>I know the label syntax is strict, but Bazel intentionally enforces that to many reasons. The precise details can be found <a href="https://docs.bazel.build/versions/3.4.0/build-ref.html#lexi">here</a>.</p>
+
+<h3 id="the-build-files">The <code class="language-plaintext highlighter-rouge">BUILD</code> files</h3>
+
+<p>In the above sections, we discussed packages, targets, labels, build dependency graph abstractly. They are building blocks of Bazel and can be found in a <code class="language-plaintext highlighter-rouge">BUILD</code> file.</p>
+
+<p>A <code class="language-plaintext highlighter-rouge">BUILD</code> file defines a package and is interpreted as a sequential list of statements by using the imperative language called <a href="https://github.com/bazelbuild/starlark/">Starlark</a>.</p>
+
+<p>By saying “sequential list”, we emphasize the <code class="language-plaintext highlighter-rouge">order</code> does matter, especially for <strong>variables</strong>. Variables must be defined before they are used.</p>
+
+<p>In the meantime, the relative order of <strong>rule declarations</strong> is immaterial and all that matter is <strong>which rules were declared and with what value</strong> by the time package evaluation completes.</p>
+
+<p>So, in simple <code class="language-plaintext highlighter-rouge">BUILD</code> files that consist only of rule declarations, these declarations can be re-ordered freely without changing the behavior.</p>
+
+<h4 id="limitations">Limitations</h4>
+
+<ul>
+  <li>no function definition, <code class="language-plaintext highlighter-rouge">for</code> statements or <code class="language-plaintext highlighter-rouge">if</code> statements to encourage a clean separation b/w code and data
+    <ul>
+      <li>functions should be declared in <code class="language-plaintext highlighter-rouge">.bzl</code> files instead</li>
+    </ul>
+  </li>
+  <li>no <code class="language-plaintext highlighter-rouge">*args</code> or <code class="language-plaintext highlighter-rouge">**kwargs</code> arguments
+    <ul>
+      <li>have to list all the arguments explicitly</li>
+    </ul>
+  </li>
+  <li>unable to perform arbitrary I/O
+    <ul>
+      <li>hence the interpretation of <code class="language-plaintext highlighter-rouge">BUILD</code> files is hermetic i.e. dependent only on a known set of inputs, which is essential for ensuring that builds are reproducible</li>
+    </ul>
+  </li>
+  <li>should be written using only ASCII characters</li>
+</ul>
+
+<h4 id="best-practices">Best practices</h4>
+
+<ul>
+  <li>use comments liberally to document the role of each build target, whether or not it is intended for public use and to document the role of the package itself
+    <ul>
+      <li>since <code class="language-plaintext highlighter-rouge">BUILD</code> files need to be updated whenever the dependencies of the underlying code change, and are typically maintained by multiple people on a team</li>
+    </ul>
+  </li>
+</ul>
+
+<h4 id="bazel-extensions">Bazel extensions</h4>
+
+<p>Bazel extensions are files ending in <code class="language-plaintext highlighter-rouge">.bzl</code>.</p>
+
+<p>As mentioned in the <code class="language-plaintext highlighter-rouge">BUILD</code> file limitations, such files can be used to load new rules, functions or constants. Use <code class="language-plaintext highlighter-rouge">load</code> statement in the <code class="language-plaintext highlighter-rouge">BUILD</code> file to import a symbol from an extension.</p>
+
+<p>E.g. The following code loads the file <code class="language-plaintext highlighter-rouge">foo/bar/file.bzl</code> and add the <code class="language-plaintext highlighter-rouge">some_library</code> symbol to the environment.</p>
+
+<pre><code class="language-txt">load("//foo/bar:file.bzl", "some_library")
+</code></pre>
+
+<p><code class="language-plaintext highlighter-rouge">load</code> also supports additional arguments to import multiple symbols.</p>
+
+<p>Limitations of <code class="language-plaintext highlighter-rouge">load</code> statement:</p>
+
+<ul>
+  <li>arguments must be string literals (i.e. no variables)</li>
+  <li><code class="language-plaintext highlighter-rouge">load</code> statements must appear at the top-level (i.e. cannot be in function body)</li>
+  <li>the first argument is a label (discussed above) identifying the <code class="language-plaintext highlighter-rouge">.bzl</code> file (i.e. a file target). If it is a <strong>relative label</strong>,
+    <ul>
+      <li>it is resolved w.r.t the package (not directory) containing the <code class="language-plaintext highlighter-rouge">.bzl</code> file.</li>
+      <li>it should use a leading <code class="language-plaintext highlighter-rouge">:</code></li>
+    </ul>
+  </li>
+</ul>
+
+<p>Another typical usage of <code class="language-plaintext highlighter-rouge">load</code> is to assign different names (i.e. aliases) to the imported symbols:</p>
+
+<p>E.g.</p>
+
+<pre><code class="language-txt">load("//foo/bar:file.bzl", library_alias = "some_library")
+
+# multiple symbols and a mix of aliases and regular symbol names
+load(":my_rules.bzl", "some_rule", nice_alias = "some_other_rule")
+</code></pre>
+
+<p>In a <code class="language-plaintext highlighter-rouge">.bzl</code> file, symbols starting with <code class="language-plaintext highlighter-rouge">_</code> are not exported and thus cannot be loaded from another file.</p>
+
+<h3 id="build-rules">Build rules</h3>
+
+<p>Majority of Bazel build rules come in families and grouped by language. For example, <code class="language-plaintext highlighter-rouge">cc_binary</code>, <code class="language-plaintext highlighter-rouge">cc_library</code> and <code class="language-plaintext highlighter-rouge">cc_test</code> are the build rules for C++ binaries, libraries, and tests.</p>
+
+<p>As you can imagine, the naming schema for other languages is similar: with a different prefix that identifying that language. E.g. <code class="language-plaintext highlighter-rouge">java_*</code> for Java. The suffix identifies the feature of that rule:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">*_binary</code> rules build executables. The executable will be put in the build tool’s binary output tree w.r.t the rule’s label, so <code class="language-plaintext highlighter-rouge">//my:program</code> will appear at <code class="language-plaintext highlighter-rouge">$(BINDIR)/my/program</code>.</li>
+  <li><code class="language-plaintext highlighter-rouge">*_test</code> rules are a specialization of a <code class="language-plaintext highlighter-rouge">*_binary</code> rule and is used for automated testing.
+    <ul>
+      <li>tests return 0 on success</li>
+      <li>it can only open files that beneath its runfiles tree at runtime</li>
+    </ul>
+  </li>
+  <li><code class="language-plaintext highlighter-rouge">*_library</code> rules specify <strong>separately-compiled modules</strong> in the given programming language. Libraries can depend on other libs, and binaries and tests can depend on libs.</li>
+</ul>
+
+<h3 id="dependencies">Dependencies</h3>
+
+<p>We discussed dependency graph in the above sections, and it models the <em>depends on</em> relationship among targets.</p>
+
+<p>A target <code class="language-plaintext highlighter-rouge">A</code> <em>depends on</em> a target <code class="language-plaintext highlighter-rouge">B</code> if <code class="language-plaintext highlighter-rouge">B</code> is needed by <code class="language-plaintext highlighter-rouge">A</code> at build or execution time.</p>
+
+<p>With the dependency graph defined, we further define a target’s <em>direct dependencies</em> as those direct neighbors in the dependency graph, i.e. targets reachable by a path of length 1 in the DAG. Similarly, a target’s <em>transitive dependencies</em> are those targets on which it depends via <strong>a path</strong> through the graph.</p>
+
+<p>In the context of builds, there are two types of dependency graphs:</p>
+
+<ul>
+  <li>the graph of actual dependencies
+    <ul>
+      <li>a target <code class="language-plaintext highlighter-rouge">X</code> is actually dependent on target <code class="language-plaintext highlighter-rouge">Y</code>if and only if <code class="language-plaintext highlighter-rouge">Y</code> must be present, built and up-to-date in order for <code class="language-plaintext highlighter-rouge">X</code> to be <strong>built</strong> correctly.
+        <ul>
+          <li><strong>built</strong> could mean generated, processed, compiled, linked, archived, compressed, executed, or any other kinds of tasks that routinely occur during a build.</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>the graph of declared dependencies
+    <ul>
+      <li>a target <code class="language-plaintext highlighter-rouge">X</code> has a declared dependency on target <code class="language-plaintext highlighter-rouge">Y</code> if and only if there’s a <strong>dependency edge</strong> from <code class="language-plaintext highlighter-rouge">X</code> to <code class="language-plaintext highlighter-rouge">Y</code> in the package of <code class="language-plaintext highlighter-rouge">X</code>.</li>
+    </ul>
+  </li>
+</ul>
+
+<p>In order to have a correct build, the actual dependency graph (denoted by <code class="language-plaintext highlighter-rouge">Α</code>) must be a subgraph of the declared dependency graph (denoted by <code class="language-plaintext highlighter-rouge">D</code>) (i.e. every pair of directly-connected nodes in <code class="language-plaintext highlighter-rouge">A</code> must also be directly connected in <code class="language-plaintext highlighter-rouge">D</code>). We therefore say <code class="language-plaintext highlighter-rouge">D</code> is an <strong>overapproximation</strong> of <code class="language-plaintext highlighter-rouge">A</code>.</p>
+
+<p>What all these mean is that <code class="language-plaintext highlighter-rouge">BUILD</code> file writers should try to make <code class="language-plaintext highlighter-rouge">D</code> as close to <code class="language-plaintext highlighter-rouge">A</code> as possible, and thus every rule must explicitly declare all of its actual direct dependencies to the build system, and no more.</p>
+
+<h4 id="types-of-dependencies">Types of dependencies</h4>
+
+<p>Most build rules have 3 attributes for specifying different kinds of generic dependencies: <code class="language-plaintext highlighter-rouge">srcs</code>, <code class="language-plaintext highlighter-rouge">deps</code>, and <code class="language-plaintext highlighter-rouge">data</code>. Other attributes also exist for rule-specific kinds of dependencies e.g. <code class="language-plaintext highlighter-rouge">compiler</code>, <code class="language-plaintext highlighter-rouge">resources</code>, etc.</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">srcs</code> dependencies
+    <ul>
+      <li>represent files directly consumed by the rule or rules that output source files</li>
+    </ul>
+  </li>
+  <li><code class="language-plaintext highlighter-rouge">deps</code> dependencies
+    <ul>
+      <li>rule pointing to separately-compiled modules providing header files, symbols, libraries, data, etc.</li>
+    </ul>
+  </li>
+  <li><code class="language-plaintext highlighter-rouge">data</code> dependencies
+    <ul>
+      <li>the build system runs tests in an isolated directory where only files listed as <code class="language-plaintext highlighter-rouge">data</code> are available</li>
+      <li>
+        <p>E.g.</p>
+
+        <pre><code class="language-txt"># I need a config file from a directory named env:
+java_binary(
+  name = "setenv",
+  ...
+  data = glob(["testdata/**"]),
+)
+
+# I need test data from another directory
+sh_test(
+  name = "regtest",
+  srcs = ["regtest.sh"],
+  data = [
+    "//data:file1.txt",
+    "//data:file2.txt",
+    ...
+  ],
+)
+</code></pre>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="example-project">Example project</h2>
+
+<p>I tried to re-build our previous post <a href="/primer/2020/08/07/value-parameterized-gtest/">Value-Parameterized GTest</a> with Bazel, and you can find the source code <a href="https://github.com/mcao2/value-parameterized-gtest/tree/bazel">here</a>. It’s interesting to compare these two branches (<code class="language-plaintext highlighter-rouge">master</code> branch uses cmake while <code class="language-plaintext highlighter-rouge">bazel</code> branch uses bazel) and appreciate the elegance when we adopted Bazel.</p>
+
+<div class="footnotes" role="doc-endnotes">
+  <ol>
+    <li id="fn:1" role="doc-endnote">
+      <p>https://www.bazel.build <a href="#fnref:1" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+
+</div>
+
+<div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+    <li>
+      <h3>
+        <a href="/2023/06/22/how-to-setup-ptr-record-in-oci/">
+          How to setup PTR record in Oracle Cloud Infrastructure (OCI)
+          <small>22 Jun 2023</small>
+        </a>
+      </h3>
+    </li>
+    
+    <li>
+      <h3>
+        <a href="/2023/06/21/Debug-resource-deadlock-avoided/">
+          Debug Resource Deadlock Avoided Error
+          <small>21 Jun 2023</small>
+        </a>
+      </h3>
+    </li>
+    
+    <li>
+      <h3>
+        <a href="/tools/2022/08/28/setup-vmess-edge/">
+          Set up network edge router via V2Ray
+          <small>28 Aug 2022</small>
+        </a>
+      </h3>
+    </li>
+    
+  </ul>
+</div>
+    </div>
+
+  </body>
+</html>

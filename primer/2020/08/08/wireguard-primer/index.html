@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+  <meta charset="utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Meta -->
+  <link rel="canonical" href="https://mxcao.me/">
+
+  <!-- Analytics -->
+  <script async src="https://umami.mxcao.me/script.js" data-website-id="4c2d93d9-a90e-41c6-bc74-d2f96994b1e9"></script>
+
+  <!-- Christmax Snow -->
+  <!-- <script src="https://app.embed.im/snow.js" defer></script> -->
+
+  <title>
+    WireGuard Primer &middot; mxin
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/main.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700%7CSource+Sans+Pro:400,400i,700,700i&subset=greek,greek-ext,latin-ext">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon" sizes="180x180" href="/public/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/public/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/public/favicon-16x16.png">
+  <link rel="manifest" href="/public/site.webmanifest">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+
+</head>
+
+  <body>
+
+    <div class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>mxin</h1>
+      <p class="tagline"># Mengxin Cao</p>
+    </div>
+
+    <input type="checkbox" id="menu-icon">
+    <label class="menu-label" for="menu-icon"></label>
+    <div class="trigger">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-item">
+          <a href="/">Home</a>
+        </li>
+        
+
+        
+        
+        
+        
+        
+        
+        
+        
+        <li class="sidebar-nav-item">
+          <a href="/about/">About</a>
+        </li>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <li class="sidebar-nav-item">
+          <a href="/posts/">Posts</a>
+        </li>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <li class="sidebar-nav-item">
+          <a href="https://github.com/mcao2/">GitHub</a>
+        </li>
+        <li class="sidebar-nav-item">
+          <a href="https://www.linkedin.com/in/mxin/">LinkedIn</a>
+        </li>
+        <!-- <li class="sidebar-nav-item">
+          <a href="https://cs.cmu.edu/~mcao2/mengxin_cv.pdf">Curriculum Vitae</a>
+        </li> -->
+      </ul>
+
+      <p class="copyright">&copy; 2023. All rights reserved.</p>
+    </div>
+  </div>
+</div>
+
+    <div class="content container">
+      <div class="post">
+  <h1 class="post-title">WireGuard Primer</h1>
+  <span class="post-info">08 Aug 2020</span>
+  <h2 id="introduction">Introduction</h2>
+
+<p>WireGuard <sup id="fnref:1" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup> is a simple, fast, and modern <strong>VPN</strong> that utilizes cryptography.</p>
+
+<p>It encapsulates IP packets over UDP. The general workflow can be summarized as:</p>
+
+<ul>
+  <li>Install WireGuard</li>
+  <li>Add a WireGuard interface (like <code class="language-plaintext highlighter-rouge">wlan0</code>/<code class="language-plaintext highlighter-rouge">eth0</code> but named <code class="language-plaintext highlighter-rouge">wg0</code>/<code class="language-plaintext highlighter-rouge">wg1</code>…)</li>
+  <li>Configure the interface with a private key and optionally add peer’s public key(s)</li>
+  <li>Send packets to the interface</li>
+</ul>
+
+<p>It’s similar to the ssh model. Both parties have each other’s public keys and they communicate by exchanging packets encrypted by the public keys through the WireGuard interface.</p>
+
+<!--more-->
+
+<h3 id="about-the-wireguard-network-interface">About the WireGuard network interface</h3>
+
+<p>The WireGuard network interface is where the magic happens and it acts as a tunnel interface.</p>
+
+<p>You can add one or more such interfaces depending on your needs. It can be configured normally using utilities like <code class="language-plaintext highlighter-rouge">ifconfig(8)</code> or <code class="language-plaintext highlighter-rouge">ip-address(8)</code>, but more typically you configure such interfaces using the <code class="language-plaintext highlighter-rouge">wg(8)</code> tool for WireGuard-specific settings.</p>
+
+<p>By saying that it acts as a tunnel interface, we mean:</p>
+
+<ul>
+  <li>It associates tunnel IP address with public keys and remote endpoints</li>
+  <li><strong>Sending</strong> a packet to a peer through a WireGuard interface involves
+    <ul>
+      <li><strong>Find the destination peer</strong>
+        <ul>
+          <li>E.g. this packet is meant for <code class="language-plaintext highlighter-rouge">192.168.30.8</code>. Which peer is that? Let me look… Okay, it’s for peer <code class="language-plaintext highlighter-rouge">ABCDEFGH</code>. (Or if it’s not for any configured peer, drop the packet.)</li>
+        </ul>
+      </li>
+      <li><strong>Encrypt the IP packet using peer <code class="language-plaintext highlighter-rouge">ABCDEFGH</code>’s public key</strong></li>
+      <li><strong>Find the destination’s remote endpoint</strong>
+        <ul>
+          <li>E.g. what is the remote endpoint of peer <code class="language-plaintext highlighter-rouge">ABCDEFGH</code>? Let me look… Okay, the endpoint is UDP port <code class="language-plaintext highlighter-rouge">53133</code> on host <code class="language-plaintext highlighter-rouge">216.58.211.110</code></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><strong>Receiving</strong> a packet from a peer through a WireGuard interface involves
+    <ul>
+      <li><strong>Decrypt the received packet</strong>
+        <ul>
+          <li>I just got a packet from UDP port 7361 on host 98.139.183.24. Let’s decrypt it!</li>
+          <li>If the decryption failed, drop the packet; Otherwise let’s remember that peer <code class="language-plaintext highlighter-rouge">LMNOPQRS</code>’s most recent Internet endpoint is <code class="language-plaintext highlighter-rouge">98.139.183.24:7361</code> using UDP</li>
+        </ul>
+      </li>
+      <li><strong>Authentication</strong>
+        <ul>
+          <li>Now we have the plaintext packet from peer <code class="language-plaintext highlighter-rouge">LMNOPQRS</code> with IP <code class="language-plaintext highlighter-rouge">192.168.43.89</code>, is <code class="language-plaintext highlighter-rouge">LMNOPQRS</code> allowed to be sending packets to us as <code class="language-plaintext highlighter-rouge">192.168.43.89</code>?</li>
+          <li>If so, accept the packet on the interface. If not, drop it.</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<p>The above short, simplified summary is for our understanding purpose and there’s much happening behind the scenes to provide proper privacy, authenticity, and secrecy.</p>
+
+<h3 id="about-cryptokey-routing">About Cryptokey Routing</h3>
+
+<p>Cryptokey Routing is at the heart of WireGuard.</p>
+
+<p>It associates <strong>public keys</strong> with a list of tunnel IPs that are allowed inside the tunnel. Those public keys correspond to a list of peers, each peer has a public key. We use public keys to authenticate each other’s identity. They can be safely passed around for use in plaintext config files by any out-of-band method.</p>
+
+<p>It also associates a <strong>private key</strong> with a WireGuard network interface.</p>
+
+<p>For example, a server may have below config file:</p>
+
+<pre><code class="language-txt">[Interface]
+PrivateKey = yAnz5TF+lXXJte14tji3zlMNq+hd2rYUIgJBgB3fBmk=
+ListenPort = 51820
+
+[Peer]
+PublicKey = xTIBA5rboUvnH4htodjb6e697QjLERt1NAB4mZqp8Dg=
+AllowedIPs = 10.192.122.3/32, 10.192.124.1/24
+
+[Peer]
+PublicKey = TrMvSoP4jYQlY6RIzBgbssQqY3vxI2Pi+y71lOWWXX0=
+AllowedIPs = 10.192.122.4/32, 192.168.0.0/16
+
+[Peer]
+PublicKey = gN65BkIKy1eCE9pP1wdc8ROUtkHLF2PfAqYdyYBz6EA=
+AllowedIPs = 10.10.10.230/32
+</code></pre>
+
+<p>Each peer in this case will be a client that can send packets to the server’s network interface with a source IP matching the allowed IPs.</p>
+
+<p>For example, if a packet is <strong>received by the server</strong> from peer <code class="language-plaintext highlighter-rouge">gN65BkIK...</code>, after being decrypted and authenticated, if its source IP is <code class="language-plaintext highlighter-rouge">10.10.10.230</code>, then it’s allowed onto the interface; otherwise it’s dropped. If the server wants to <strong>send a packet to a client</strong>, it looks at that packet’s destination IP and compares it to each peer’s list of allowed IPs to see <em>which peer to send</em> it to. For example, if the server’s network interface is asked to send a packet with a destination IP of <code class="language-plaintext highlighter-rouge">10.10.10.230</code>, it will encrypt it using the public key of peer <code class="language-plaintext highlighter-rouge">gN65BkIK...</code>, and then send it out to the peer’s <strong>most recent internet endpoint</strong>.</p>
+
+<p>In the meantime, a client may have the below config file:</p>
+
+<pre><code class="language-txt">[Interface]
+PrivateKey = gI6EdUSYvn8ugXOt8QQD6Yc+JyiZxIhp3GInSWRfWGE=
+ListenPort = 21841
+
+[Peer]
+PublicKey = HIgo9xNzJMWLKASShiTqIybxZ0U3wGLiUeJ1PKf8ykw=
+Endpoint = 192.95.5.69:51820
+AllowedIPs = 0.0.0.0/0
+</code></pre>
+
+<p>The client here has only 1 peer with public key <code class="language-plaintext highlighter-rouge">HIgo9...</code>. That peer is able to send packets to this interface with any source IP.</p>
+
+<p>The endpoint in the above client config is an <strong>initial endpoint</strong> of its single peer so that it knows where to send encrypted data before it has received encrypted data. Compared to this, the server side config does not have any initial endpoints of its peers because the server discovers the peer endpoints by examining from where correctly authenticated data originates.</p>
+
+<p>If a server changes its own endpoint, and sends data to the clients, the clients will discover the new server endpoint and update its config. This is what we referred in the previous discussion “<em>use the most recent IP endpoint</em>”. Such feature is also called <strong>IP roaming</strong>.</p>
+
+<p>For example, if a <strong>packet is received from</strong> peer <code class="language-plaintext highlighter-rouge">HIgo9...</code>, after being decrypted and authenticated, it is allowed onto the interface; otherwise it is dropped. In the meantime, if the client’s network interface is asked to send a packet to its single peer, it will encrypt the packet for the peer with <em>any</em> destination IP since the allowed IP is a wildcard <code class="language-plaintext highlighter-rouge">0.0.0.0/0</code>, and then send it out to the single peer’s most recent internet endpoint.</p>
+
+<p>In other words, the <strong>list of allowed IPs</strong> behave differently depending on the purpose is sending or receiving:</p>
+
+<ul>
+  <li>When sending packets out, the list behaves like a <strong>routing table</strong> that determines which host to send the packets to</li>
+  <li>When receiving packets, the list behaves like a <strong>access control list</strong> (ACL) that determines whether to keep the packets or not</li>
+</ul>
+
+<p>This is important and keep these two rules in mind!</p>
+
+<p>Combining the public key and the bi-purpose list of allowed IPs is what we call a <strong>CryptoKey Routing Table</strong>: the simple association of public keys and allowed IPs.</p>
+
+<p>Note that any of the IP field can be either IPv4, IPv6, or any combination of them.</p>
+
+<p>The tight coupling of peer identity and the allowed IPs ease system admins from complicated firewall extensions but rather using a simplified match on “is it from this IP? on this interface?”.</p>
+
+<h2 id="setup">Setup</h2>
+
+<h3 id="installation-">Installation <sup id="fnref:2" role="doc-noteref"><a href="#fn:2" class="footnote" rel="footnote">2</a></sup></h3>
+
+<p>Here I only cover the commands used to install WireGuard in Ubuntu.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>apt <span class="nb">install </span>wireguard
+</code></pre></div></div>
+
+<p>Verify your installation by checking its version:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>wg <span class="nt">-v</span>
+</code></pre></div></div>
+
+<p>Verify that the <code class="language-plaintext highlighter-rouge">wireguard</code> kernel module is loaded:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>lsmod | <span class="nb">grep </span>wireguard
+</code></pre></div></div>
+
+<p>If not loaded, try to reboot your instance and check again.</p>
+
+<p>You can manually load it with:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>modprobe wireguard
+</code></pre></div></div>
+
+<h3 id="server-setup-">Server Setup <sup id="fnref:3" role="doc-noteref"><a href="#fn:3" class="footnote" rel="footnote">3</a></sup></h3>
+
+<p><strong>Generate a public and private certificate on the server</strong>:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">umask </span>077
+wg genkey | <span class="nb">tee </span>server_private_key | wg pubkey <span class="o">&gt;</span> server_public_key
+</code></pre></div></div>
+
+<p><strong>Create the server config file</strong> in <code class="language-plaintext highlighter-rouge">/etc/wireguard/wg0.conf</code>:</p>
+
+<pre><code class="language-txt">[Interface]
+Address = 10.9.0.1/24, fd42:42:42::1/64
+SaveConfig = true
+PrivateKey = # PLACEHOLDER for your server side private key
+ListenPort = 51820
+PostUp = iptables -A FORWARD -i %i -j ACCEPT; iptables -A FORWARD -o %i -j ACCEPT; iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE; ip6tables -A FORWARD -i %i -j ACCEPT; ip6tables -A FORWARD -o %i -j ACCEPT; ip6tables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
+PostDown = iptables -D FORWARD -i %i -j ACCEPT; iptables -D FORWARD -o %i -j ACCEPT; iptables -t nat -D POSTROUTING -o eth0 -j MASQUERADE; ip6tables -D FORWARD -i %i -j ACCEPT; ip6tables -D FORWARD -o %i -j ACCEPT; ip6tables -t nat -D POSTROUTING -o eth0 -j MASQUERADE
+[Peer]
+PublicKey = # PLACEHOLDER for your client side public key
+AllowedIPs = 10.9.0.2/32, fd42:42:42::2/128
+</code></pre>
+
+<p>Note that you need to change the public interface based on your situation. In my case it is <code class="language-plaintext highlighter-rouge">eth0</code>. If it is not, change it to the actual name.</p>
+
+<p>As we mentioned earlier, the list of <code class="language-plaintext highlighter-rouge">AllowedIPs</code> has different interpretation when sending/receiving packets (a routing table when sending and a ACL when receiving). You will want to add your LAN’s <strong>subnet</strong> under <code class="language-plaintext highlighter-rouge">AllowedIPs</code> so that you can access them through the tunnel. Note that it is a subnet! Otherwise you may encounter errors like <code class="language-plaintext highlighter-rouge">RTNETLINK answers: File exists</code>.</p>
+
+<p>In the above sever config file, I also assigned an IPv6 IP for the server and the peer since my instance has a public IPv6 address, and hence we can use it as a dual-stack VPN.</p>
+
+<p><strong>Enable IPv4/IPv6 forwarding</strong></p>
+
+<p>Open <code class="language-plaintext highlighter-rouge">/etc/sysctl.conf</code> and uncomment the following lines:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>net.ipv4.ip_forward<span class="o">=</span>1
+net.ipv6.conf.all.forwarding<span class="o">=</span>1
+
+</code></pre></div></div>
+
+<p>Restart the server or use the following commands to let the forwarding to take effect.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>sysctl <span class="nt">--system</span>
+</code></pre></div></div>
+
+<p><strong>Start WireGuard</strong></p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo chown</span> <span class="nt">-v</span> root:root /etc/wireguard/wg0.conf
+<span class="nb">sudo chmod</span> <span class="nt">-v</span> 644 /etc/wireguard/wg0.conf
+wg-quick up wg0
+<span class="nb">sudo </span>systemctl <span class="nb">enable</span> <span class="nt">--now</span> wg-quick@wg0.service
+</code></pre></div></div>
+
+<h3 id="client-setup">Client Setup</h3>
+
+<p>I’m using the WireGuard Mac App, and the configuration is simple and intuitive. Follow the instructions above to generate the certificates for the client, and populate the configs following the official docs.</p>
+
+<h3 id="forward-all-your-traffic-through-the-tunnel-">Forward all your traffic through the tunnel <sup id="fnref:4" role="doc-noteref"><a href="#fn:4" class="footnote" rel="footnote">4</a></sup></h3>
+
+<p>Remember what we emphasized earlier? The dual-purpose list of AllowedIPs? If you want your traffic looks like it’s coming from your server, you can forward all the traffic through WireGuard interface.</p>
+
+<p>Simply change the <code class="language-plaintext highlighter-rouge">AllowedIPs</code> line on the client to this:</p>
+
+<pre><code class="language-txt">AllowedIPs = 0.0.0.0/0, ::/0
+</code></pre>
+
+<p>This will make the <code class="language-plaintext highlighter-rouge">wg0</code> (or whatever your WireGuard interface is) responsible for routing all IP addresses/traffic over your server. You can check this by visiting <a href="http://ping.pe/">ping.pe</a>.</p>
+
+<h3 id="forward-all-ipv6-traffic-through-the-tunnel">Forward all IPv6-traffic through the tunnel</h3>
+
+<p>I want to route all my IPv6 traffic through the tunnel but keep the IPv6 traffic untouched. At first I tried setting:</p>
+
+<pre><code class="language-txt">AllowedIPs = 10.9.0.1/32, ::/0
+</code></pre>
+
+<p>But it seems WireGuard also changed the routing table for IPv4 (checked via <code class="language-plaintext highlighter-rouge">netstat -nr</code>). I found <a href="https://www.reddit.com/r/WireGuard/comments/ewt7g0/ios_macos_route_all_traffic_through_peer_only_ipv6/">this reddit post</a> and the workaround is:</p>
+
+<pre><code class="language-txt">AllowedIPs = 10.9.0.1/32, ::/1, 8000::/1
+</code></pre>
+
+<p>It’s a clever hack to make it work but I expect a cleaner solution should exist (like the previous config).</p>
+
+<p>Now I can reach IPv6-only websites like <code class="language-plaintext highlighter-rouge">bt.byr.cn</code> while not tunneling my IPv4 traffic to the slow VPN network!</p>
+
+<h3 id="protect-your-dns-">Protect your DNS <sup id="fnref:5" role="doc-noteref"><a href="#fn:5" class="footnote" rel="footnote">5</a></sup></h3>
+
+<p>When you use WireGuard in your machine as a client, your local network won’t be accessible, which means if the DNS servers pushed by your DHCP server are in the local network, you cannot access it! You can add a DNS entry in your client interface config like below:</p>
+
+<pre><code class="language-txt">[Interface]
+PrivateKey = (hidden)
+Address = 10.9.0.2/24, fd42:42:42::2/64
+DNS = 176.103.130.130, 176.103.130.131
+
+[Peer]
+PublicKey = # PLACEHOLDER for your peer's public key
+AllowedIPs = 10.9.0.1/32, fd42:42:42::1/128
+Endpoint = # PLACEHOLDER for your peer's remote endpoint, be it IPv4 or IPv6
+</code></pre>
+
+<p>Here we use Adguard DNS but you can definitely host your own DNS server in your server machine. I also recommend <a href="https://nextdns.io/">NextDNS</a> for your DNS experience. Thank you.</p>
+
+<div class="footnotes" role="doc-endnotes">
+  <ol>
+    <li id="fn:1" role="doc-endnote">
+      <p>https://www.wireguard.com/ <a href="#fnref:1" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:2" role="doc-endnote">
+      <p>https://www.wireguard.com/install/ <a href="#fnref:2" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:3" role="doc-endnote">
+      <p>http://portal.altispeed.com/kb/faq.php?id=201 <a href="#fnref:3" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:4" role="doc-endnote">
+      <p>https://www.stavros.io/posts/how-to-configure-wireguard/ <a href="#fnref:4" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:5" role="doc-endnote">
+      <p>https://stanislas.blog/2019/01/how-to-setup-vpn-server-wireguard-nat-ipv6/ <a href="#fnref:5" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+
+</div>
+
+<div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+    <li>
+      <h3>
+        <a href="/2023/06/22/how-to-setup-ptr-record-in-oci/">
+          How to setup PTR record in Oracle Cloud Infrastructure (OCI)
+          <small>22 Jun 2023</small>
+        </a>
+      </h3>
+    </li>
+    
+    <li>
+      <h3>
+        <a href="/2023/06/21/Debug-resource-deadlock-avoided/">
+          Debug Resource Deadlock Avoided Error
+          <small>21 Jun 2023</small>
+        </a>
+      </h3>
+    </li>
+    
+    <li>
+      <h3>
+        <a href="/tools/2022/08/28/setup-vmess-edge/">
+          Set up network edge router via V2Ray
+          <small>28 Aug 2022</small>
+        </a>
+      </h3>
+    </li>
+    
+  </ul>
+</div>
+    </div>
+
+  </body>
+</html>

@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+  <meta charset="utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Meta -->
+  <link rel="canonical" href="https://mxcao.me/">
+
+  <!-- Analytics -->
+  <script async src="https://umami.mxcao.me/script.js" data-website-id="4c2d93d9-a90e-41c6-bc74-d2f96994b1e9"></script>
+
+  <!-- Christmax Snow -->
+  <!-- <script src="https://app.embed.im/snow.js" defer></script> -->
+
+  <title>
+    Boost.Log Primer &middot; mxin
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/main.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700%7CSource+Sans+Pro:400,400i,700,700i&subset=greek,greek-ext,latin-ext">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon" sizes="180x180" href="/public/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/public/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/public/favicon-16x16.png">
+  <link rel="manifest" href="/public/site.webmanifest">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+
+</head>
+
+  <body>
+
+    <div class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>mxin</h1>
+      <p class="tagline"># Mengxin Cao</p>
+    </div>
+
+    <input type="checkbox" id="menu-icon">
+    <label class="menu-label" for="menu-icon"></label>
+    <div class="trigger">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-item">
+          <a href="/">Home</a>
+        </li>
+        
+
+        
+        
+        
+        
+        
+        
+        
+        
+        <li class="sidebar-nav-item">
+          <a href="/about/">About</a>
+        </li>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <li class="sidebar-nav-item">
+          <a href="/posts/">Posts</a>
+        </li>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <li class="sidebar-nav-item">
+          <a href="https://github.com/mcao2/">GitHub</a>
+        </li>
+        <li class="sidebar-nav-item">
+          <a href="https://www.linkedin.com/in/mxin/">LinkedIn</a>
+        </li>
+        <!-- <li class="sidebar-nav-item">
+          <a href="https://cs.cmu.edu/~mcao2/mengxin_cv.pdf">Curriculum Vitae</a>
+        </li> -->
+      </ul>
+
+      <p class="copyright">&copy; 2023. All rights reserved.</p>
+    </div>
+  </div>
+</div>
+
+    <div class="content container">
+      <div class="post">
+  <h1 class="post-title">Boost.Log Primer</h1>
+  <span class="post-info">12 Jul 2020</span>
+  <h1 id="boost-log-">Boost Log <sup id="fnref:1" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup></h1>
+
+<h2 id="prepare-the-namespace-aliases">Prepare the namespace aliases</h2>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">namespace</span> <span class="n">logging</span> <span class="o">=</span> <span class="n">boost</span><span class="o">::</span><span class="n">log</span><span class="p">;</span>
+<span class="k">namespace</span> <span class="n">sinks</span> <span class="o">=</span> <span class="n">boost</span><span class="o">::</span><span class="n">log</span><span class="o">::</span><span class="n">sinks</span><span class="p">;</span>
+<span class="k">namespace</span> <span class="n">src</span> <span class="o">=</span> <span class="n">boost</span><span class="o">::</span><span class="n">log</span><span class="o">::</span><span class="n">sources</span><span class="p">;</span>
+<span class="k">namespace</span> <span class="n">expr</span> <span class="o">=</span> <span class="n">boost</span><span class="o">::</span><span class="n">log</span><span class="o">::</span><span class="n">expressions</span><span class="p">;</span>
+<span class="k">namespace</span> <span class="n">attrs</span> <span class="o">=</span> <span class="n">boost</span><span class="o">::</span><span class="n">log</span><span class="o">::</span><span class="n">attributes</span><span class="p">;</span>
+<span class="k">namespace</span> <span class="n">keywords</span> <span class="o">=</span> <span class="n">boost</span><span class="o">::</span><span class="n">log</span><span class="o">::</span><span class="n">keywords</span><span class="p">;</span>
+</code></pre></div></div>
+
+<!--more-->
+
+<h2 id="definitions-">Definitions <sup id="fnref:2" role="doc-noteref"><a href="#fn:2" class="footnote" rel="footnote">2</a></sup></h2>
+
+<ul>
+  <li><strong>Log record</strong>: a single bundle of info that is collected from the app and is a candidate for the log output</li>
+  <li><strong>Attribute</strong>: a piece of meta-info that can be used to specialize a log record e.g. ThreadID, Timestamp, etc.</li>
+  <li><strong>Attribute value</strong>: the actual data acquired from attributes and is attached to a specific log record. Values can have different types</li>
+  <li><strong>Attribute value visitation</strong>: a way of processing the attribute value, which involves applying a “visitor” (a function obj) to the attribute value</li>
+  <li><strong>Attribute value extraction</strong>: a way of processing the attribute value when the caller attempts to obtain a reference to the stored value. The caller should know the stored type of the attr value in order to be able to extract it</li>
+  <li><strong>Log sink</strong>: a target to which all log records are fed after being collected from the user’s app</li>
+  <li><strong>Log source</strong>: an entry point for the user’s app to put log records to</li>
+  <li><strong>Log filter</strong>: a predicate that takes a log record and tells whether this record should be kept or discarded</li>
+  <li><strong>Log formatter</strong>: a function obj that generates the final textual output from a log record</li>
+  <li><strong>Logging core</strong>: the global entity that maintains connections b/w sources and sinks and applies filters to records. usually used at the logging init</li>
+  <li><strong>TLS</strong>: thread-local storage</li>
+</ul>
+
+<h2 id="architecture-">Architecture <sup id="fnref:3" role="doc-noteref"><a href="#fn:3" class="footnote" rel="footnote">3</a></sup></h2>
+
+<h3 id="three-layer-architecture">Three-layer architecture</h3>
+
+<ul>
+  <li>Data collection layer</li>
+  <li>(Connection layer) Central-hub that interconnects the collection and the processing layers</li>
+  <li>Data processing layer</li>
+</ul>
+
+<h4 id="visualization">Visualization</h4>
+
+<p><img src="/public/files/boost-log-arch.png" alt="boost-log-arch" /></p>
+
+<ul>
+  <li>Arrows show the info flow direction
+    <ul>
+      <li>the left-most is our application (log sources)</li>
+      <li>the right-most is the final storage if any
+        <ul>
+          <li>storage is optional because the processed log may include some actions without actual data persisting</li>
+          <li>e.g. the app can emit a special log record that will be processed s.t. the user sees the error msg as a tool-tip notification over the app icon and hears an alarming sound</li>
+          <li>this allows boost log be used not only for classic logging, but also to indicate some important events to the app user and accumulate statistical data</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="log-sources">Log sources</h3>
+
+<p>A log source is an entity that initiates logging by constructing a log record. In general, boost log lib does not require the use of loggers to write logs. But loggers are the most common kind of log sources.</p>
+
+<p>In the left-most of the arch, our application <strong>emits log records</strong> with the help of <strong>loggers</strong>, which are special obj that provide streams to format msgs that will eventually be put to log</p>
+
+<p>Boost log lib provides many different logger types and you can craft your own by extending the existing ones.</p>
+
+<p><strong>Loggers</strong> are designed as a mixture of distinct features s.t. they can be used in combination.</p>
+
+<p>You can embed the logger into your application classes or create and use a global instance of the logger.</p>
+
+<ul>
+  <li>Embedding a logger provides a way to differentiate logs from different instances of the class</li>
+  <li>A single global logger instance is more convenient like in functional-style programming</li>
+</ul>
+
+<h3 id="attributes-and-attribute-values">Attributes and attribute values</h3>
+
+<p>A <strong>log source</strong> must pass all <strong>data</strong> associated with the log record to the <strong>logging core</strong>. This data is represented with a set of named attributes and each one is a function whose result is what we call “attribute values”. The attribute values are processed on further stages.</p>
+
+<p>An example attribute is a function that returns the current timestamp, and its result (i.e. its value) is the particular time point.</p>
+
+<p>We can classify attributes into 3 categories, <strong>ordered by increasing priority</strong>:</p>
+
+<ul>
+  <li>Global attributes</li>
+  <li>Thread-specific attributes</li>
+  <li>Source-specific attributes</li>
+</ul>
+
+<p>The <strong>global and thread-specific</strong> attributes are maintained by the logging core, as shown in the architecture figure, and therefore these attributes need not be passed by the log source in order to initiate logging.</p>
+
+<p>The global attributes are attached to any log record ever made.</p>
+
+<p>Thread-specific attributes are attached only to the records made from the thread in which they were registered in the set.</p>
+
+<p>Source-specific attributes are maintained by the source that initiates logging, and attached only to the records being made through that particular source.</p>
+
+<p>When a log source <strong>initiates logging</strong>, it acquire <strong>attribute values</strong> from all three attribute sets. These values form a single set of named attribute values, and is then processed further.</p>
+
+<p>It’s possible that a <strong>same-named attribute</strong> that appear in several attribute sets. Such conflicts are solved on <strong>priority</strong> basis. The global attributes have the least priority and the source-specific attributes have the highest.</p>
+
+<h3 id="logging-core-and-filtering">Logging core and filtering</h3>
+
+<p><strong>Filtering</strong>: After the <strong>logging source</strong> composed the named attribute values set, the <strong>logging core</strong> decides if this log record is going to be processed in sinks.</p>
+
+<p>Two layers of filtering:</p>
+
+<ul>
+  <li><strong>Global filtering</strong> is applied first within the logging core and allows quickly wiping away unneeded log records</li>
+  <li><strong>Sink-specific filtering</strong> is applied second within each sink separately and allows directing log records to particular sinks.</li>
+</ul>
+
+<p>It is not significant where the log record comes from (i.e. regardless the logging source that emit them), the filtering relies solely on the set of named attribute values attached to the record.</p>
+
+<p>For a given log record, the filtering is <strong>performed only once</strong> and only those attribute values that are attached to the record before the filtering starts can participate in filtering. We say this because some named attribute values, like the “log record message”, are typically <strong>attached to the log record after the filtering is done</strong>, which means these values cannot be used in filters!</p>
+
+<h3 id="sinks-and-formatting">Sinks and formatting</h3>
+
+<p>A log record that passes filtering for <strong>at least one sink</strong> is considered as <strong>consumable</strong>.</p>
+
+<p>If the sink supports formatted output, this is the point when log msg formatting takes place. Note that formatting is done on a per-sink basis s.t. each sink can have its own specific output format.</p>
+
+<p>The formatted msg along with the composed set of named attribute values are passed to the accepting sinks.</p>
+
+<p>As shown in the arch figure, a sink consists of two parts:</p>
+
+<ul>
+  <li>Sink frontend</li>
+  <li>Sink backend</li>
+</ul>
+
+<p>The division is made <strong>to extract the common functionality of sinks</strong> like filtering, formatting, thread sync <strong>into separate entities</strong> (frontends).</p>
+
+<p><strong>Sink frontends</strong> are provided by the lib and usually users won’t have to reimplement them.
+<strong>Sink backends</strong> are one of the most likely places for extending the library. The backends do the actual data processing.</p>
+
+<p>There can be multiple sinks in a single app.</p>
+
+<p>E.g.</p>
+
+<ul>
+  <li>a sink that stores processed log records into a file</li>
+  <li>another sink that sends the processed log records over the network to the remote log processing node</li>
+  <li>another sink that puts record msgs into tool-tip notifications</li>
+</ul>
+
+<p>The lib also provides most commonly used sink backends.</p>
+
+<h2 id="tutorial-">Tutorial <sup id="fnref:4" role="doc-noteref"><a href="#fn:4" class="footnote" rel="footnote">4</a></sup></h2>
+
+<h3 id="trivial-logging">Trivial logging</h3>
+
+<p>Necessary headers:</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include &lt;boost/log/trivial.hpp&gt;
+</span></code></pre></div></div>
+
+<p>The <code class="language-plaintext highlighter-rouge">BOOST_LOG_TRIVIAL</code> macro accepts a severity level and results in a stream-like objects that support insertion operator. The log msg will be printed on the console.</p>
+
+<p>E.g.</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include &lt;boost/log/trivial.hpp&gt;
+</span>
+<span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span><span class="p">,</span> <span class="kt">char</span><span class="o">*</span><span class="p">[])</span>
+<span class="p">{</span>
+    <span class="n">BOOST_LOG_TRIVIAL</span><span class="p">(</span><span class="n">trace</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">"A trace severity message"</span><span class="p">;</span>
+    <span class="n">BOOST_LOG_TRIVIAL</span><span class="p">(</span><span class="n">debug</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">"A debug severity message"</span><span class="p">;</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Features:</p>
+
+<ul>
+  <li>Each log record in the output msg contains a timestamp, a thread ID and the severity level</li>
+  <li>It is safe to write logs from multiple threads concurrently and log msgs will not be corrupted</li>
+  <li>Filtering can be applied</li>
+</ul>
+
+<h4 id="add-filters-to-the-trivial-logging">Add filters to the trivial logging</h4>
+
+<p>You will normally want to apply filters to output only significant records and ignore the rest.</p>
+
+<p>Let’s do this by setting a <strong>global filter</strong> in the <strong>logging core</strong>.</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="nf">init</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">logging</span><span class="o">::</span><span class="n">core</span><span class="o">::</span><span class="n">get</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">set_filter</span>
+    <span class="p">(</span>
+        <span class="n">logging</span><span class="o">::</span><span class="n">trivial</span><span class="o">::</span><span class="n">severity</span> <span class="o">&gt;=</span> <span class="n">logging</span><span class="o">::</span><span class="n">trivial</span><span class="o">::</span><span class="n">info</span>
+    <span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span><span class="p">,</span> <span class="kt">char</span><span class="o">*</span><span class="p">[])</span>
+<span class="p">{</span>
+    <span class="n">init</span><span class="p">();</span>
+    <span class="n">BOOST_LOG_TRIVIAL</span><span class="p">(</span><span class="n">trace</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">"A trace severity message will be ignored"</span><span class="p">;</span>
+    <span class="n">BOOST_LOG_TRIVIAL</span><span class="p">(</span><span class="n">debug</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">"A debug severity message will be ignored"</span><span class="p">;</span>
+    <span class="n">BOOST_LOG_TRIVIAL</span><span class="p">(</span><span class="n">info</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">"An informational severity message"</span><span class="p">;</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Since we are setting up a global filter, we have to acquire the logging core instance using <code class="language-plaintext highlighter-rouge">logging::core::get()</code>. It returns a pointer to the core singleton instance.</p>
+
+<p>The filter in this example is built as a <a href="https://www.boost.org/doc/libs/release/libs/phoenix/doc/html/index.html">Boost.Phoenix</a> lambda expression. The left argument is a placeholder that describes the attribute to be checked. The placeholder along with <strong>the ordering operator</strong> creates <strong>a function object</strong> that will be called by the logging core to filter log records and only records that pass the predicate will end up on the console.</p>
+
+<h4 id="setting-up-sinks">Setting up sinks</h4>
+
+<p>The lib contains a default sink that is used as a fallback when the user did not set up any sinks. This is why our previous trivial logging example worked. This default sink always print log records to the console in a fixed format and is mostly provided to allow trivial logging to be used right away.</p>
+
+<p>Sometimes trivial logging does not provide enough flexibility like when one wants to apply complex log processing logic. You need to <strong>construct</strong> logging sinks and <strong>register</strong> them with the logging core in order to customize this. This only needs to be done once somewhere in the startup code.</p>
+
+<p><strong>Note that once you add any sinks to the logging core, the default sink will no longer be used!</strong> You will still be able to use trivial logging macros though.</p>
+
+<h5 id="logging-to-files">Logging to files</h5>
+
+<p>E.g.</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="nf">init</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">logging</span><span class="o">::</span><span class="n">add_file_log</span><span class="p">(</span><span class="s">"sample.log"</span><span class="p">);</span>
+    <span class="n">logging</span><span class="o">::</span><span class="n">core</span><span class="o">::</span><span class="n">get</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">set_filter</span>
+    <span class="p">(</span>
+        <span class="n">logging</span><span class="o">::</span><span class="n">trivial</span><span class="o">::</span><span class="n">severity</span> <span class="o">&gt;=</span> <span class="n">logging</span><span class="o">::</span><span class="n">trivial</span><span class="o">::</span><span class="n">info</span>
+    <span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>The <code class="language-plaintext highlighter-rouge">add_file_log</code> function initializes a logging sink that stores log records into a text file. You can also customize it with additional parameters in a named form:</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">logging</span><span class="o">::</span><span class="n">add_file_log</span>
+<span class="p">(</span>
+    <span class="n">keywords</span><span class="o">::</span><span class="n">file_name</span> <span class="o">=</span> <span class="s">"sample_%N.log"</span><span class="p">,</span> <span class="c1">// file name pattern</span>
+    <span class="n">keywords</span><span class="o">::</span><span class="n">rotation_size</span> <span class="o">=</span> <span class="mi">10</span> <span class="o">*</span> <span class="mi">1024</span> <span class="o">*</span> <span class="mi">1024</span><span class="p">,</span> <span class="c1">// rotate files every 10 MiB</span>
+    <span class="n">keywords</span><span class="o">::</span><span class="n">time_based_rotation</span> <span class="o">=</span> <span class="n">sinks</span><span class="o">::</span><span class="n">file</span><span class="o">::</span><span class="n">rotation_at_time_point</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="c1">// or at midnight</span>
+    <span class="n">keywords</span><span class="o">::</span><span class="n">format</span> <span class="o">=</span> <span class="s">"[%TimeStamp%]: %Message%"</span> <span class="c1">// log record format</span>
+<span class="p">);</span>
+</code></pre></div></div>
+
+<h3 id="creating-loggers-and-writing-logs">Creating loggers and writing logs</h3>
+
+<p>The logger object is a logging source that can be used to emit logs records.</p>
+
+<p>The <strong>trivial logging</strong> example we seen above uses the logger provided by the lib and is used behind the scenes through the macro.</p>
+
+<p>Unlike sinks, logging sources (loggers) need not be registered since they interact with the logging core directly.</p>
+
+<p>Boost log lib provides two types of loggers:</p>
+
+<ul>
+  <li>Thread-safe loggers</li>
+  <li>Non-thread-safe loggers</li>
+</ul>
+
+<p>It is safe for different threads to write logs through <strong>different instances</strong> of the non-thread-safe logger, which means a separate logger for each thread to write logs.</p>
+
+<p>The thread-safe logger can be accessed from different threads concurrently and the thread-safety is protected by using locks, which means worse performance incase of intense logging compared to the non-thread-safe counterparts.</p>
+
+<p>Regardless of the thread safety, all lib-provided loggers are default and copy-constructible and support swapping, so there should be no problem in making a logger a member of your class.</p>
+
+<p>The lib provides many loggers with different features, such as severity and channel support. These features can be combined with each other in order to construct more complex loggers.</p>
+
+<h4 id="global-logger-object">Global logger object</h4>
+
+<p>In case you cannot put a logger into your class (suppose you don’t have one), the library provides a way of <strong>declaring global loggers</strong> like this:</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Remember that we defined namespace src = boost::log::sources;</span>
+<span class="n">BOOST_LOG_INLINE_GLOBAL_LOGGER_DEFAULT</span><span class="p">(</span><span class="n">my_logger</span><span class="p">,</span> <span class="n">src</span><span class="o">::</span><span class="n">logger_mt</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>The <code class="language-plaintext highlighter-rouge">my_logger</code> is a user-defined tag name that will be used later to retrieve the global logger object.</p>
+
+<p>The <code class="language-plaintext highlighter-rouge">logger_mt</code> is the logger type. Any logger type provided by the lib or defined by the user can participate in such declaration. But note that you will normally want to use thread-safe loggers in a multi-threaded app as global logger obj since the logger will have a single instance.</p>
+
+<p>In other parts of your app, you can acquire the global logger like this:</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">src</span><span class="o">::</span><span class="n">logger_mt</span><span class="o">&amp;</span> <span class="n">lg</span> <span class="o">=</span> <span class="n">my_logger</span><span class="o">::</span><span class="n">get</span><span class="p">();</span>
+</code></pre></div></div>
+
+<p>The <code class="language-plaintext highlighter-rouge">lg</code> will refer to the one and only instance of the global logger throughout the application. The <code class="language-plaintext highlighter-rouge">get</code> function is thread-safe and hence you don’t need additional synchronization around it.</p>
+
+<h4 id="writing-logs">Writing logs</h4>
+
+<p>E.g.</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">logging</span><span class="o">::</span><span class="n">record</span> <span class="n">rec</span> <span class="o">=</span> <span class="n">lg</span><span class="p">.</span><span class="n">open_record</span><span class="p">();</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">rec</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">logging</span><span class="o">::</span><span class="n">record_ostream</span> <span class="n">strm</span><span class="p">(</span><span class="n">rec</span><span class="p">);</span>
+    <span class="n">strm</span> <span class="o">&lt;&lt;</span> <span class="s">"Hello, World!"</span><span class="p">;</span>
+    <span class="n">strm</span><span class="p">.</span><span class="n">flush</span><span class="p">();</span>
+    <span class="n">lg</span><span class="p">.</span><span class="n">push_record</span><span class="p">(</span><span class="n">boost</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">rec</span><span class="p">));</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>The <code class="language-plaintext highlighter-rouge">open_record</code> function determines if the record to be constructed is going to be consumed by at least one sink, i.e. filtering is applied at this stage.</p>
+
+<p>If the record is to be consumed, the function returns a valid record obj and we can then fill the record msg into it. The record processing can be completed with the call to <code class="language-plaintext highlighter-rouge">push_record</code>.</p>
+
+<p>It seems complicated to use the logger even for the most simple log message… But we can easily wrap them into a macro! The log record above can be written like this:</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">BOOST_LOG</span><span class="p">(</span><span class="n">lg</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">"Hello, World!"</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>The <code class="language-plaintext highlighter-rouge">BOOST_LOG</code> macro, along with other similar ones, is defined by the library.</p>
+
+<h3 id="adding-more-info-to-log-with-attributes">Adding more info to log with <code class="language-plaintext highlighter-rouge">Attributes</code></h3>
+
+<p>As said above, each log record can have many named attribute values attached. Attributes contain essential information about the log emit condition, like the line number in the code, executable name, current time, etc.</p>
+
+<p>An attribute may behave as a <strong>value generator</strong>, i.e. it may return a different value for each log record it is involved in. As soon as the attribute generates the value, the value becomes independent from the creator and can be used by filters, formatters and sinks.</p>
+
+<p>In order to properly use attributes in your code, you need to know its <strong>name</strong> and <strong>type</strong> (or at least a set of types it may have).</p>
+
+<p>As discussed in the previous sections, attributes can be classified into 3 scopes: global, thread-specific, and source-specific. When a log record is made, attribute values from these 3 sets are joined into a single set and passed to sinks. This implies that <strong>the origin of the attribute makes no difference for sinks</strong>!</p>
+
+<p>Any attribute can be registered in any scope. An attribute is given a unique name upon registration in order to make it possible to search for it. As mentioned earlier, conflicts resolution is based on priority.</p>
+
+<h4 id="attribute-registration">Attribute registration</h4>
+
+<p>There are common attributes that are likely to be used in nearly any application.</p>
+
+<p>Here we take the log record counter attribute and the timestamp attribute for example. Such commonly used attributes can be registered with a single function call:</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">logging</span><span class="o">::</span><span class="n">add_common_attributes</span><span class="p">();</span>
+</code></pre></div></div>
+
+<p>Common attributes like “LineID”, “Timestamp”, “ProcessID”, and “ThreadID” are registered globally.</p>
+
+<p>Some special attributes are registered automatically for you on logger construction.</p>
+
+<p>E.g. the severity_logger registers a source-specific attribute “Severity” which can be used to add a level of emphasis for different log records.</p>
+
+<p>The <code class="language-plaintext highlighter-rouge">BOOST_LOG_SEV</code> macro acts pretty much like <code class="language-plaintext highlighter-rouge">BOOST_LOG</code> except that it takes an additional argument for the <code class="language-plaintext highlighter-rouge">open_record</code> method of the logger.</p>
+
+<p>Usually we want to register a <code class="language-plaintext highlighter-rouge">named_scope</code> attribute so that we can store scope names in log for every log record.</p>
+
+<p>E.g.</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// some where in logger init</span>
+<span class="n">core</span><span class="o">-&gt;</span><span class="n">add_global_attribute</span><span class="p">(</span><span class="s">"Scope"</span><span class="p">,</span> <span class="n">attrs</span><span class="o">::</span><span class="n">named_scope</span><span class="p">());</span>
+<span class="p">...</span>
+<span class="c1">// some where in usage</span>
+<span class="kt">void</span> <span class="nf">named_scope_logging</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">BOOST_LOG_NAMED_SCOPE</span><span class="p">(</span><span class="s">"named_scope_logging"</span><span class="p">);</span>
+
+    <span class="n">src</span><span class="o">::</span><span class="n">severity_logger</span><span class="o">&lt;</span> <span class="n">severity_level</span> <span class="o">&gt;</span> <span class="n">slg</span><span class="p">;</span>
+
+    <span class="n">BOOST_LOG_SEV</span><span class="p">(</span><span class="n">slg</span><span class="p">,</span> <span class="n">normal</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">"Hello from the function named_scope_logging!"</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Another useful attribute for performance analysis is what we call the “Timeline” attribute.</p>
+
+<p>After registered the “Timeline” attribute e.g. through <code class="language-plaintext highlighter-rouge">BOOST_LOG_SCOPED_THREAD_ATTR("Timeline", attrs::timer());</code>, every log record after this will contain the “Timeline” attribute with a high precision time duration passed since the attribute was registered.</p>
+
+<p>Based on these readings, one will be able to detect which parts of the code require more or less time to execute. This attribute will be unregistered upon leaving the scope that defined it.</p>
+
+<h3 id="log-record-formatting">Log record formatting</h3>
+
+<p>After adding/registering attributes, you need to specify a formatter that will use these attribute values in order to have them reach the output.</p>
+
+<p>As we have seen in the tutorial about writing logs to files, we defined a formatter that used the “TimeStamp” and “Message” attributes.</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="nf">init</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">logging</span><span class="o">::</span><span class="n">add_file_log</span>
+    <span class="p">(</span>
+        <span class="n">keywords</span><span class="o">::</span><span class="n">file_name</span> <span class="o">=</span> <span class="s">"sample_%N.log"</span><span class="p">,</span>
+        <span class="n">keywords</span><span class="o">::</span><span class="n">rotation_size</span> <span class="o">=</span> <span class="mi">10</span> <span class="o">*</span> <span class="mi">1024</span> <span class="o">*</span> <span class="mi">1024</span><span class="p">,</span>
+        <span class="n">keywords</span><span class="o">::</span><span class="n">time_based_rotation</span> <span class="o">=</span> <span class="n">sinks</span><span class="o">::</span><span class="n">file</span><span class="o">::</span><span class="n">rotation_at_time_point</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+        <span class="n">keywords</span><span class="o">::</span><span class="n">format</span> <span class="o">=</span> <span class="s">"[%TimeStamp%]: %Message%"</span>
+    <span class="p">);</span>
+
+    <span class="n">logging</span><span class="o">::</span><span class="n">core</span><span class="o">::</span><span class="n">get</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">set_filter</span>
+    <span class="p">(</span>
+        <span class="n">logging</span><span class="o">::</span><span class="n">trivial</span><span class="o">::</span><span class="n">severity</span> <span class="o">&gt;=</span> <span class="n">logging</span><span class="o">::</span><span class="n">trivial</span><span class="o">::</span><span class="n">info</span>
+    <span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>The <code class="language-plaintext highlighter-rouge">format</code> parameter allows us to specify the format of the log record. If you want to set up sinks manually, you can achieve this by using the <code class="language-plaintext highlighter-rouge">set_formatter</code> member function of the sink frontends.</p>
+
+<h4 id="lambda-style-formatters">Lambda-style formatters</h4>
+
+<p>E.g.</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">keywords</span><span class="o">::</span><span class="n">format</span> <span class="o">=</span>
+<span class="p">(</span>
+    <span class="n">expr</span><span class="o">::</span><span class="n">stream</span>
+        <span class="o">&lt;&lt;</span> <span class="n">expr</span><span class="o">::</span><span class="n">attr</span><span class="o">&lt;</span> <span class="kt">unsigned</span> <span class="kt">int</span> <span class="o">&gt;</span><span class="p">(</span><span class="s">"LineID"</span><span class="p">)</span>
+        <span class="o">&lt;&lt;</span> <span class="s">": &lt;"</span> <span class="o">&lt;&lt;</span> <span class="n">logging</span><span class="o">::</span><span class="n">trivial</span><span class="o">::</span><span class="n">severity</span>
+        <span class="o">&lt;&lt;</span> <span class="s">"&gt; "</span> <span class="o">&lt;&lt;</span> <span class="n">expr</span><span class="o">::</span><span class="n">smessage</span>
+<span class="p">)</span>
+</code></pre></div></div>
+
+<p>The <code class="language-plaintext highlighter-rouge">stream</code> is a placeholder for the stream to format the record in. The insertion arguments like <code class="language-plaintext highlighter-rouge">attr</code> and <code class="language-plaintext highlighter-rouge">message</code> are manipulators that define what should be stored in the stream. Note that it is possible to replace <code class="language-plaintext highlighter-rouge">severity</code> with the following <code class="language-plaintext highlighter-rouge">expr::attr&lt; logging::trivial::severity_level &gt;("Severity")</code>.</p>
+
+<p>It is recommended to define placeholders like <code class="language-plaintext highlighter-rouge">severity</code> for user’s attributes since it provides simpler syntax in the template expressions and makes coding less error-prone.</p>
+
+<h4 id="boostformat-style-formatters">Boost.Format-style formatters</h4>
+
+<p>E.g.</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">sink</span><span class="o">-&gt;</span><span class="n">set_formatter</span>
+<span class="p">(</span>
+    <span class="n">expr</span><span class="o">::</span><span class="n">format</span><span class="p">(</span><span class="s">"%1%: &lt;%2%&gt; %3%"</span><span class="p">)</span>
+        <span class="o">%</span> <span class="n">expr</span><span class="o">::</span><span class="n">attr</span><span class="o">&lt;</span> <span class="kt">unsigned</span> <span class="kt">int</span> <span class="o">&gt;</span><span class="p">(</span><span class="s">"LineID"</span><span class="p">)</span>
+        <span class="o">%</span> <span class="n">logging</span><span class="o">::</span><span class="n">trivial</span><span class="o">::</span><span class="n">severity</span>
+        <span class="o">%</span> <span class="n">expr</span><span class="o">::</span><span class="n">smessage</span>
+<span class="p">);</span>
+</code></pre></div></div>
+
+<p>The <code class="language-plaintext highlighter-rouge">format</code> placeholder accepts the format string like printf with positional specs of all arguments being formatted.</p>
+
+<p>Note that <strong>only positional format is currently supported</strong>, which means you cannot have all features in the Boost.Format.</p>
+
+<p>When you call <code class="language-plaintext highlighter-rouge">format(s)</code> where s is the format-string, it constructs an obj that parses the format string and looks for all directives in it and prepares internal structures for the next step.</p>
+
+<p>Then you feed variables into the formatter.</p>
+
+<p>Once all args have been fed you can dump the format obj to a stream.</p>
+
+<p>All in all, the format class translates a format-string into operations on an internal stream, and finally returns the result of the formatting as a string or directly into an output stream.</p>
+
+<h4 id="specialized-formatters">Specialized formatters</h4>
+
+<p>These specialized formatters are designed for a number of special types like date, time, named scope. They provide extended control over the formatted values.</p>
+
+<p>E.g. You can describe date and time format with a format string compatible with Boost.DateTime</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">expr</span><span class="o">::</span><span class="n">stream</span>
+    <span class="o">&lt;&lt;</span> <span class="n">expr</span><span class="o">::</span><span class="n">format_date_time</span><span class="o">&lt;</span> <span class="n">boost</span><span class="o">::</span><span class="n">posix_time</span><span class="o">::</span><span class="n">ptime</span> <span class="o">&gt;</span><span class="p">(</span><span class="s">"TimeStamp"</span><span class="p">,</span> <span class="s">"%Y-%m-%d %H:%M:%S"</span><span class="p">)</span>
+    <span class="o">&lt;&lt;</span> <span class="s">": &lt;"</span> <span class="o">&lt;&lt;</span> <span class="n">logging</span><span class="o">::</span><span class="n">trivial</span><span class="o">::</span><span class="n">severity</span>
+    <span class="o">&lt;&lt;</span> <span class="s">"&gt; "</span> <span class="o">&lt;&lt;</span> <span class="n">expr</span><span class="o">::</span><span class="n">smessage</span>
+</code></pre></div></div>
+
+<h4 id="string-templates-as-formatters">String templates as formatters</h4>
+
+<p>In some contexts, textual templates are accepted as formatters and the lib init support code is invoked to parse the template and reconstruct the appropriate formatter.</p>
+
+<p>It’s suitable for simple formatting needs but keep in mind when using this approach there are a number of caveats and you should be careful if you want to use it in a complex formatting need.</p>
+
+<p>E.g.</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">keywords</span><span class="o">::</span><span class="n">format</span> <span class="o">=</span> <span class="s">"[%TimeStamp%]: %Message%"</span>
+</code></pre></div></div>
+
+<p>The <code class="language-plaintext highlighter-rouge">format</code> now accepts a format string template that contain a number of placeholders enclosed with percent signs. Each placeholder contain an attribute value name to insert instead of the placeholder.</p>
+
+<p><strong>Note that such format templates are not accepted by sink backends in the <code class="language-plaintext highlighter-rouge">set_formatter</code> method</strong>! You need to call <code class="language-plaintext highlighter-rouge">parse_formatter</code> to parse textual template into a formatter function!</p>
+
+<h4 id="custom-formatting-functions">Custom formatting functions</h4>
+
+<p>You can add a custom formatter to a sink backend that supports formatting. The formatter is actually a function obj that supports the following signature:</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// CharT is the target character type</span>
+<span class="kt">void</span> <span class="p">(</span><span class="n">logging</span><span class="o">::</span><span class="n">record_view</span> <span class="k">const</span><span class="o">&amp;</span> <span class="n">rec</span><span class="p">,</span> <span class="n">logging</span><span class="o">::</span><span class="n">basic_formatting_ostream</span><span class="o">&lt;</span> <span class="n">CharT</span> <span class="o">&gt;&amp;</span> <span class="n">strm</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>The formatter will be invoked whenever a log record view <code class="language-plaintext highlighter-rouge">rec</code> passes filtering and is to be stored in the log.</p>
+
+<p>I tried to customize the ThreadID attribute with the lambda style formatter but got no luck, FYI <a href="https://sourceforge.net/p/boost-log/discussion/710021/thread/e90226f5/">here’s a pretty old discussion about formatting ThreadID</a>.</p>
+
+<div class="footnotes" role="doc-endnotes">
+  <ol>
+    <li id="fn:1" role="doc-endnote">
+      <p>https://www.boost.org/doc/libs/1_63_0/libs/log/doc/html/index.html <a href="#fnref:1" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:2" role="doc-endnote">
+      <p>https://www.boost.org/doc/libs/1_63_0/libs/log/doc/html/log/defs.html <a href="#fnref:2" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:3" role="doc-endnote">
+      <p>https://www.boost.org/doc/libs/1_63_0/libs/log/doc/html/log/design.html <a href="#fnref:3" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:4" role="doc-endnote">
+      <p>https://www.boost.org/doc/libs/1_63_0/libs/log/doc/html/log/tutorial.html <a href="#fnref:4" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+
+</div>
+
+<div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+    <li>
+      <h3>
+        <a href="/2023/06/22/how-to-setup-ptr-record-in-oci/">
+          How to setup PTR record in Oracle Cloud Infrastructure (OCI)
+          <small>22 Jun 2023</small>
+        </a>
+      </h3>
+    </li>
+    
+    <li>
+      <h3>
+        <a href="/2023/06/21/Debug-resource-deadlock-avoided/">
+          Debug Resource Deadlock Avoided Error
+          <small>21 Jun 2023</small>
+        </a>
+      </h3>
+    </li>
+    
+    <li>
+      <h3>
+        <a href="/tools/2022/08/28/setup-vmess-edge/">
+          Set up network edge router via V2Ray
+          <small>28 Aug 2022</small>
+        </a>
+      </h3>
+    </li>
+    
+  </ul>
+</div>
+    </div>
+
+  </body>
+</html>

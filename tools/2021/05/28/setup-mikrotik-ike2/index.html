@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+  <meta charset="utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Meta -->
+  <link rel="canonical" href="https://mxcao.me/">
+
+  <!-- Analytics -->
+  <script async src="https://umami.mxcao.me/script.js" data-website-id="4c2d93d9-a90e-41c6-bc74-d2f96994b1e9"></script>
+
+  <!-- Christmax Snow -->
+  <!-- <script src="https://app.embed.im/snow.js" defer></script> -->
+
+  <title>
+    Set up IKEv2 VPN on a Mikrotik Router &middot; mxin
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/main.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700%7CSource+Sans+Pro:400,400i,700,700i&subset=greek,greek-ext,latin-ext">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon" sizes="180x180" href="/public/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/public/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/public/favicon-16x16.png">
+  <link rel="manifest" href="/public/site.webmanifest">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+
+</head>
+
+  <body>
+
+    <div class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>mxin</h1>
+      <p class="tagline"># Mengxin Cao</p>
+    </div>
+
+    <input type="checkbox" id="menu-icon">
+    <label class="menu-label" for="menu-icon"></label>
+    <div class="trigger">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-item">
+          <a href="/">Home</a>
+        </li>
+        
+
+        
+        
+        
+        
+        
+        
+        
+        
+        <li class="sidebar-nav-item">
+          <a href="/about/">About</a>
+        </li>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <li class="sidebar-nav-item">
+          <a href="/posts/">Posts</a>
+        </li>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <li class="sidebar-nav-item">
+          <a href="https://github.com/mcao2/">GitHub</a>
+        </li>
+        <li class="sidebar-nav-item">
+          <a href="https://www.linkedin.com/in/mxin/">LinkedIn</a>
+        </li>
+        <!-- <li class="sidebar-nav-item">
+          <a href="https://cs.cmu.edu/~mcao2/mengxin_cv.pdf">Curriculum Vitae</a>
+        </li> -->
+      </ul>
+
+      <p class="copyright">&copy; 2023. All rights reserved.</p>
+    </div>
+  </div>
+</div>
+
+    <div class="content container">
+      <div class="post">
+  <h1 class="post-title">Set up IKEv2 VPN on a Mikrotik Router</h1>
+  <span class="post-info">28 May 2021</span>
+  <h2 id="motivation">Motivation</h2>
+
+<p>I got rid of my AT&amp;T router a few days back and managed to have a Mikrotik router <a href="https://mikrotik.com/product/hap_ac2">hAP ac²</a> as an alternative. One benefit of using a mikrotik router, specifically, its RouterOS, is the customizability to add cool features to my home network. I have very slow traffic when using the AT&amp;T home network when visiting some websites, e.g., weibo, so I want to route them via a VPN running on oracle cloud.</p>
+
+<!--more-->
+
+<p>Check out my previous post about setting up an OCI instance if you are interested.</p>
+
+<h2 id="set-up-an-ipsec-vpn">Set up an IPSec VPN</h2>
+
+<p>I usually use Tailscale for VPNs but seems mikrotik does not have it for now. So I found an IPSec VPN auto setup script to ease the burden. Please checkout <a href="https://github.com/hwdsl2/setup-ipsec-vpn">this repo</a> for a detailed walkthrough.</p>
+
+<p>For Ubuntu &amp; Debian, the one-liner script is:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  wget https://git.io/vpnsetup <span class="nt">-O</span> vpn.sh <span class="o">&amp;&amp;</span> <span class="nb">sudo </span>sh vpn.sh <span class="o">&amp;&amp;</span> <span class="nb">sudo </span>ikev2.sh <span class="nt">--auto</span>
+</code></pre></div></div>
+
+<h2 id="set-up-an-ikev2-client-on-the-mikrotik-router">Set up an IKEv2 client on the Mikrotik router</h2>
+
+<p>You can find some tutorials on setting up a NordVPN on a RouterOS, like <a href="https://wiki.mikrotik.com/wiki/IKEv2_EAP_between_NordVPN_and_RouterOS">this one</a> and most of the steps are similar to what we need to do.</p>
+
+<h3 id="step-0-import-your-p12-file">Step 0: Import your <code class="language-plaintext highlighter-rouge">.p12</code> file</h3>
+
+<p>This <code class="language-plaintext highlighter-rouge">.p12</code> file acts like the all-in-one cert and is usually encrypted with a passphrase. You can find it in the output of the previous step when you setting up the VPN server.</p>
+
+<p>Upload your <code class="language-plaintext highlighter-rouge">.p12</code> file to the <code class="language-plaintext highlighter-rouge">Files</code> of the mikrotik router. You can verify the file is accessible by using the following command:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  /file print
+</code></pre></div></div>
+
+<p>And you will find something like this:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c"># NAME                                       TYPE                                            SIZE CREATION-TIME</span>
+  0 vpnclient.p12                              .p12 file                                       4425 may/27/2021 22:00:00
+</code></pre></div></div>
+
+<p>Next import this <code class="language-plaintext highlighter-rouge">.p12</code> file via:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  /certificate import file-name<span class="o">=</span>vpnclient.p12 <span class="nv">passphrase</span><span class="o">=</span>YOUR_PASSPHRASE
+</code></pre></div></div>
+
+<p>Remember to substitute your passphrase in the above command. And you probably need to run this command twice until you see the number of <code class="language-plaintext highlighter-rouge">private-keys-imported</code> is <code class="language-plaintext highlighter-rouge">1</code>.</p>
+
+<p>Then go to the <code class="language-plaintext highlighter-rouge">certificates</code> tab of the web portal, check the one with <code class="language-plaintext highlighter-rouge">KT</code> marker, note it down and it will be the one we will use in the next steps.</p>
+
+<h3 id="step-1-set-up-the-ikev2-client-">Step 1: Set up the IKEv2 client <sup id="fnref:1" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup></h3>
+
+<p>Create a separate Phase 1 profile and Phase 2 proposal configurations to not interfere with any existing IPsec configuration:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  /ip ipsec profile
+  add <span class="nv">name</span><span class="o">=</span>ike2-oracle-vpn
+  /ip ipsec proposal
+  add <span class="nv">name</span><span class="o">=</span>ike2-oracle-vpn pfs-group<span class="o">=</span>none
+</code></pre></div></div>
+
+<p>Create a new policy group and template to separate this configuration from any other IPsec configuration:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  /ip ipsec policy group
+  add <span class="nv">name</span><span class="o">=</span>ike2-oracle-vpn
+  /ip ipsec policy
+  add <span class="nv">group</span><span class="o">=</span>ike2-oracle-vpn <span class="nv">proposal</span><span class="o">=</span>ike2-oracle-vpn <span class="nv">template</span><span class="o">=</span><span class="nb">yes </span>dst-address<span class="o">=</span>0.0.0.0/0 src-address<span class="o">=</span>0.0.0.0/0
+</code></pre></div></div>
+
+<p>Create a new mode config entry with <code class="language-plaintext highlighter-rouge">responder=no</code> that will request configuration parameters from the server:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  /ip ipsec mode-config
+  add <span class="nv">name</span><span class="o">=</span>ike2-oracle-vpn <span class="nv">responder</span><span class="o">=</span>no
+</code></pre></div></div>
+
+<p>Create peer and identity configurations, remember to substitute yoru server IP and the correct certificate filename in the following command:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  /ip ipsec peer
+  add <span class="nv">address</span><span class="o">=</span>123.123.123.123/32 exchange-mode<span class="o">=</span>ike2 <span class="nv">name</span><span class="o">=</span>ike2-oracle-vpn <span class="nv">profile</span><span class="o">=</span>ike2-oracle-vpn
+
+  /ip ipsec identity
+  <span class="c"># vpnclient.p12_1 is the one with `KT` marker on it</span>
+  add auth-method<span class="o">=</span>digital-signature <span class="nv">certificate</span><span class="o">=</span>vpnclient.p12_1 generate-policy<span class="o">=</span>port-strict mode-config<span class="o">=</span>ike2-oracle-vpn <span class="nv">peer</span><span class="o">=</span>ike2-oracle-vpn policy-template-group<span class="o">=</span>ike2-oracle-vpn
+</code></pre></div></div>
+
+<p>Verify that the connection is successfully established:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  /ip ipsec
+  active-peers print
+  installed-sa print
+</code></pre></div></div>
+
+<p>You should see an established connection to your VPN server.</p>
+
+<h3 id="step-2-prepare-the-list-of-ips-to-be-sent-over-the-tunnel">Step 2: Prepare the list of IPs to be sent over the tunnel</h3>
+
+<p>Grab some existing IP-list and wrangle it to fit RouterOS. The following command will get a list of China IP ranges <sup id="fnref:2" role="doc-noteref"><a href="#fn:2" class="footnote" rel="footnote">2</a></sup>, add them to a list named <code class="language-plaintext highlighter-rouge">CNIP</code>, and prepare them so that they can be easily imported to the mikrotik router.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  curl <span class="nt">-s</span> https://raw.githubusercontent.com/17mon/china_ip_list/master/china_ip_list.txt |sed <span class="nt">-e</span> <span class="s1">'s/^/add address=/g'</span> <span class="nt">-e</span> <span class="s1">'s/$/ list=CNIP/g'</span>|sed <span class="nt">-e</span> <span class="s1">$'1i</span><span class="se">\\\n</span><span class="s1">/ip firewall address-list'</span> <span class="nt">-e</span> <span class="s1">$'1i</span><span class="se">\\\n</span><span class="s1">remove [/ip firewall address-list find list=CNIP]'</span> <span class="o">&gt;</span>cnip.rsc
+</code></pre></div></div>
+
+<p>Now same trick: upload this file to the router, and import it via <code class="language-plaintext highlighter-rouge">/import cnip.rsc</code>. Note that this list is huge and it may take a while to ingest it.</p>
+
+<h3 id="step-3-tag-traffic-that-match-the-list-in-mangle-firewall">Step 3: Tag traffic that match the list in <a href="https://wiki.mikrotik.com/wiki/Manual:IP/Firewall/Mangle">Mangle Firewall</a></h3>
+
+<p>Set the connection-mark under your mode config configuration:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  /ip ipsec mode-config
+  <span class="nb">set</span> <span class="o">[</span> find <span class="nv">name</span><span class="o">=</span>ike2-oracle-vpn <span class="o">]</span> connection-mark<span class="o">=</span>ike2-oracle-vpn
+</code></pre></div></div>
+
+<p>When it is done, a NAT rule is generated with the dynamic address provided by the server:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="o">[</span>admin@MikroTik] /ip firewall mangle&gt; /ip firewall nat print
+  Flags: X - disabled, I - invalid, D - dynamic
+   0  D <span class="p">;;;</span> ipsec mode-config
+        <span class="nv">chain</span><span class="o">=</span>srcnat <span class="nv">action</span><span class="o">=</span>src-nat to-addresses<span class="o">=</span>192.168.43.10 connection-mark<span class="o">=</span>ike2-oracle-vpn
+</code></pre></div></div>
+
+<p>Apply connection-mark to traffic matching the created address list:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  /ip firewall mangle
+  add <span class="nv">action</span><span class="o">=</span>mark-connection <span class="nv">chain</span><span class="o">=</span>prerouting dst-address-list<span class="o">=</span>CNIP new-connection-mark<span class="o">=</span>ike2-oracle-vpn <span class="nv">passthrough</span><span class="o">=</span><span class="nb">yes</span>
+</code></pre></div></div>
+
+<p><img src="/public/files/mikrotik_ikev2/mikrotik-after-setup-ike2-mangled-traffic.png" alt="Marked traffic that match the address list" /></p>
+
+<hr />
+
+<h2 id="references">References</h2>
+
+<div class="footnotes" role="doc-endnotes">
+  <ol>
+    <li id="fn:1" role="doc-endnote">
+      <p>https://wiki.mikrotik.com/wiki/Manual:IP/IPsec#RouterOS_client_configuration <a href="#fnref:1" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:2" role="doc-endnote">
+      <p>https://www.willnet.net/index.php/archives/369/ <a href="#fnref:2" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+
+</div>
+
+<div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+    <li>
+      <h3>
+        <a href="/2023/06/22/how-to-setup-ptr-record-in-oci/">
+          How to setup PTR record in Oracle Cloud Infrastructure (OCI)
+          <small>22 Jun 2023</small>
+        </a>
+      </h3>
+    </li>
+    
+    <li>
+      <h3>
+        <a href="/2023/06/21/Debug-resource-deadlock-avoided/">
+          Debug Resource Deadlock Avoided Error
+          <small>21 Jun 2023</small>
+        </a>
+      </h3>
+    </li>
+    
+    <li>
+      <h3>
+        <a href="/tools/2022/08/28/setup-vmess-edge/">
+          Set up network edge router via V2Ray
+          <small>28 Aug 2022</small>
+        </a>
+      </h3>
+    </li>
+    
+  </ul>
+</div>
+    </div>
+
+  </body>
+</html>

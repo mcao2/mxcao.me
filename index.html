@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+  <meta charset="utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Meta -->
+  <link rel="canonical" href="https://mxcao.me/">
+
+  <!-- Analytics -->
+  <script async src="https://umami.mxcao.me/script.js" data-website-id="4c2d93d9-a90e-41c6-bc74-d2f96994b1e9"></script>
+
+  <!-- Christmax Snow -->
+  <!-- <script src="https://app.embed.im/snow.js" defer></script> -->
+
+  <title>
+    Home &middot; mxin
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/main.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700%7CSource+Sans+Pro:400,400i,700,700i&subset=greek,greek-ext,latin-ext">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon" sizes="180x180" href="/public/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/public/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/public/favicon-16x16.png">
+  <link rel="manifest" href="/public/site.webmanifest">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+
+</head>
+
+  <body>
+
+    <div class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>mxin</h1>
+      <p class="tagline"># Mengxin Cao</p>
+    </div>
+
+    <input type="checkbox" id="menu-icon">
+    <label class="menu-label" for="menu-icon"></label>
+    <div class="trigger">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-item active">
+          <a href="/">Home</a>
+        </li>
+        
+
+        
+        
+        
+        
+        
+        
+        
+        
+        <li class="sidebar-nav-item">
+          <a href="/about/">About</a>
+        </li>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <li class="sidebar-nav-item">
+          <a href="/posts/">Posts</a>
+        </li>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <li class="sidebar-nav-item">
+          <a href="https://github.com/mcao2/">GitHub</a>
+        </li>
+        <li class="sidebar-nav-item">
+          <a href="https://www.linkedin.com/in/mxin/">LinkedIn</a>
+        </li>
+        <!-- <li class="sidebar-nav-item">
+          <a href="https://cs.cmu.edu/~mcao2/mengxin_cv.pdf">Curriculum Vitae</a>
+        </li> -->
+      </ul>
+
+      <p class="copyright">&copy; 2023. All rights reserved.</p>
+    </div>
+  </div>
+</div>
+
+    <div class="content container">
+      <div class="posts">
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2023/06/22/how-to-setup-ptr-record-in-oci/">
+        How to setup PTR record in Oracle Cloud Infrastructure (OCI)
+      </a>
+    </h1>
+
+    <span class="post-info">22 Jun 2023</span>
+
+    <h2 id="introduction">Introduction</h2>
+
+<p>One of my VPS machines use <a href="https://www.cloudron.io/">Cloudron</a> to easily self-host apps. And I always receive a notification from my Cloudron instance saying:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>PTR DNS record (PTR) did not match.
+    Hostname: &lt;IP&gt;
+    Expected: &lt;My Domain Name&gt;
+    Actual: null
+</code></pre></div></div>
+
+
+
+    <div class="continue-reading-container">
+      <a class="continue-reading-link" href="/2023/06/22/how-to-setup-ptr-record-in-oci/">Continue
+        reading &rarr;</a>
+    </div>
+
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2023/06/21/Debug-resource-deadlock-avoided/">
+        Debug Resource Deadlock Avoided Error
+      </a>
+    </h1>
+
+    <span class="post-info">21 Jun 2023</span>
+
+    <h2 id="introduction">Introduction</h2>
+
+<p>When I was debugging a core dump issue discovered in ADS (Autonomous Driving System) testing, I found a very interesting error message in the log file:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>terminate called after throwing an instance of <span class="s1">'boost::interprocess::interprocess_exception'</span>
+  what<span class="o">()</span>:  Resource deadlock avoided
+</code></pre></div></div>
+
+
+
+    <div class="continue-reading-container">
+      <a class="continue-reading-link" href="/2023/06/21/Debug-resource-deadlock-avoided/">Continue
+        reading &rarr;</a>
+    </div>
+
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/tools/2022/08/28/setup-vmess-edge/">
+        Set up network edge router via V2Ray
+      </a>
+    </h1>
+
+    <span class="post-info">28 Aug 2022</span>
+
+    <h2 id="motivation">Motivation</h2>
+
+<p>Hello! Long time no see! I have been heavily using an iOS app called “Quantumult X” (a.k.a. QX) these days, mainly for the following reasons:</p>
+
+<ul>
+  <li>Easy to setup and lots of tutorials/scripts online that you can add and learn</li>
+  <li>You can add VPN servers, add flexible routing rules e.g., SSID-based switching, and subscribe to public servers (not recommended out of privacy/security concerns)</li>
+  <li>You can do MITM rewrites that enable you to have premium features on other apps for free</li>
+</ul>
+
+<p>Overall I’m very happy with this app but I do find some limitations:</p>
+
+
+
+    <div class="continue-reading-container">
+      <a class="continue-reading-link" href="/tools/2022/08/28/setup-vmess-edge/">Continue
+        reading &rarr;</a>
+    </div>
+
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/tools/2021/05/28/setup-mikrotik-ike2/">
+        Set up IKEv2 VPN on a Mikrotik Router
+      </a>
+    </h1>
+
+    <span class="post-info">28 May 2021</span>
+
+    <h2 id="motivation">Motivation</h2>
+
+<p>I got rid of my AT&amp;T router a few days back and managed to have a Mikrotik router <a href="https://mikrotik.com/product/hap_ac2">hAP ac²</a> as an alternative. One benefit of using a mikrotik router, specifically, its RouterOS, is the customizability to add cool features to my home network. I have very slow traffic when using the AT&amp;T home network when visiting some websites, e.g., weibo, so I want to route them via a VPN running on oracle cloud.</p>
+
+
+
+    <div class="continue-reading-container">
+      <a class="continue-reading-link" href="/tools/2021/05/28/setup-mikrotik-ike2/">Continue
+        reading &rarr;</a>
+    </div>
+
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/infrastructure/2021/05/23/notes-on-oci-usage/">
+        Notes on OCI (Oracle Cloud Infrastructure)
+      </a>
+    </h1>
+
+    <span class="post-info">23 May 2021</span>
+
+    <h2 id="motivation">Motivation</h2>
+
+<p>Some of my services are too light that I don’t want to run them endlessly on my beefy home server. One reason is that I want better availability and clearly it’s hard (a better word probably is expensive) to achieve that in my current set up. So I decided to go for the Cloud, after all… I was a cloud TA!</p>
+
+
+
+    <div class="continue-reading-container">
+      <a class="continue-reading-link" href="/infrastructure/2021/05/23/notes-on-oci-usage/">Continue
+        reading &rarr;</a>
+    </div>
+
+  </div>
+  
+</div>
+
+<div class="pagination">
+  
+  <a class="pagination-item older" href="/page2">Older</a>
+  
+  
+  <span class="pagination-item newer">Newer</span>
+  
+</div>
+    </div>
+
+  </body>
+</html>

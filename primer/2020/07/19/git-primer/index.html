@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+  <meta charset="utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Meta -->
+  <link rel="canonical" href="https://mxcao.me/">
+
+  <!-- Analytics -->
+  <script async src="https://umami.mxcao.me/script.js" data-website-id="4c2d93d9-a90e-41c6-bc74-d2f96994b1e9"></script>
+
+  <!-- Christmax Snow -->
+  <!-- <script src="https://app.embed.im/snow.js" defer></script> -->
+
+  <title>
+    Git Primer &middot; mxin
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/main.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700%7CSource+Sans+Pro:400,400i,700,700i&subset=greek,greek-ext,latin-ext">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon" sizes="180x180" href="/public/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/public/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/public/favicon-16x16.png">
+  <link rel="manifest" href="/public/site.webmanifest">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+
+</head>
+
+  <body>
+
+    <div class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>mxin</h1>
+      <p class="tagline"># Mengxin Cao</p>
+    </div>
+
+    <input type="checkbox" id="menu-icon">
+    <label class="menu-label" for="menu-icon"></label>
+    <div class="trigger">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-item">
+          <a href="/">Home</a>
+        </li>
+        
+
+        
+        
+        
+        
+        
+        
+        
+        
+        <li class="sidebar-nav-item">
+          <a href="/about/">About</a>
+        </li>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <li class="sidebar-nav-item">
+          <a href="/posts/">Posts</a>
+        </li>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <li class="sidebar-nav-item">
+          <a href="https://github.com/mcao2/">GitHub</a>
+        </li>
+        <li class="sidebar-nav-item">
+          <a href="https://www.linkedin.com/in/mxin/">LinkedIn</a>
+        </li>
+        <!-- <li class="sidebar-nav-item">
+          <a href="https://cs.cmu.edu/~mcao2/mengxin_cv.pdf">Curriculum Vitae</a>
+        </li> -->
+      </ul>
+
+      <p class="copyright">&copy; 2023. All rights reserved.</p>
+    </div>
+  </div>
+</div>
+
+    <div class="content container">
+      <div class="post">
+  <h1 class="post-title">Git Primer</h1>
+  <span class="post-info">19 Jul 2020</span>
+  <h1 id="git-primer">Git Primer</h1>
+
+<h2 id="git-commit-messages">Git Commit Messages</h2>
+
+<p>Git commit messages can help you understand why something happened months or years ago for your collaborators or yourselves. It affects a project’s maintainability, and hence plays a critical role in a project’s long-term success.</p>
+
+<p>This section we summarize some common techniques to write a healthy commit message. Of course there are variations on the styles and conventions adopted by different projects/orgs, you should pick one and stick to it as much as possible to reduce chaos and inconsistency.</p>
+
+<!--more-->
+
+<p>A commit message is nothing but some plain texts explaining the changes you made. We can describe a <strong>git commit msg convention</strong> from several perspectives:</p>
+
+<ul>
+  <li>Style: e.g. capitalization, punctuation</li>
+  <li>Content: info that the commit msg body should or should not contain</li>
+  <li>Metadata: e.g. reference PR numbers, issue tracking IDs</li>
+</ul>
+
+<p>Fortunately, well-established conventions exist and you don’t need to re-invent the wheel.</p>
+
+<h3 id="several-rules-of-a-great-git-commit-msg-">Several rules of a great git commit msg <sup id="fnref:1" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup></h3>
+
+<ol>
+  <li>Separate <strong>subject</strong> from <strong>body</strong> with a blank line</li>
+  <li>Limit the <strong>subject</strong> line to 50 characters</li>
+  <li>Capitalize the subject line</li>
+  <li>Do not end the subject line with a period</li>
+  <li>Use the <strong>imperative mood</strong> in the subject line</li>
+  <li>Wrap the body at 72 characters</li>
+  <li>Use the body to explain what and why vs. how</li>
+</ol>
+
+<p>E.g.</p>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Summarize changes in around 50 characters or less
+
+More detailed explanatory text, if necessary. Wrap it to about 72
+characters or so. In some contexts, the first line is treated as the
+subject of the commit and the rest of the text as the body. The
+blank line separating the summary from the body is critical (unless
+you omit the body entirely); various tools like <span class="sb">`log`</span>, <span class="sb">`shortlog`</span>
+and <span class="sb">`rebase`</span> can get confused if you run the two together.
+
+Explain the problem that this commit is solving. Focus on why you
+are making this change as opposed to how (the code explains that).
+Are there side effects or other unintuitive consequences of this
+change? Here's the place to explain them.
+
+Further paragraphs come after blank lines.
+<span class="p">
+ -</span> Bullet points are okay, too
+<span class="p">
+ -</span> Typically a hyphen or asterisk is used for the bullet, preceded
+   by a single space, with blank lines in between, but conventions
+   vary here
+
+If you use an issue tracker, put references to them at the bottom,
+like this:
+
+Resolves: #123
+See also: #456, #789
+</code></pre></div></div>
+
+<h3 id="notes">Notes</h3>
+
+<ol>
+  <li>
+    <p>Not every commit msg needs both a subject and a body and sometimes a single line is fine for simple changes</p>
+
+    <p>E.g.</p>
+
+    <div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code> git commit -m "Fix typo in introduction to user guide"
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Commit msgs with a subject and a body are not easy to write with the <code class="language-plaintext highlighter-rouge">-m</code> option. You should configure an editor for use with git. You can also define a commit msg template in the git config like below to remind you of the proper format and style when creating a commit msg:</p>
+
+    <p>E.g. Consider a template file at <code class="language-plaintext highlighter-rouge">~/.gitmessage.txt</code> that looks like this</p>
+
+    <div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code> Subject line (try to keep under 50 characters)
+
+ Multi-line description of commit,
+ feel free to be detailed.
+
+ [Ticket: X]
+</code></pre></div>    </div>
+
+    <p>To tell Git to use it as the default message that appears in your editor when you run git commit, set the commit.template configuration value:</p>
+
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="nv">$ </span>git config <span class="nt">--global</span> commit.template ~/.gitmessage.txt
+ <span class="nv">$ </span>git commit
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>The blank line b/w the subject and body is essential and there’re a number of contexts in git like <code class="language-plaintext highlighter-rouge">git log --oneline</code> or <code class="language-plaintext highlighter-rouge">git shortlog</code> that the distinction b/w subject and body matter</p>
+  </li>
+  <li>
+    <p>The 50 characters limit for the subject line forces the author to think about the most concise way to express his ideas. It also ensures that they are readable from the GitHub WebUI</p>
+  </li>
+  <li>
+    <p>Your subject line should always be able to complete the following sentence:</p>
+
+    <blockquote>
+      <p>If applied, this commit will <em>your subject line here</em></p>
+    </blockquote>
+  </li>
+  <li>
+    <p>When you write the git msg body if needed, be mindful about its right margin and wrap text at 72 characters. Consider to set up a good text editor that automatically wrap texts for you</p>
+
+    <p>If you are using VSCode, the below settings can be a starting point:</p>
+
+    <ul>
+      <li>
+        <p>Set VSCode as your default editor for git</p>
+
+        <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c"># '--wait': Wait for the files to be closed before returning.</span>
+  <span class="nv">$ </span>git config <span class="nt">--global</span> core.editor <span class="s2">"code --wait"</span>
+</code></pre></div>        </div>
+      </li>
+      <li>
+        <p>In your VSCode user <code class="language-plaintext highlighter-rouge">settings.json</code>, add the following wrap rule:</p>
+
+        <div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="w">  </span><span class="nl">"[git-commit]"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"editor.rulers"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+          </span><span class="mi">72</span><span class="w">
+      </span><span class="p">],</span><span class="w">
+      </span><span class="nl">"editor.wordWrapColumn"</span><span class="p">:</span><span class="w"> </span><span class="mi">72</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"editor.wordWrap"</span><span class="p">:</span><span class="w"> </span><span class="s2">"wordWrapColumn"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"editor.wrappingIndent"</span><span class="p">:</span><span class="w"> </span><span class="s2">"same"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span></code></pre></div>        </div>
+
+        <p>More customizations can be found <a href="https://code.visualstudio.com/docs/getstarted/settings#_language-specific-editor-settings">here</a>.</p>
+      </li>
+    </ul>
+  </li>
+</ol>
+
+<h2 id="git-commands-">Git Commands <sup id="fnref:2" role="doc-noteref"><a href="#fn:2" class="footnote" rel="footnote">2</a></sup></h2>
+
+<ul>
+  <li><strong>Commit changes</strong>
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">git commit -m 'Simple msg goes here'</code></li>
+      <li><code class="language-plaintext highlighter-rouge">git commit --amend</code> <sup id="fnref:3" role="doc-noteref"><a href="#fn:3" class="footnote" rel="footnote">3</a></sup>
+        <ul>
+          <li>Sometimes we commit too early and possibly forget to add some files, or you mess up your commit msg format, you want to undo that commit, make additional changes you forgot, stage and commit again. Now this time use the <code class="language-plaintext highlighter-rouge">--amend</code> option!</li>
+          <li>This will take you staging area and uses it for the commit. The same commit msg will pop up and you can update this msg and it will overwrites your previous commit</li>
+          <li>You end up with a single commit, the one amended will <strong>replace</strong> the results of the first</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><strong>Create a new branch</strong>
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">git branch bugFix</code> (Note that this does not set the HEAD at the new branch)</li>
+      <li><code class="language-plaintext highlighter-rouge">git checkout -b bugFix</code></li>
+    </ul>
+  </li>
+  <li><strong>Combine changes</strong>
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">merge</code>
+        <ul>
+          <li>Create a special commit that has two unique parents:
+            <ul>
+              <li>
+                <p><code class="language-plaintext highlighter-rouge">git merge bugFix</code>
+<img src="/public/files/git_primer/15951758006949.jpg" alt="git merge bugFix" /></p>
+              </li>
+              <li>
+                <p>If you want to keep the <code class="language-plaintext highlighter-rouge">bugFix</code> branch up to date and continue work on it, we can merge the <code class="language-plaintext highlighter-rouge">master</code> branch to the <code class="language-plaintext highlighter-rouge">bugFix</code> branch. Since <code class="language-plaintext highlighter-rouge">bugFix</code> was an ancestor of <code class="language-plaintext highlighter-rouge">master</code> after the above merge, it simply move the <code class="language-plaintext highlighter-rouge">bugFix</code> to the same commit as <code class="language-plaintext highlighter-rouge">master</code>: <code class="language-plaintext highlighter-rouge">git checkout bugFix; git merge master</code>
+<img src="/public/files/git_primer/15951774331718.jpg" alt="keep bugFix up to date with master" /></p>
+              </li>
+            </ul>
+          </li>
+          <li><code class="language-plaintext highlighter-rouge">rebase</code>
+            <ul>
+              <li>Explanations:
+                <ul>
+                  <li>Take a set of commits, copy them and paste them down somewhere else. It can be used to make a nice linear sequence of commits and the commit history will be much cleaner.</li>
+                  <li>Take all the changes that were committed on one branch and <strong>reply</strong> them on a different branch.</li>
+                </ul>
+              </li>
+              <li><code class="language-plaintext highlighter-rouge">git rebase target_branch_to_reply_changes_to</code>
+                <ul>
+                  <li>E.g. If you are on branch <code class="language-plaintext highlighter-rouge">bugFix</code> and want to move work from <code class="language-plaintext highlighter-rouge">bugFix</code> directly onto the <code class="language-plaintext highlighter-rouge">master</code>. That way the commit history will looks like these two features were developed sequentially, when in reality they were developed in parallel.</li>
+                  <li><code class="language-plaintext highlighter-rouge">git checkout bugFix; git rebase master</code>
+<img src="/public/files/git_primer/15951781011384.jpg" alt="rebase bugFix changes to master" />
+                    <ul>
+                      <li>Now you can go back to the <code class="language-plaintext highlighter-rouge">master</code> and do a fast-forward merge to keep the <code class="language-plaintext highlighter-rouge">master</code> up to date: <code class="language-plaintext highlighter-rouge">git checkout master; git merge/rebase bugFix</code></li>
+                    </ul>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><strong>Moving around commits</strong>
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">HEAD</code>: the symbolic name for the currently checked out commit. It always points to the most recent commit which is reflected in the working tree.</li>
+      <li>Detaching <code class="language-plaintext highlighter-rouge">HEAD</code>: attach <code class="language-plaintext highlighter-rouge">HEAD</code> to a commit instead of a branch, e.g. when you checkout a particular commit rather than a branch. Typically you find the commit by using <code class="language-plaintext highlighter-rouge">git log</code> to find the right hash.
+<img src="/public/files/git_primer/15951786444183.jpg" alt="detach HEAD" />
+        <ul>
+          <li><strong>Relative Refs</strong>
+            <ul>
+              <li>Start from somewhere memorable e.g. branch <code class="language-plaintext highlighter-rouge">bugFix</code> or the <code class="language-plaintext highlighter-rouge">HEAD</code>, and move from there
+                <ul>
+                  <li>moving upwards, 1 commit at a time: <code class="language-plaintext highlighter-rouge">^</code> (Caret operator)
+                    <ul>
+                      <li>e.g.
+                        <ul>
+                          <li>detach head to its parent: <code class="language-plaintext highlighter-rouge">git checkout HEAD^1</code>, or</li>
+                          <li>checkout to the <code class="language-plaintext highlighter-rouge">master</code>’s grandparent: <code class="language-plaintext highlighter-rouge">git checkout master^^</code></li>
+                        </ul>
+                      </li>
+                    </ul>
+                  </li>
+                  <li>moving upwards for &lt;num&gt; commits: <code class="language-plaintext highlighter-rouge">~&lt;num&gt;</code> (Tilde operator)
+                    <ul>
+                      <li>e.g.
+                        <ul>
+                          <li>detach head and move upward 4 commits: <code class="language-plaintext highlighter-rouge">git checkout HEAD~4</code></li>
+                        </ul>
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+              </li>
+              <li>Branch forcing:
+                <ul>
+                  <li>Reassign a branch to a particular commit</li>
+                  <li>E.g. move the <code class="language-plaintext highlighter-rouge">master</code> branch to 3 parents behind HEAD: <code class="language-plaintext highlighter-rouge">git branch -f master HEAD~3</code></li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><strong>Reversing changes</strong>
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">git reset</code>
+        <ul>
+          <li><strong>Rewriting history</strong>: revert changes by moving a branch reference backwards in time to an older commit</li>
+          <li><strong>Warning</strong>: This cmd is great for <strong>local branches on your own machine</strong>, not good for remote branches that others are using!</li>
+          <li>E.g. move the <code class="language-plaintext highlighter-rouge">master</code> branch to the parent of HEAD: <code class="language-plaintext highlighter-rouge">git reset HEAD^</code>, or you can achieve this via <code class="language-plaintext highlighter-rouge">branch forcing</code>: <code class="language-plaintext highlighter-rouge">git branch -f master HEAD^</code></li>
+          <li>Modes
+            <ul>
+              <li><code class="language-plaintext highlighter-rouge">--soft</code>
+                <ul>
+                  <li>does not touch the index file or the working tree at all but resets the head to the given &lt;commit&gt;</li>
+                </ul>
+              </li>
+              <li><code class="language-plaintext highlighter-rouge">--mixed</code>
+                <ul>
+                  <li>default mode, resets the index file but not the working tree, i.e. preserve changes but not marked for commit</li>
+                </ul>
+              </li>
+              <li><code class="language-plaintext highlighter-rouge">--hard</code>
+                <ul>
+                  <li>resets the index and working tree and any changes to tracked files are discarded</li>
+                </ul>
+              </li>
+              <li><code class="language-plaintext highlighter-rouge">--merge</code></li>
+              <li><code class="language-plaintext highlighter-rouge">--keep</code></li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li><code class="language-plaintext highlighter-rouge">git revert</code>
+        <ul>
+          <li>Revert changes and share those reversed changes with others by creating a new commit, whose effect is to revert a particular commit</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><strong>Move works around</strong>
+    <ul>
+      <li>i.e. “Move this commit here, that commit there”</li>
+      <li><code class="language-plaintext highlighter-rouge">git cherry-pick &lt;commit1&gt; &lt;commit2&gt; &lt;...&gt;</code>
+        <ul>
+          <li>A way of saying that you want to copy the provided commits below your current location i.e. below the <code class="language-plaintext highlighter-rouge">HEAD</code></li>
+          <li>Surely you may be able to achieve the same goal by using <code class="language-plaintext highlighter-rouge">git rebase</code>, but <code class="language-plaintext highlighter-rouge">cherry-pick</code> is kinda of magic and easier to achieve this goal…</li>
+        </ul>
+      </li>
+      <li>Interactive rebasing <code class="language-plaintext highlighter-rouge">git rebase -i target_branch_to_replay_changes_to</code>
+        <ul>
+          <li>Cover the situation where you don’t know what commits you want: review a series of commits you’re about to rebase</li>
+          <li>Git will open up a UI to show you which commits are about to be copied below the target of the rebase (i.e. <code class="language-plaintext highlighter-rouge">target_branch_to_replay_changes_to</code>).
+            <ul>
+              <li>You can reorder commits by changing their order in the UI</li>
+              <li>You can choose to completely omit some commits</li>
+              <li>And many more…</li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<hr />
+
+<h3 id="references">References</h3>
+
+<div class="footnotes" role="doc-endnotes">
+  <ol>
+    <li id="fn:1" role="doc-endnote">
+      <p>https://chris.beams.io/posts/git-commit/ <a href="#fnref:1" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:2" role="doc-endnote">
+      <p>https://learngitbranching.js.org/?locale=en_US <a href="#fnref:2" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:3" role="doc-endnote">
+      <p>https://git-scm.com/book/en/v2/Git-Basics-Undoing-Things <a href="#fnref:3" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+
+</div>
+
+<div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+    <li>
+      <h3>
+        <a href="/2023/06/22/how-to-setup-ptr-record-in-oci/">
+          How to setup PTR record in Oracle Cloud Infrastructure (OCI)
+          <small>22 Jun 2023</small>
+        </a>
+      </h3>
+    </li>
+    
+    <li>
+      <h3>
+        <a href="/2023/06/21/Debug-resource-deadlock-avoided/">
+          Debug Resource Deadlock Avoided Error
+          <small>21 Jun 2023</small>
+        </a>
+      </h3>
+    </li>
+    
+    <li>
+      <h3>
+        <a href="/tools/2022/08/28/setup-vmess-edge/">
+          Set up network edge router via V2Ray
+          <small>28 Aug 2022</small>
+        </a>
+      </h3>
+    </li>
+    
+  </ul>
+</div>
+    </div>
+
+  </body>
+</html>

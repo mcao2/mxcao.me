@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+  <meta charset="utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Meta -->
+  <link rel="canonical" href="https://mxcao.me/">
+
+  <!-- Analytics -->
+  <script async src="https://umami.mxcao.me/script.js" data-website-id="4c2d93d9-a90e-41c6-bc74-d2f96994b1e9"></script>
+
+  <!-- Christmax Snow -->
+  <!-- <script src="https://app.embed.im/snow.js" defer></script> -->
+
+  <title>
+    Home &middot; mxin
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/main.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700%7CSource+Sans+Pro:400,400i,700,700i&subset=greek,greek-ext,latin-ext">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon" sizes="180x180" href="/public/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/public/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/public/favicon-16x16.png">
+  <link rel="manifest" href="/public/site.webmanifest">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+
+</head>
+
+  <body>
+
+    <div class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>mxin</h1>
+      <p class="tagline"># Mengxin Cao</p>
+    </div>
+
+    <input type="checkbox" id="menu-icon">
+    <label class="menu-label" for="menu-icon"></label>
+    <div class="trigger">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-item">
+          <a href="/">Home</a>
+        </li>
+        
+
+        
+        
+        
+        
+        
+        
+        
+        
+        <li class="sidebar-nav-item">
+          <a href="/about/">About</a>
+        </li>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <li class="sidebar-nav-item">
+          <a href="/posts/">Posts</a>
+        </li>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <li class="sidebar-nav-item">
+          <a href="https://github.com/mcao2/">GitHub</a>
+        </li>
+        <li class="sidebar-nav-item">
+          <a href="https://www.linkedin.com/in/mxin/">LinkedIn</a>
+        </li>
+        <!-- <li class="sidebar-nav-item">
+          <a href="https://cs.cmu.edu/~mcao2/mengxin_cv.pdf">Curriculum Vitae</a>
+        </li> -->
+      </ul>
+
+      <p class="copyright">&copy; 2023. All rights reserved.</p>
+    </div>
+  </div>
+</div>
+
+    <div class="content container">
+      <div class="posts">
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/primer/2020/08/08/wireguard-primer/">
+        WireGuard Primer
+      </a>
+    </h1>
+
+    <span class="post-info">08 Aug 2020</span>
+
+    <h2 id="introduction">Introduction</h2>
+
+<p>WireGuard <sup id="fnref:1" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup> is a simple, fast, and modern <strong>VPN</strong> that utilizes cryptography.</p>
+
+<p>It encapsulates IP packets over UDP. The general workflow can be summarized as:</p>
+
+<ul>
+  <li>Install WireGuard</li>
+  <li>Add a WireGuard interface (like <code class="language-plaintext highlighter-rouge">wlan0</code>/<code class="language-plaintext highlighter-rouge">eth0</code> but named <code class="language-plaintext highlighter-rouge">wg0</code>/<code class="language-plaintext highlighter-rouge">wg1</code>…)</li>
+  <li>Configure the interface with a private key and optionally add peer’s public key(s)</li>
+  <li>Send packets to the interface</li>
+</ul>
+
+<p>It’s similar to the ssh model. Both parties have each other’s public keys and they communicate by exchanging packets encrypted by the public keys through the WireGuard interface.</p>
+
+<div class="footnotes" role="doc-endnotes">
+  <ol>
+    <li id="fn:1" role="doc-endnote">
+      <p>https://www.wireguard.com/ <a href="#fnref:1" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+
+
+    <div class="continue-reading-container">
+      <a class="continue-reading-link" href="/primer/2020/08/08/wireguard-primer/">Continue
+        reading &rarr;</a>
+    </div>
+
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/primer/2020/08/07/value-parameterized-gtest/">
+        Value-Parameterized GTest
+      </a>
+    </h1>
+
+    <span class="post-info">07 Aug 2020</span>
+
+    <h2 id="introduction">Introduction</h2>
+
+<p>Last time I talked about gtest in the <a href="/primer/2020/06/10/googletest-primer/">gtest primer</a>, and in this post we discuss the usage of <a href="https://github.com/google/googletest/blob/master/googletest/docs/advanced.md#value-parameterized-tests">“value-paramterized” tests</a>. In general, when you write a simple test case and verified it is working, what is the next step? Maybe you want to add more test cases! But how? Adding them by “hard-coding” the logics in the source files? It’s not a good idea since cases may evolve and we may later add new corner cases, maybe months later. At that time, you may already forgot how to write a test case using gtest.</p>
+
+<p>Value-parameterized tests are a good way to organize your test cases and group them in a logical manner e.g. test cases for a particular API. I use value-parameterized tests and a YAML configuration file to dynamically add/reduce my test cases, so that adding or removing a test case is as simple as updating the YAML file.</p>
+
+
+
+    <div class="continue-reading-container">
+      <a class="continue-reading-link" href="/primer/2020/08/07/value-parameterized-gtest/">Continue
+        reading &rarr;</a>
+    </div>
+
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/primer/2020/07/19/git-primer/">
+        Git Primer
+      </a>
+    </h1>
+
+    <span class="post-info">19 Jul 2020</span>
+
+    <h1 id="git-primer">Git Primer</h1>
+
+<h2 id="git-commit-messages">Git Commit Messages</h2>
+
+<p>Git commit messages can help you understand why something happened months or years ago for your collaborators or yourselves. It affects a project’s maintainability, and hence plays a critical role in a project’s long-term success.</p>
+
+<p>This section we summarize some common techniques to write a healthy commit message. Of course there are variations on the styles and conventions adopted by different projects/orgs, you should pick one and stick to it as much as possible to reduce chaos and inconsistency.</p>
+
+
+
+    <div class="continue-reading-container">
+      <a class="continue-reading-link" href="/primer/2020/07/19/git-primer/">Continue
+        reading &rarr;</a>
+    </div>
+
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/primer/2020/07/12/boost-log-primer/">
+        Boost.Log Primer
+      </a>
+    </h1>
+
+    <span class="post-info">12 Jul 2020</span>
+
+    <h1 id="boost-log-">Boost Log <sup id="fnref:1" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup></h1>
+
+<h2 id="prepare-the-namespace-aliases">Prepare the namespace aliases</h2>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">namespace</span> <span class="n">logging</span> <span class="o">=</span> <span class="n">boost</span><span class="o">::</span><span class="n">log</span><span class="p">;</span>
+<span class="k">namespace</span> <span class="n">sinks</span> <span class="o">=</span> <span class="n">boost</span><span class="o">::</span><span class="n">log</span><span class="o">::</span><span class="n">sinks</span><span class="p">;</span>
+<span class="k">namespace</span> <span class="n">src</span> <span class="o">=</span> <span class="n">boost</span><span class="o">::</span><span class="n">log</span><span class="o">::</span><span class="n">sources</span><span class="p">;</span>
+<span class="k">namespace</span> <span class="n">expr</span> <span class="o">=</span> <span class="n">boost</span><span class="o">::</span><span class="n">log</span><span class="o">::</span><span class="n">expressions</span><span class="p">;</span>
+<span class="k">namespace</span> <span class="n">attrs</span> <span class="o">=</span> <span class="n">boost</span><span class="o">::</span><span class="n">log</span><span class="o">::</span><span class="n">attributes</span><span class="p">;</span>
+<span class="k">namespace</span> <span class="n">keywords</span> <span class="o">=</span> <span class="n">boost</span><span class="o">::</span><span class="n">log</span><span class="o">::</span><span class="n">keywords</span><span class="p">;</span>
+</code></pre></div></div>
+
+<div class="footnotes" role="doc-endnotes">
+  <ol>
+    <li id="fn:1" role="doc-endnote">
+      <p>https://www.boost.org/doc/libs/1_63_0/libs/log/doc/html/index.html <a href="#fnref:1" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+
+
+    <div class="continue-reading-container">
+      <a class="continue-reading-link" href="/primer/2020/07/12/boost-log-primer/">Continue
+        reading &rarr;</a>
+    </div>
+
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/primer/2020/06/10/googletest-primer/">
+        GoogleTest Primer
+      </a>
+    </h1>
+
+    <span class="post-info">10 Jun 2020</span>
+
+    <h1 id="googletest--primer-gtest">GoogleTest <sup id="fnref:1" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup> Primer (gtest)</h1>
+
+<h2 id="what-is-googletest">What is GoogleTest</h2>
+
+<p>Googletest is a testing framework to help write better C++ code</p>
+<ul>
+  <li>supports any kind of tests, not just unit tests</li>
+  <li>based on the popular xUnit (e.g. JUnit, PyUnit) architecture</li>
+</ul>
+
+<div class="footnotes" role="doc-endnotes">
+  <ol>
+    <li id="fn:1" role="doc-endnote">
+      <p>https://github.com/google/googletest/blob/master/googletest/docs/primer.md <a href="#fnref:1" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+
+
+    <div class="continue-reading-container">
+      <a class="continue-reading-link" href="/primer/2020/06/10/googletest-primer/">Continue
+        reading &rarr;</a>
+    </div>
+
+  </div>
+  
+</div>
+
+<div class="pagination">
+  
+  <a class="pagination-item older" href="/page4">Older</a>
+  
+  
+  
+  <a class="pagination-item newer" href="/page2">Newer</a>
+  
+  
+</div>
+    </div>
+
+  </body>
+</html>

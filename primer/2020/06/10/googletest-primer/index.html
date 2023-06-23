@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+  <meta charset="utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Meta -->
+  <link rel="canonical" href="https://mxcao.me/">
+
+  <!-- Analytics -->
+  <script async src="https://umami.mxcao.me/script.js" data-website-id="4c2d93d9-a90e-41c6-bc74-d2f96994b1e9"></script>
+
+  <!-- Christmax Snow -->
+  <!-- <script src="https://app.embed.im/snow.js" defer></script> -->
+
+  <title>
+    GoogleTest Primer &middot; mxin
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/main.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700%7CSource+Sans+Pro:400,400i,700,700i&subset=greek,greek-ext,latin-ext">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon" sizes="180x180" href="/public/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/public/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/public/favicon-16x16.png">
+  <link rel="manifest" href="/public/site.webmanifest">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+
+</head>
+
+  <body>
+
+    <div class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>mxin</h1>
+      <p class="tagline"># Mengxin Cao</p>
+    </div>
+
+    <input type="checkbox" id="menu-icon">
+    <label class="menu-label" for="menu-icon"></label>
+    <div class="trigger">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-item">
+          <a href="/">Home</a>
+        </li>
+        
+
+        
+        
+        
+        
+        
+        
+        
+        
+        <li class="sidebar-nav-item">
+          <a href="/about/">About</a>
+        </li>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <li class="sidebar-nav-item">
+          <a href="/posts/">Posts</a>
+        </li>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <li class="sidebar-nav-item">
+          <a href="https://github.com/mcao2/">GitHub</a>
+        </li>
+        <li class="sidebar-nav-item">
+          <a href="https://www.linkedin.com/in/mxin/">LinkedIn</a>
+        </li>
+        <!-- <li class="sidebar-nav-item">
+          <a href="https://cs.cmu.edu/~mcao2/mengxin_cv.pdf">Curriculum Vitae</a>
+        </li> -->
+      </ul>
+
+      <p class="copyright">&copy; 2023. All rights reserved.</p>
+    </div>
+  </div>
+</div>
+
+    <div class="content container">
+      <div class="post">
+  <h1 class="post-title">GoogleTest Primer</h1>
+  <span class="post-info">10 Jun 2020</span>
+  <h1 id="googletest--primer-gtest">GoogleTest <sup id="fnref:1" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup> Primer (gtest)</h1>
+
+<h2 id="what-is-googletest">What is GoogleTest</h2>
+
+<p>Googletest is a testing framework to help write better C++ code</p>
+<ul>
+  <li>supports any kind of tests, not just unit tests</li>
+  <li>based on the popular xUnit (e.g. JUnit, PyUnit) architecture</li>
+</ul>
+
+<!--more-->
+
+<h2 id="what-defines-a-good-test">What defines a “good” test</h2>
+
+<p>A good test should:</p>
+<ul>
+  <li>Be independent and repeatable</li>
+  <li>Be well-organized and reflect the structure of the tested code
+    <ul>
+      <li>=&gt; gtest groups related tests into <strong>test suits</strong> that can share data and subroutines</li>
+    </ul>
+  </li>
+  <li>Be portable and reusable =&gt; platform neutral, compiler neutral</li>
+  <li>Verbose diagnostic information when test fail
+    <ul>
+      <li>=&gt; gtest does not stop at the first test failure but stops the current test and continues with the rest tests if any.
+        <ul>
+          <li>=&gt; enable users to detect and fix multiple bugs in a single run-edit-compile cycle</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>Liberate test writers from housekeeping chores and focus on the test content
+    <ul>
+      <li>=&gt; gtest automatically keeps track of all tests defined and does not require users to enumerate them in order to run them</li>
+    </ul>
+  </li>
+  <li>Be fast
+    <ul>
+      <li>=&gt; gtest enable users to <strong>reuse shared resources across tests</strong> and pay for the setup/tear-down only once, without making tests depend on each other</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="the-nomenclature">The nomenclature</h2>
+
+<ul>
+  <li><strong>Test</strong>: gtest’s term for “Test Case” in ISTQB <sup id="fnref:2" role="doc-noteref"><a href="#fn:2" class="footnote" rel="footnote">2</a></sup>. Exercise a particular program path with specific input values and verify the results</li>
+  <li><strong>Test Suit</strong>: a group of related tests</li>
+  <li><strong>Test Program</strong>: contains one or more test suits</li>
+</ul>
+
+<h2 id="basic-concepts">Basic Concepts</h2>
+
+<p>The usage of GoogleTest starts with <strong>writing assertions</strong>.</p>
+<ul>
+  <li>An assertion is a statement that checks whether a condition is true or false.</li>
+  <li>Assertion result can be <em>success</em>, <em>nonfatal failure</em>, <em>fatal failure</em>.</li>
+  <li>A fatal failure aborts the current function</li>
+</ul>
+
+<p><strong>Tests</strong> use assertions to verify the tested code’s behavior. If a test crashes or has a failed assertion, then this test fails.</p>
+
+<p>A <strong>Test Suit</strong> contains one or many tests. It’s usually a group of tests that reflect the structure of the tested code. Tests within a test suite can share <strong>common resources</strong> (objects, subroutines) by putting them into a <em>test fixture</em> class</p>
+
+<h3 id="assertions">Assertions</h3>
+
+<ul>
+  <li>GTest assertions are <strong>macros</strong> that resemble function calls.</li>
+  <li>When assertion fails, gtest prints the assertion’s source file, line number, along with a failure message (user can supply a custom failure message which will be appended to gtest’s msg)</li>
+  <li>Two types of assertions that differ in their effects on the code being tested
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">ASSERT_*</code> generate fatal failures when they fail and abort the current function. The abortion may skip clean-up code that comes after it and hence may cause a space leak! (particularly if you will also use a heap checker)</li>
+      <li><code class="language-plaintext highlighter-rouge">EXPECT_*</code> generate non-fatal failures, which don’t abort the current function and allow more than one failure to be reported in a test</li>
+    </ul>
+  </li>
+  <li>Syntax
+    <pre><code class="language-Cpp">  ASSERT_EQ(x.size(), y.size()) &lt;&lt; "Vectors x and y are of unequal length"; // Anything that can be streamed to an ostream can be streamed to an assertion macro
+    
+  for (int i = 0; i &lt; x.size(); ++i) {
+    EXPECT_EQ(x[i], y[i]) &lt;&lt; "Vectors x and y differ at index " &lt;&lt; i;
+  }
+</code></pre>
+  </li>
+  <li>
+    <p>Basic Assertions</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th style="text-align: center">Fatal Assertions</th>
+          <th style="text-align: center">Nonfatal Assertions</th>
+          <th style="text-align: center">Explaination</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: center"><code class="language-plaintext highlighter-rouge">ASSERT_TRUE(cond)</code></td>
+          <td style="text-align: center"><code class="language-plaintext highlighter-rouge">EXPECT_TRUE(cond)</code></td>
+          <td style="text-align: center"><code class="language-plaintext highlighter-rouge">cond</code> is true</td>
+        </tr>
+        <tr>
+          <td style="text-align: center"><code class="language-plaintext highlighter-rouge">ASSERT_FALSE(cond)</code></td>
+          <td style="text-align: center"><code class="language-plaintext highlighter-rouge">EXPECT_FALSE(cond)</code></td>
+          <td style="text-align: center"><code class="language-plaintext highlighter-rouge">cond</code> is false</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+  <li>Binary Comparisons
+    <ul>
+      <li>N.B. value arguments (<code class="language-plaintext highlighter-rouge">val1</code>, <code class="language-plaintext highlighter-rouge">val2</code>) must <strong>be comparable</strong> by the assertion’s comparison operator (<code class="language-plaintext highlighter-rouge">==</code>, <code class="language-plaintext highlighter-rouge">&lt;</code>, etc.) or you’ll get a compilation error.</li>
+      <li><code class="language-plaintext highlighter-rouge">ASSERT_EQ(val1, val2)</code>, <code class="language-plaintext highlighter-rouge">ASSERT_NE(val1, val2)</code>, etc.</li>
+      <li><code class="language-plaintext highlighter-rouge">EXPECT_EQ(val1, val2)</code>, <code class="language-plaintext highlighter-rouge">EXPECT_NE(val1, val2)</code>, etc.</li>
+      <li>You may need to use <code class="language-plaintext highlighter-rouge">ASSERT_TRUE</code> or <code class="language-plaintext highlighter-rouge">EXPECT_TRUE</code> to assert the equality of two objects of an user-defined type based on the Google C++ Style Guide
+        <ul>
+          <li>but when possible, <code class="language-plaintext highlighter-rouge">ASSERT_EQ</code> is preferred to <code class="language-plaintext highlighter-rouge">ASSERT_EQ(val1 == val2)</code> since it tells you <code class="language-plaintext highlighter-rouge">val1</code> and <code class="language-plaintext highlighter-rouge">val2</code>’s values on failure</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><a href="https://github.com/google/googletest/blob/master/googletest/docs/primer.md#string-comparison">String Comparisons</a>
+    <ul>
+      <li>use <code class="language-plaintext highlighter-rouge">ASSERT_STREQ()</code> rather than <code class="language-plaintext highlighter-rouge">ASSERT_EQ</code></li>
+      <li>to assert that a C string is NULL, use <code class="language-plaintext highlighter-rouge">ASSERT_STREQ(c_str, NULL)</code> or <code class="language-plaintext highlighter-rouge">ASSERT_EQ(c_str, nullptr)</code> if c++11 is supported</li>
+    </ul>
+  </li>
+  <li>Pointer Comparisons
+    <ul>
+      <li>use <code class="language-plaintext highlighter-rouge">*_EQ(ptr, nullptr)</code> and <code class="language-plaintext highlighter-rouge">*_NE(ptr, nullptr)</code> instead of <code class="language-plaintext highlighter-rouge">*_EQ(ptr, NULL)</code>. (because <code class="language-plaintext highlighter-rouge">nullptr</code> is typed)</li>
+    </ul>
+  </li>
+  <li>Floating point Comparisons
+    <ul>
+      <li>use the floating point variations of some of these macros in order to avoid rounding problems (see <a href="https://github.com/google/googletest/blob/master/googletest/docs/advanced.md">here</a> for more information)</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="simple-tests">Simple Tests</h3>
+
+<ol>
+  <li>Use the <code class="language-plaintext highlighter-rouge">TEST()</code> macro to define and name a test function
+    <ul>
+      <li>test functions are ordinary C++ functions that don’t return a value</li>
+    </ul>
+  </li>
+  <li>Use various gtest assertions we discussed above in the test function, along with any other valid C++ statements you want to use</li>
+  <li>Test result is determined by the assertions.
+    <ul>
+      <li>if any assertion in the test fails (either fatally or non-fatally), or if the test crashes, the entire test fails</li>
+    </ul>
+  </li>
+  <li>Arguments
+    <ul>
+      <li>first argument is the test suite name</li>
+      <li>second argument is the test’s name within the test suite</li>
+      <li>both should be valid C++ identifiers and should not contain any underscores</li>
+    </ul>
+  </li>
+  <li>Test’s <strong>full name</strong> consists of its containing test suite and its individual test name</li>
+  <li>Tests from different test suites can have the same individual name</li>
+  <li>Test results are grouped by test suites, and logically related tests should be in the same test suite.</li>
+  <li>
+    <p>Naming convention for test suits and tests should follow the same convention for naming functions and classes</p>
+
+    <p>e.g.</p>
+    <pre><code class="language-Cpp"> TEST(TestSuiteName, TestName) {
+   ... test body ...
+ }
+</code></pre>
+  </li>
+</ol>
+
+<h3 id="test-fixtures">Test Fixtures</h3>
+
+<p>Enable users to use the same data configuration for multiple tests.</p>
+
+<h4 id="steps-to-create-a-fixture">Steps to create a fixture</h4>
+<ol>
+  <li>Derive a class from <code class="language-plaintext highlighter-rouge">::testing::Test</code> and start its body with <code class="language-plaintext highlighter-rouge">protected</code> since we want to access the fixture members from sub-classes</li>
+  <li>Inside the class, declare any objects you plan to use</li>
+  <li>If necessary, write a default constructor or <code class="language-plaintext highlighter-rouge">SetUp()</code> function to prepare the objects for each test. <strong>Use <code class="language-plaintext highlighter-rouge">override</code> in C++11 to make sure you spelled SetUp correctly!</strong></li>
+  <li>If necessary, write a destructor or <code class="language-plaintext highlighter-rouge">TearDown()</code> function to release any resources you allocated in <code class="language-plaintext highlighter-rouge">SetUp()</code>.</li>
+  <li>If needed, define subroutines for your tests to share</li>
+</ol>
+
+<h4 id="how-to-use-a-fixture">How to use a fixture</h4>
+<ol>
+  <li>use <code class="language-plaintext highlighter-rouge">TEST_F()</code> instead of <code class="language-plaintext highlighter-rouge">TEST()</code> as it allows you to access objects and subroutines in the test fixture</li>
+  <li>the first argument defines the test suite name, and it must be the name of the test fixture class</li>
+  <li>you must first define the test fixture class before you can actually use it in your tests! or you will get the compiler error <code class="language-plaintext highlighter-rouge">virtual outside class declaration</code></li>
+  <li>gtest will create a fresh test fixture at runtime for each test defined with <code class="language-plaintext highlighter-rouge">TEST_F()</code>, then
+    <ul>
+      <li>immediately initialize it via <code class="language-plaintext highlighter-rouge">SetUp()</code></li>
+      <li>run the test, clean up by calling <code class="language-plaintext highlighter-rouge">TearDown()</code></li>
+      <li>delete the test fixture</li>
+    </ul>
+  </li>
+  <li>Note that different tests in the same suite have different test fixture objects, and gtest always delete a test fixture before it creates the next one
+    <ul>
+      <li>gtest does not reuse the same test fixture for multiple tests</li>
+      <li>any changes one test makes to the fixture do not affect other tests</li>
+    </ul>
+  </li>
+  <li>
+    <p>Naming convention for fixture classes are: append the <code class="language-plaintext highlighter-rouge">Test</code> to the class name. e.g. give it the name <code class="language-plaintext highlighter-rouge">FooTest</code> if you want to test class <code class="language-plaintext highlighter-rouge">Foo</code></p>
+
+    <p>e.g.</p>
+    <pre><code class="language-Cpp"> class QueueTest : public ::testing::Test {
+  protected:
+   void SetUp() override {
+      q1_.Enqueue(1);
+      q2_.Enqueue(2);
+      q2_.Enqueue(3);
+   }
+    
+   // void TearDown() override {}
+    
+   Queue&lt;int&gt; q0_;
+   Queue&lt;int&gt; q1_;
+   Queue&lt;int&gt; q2_;
+ };
+</code></pre>
+    <pre><code class="language-Cpp"> TEST_F(QueueTest, IsEmptyInitially) {
+   EXPECT_EQ(q0_.size(), 0);
+ }
+    
+ TEST_F(QueueTest, DequeueWorks) {
+   int* n = q0_.Dequeue();
+   EXPECT_EQ(n, nullptr);
+    
+   n = q1_.Dequeue();
+   ASSERT_NE(n, nullptr);
+   EXPECT_EQ(*n, 1);
+   EXPECT_EQ(q1_.size(), 0);
+   delete n;
+    
+   n = q2_.Dequeue();
+   ASSERT_NE(n, nullptr);
+   EXPECT_EQ(*n, 2);
+   EXPECT_EQ(q2_.size(), 1);
+   delete n;
+ }
+</code></pre>
+  </li>
+</ol>
+
+<h3 id="invoking-the-tests">Invoking the tests</h3>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">TEST()</code> and <code class="language-plaintext highlighter-rouge">TEST_F()</code> implicitly register their tests with gtest</li>
+  <li>You can run them with <code class="language-plaintext highlighter-rouge">RUN_ALL_TESTS()</code>, which returns 0 if all the tests are successful or 1 otherwise.</li>
+  <li><code class="language-plaintext highlighter-rouge">RUN_ALL_TESTS()</code> runs all tests in your link unit and they can be from different test suites, or even different source files</li>
+  <li>You should call <code class="language-plaintext highlighter-rouge">RUN_ALL_TESTS()</code> only once! Calling it more than once conflicts with some advanced gtest features and thus is not supported</li>
+</ul>
+
+<h4 id="behind-the-scenes-the-run_all_tests-macro">Behind the scenes, the <code class="language-plaintext highlighter-rouge">RUN_ALL_TESTS()</code> macro:</h4>
+<ul>
+  <li>Saves the state of all gtest flags</li>
+  <li>Creates a test fixture object for the first test</li>
+  <li>Initializes it via <code class="language-plaintext highlighter-rouge">SetUp()</code></li>
+  <li>Runs the test on the fixture object</li>
+  <li>Cleans up the fixture via <code class="language-plaintext highlighter-rouge">TearDown()</code></li>
+  <li>Deletes the fixture</li>
+  <li>Restores the state of all gtest flags</li>
+  <li>Repeats the above steps for the next test, until all tests have run</li>
+</ul>
+
+<p><strong>If a fatal failure happens, the subsequent steps will be skipped!</strong></p>
+
+<h3 id="writing-the-main-function">Writing the main() function</h3>
+
+<p>Most users should not need to write their own <code class="language-plaintext highlighter-rouge">main</code> function and instead they should link with <code class="language-plaintext highlighter-rouge">gtest_main()</code>, which defines a suitable entry point.</p>
+
+<p>When you want to do something before the tests that cannot be expressed within the framework of fixtures and test suits, then you can consider writing your own <code class="language-plaintext highlighter-rouge">main</code> function.</p>
+
+<p>If you write your own <code class="language-plaintext highlighter-rouge">main</code> function, it should return the value of <code class="language-plaintext highlighter-rouge">RUN_ALL_TESTS()</code>!</p>
+
+<p>See the starter code <a href="https://github.com/google/googletest/blob/master/googletest/docs/primer.md#writing-the-main-function">here</a>.</p>
+
+<h2 id="advanced-gtest-topics">Advanced gtest topics</h2>
+
+<h3 id="explicit-success-and-failure-macros">Explicit Success and Failure macros</h3>
+
+<p><code class="language-plaintext highlighter-rouge">SUCCEED()</code>, <code class="language-plaintext highlighter-rouge">FAIL()</code> do not actually test a value or expression and they generate a success or failure directly. They supports streaming of custom <strong>messages</strong> into them.</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">SUCCEED()</code>
+    <ul>
+      <li>it <strong>does not</strong> make the overall test succeed and a test is considered successful only if none of its assertions fail during its execution</li>
+      <li>it is purely documentary and currently does not generate any user-visible output</li>
+    </ul>
+  </li>
+  <li><code class="language-plaintext highlighter-rouge">FAIL()</code>, <code class="language-plaintext highlighter-rouge">ADD_FAILURE()</code>, and <code class="language-plaintext highlighter-rouge">ADD_FAILURE_AT()</code>
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">FAIL()</code> generates a fatal failure</li>
+      <li><code class="language-plaintext highlighter-rouge">ADD_FAILURE()</code> and <code class="language-plaintext highlighter-rouge">ADD_FAILURE_AT()</code> generate nonfatal failure</li>
+      <li>they are useful when the control flow (rather than the boolean expression) determines the test’s sucecss or failure</li>
+      <li><code class="language-plaintext highlighter-rouge">FAIL()</code> can only be used in functions that return <code class="language-plaintext highlighter-rouge">void</code></li>
+    </ul>
+
+    <p>e.g.</p>
+    <pre><code class="language-Cpp">  switch(expression) {
+    case 1:
+       ... some checks ...
+    case 2:
+       ... some other checks ...
+    default:
+       FAIL() &lt;&lt; "We shouldn't get here.";
+  }
+</code></pre>
+  </li>
+</ul>
+
+<h3 id="exception-assertions">Exception Assertions</h3>
+
+<p>These assertions are for verifying that a piece of code throws or does not throw an exception of the given type.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">Fatal</th>
+      <th style="text-align: center">Nonfatal</th>
+      <th style="text-align: center">Explaination</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">ASSERT_THROW(statement, exception_type)</code></td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">EXPECT_THORW(statement, exception_type)</code></td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">statement</code> throws an exception of the given type</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">ASSERT_ANY_THROW(statement)</code></td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">EXPECT_ANY_THROW(statement)</code></td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">statement</code> throws an exception of any type</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">ASSERT_NO_THROW(statement)</code></td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">EXPECT_NO_THROW(statement)</code></td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">statement</code> does not throw any exception</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="value-parameterized-tests">Value-Parameterized Tests</h3>
+
+<p>Enable users to test code with different parameters without writing multiple copies of the same test.</p>
+
+<h4 id="howto">HowTo</h4>
+
+<ol>
+  <li>define a fixture class that derived from both <code class="language-plaintext highlighter-rouge">testing::Test</code> and <code class="language-plaintext highlighter-rouge">testing::WithParamInterface&lt;T&gt;</code> where <code class="language-plaintext highlighter-rouge">T</code> is the type of your parameter values. <strong>For convenience</strong>, you can just derive the fixture class from <code class="language-plaintext highlighter-rouge">testing::TestWithParam&lt;T&gt;</code>, which itself is derived from both the required classes. <code class="language-plaintext highlighter-rouge">T</code> can be any copyable type and if it is a raw pointer, you are responsible for managing the lifespan of the pointed values.</li>
+  <li>If your test fixture defines <code class="language-plaintext highlighter-rouge">SetUpTestSuite()</code> or <code class="language-plaintext highlighter-rouge">TearDownTestSuite()</code> they must be declared <code class="language-plaintext highlighter-rouge">public</code> rather than <code class="language-plaintext highlighter-rouge">protected</code> in order to use <code class="language-plaintext highlighter-rouge">TEST_P</code>.</li>
+  <li>Use the <code class="language-plaintext highlighter-rouge">TEST_P</code> macro to define as many test patterns using this fixture as you want</li>
+  <li>Inside the test, you can access the parameter by calling <code class="language-plaintext highlighter-rouge">GetParam()</code> method of the <code class="language-plaintext highlighter-rouge">TestWithParam&lt;T&gt;</code> class</li>
+  <li>You can then instantiate the test suite with any set of parameters using <code class="language-plaintext highlighter-rouge">INSTANTIATE_TEST_SUITE_P()</code></li>
+  <li>
+    <p>You <strong>must</strong> place the <code class="language-plaintext highlighter-rouge">INSTANTIATE_TEST_SUITE_P()</code> statement at global or namespace scope, rather than function scope.</p>
+
+    <p>e.g.</p>
+    <pre><code class="language-Cpp"> INSTANTIATE_TEST_SUITE_P(InstantiationName,
+                          FooTest,
+                          testing::Values("meeny", "miny", "moe"));
+</code></pre>
+  </li>
+</ol>
+
+<hr />
+<div class="footnotes" role="doc-endnotes">
+  <ol>
+    <li id="fn:1" role="doc-endnote">
+      <p>https://github.com/google/googletest/blob/master/googletest/docs/primer.md <a href="#fnref:1" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:2" role="doc-endnote">
+      <p>https://glossary.istqb.org/en/search/test%20case <a href="#fnref:2" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+
+</div>
+
+<div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+    <li>
+      <h3>
+        <a href="/2023/06/22/how-to-setup-ptr-record-in-oci/">
+          How to setup PTR record in Oracle Cloud Infrastructure (OCI)
+          <small>22 Jun 2023</small>
+        </a>
+      </h3>
+    </li>
+    
+    <li>
+      <h3>
+        <a href="/2023/06/21/Debug-resource-deadlock-avoided/">
+          Debug Resource Deadlock Avoided Error
+          <small>21 Jun 2023</small>
+        </a>
+      </h3>
+    </li>
+    
+    <li>
+      <h3>
+        <a href="/tools/2022/08/28/setup-vmess-edge/">
+          Set up network edge router via V2Ray
+          <small>28 Aug 2022</small>
+        </a>
+      </h3>
+    </li>
+    
+  </ul>
+</div>
+    </div>
+
+  </body>
+</html>

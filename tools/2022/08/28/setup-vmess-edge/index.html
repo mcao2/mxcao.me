@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+  <meta charset="utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Meta -->
+  <link rel="canonical" href="https://mxcao.me/">
+
+  <!-- Analytics -->
+  <script async src="https://umami.mxcao.me/script.js" data-website-id="4c2d93d9-a90e-41c6-bc74-d2f96994b1e9"></script>
+
+  <!-- Christmax Snow -->
+  <!-- <script src="https://app.embed.im/snow.js" defer></script> -->
+
+  <title>
+    Set up network edge router via V2Ray &middot; mxin
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/main.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700%7CSource+Sans+Pro:400,400i,700,700i&subset=greek,greek-ext,latin-ext">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon" sizes="180x180" href="/public/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/public/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/public/favicon-16x16.png">
+  <link rel="manifest" href="/public/site.webmanifest">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+
+</head>
+
+  <body>
+
+    <div class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>mxin</h1>
+      <p class="tagline"># Mengxin Cao</p>
+    </div>
+
+    <input type="checkbox" id="menu-icon">
+    <label class="menu-label" for="menu-icon"></label>
+    <div class="trigger">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-item">
+          <a href="/">Home</a>
+        </li>
+        
+
+        
+        
+        
+        
+        
+        
+        
+        
+        <li class="sidebar-nav-item">
+          <a href="/about/">About</a>
+        </li>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <li class="sidebar-nav-item">
+          <a href="/posts/">Posts</a>
+        </li>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <li class="sidebar-nav-item">
+          <a href="https://github.com/mcao2/">GitHub</a>
+        </li>
+        <li class="sidebar-nav-item">
+          <a href="https://www.linkedin.com/in/mxin/">LinkedIn</a>
+        </li>
+        <!-- <li class="sidebar-nav-item">
+          <a href="https://cs.cmu.edu/~mcao2/mengxin_cv.pdf">Curriculum Vitae</a>
+        </li> -->
+      </ul>
+
+      <p class="copyright">&copy; 2023. All rights reserved.</p>
+    </div>
+  </div>
+</div>
+
+    <div class="content container">
+      <div class="post">
+  <h1 class="post-title">Set up network edge router via V2Ray</h1>
+  <span class="post-info">28 Aug 2022</span>
+  <h2 id="motivation">Motivation</h2>
+
+<p>Hello! Long time no see! I have been heavily using an iOS app called “Quantumult X” (a.k.a. QX) these days, mainly for the following reasons:</p>
+
+<ul>
+  <li>Easy to setup and lots of tutorials/scripts online that you can add and learn</li>
+  <li>You can add VPN servers, add flexible routing rules e.g., SSID-based switching, and subscribe to public servers (not recommended out of privacy/security concerns)</li>
+  <li>You can do MITM rewrites that enable you to have premium features on other apps for free</li>
+</ul>
+
+<p>Overall I’m very happy with this app but I do find some limitations:</p>
+
+<!--more-->
+
+<ul>
+  <li>The set of protocols supported by QX is limited. According to their <a href="https://github.com/crossutility/Quantumult-X/blob/d30a160eb093b3be175ea5eeeff0648db50b2a20/sample.conf#L129">sample.conf</a>, it only supports <code class="language-plaintext highlighter-rouge">shadowsocks</code>, <code class="language-plaintext highlighter-rouge">vmess</code>, <code class="language-plaintext highlighter-rouge">http</code>, and <code class="language-plaintext highlighter-rouge">trojan</code>.</li>
+</ul>
+
+<p>For me I do have some proxy servers using <code class="language-plaintext highlighter-rouge">shadowsocks</code>, <code class="language-plaintext highlighter-rouge">vmess</code>, but I also have other types up and running such as <code class="language-plaintext highlighter-rouge">wireguard</code>. So natively there’s no way you can add a wireguard server to this list of <code class="language-plaintext highlighter-rouge">server_local</code> in QX.</p>
+
+<p>Besides that I have other good-to-have features that I wish I can use within a single app:</p>
+
+<ul>
+  <li>iOS only supports 1 VPN up and running and therefore if I connect to QX then my tailscale connection is down. This is okay but it would be great if I can access my services deployed within the tailscale subnet.</li>
+  <li>Even if this single app QX is capable to handle all the protocols, it is still limited to my mobile devices and I wish I can have some sort of routing done on the server side rather than on this app, so that if I switch to another app or a different platform then I can still have the same set of routing rules and servers. This is what I call the “network edge router” which is simply a VPS server that helps me route my traffic to different VPN servers.
+    <ul>
+      <li>The added benefit of this approach is that the VPS server is much more performant and flexible since it is a Linux machine so it can do much complicated things like multi-hop connections (e.g., device A -&gt; Network Edge Router -&gt; VPN@Server1 -&gt; VPN@Server2), which will greatly improve your anonymity.</li>
+    </ul>
+  </li>
+</ul>
+
+<p>In this post I will share how I set up such a network edge router with the help of V2Ray. Specifically I’m deploying this service to my OCI Ampere machine (arm64). Check out my previous post about setting up an OCI instance if you are interested.</p>
+
+<p>Before we come to the v2ray server config itself, let’s add a few VPN servers that we will use later.</p>
+
+<h2 id="set-up-a-cloudfare-warp-vpn-or-any-wireguard-server">Set up a Cloudfare Warp+ VPN (or any wireguard server)</h2>
+
+<p>One thing great about <a href="https://blog.cloudflare.com/1111-warp-better-vpn/">Cloudfare Warp+</a> is that you can convert it to a wireguard server with the help of <a href="https://github.com/ViRb3/wgcf">wgcf</a>.</p>
+
+<p>The conversion steps are simple and straightforward, just follow their official README and you should be good to go. Below is my steps for my future reference</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>wget https://github.com/ViRb3/wgcf/releases/download/v2.2.15/wgcf_2.2.15_linux_arm64
+<span class="nb">ln</span> <span class="nt">-s</span> wgcf_2.2.15_linux_arm64 wgcf
+./wgcf register <span class="nt">-n</span> <span class="s1">'&lt;machine name&gt;'</span> <span class="nt">--accept-tos</span>
+<span class="nv">WGCF_LICENSE_KEY</span><span class="o">=</span><span class="s2">"&lt;your license key&gt;"</span> ./wgcf update
+./wgcf generate
+</code></pre></div></div>
+
+<p>After the above steps you should have a wireguard conf file named <code class="language-plaintext highlighter-rouge">wgcf-profile.conf</code> by default.</p>
+
+<h3 id="use-wireguard-as-a-socks5-server">Use wireguard as a socks5 server</h3>
+
+<p>We don’t want to directly use the generated wireguard config because it will route all our VPS traffic through Cloudfare. What we want is an application-based proxy. So here I will convert it into a socks5 proxy server by using a docker container. I know this is not the most efficient approach but this is simpler and easy to follow.</p>
+
+<p>First check out the content of the generated wireguard conf file in the previous step and <strong>remove all the IPv6 contents within this file</strong> e.g., your wireguard IPv6 address, and the IPv6 CIDR in the AllowedIPs. This step is necesssary because our wireguard-socks5 docker container cannot process such rules.</p>
+
+<p>Clone <a href="https://github.com/mcao2/wireguard-socks5">this repo</a> and build your own wireguard-socks5 image. Note that you may want to change the network interface <a href="https://github.com/mcao2/wireguard-socks5/blob/7996c5cb0889467c37de6cfc1ed2e7d9a684f778/sockd.conf#L3">here</a> used in the container if you encounter any issues (e.g., change it to eth0). Note that after the change you should rebuild the docker image.</p>
+
+<p>Below is my steps:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git clone git@github.com:mcao2/wireguard-socks5.git
+podman build <span class="nt">-t</span> wireguard-socks5:latest-arm <span class="nb">.</span>
+<span class="c"># First run an interactive container to check if there's any errors</span>
+podman run <span class="nt">--rm</span> <span class="nt">-it</span> <span class="se">\</span>
+  <span class="nt">--name</span><span class="o">=</span>wireguard-socks-proxy <span class="se">\</span>
+  <span class="nt">--device</span><span class="o">=</span>/dev/net/tun <span class="nt">--cap-add</span><span class="o">=</span>NET_ADMIN <span class="nt">--privileged</span> <span class="se">\</span>
+  <span class="nt">--publish</span> 127.0.0.1:1080:1080 <span class="se">\</span>
+  <span class="nt">--volume</span> /my/dir/to/wireguard:/etc/wireguard:z <span class="se">\</span>
+  wireguard-socks5:latest-arm
+<span class="c"># If you encounter network interface name resolution error then change it in https://github.com/mcao2/wireguard-socks5/blob/master/sockd.conf and rebuild the docker</span>
+<span class="c"># Now start our proxy server in detach mode</span>
+podman run <span class="nt">--rm</span> <span class="nt">-d</span> <span class="se">\</span>
+  <span class="nt">--name</span><span class="o">=</span>wireguard-socks-proxy <span class="se">\</span>
+  <span class="nt">--device</span><span class="o">=</span>/dev/net/tun <span class="nt">--cap-add</span><span class="o">=</span>NET_ADMIN <span class="nt">--privileged</span> <span class="se">\</span>
+  <span class="nt">--publish</span> 127.0.0.1:1080:1080 <span class="se">\</span>
+  <span class="nt">--volume</span> /my/dir/to/wireguard:/etc/wireguard:z <span class="se">\</span>
+  wireguard-socks5:latest-arm
+</code></pre></div></div>
+
+<p>By now you should have a socks5 server up and running in <code class="language-plaintext highlighter-rouge">127.0.0.1:1080</code>, verify this by using <code class="language-plaintext highlighter-rouge">curl --proxy socks5h://127.0.0.1:1080 ipinfo.io</code>.</p>
+
+<h3 id="auto-start-container-on-restart">Auto start container on restart</h3>
+
+<p>Podman provides command to generate a systemd unit file that you can enable for this purpose. Below is my steps to enable this:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>su
+setsebool <span class="nt">-P</span> container_manage_cgroup on
+<span class="c"># `--name` is the container name</span>
+podman generate systemd <span class="nt">--files</span> <span class="nt">--name</span> wireguard-socks-proxy <span class="nt">--new</span>
+<span class="nb">mv </span>container-wireguard-socks-proxy.service /etc/systemd/system/container-wireguard-socks-proxy.service
+systemctl <span class="nb">enable </span>container-wireguard-socks-proxy.service
+<span class="c"># Stop your existing container first</span>
+podman <span class="nb">rm</span> <span class="nt">-f</span> wireguard-socks-proxy
+<span class="c"># Start your new container via systemd</span>
+systemctl start container-wireguard-socks-proxy.service
+<span class="c"># Check its static</span>
+systemctl status container-wireguard-socks-proxy.service
+</code></pre></div></div>
+
+<h2 id="v2ray-rules">V2Ray rules</h2>
+
+<p>Now is the fun part! Install the latest V2Ray service following <a href="https://github.com/v2fly/fhs-install-v2ray">their guides</a>.</p>
+
+<p>Edit the config file <code class="language-plaintext highlighter-rouge">/usr/local/etc/v2ray/config.json</code> and add the following contents:</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">{</span>
+  <span class="s2">"log"</span>: <span class="o">{</span>
+    <span class="s2">"loglevel"</span>: <span class="s2">"warning"</span>,
+    <span class="s2">"access"</span>: <span class="s2">"/var/log/v2ray/access.log"</span>,
+    <span class="s2">"error"</span>: <span class="s2">"/var/log/v2ray/error.log"</span>
+  <span class="o">}</span>,
+  <span class="s2">"inbounds"</span>: <span class="o">[</span>
+    <span class="o">{</span>
+      <span class="s2">"tag"</span>: <span class="s2">"vmess-in"</span>,
+      // CHANGE ME!
+      <span class="s2">"port"</span>: &lt;YOUR_PORT_1&gt;,
+      <span class="s2">"listen"</span>: <span class="s2">"0.0.0.0"</span>,
+      <span class="s2">"protocol"</span>: <span class="s2">"vmess"</span>,
+      <span class="s2">"settings"</span>: <span class="o">{</span>
+        <span class="s2">"clients"</span>: <span class="o">[</span> // An array <span class="k">for </span>valid user accounts
+          <span class="o">{</span>
+            // CHANGE ME!
+            <span class="s2">"id"</span>: <span class="s2">"&lt;YOUR_UUID_1&gt;"</span>, // User ID, <span class="k">in </span>the form of a UUID
+            <span class="s2">"alterId"</span>: 64, // Number of alternative IDs, which will be generated <span class="k">in </span>a deterministic way
+            <span class="s2">"level"</span>: 0 // V2Ray will apply different policies based on user level
+          <span class="o">}</span>
+        <span class="o">]</span>,
+        <span class="s2">"disableInsecureEncryption"</span>: <span class="nb">true</span> // Forbids client <span class="k">for </span>using insecure encryption methods
+      <span class="o">}</span>
+    <span class="o">}</span>,
+    <span class="o">{</span>
+      <span class="s2">"tag"</span>: <span class="s2">"telegram-in"</span>,
+      // CHANGE ME!
+      <span class="s2">"port"</span>: &lt;YOUR_PORT_2&gt;,
+      <span class="s2">"listen"</span>: <span class="s2">"0.0.0.0"</span>,
+      <span class="s2">"protocol"</span>: <span class="s2">"mtproto"</span>,
+      <span class="s2">"settings"</span>: <span class="o">{</span>
+        <span class="s2">"users"</span>: <span class="o">[</span>
+          <span class="o">{</span>
+            <span class="s2">"level"</span>: 0,
+            // CHANGE ME!
+            <span class="s2">"secret"</span>: <span class="s2">"&lt;YOUR_SECRET_2&gt;"</span> // User secret. In Telegram, user secret must be 32 characters long, and only contains characters between 0 to 9, and ato f. You may use the following <span class="nb">command </span>to generate MTProto secret: <span class="sb">`</span>openssl rand <span class="nt">-hex</span> 16<span class="sb">`</span>
+          <span class="o">}</span>
+        <span class="o">]</span>
+      <span class="o">}</span>
+    <span class="o">}</span>,
+    <span class="o">{</span>
+      <span class="s2">"tag"</span>: <span class="s2">"vmess-in-cloudfare"</span>,
+      // CHANGE ME!
+      <span class="s2">"port"</span>: &lt;YOUR_PORT_3&gt;,
+      <span class="s2">"listen"</span>: <span class="s2">"0.0.0.0"</span>,
+      <span class="s2">"protocol"</span>: <span class="s2">"vmess"</span>,
+      <span class="s2">"settings"</span>: <span class="o">{</span>
+        <span class="s2">"clients"</span>: <span class="o">[</span>
+          <span class="o">{</span>
+            // CHANGE ME!
+            <span class="s2">"id"</span>: <span class="s2">"&lt;YOUR_UUID_3&gt;"</span>,
+            <span class="s2">"alterId"</span>: 64,
+            <span class="s2">"level"</span>: 0
+          <span class="o">}</span>
+        <span class="o">]</span>,
+        <span class="s2">"disableInsecureEncryption"</span>: <span class="nb">true</span>
+      <span class="o">}</span>
+    <span class="o">}</span>
+  <span class="o">]</span>,
+  <span class="s2">"outbounds"</span>: <span class="o">[</span>
+    <span class="o">{</span>
+      <span class="s2">"tag"</span>: <span class="s2">"default-out"</span>,
+      <span class="s2">"protocol"</span>: <span class="s2">"freedom"</span>,
+      <span class="s2">"settings"</span>: <span class="o">{}</span>
+    <span class="o">}</span>,
+    <span class="o">{</span>
+      <span class="s2">"tag"</span>: <span class="s2">"telegram-out"</span>,
+      <span class="s2">"protocol"</span>: <span class="s2">"mtproto"</span>,
+      <span class="s2">"settings"</span>: <span class="o">{}</span>
+    <span class="o">}</span>,
+    <span class="o">{</span>
+      <span class="s2">"tag"</span>: <span class="s2">"tailscale-out"</span>,
+      <span class="s2">"protocol"</span>: <span class="s2">"freedom"</span>,
+      <span class="s2">"settings"</span>: <span class="o">{}</span>
+    <span class="o">}</span>,
+    <span class="o">{</span>
+      <span class="s2">"tag"</span>: <span class="s2">"cloudfare-out"</span>,
+      <span class="s2">"protocol"</span>: <span class="s2">"socks"</span>,
+      <span class="s2">"settings"</span>: <span class="o">{</span>
+        <span class="s2">"servers"</span>: <span class="o">[</span>
+          <span class="o">{</span>
+            <span class="s2">"address"</span>: <span class="s2">"127.0.0.1"</span>,
+            <span class="s2">"port"</span>: 1080
+          <span class="o">}</span>
+        <span class="o">]</span>
+      <span class="o">}</span>
+    <span class="o">}</span>
+  <span class="o">]</span>,
+  <span class="s2">"routing"</span>: <span class="o">{</span> // Configuration <span class="k">for </span>internal Routing strategy
+    <span class="s2">"domainStrategy"</span>: <span class="s2">"AsIs"</span>, // domain resolution strategy
+    <span class="s2">"rules"</span>: <span class="o">[</span> // <span class="k">for </span>each inbound connection, v2ray tries these rules from top down one by one. If a rule takes effect, the connection will be routed to the <span class="sb">`</span>outboundTag<span class="sb">`</span> or <span class="sb">`</span>balanceTag<span class="sb">`</span> of the rule
+      <span class="o">{</span> // Route traffic <span class="k">for </span>the <span class="sb">`</span>mtproto<span class="sb">`</span> protocol
+        <span class="s2">"type"</span>: <span class="s2">"field"</span>,
+        <span class="s2">"inboundTag"</span>: <span class="o">[</span>
+          <span class="s2">"telegram-in"</span>
+        <span class="o">]</span>,
+        <span class="s2">"outboundTag"</span>: <span class="s2">"telegram-out"</span>
+      <span class="o">}</span>,
+      <span class="o">{</span> // Route traffic <span class="k">for </span>tailscale
+        <span class="s2">"type"</span>: <span class="s2">"field"</span>,
+        <span class="s2">"ip"</span>: <span class="o">[</span>
+          <span class="s2">"100.64.0.0/10"</span> // tailscale subnet
+        <span class="o">]</span>,
+        <span class="s2">"outboundTag"</span>: <span class="s2">"tailscale-out"</span>
+      <span class="o">}</span>,
+      <span class="o">{</span> // Route vmess-in via default out
+        <span class="s2">"type"</span>: <span class="s2">"field"</span>,
+        <span class="s2">"inboundTag"</span>: <span class="o">[</span>
+          <span class="s2">"vmess-in"</span>
+        <span class="o">]</span>,
+        <span class="s2">"outboundTag"</span>: <span class="s2">"default-out"</span>
+      <span class="o">}</span>,
+      <span class="o">{</span> // Route vmess-in-cloudfare via cloudfare wireguard interface
+        <span class="s2">"type"</span>: <span class="s2">"field"</span>,
+        <span class="s2">"inboundTag"</span>: <span class="o">[</span>
+          <span class="s2">"vmess-in-cloudfare"</span>
+        <span class="o">]</span>,
+        <span class="s2">"outboundTag"</span>: <span class="s2">"cloudfare-out"</span>
+      <span class="o">}</span>
+    <span class="o">]</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>The config file is self-explanatory and you definitely need to change all the fields marked with <code class="language-plaintext highlighter-rouge">// CHANGE ME!</code>.</p>
+
+<p>In this config file I also added a mtproto server for my telegram client to use. You can choose not to add this and
+safely remove all associated routing rules.</p>
+
+<p>That’s it! In your QX config add the following:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">vmess</span><span class="o">=</span>&lt;YOUR_VPS_IP&gt;:&lt;YOUR_PORT_1&gt;, <span class="nv">method</span><span class="o">=</span>chacha20-poly1305, <span class="nv">password</span><span class="o">=</span>&lt;YOUR_UUID_1&gt;, fast-open<span class="o">=</span><span class="nb">false</span>, udp-relay<span class="o">=</span><span class="nb">false</span>, <span class="nv">tag</span><span class="o">=</span>vmess-ampere
+<span class="nv">vmess</span><span class="o">=</span>&lt;YOUR_VPS_IP&gt;:&lt;YOUR_PORT_3&gt;, <span class="nv">method</span><span class="o">=</span>chacha20-poly1305, <span class="nv">password</span><span class="o">=</span>&lt;YOUR_UUID_3&gt;, fast-open<span class="o">=</span><span class="nb">false</span>, udp-relay<span class="o">=</span><span class="nb">false</span>, <span class="nv">tag</span><span class="o">=</span>vmess-ampere-cloudfare
+</code></pre></div></div>
+
+<p>Enjoy!</p>
+
+<hr />
+
+</div>
+
+<div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+    <li>
+      <h3>
+        <a href="/2023/06/22/how-to-setup-ptr-record-in-oci/">
+          How to setup PTR record in Oracle Cloud Infrastructure (OCI)
+          <small>22 Jun 2023</small>
+        </a>
+      </h3>
+    </li>
+    
+    <li>
+      <h3>
+        <a href="/2023/06/21/Debug-resource-deadlock-avoided/">
+          Debug Resource Deadlock Avoided Error
+          <small>21 Jun 2023</small>
+        </a>
+      </h3>
+    </li>
+    
+    <li>
+      <h3>
+        <a href="/tools/2021/05/28/setup-mikrotik-ike2/">
+          Set up IKEv2 VPN on a Mikrotik Router
+          <small>28 May 2021</small>
+        </a>
+      </h3>
+    </li>
+    
+  </ul>
+</div>
+    </div>
+
+  </body>
+</html>

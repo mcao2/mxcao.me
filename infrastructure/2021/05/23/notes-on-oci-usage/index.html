@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+  <meta charset="utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Meta -->
+  <link rel="canonical" href="https://mxcao.me/">
+
+  <!-- Analytics -->
+  <script async src="https://umami.mxcao.me/script.js" data-website-id="4c2d93d9-a90e-41c6-bc74-d2f96994b1e9"></script>
+
+  <!-- Christmax Snow -->
+  <!-- <script src="https://app.embed.im/snow.js" defer></script> -->
+
+  <title>
+    Notes on OCI (Oracle Cloud Infrastructure) &middot; mxin
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/main.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700%7CSource+Sans+Pro:400,400i,700,700i&subset=greek,greek-ext,latin-ext">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon" sizes="180x180" href="/public/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/public/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/public/favicon-16x16.png">
+  <link rel="manifest" href="/public/site.webmanifest">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+
+</head>
+
+  <body>
+
+    <div class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>mxin</h1>
+      <p class="tagline"># Mengxin Cao</p>
+    </div>
+
+    <input type="checkbox" id="menu-icon">
+    <label class="menu-label" for="menu-icon"></label>
+    <div class="trigger">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-item">
+          <a href="/">Home</a>
+        </li>
+        
+
+        
+        
+        
+        
+        
+        
+        
+        
+        <li class="sidebar-nav-item">
+          <a href="/about/">About</a>
+        </li>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <li class="sidebar-nav-item">
+          <a href="/posts/">Posts</a>
+        </li>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <li class="sidebar-nav-item">
+          <a href="https://github.com/mcao2/">GitHub</a>
+        </li>
+        <li class="sidebar-nav-item">
+          <a href="https://www.linkedin.com/in/mxin/">LinkedIn</a>
+        </li>
+        <!-- <li class="sidebar-nav-item">
+          <a href="https://cs.cmu.edu/~mcao2/mengxin_cv.pdf">Curriculum Vitae</a>
+        </li> -->
+      </ul>
+
+      <p class="copyright">&copy; 2023. All rights reserved.</p>
+    </div>
+  </div>
+</div>
+
+    <div class="content container">
+      <div class="post">
+  <h1 class="post-title">Notes on OCI (Oracle Cloud Infrastructure)</h1>
+  <span class="post-info">23 May 2021</span>
+  <h2 id="motivation">Motivation</h2>
+
+<p>Some of my services are too light that I don’t want to run them endlessly on my beefy home server. One reason is that I want better availability and clearly it’s hard (a better word probably is expensive) to achieve that in my current set up. So I decided to go for the Cloud, after all… I was a cloud TA!</p>
+
+<!--more-->
+
+<p>I chose OCI because they offer two always-free machines and it seems they are serious about this offer. So I migrated several of my services to OCI instances. This post is a summary of the quirks that I want to note down for future reference.</p>
+
+<h2 id="firewall">Firewall</h2>
+
+<p>I don’t know why they make it so hard to achieve the same effect as AWS security groups… But anyway, here’s what I need to do to reach my service via the public Internet.</p>
+
+<h3 id="set-up-vpc-rules-through-the-portal">Set up VPC rules through the portal</h3>
+
+<p>In the instance detail page, click <code class="language-plaintext highlighter-rouge">Attached VNICs</code> under the <code class="language-plaintext highlighter-rouge">Resources</code> tab. Then find the subnet of VLAN that this instance is attached with. You will be directed to the subnet detail page, where you can find the <code class="language-plaintext highlighter-rouge">Security Lists</code>, and that is our target (the equivalent of AWS security group). Then you can add/remove any rules you want.</p>
+
+<p><img src="/public/files/oci/oci-security-list-under-vcn.png" alt="" /></p>
+
+<h3 id="set-up-iptable-rules-via-command-line">Set up iptable rules via command line</h3>
+
+<p>This iptable thing actually confuses me a lot. I don’t know why they enforce iptable rules together with the security list set up.</p>
+
+<p>SSH into the instance and run the following commands. These commands are taken from <a href="https://stackoverflow.com/questions/54794217/opening-port-80-on-oracle-cloud-infrastructure-compute-node">this SO post</a></p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nb">sudo </span>iptables-save <span class="o">&gt;</span> ~/iptables-rules <span class="c"># backup</span>
+  <span class="nb">sudo </span>iptables <span class="nt">-P</span> INPUT ACCEPT <span class="c"># the following commands effectively disable iptables by allowing all traffic</span>
+  <span class="nb">sudo </span>iptables <span class="nt">-P</span> OUTPUT ACCEPT
+  <span class="nb">sudo </span>iptables <span class="nt">-P</span> FORWARD ACCEPT
+  <span class="nb">sudo </span>iptables <span class="nt">-F</span>
+</code></pre></div></div>
+
+</div>
+
+<div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+    <li>
+      <h3>
+        <a href="/2023/06/22/how-to-setup-ptr-record-in-oci/">
+          How to setup PTR record in Oracle Cloud Infrastructure (OCI)
+          <small>22 Jun 2023</small>
+        </a>
+      </h3>
+    </li>
+    
+    <li>
+      <h3>
+        <a href="/2023/06/21/Debug-resource-deadlock-avoided/">
+          Debug Resource Deadlock Avoided Error
+          <small>21 Jun 2023</small>
+        </a>
+      </h3>
+    </li>
+    
+    <li>
+      <h3>
+        <a href="/tools/2022/08/28/setup-vmess-edge/">
+          Set up network edge router via V2Ray
+          <small>28 Aug 2022</small>
+        </a>
+      </h3>
+    </li>
+    
+  </ul>
+</div>
+    </div>
+
+  </body>
+</html>

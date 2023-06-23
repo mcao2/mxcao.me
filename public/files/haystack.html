@@ -1,0 +1,1956 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Facebook's Haystack - Transno</title>
+  <meta charset="utf-8" />
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="renderer" content="webkit" />
+  <meta name="author" content="transno.com" />
+</head>
+
+<body
+  style="margin: 50px 20px;color: #333; font-family: SourceSansPro,-apple-system,BlinkMacSystemFont,PingFang SC,Helvetica,Arial,Microsoft YaHei,微软雅黑,黑体,Heiti,sans-serif,SimSun,宋体,serif">
+  <div style="font-size: 22px; padding: 0 15px 0; margin-bottom: 20px;">
+    <div style="padding-bottom: 24px;">Facebook's Haystack</div>
+    <div style="background: #e5e6e8; height: 1px;"></div>
+  </div>
+  <ul style="padding: 16px 0px 0px 40px; margin: 0px; list-style: outside disc;">
+    <li style="line-height: 24px; list-style: none; position: relative;">
+      <div class="bullet-wrapper"
+        style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+        <div class="bullet-dot"
+          style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+        </div>
+      </div><span class="content mubu-node"
+        style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>Haystack
+          is an object storage system optimized for facebook's photo application, where data is </span><span
+          class="bold" style="font-weight: bold;">written once, read often, never modified, and rarely
+          deleted</span></span>
+      <ul class="children"
+        style="list-style: outside disc; padding-inline-start: 30px; padding: 0px 0px 4px 40px; margin-left: 13px; position: relative; left: -30px; border-left: 1px solid rgb(235, 235, 235);">
+        <li style="line-height: 24px; list-style: none; position: relative;">
+          <div class="bullet-wrapper"
+            style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+            <div class="bullet-dot"
+              style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+            </div>
+          </div><span class="content mubu-node"
+            style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>Features</span></span>
+          <ul class="children"
+            style="list-style: outside disc; padding-inline-start: 30px; padding: 0px 0px 4px 40px; margin-left: 13px; position: relative; left: -30px; border-left: 1px solid rgb(235, 235, 235);">
+            <li style="line-height: 24px; list-style: none; position: relative;">
+              <div class="bullet-wrapper"
+                style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                <div class="bullet-dot"
+                  style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                </div>
+              </div><span class="content mubu-node"
+                style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>less
+                  expensive and higher performing solution than previous attempts (leveraged NAS appliances over NFS
+                  =&gt; incurs an excessive number of disk operations because of metadata lookups)</span></span>
+              <ul class="children"
+                style="list-style: outside disc; padding-inline-start: 30px; padding: 0px 0px 4px 40px; margin-left: 13px; position: relative; left: -30px; border-left: 1px solid rgb(235, 235, 235);">
+                <li style="line-height: 24px; list-style: none; position: relative;">
+                  <div class="bullet-wrapper"
+                    style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                    <div class="bullet-dot"
+                      style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                    </div>
+                  </div><span class="content mubu-node"
+                    style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>Haystack
+                      perform all metadata lookup in main memory </span></span>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li style="line-height: 24px; list-style: none; position: relative;">
+          <div class="bullet-wrapper"
+            style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+            <div class="bullet-dot"
+              style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+            </div>
+          </div><span class="content mubu-node"
+            style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>Motivations</span></span>
+          <ul class="children"
+            style="list-style: outside disc; padding-inline-start: 30px; padding: 0px 0px 4px 40px; margin-left: 13px; position: relative; left: -30px; border-left: 1px solid rgb(235, 235, 235);">
+            <li style="line-height: 24px; list-style: none; position: relative;">
+              <div class="bullet-wrapper"
+                style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                <div class="bullet-dot"
+                  style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                </div>
+              </div><span class="content mubu-node"
+                style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>For
+                  each uploaded photo, facebook generates and stores 4 images of different sizes </span></span>
+              <ul class="children"
+                style="list-style: outside disc; padding-inline-start: 30px; padding: 0px 0px 4px 40px; margin-left: 13px; position: relative; left: -30px; border-left: 1px solid rgb(235, 235, 235);">
+                <li style="line-height: 24px; list-style: none; position: relative;">
+                  <div class="bullet-wrapper"
+                    style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                    <div class="bullet-dot"
+                      style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                    </div>
+                  </div><span class="content mubu-node"
+                    style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>photo
+                      storage poses a significant challenge for facebook's infrastructure</span></span>
+                </li>
+              </ul>
+            </li>
+            <li style="line-height: 24px; list-style: none; position: relative;">
+              <div class="bullet-wrapper"
+                style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                <div class="bullet-dot"
+                  style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                </div>
+              </div><span class="content mubu-node"
+                style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>Traditional
+                  POSIX based filesystems not work because</span></span>
+              <ul class="children"
+                style="list-style: outside disc; padding-inline-start: 30px; padding: 0px 0px 4px 40px; margin-left: 13px; position: relative; left: -30px; border-left: 1px solid rgb(235, 235, 235);">
+                <li style="line-height: 24px; list-style: none; position: relative;">
+                  <div class="bullet-wrapper"
+                    style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                    <div class="bullet-dot"
+                      style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                    </div>
+                  </div><span class="content mubu-node"
+                    style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>they
+                      are directories and per file metadata</span></span>
+                </li>
+                <li style="line-height: 24px; list-style: none; position: relative;">
+                  <div class="bullet-wrapper"
+                    style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                    <div class="bullet-dot"
+                      style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                    </div>
+                  </div><span class="content mubu-node"
+                    style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>for
+                      photo application, most of this metadata, e.g. permissions, is unused and thereby wasted storage
+                      capacity </span></span>
+                </li>
+                <li style="line-height: 24px; list-style: none; position: relative;">
+                  <div class="bullet-wrapper"
+                    style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                    <div class="bullet-dot"
+                      style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                    </div>
+                  </div><span class="content mubu-node"
+                    style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>more
+                      significant cost is that we have to read the file's metadata from disk into memory in order to
+                      find the file itself</span></span>
+                  <ul class="children"
+                    style="list-style: outside disc; padding-inline-start: 30px; padding: 0px 0px 4px 40px; margin-left: 13px; position: relative; left: -30px; border-left: 1px solid rgb(235, 235, 235);">
+                    <li style="line-height: 24px; list-style: none; position: relative;">
+                      <div class="bullet-wrapper"
+                        style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                        <div class="bullet-dot"
+                          style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                        </div>
+                      </div><span class="content mubu-node"
+                        style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>this
+                          becomes the bottleneck when we amplified with over billions of photos and petabytes of data
+                        </span></span>
+                    </li>
+                    <li style="line-height: 24px; list-style: none; position: relative;">
+                      <div class="bullet-wrapper"
+                        style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                        <div class="bullet-dot"
+                          style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                        </div>
+                      </div><span class="content mubu-node"
+                        style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>disk
+                          operations: </span></span>
+                      <ul class="children"
+                        style="list-style: outside disc; padding-inline-start: 30px; padding: 0px 0px 4px 40px; margin-left: 13px; position: relative; left: -30px; border-left: 1px solid rgb(235, 235, 235);">
+                        <li style="line-height: 24px; list-style: none; position: relative;">
+                          <div class="bullet-wrapper"
+                            style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                            <div class="bullet-dot"
+                              style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                            </div>
+                          </div><span class="content mubu-node"
+                            style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>one
+                              or more to translate the filename to an inode number</span></span>
+                        </li>
+                        <li style="line-height: 24px; list-style: none; position: relative;">
+                          <div class="bullet-wrapper"
+                            style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                            <div class="bullet-dot"
+                              style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                            </div>
+                          </div><span class="content mubu-node"
+                            style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>another
+                              to read the inode from disk</span></span>
+                        </li>
+                        <li style="line-height: 24px; list-style: none; position: relative;">
+                          <div class="bullet-wrapper"
+                            style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                            <div class="bullet-dot"
+                              style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                            </div>
+                          </div><span class="content mubu-node"
+                            style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>final
+                              one to read the file itself </span></span>
+                        </li>
+                      </ul>
+                    </li>
+                    <li style="line-height: 24px; list-style: none; position: relative;">
+                      <div class="bullet-wrapper"
+                        style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                        <div class="bullet-dot"
+                          style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                        </div>
+                      </div><span class="content mubu-node"
+                        style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>conclusion:
+                        </span><span class="bold" style="font-weight: bold;">using disk IOs for metadata was the
+                          limiting factor for facebook's read throughput</span></span>
+                    </li>
+                  </ul>
+                </li>
+                <li style="line-height: 24px; list-style: none; position: relative;">
+                  <div class="bullet-wrapper"
+                    style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                    <div class="bullet-dot"
+                      style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                    </div>
+                  </div><span class="content mubu-node"
+                    style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>additional
+                      cost is the CDNs to serve the majority of read traffic </span></span>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li style="line-height: 24px; list-style: none; position: relative;">
+          <div class="bullet-wrapper"
+            style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+            <div class="bullet-dot"
+              style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+            </div>
+          </div><span class="content mubu-node"
+            style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>Design
+              goals</span></span>
+          <ul class="children"
+            style="list-style: outside disc; padding-inline-start: 30px; padding: 0px 0px 4px 40px; margin-left: 13px; position: relative; left: -30px; border-left: 1px solid rgb(235, 235, 235);">
+            <li style="line-height: 24px; list-style: none; position: relative;">
+              <div class="bullet-wrapper"
+                style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                <div class="bullet-dot"
+                  style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                </div>
+              </div><span class="content mubu-node"
+                style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>high
+                  throughput and low latency </span></span>
+              <ul class="children"
+                style="list-style: outside disc; padding-inline-start: 30px; padding: 0px 0px 4px 40px; margin-left: 13px; position: relative; left: -30px; border-left: 1px solid rgb(235, 235, 235);">
+                <li style="line-height: 24px; list-style: none; position: relative;">
+                  <div class="bullet-wrapper"
+                    style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                    <div class="bullet-dot"
+                      style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                    </div>
+                  </div><span class="content mubu-node"
+                    style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>by
+                      requiring at most one disk operation per read </span></span>
+                  <ul class="children"
+                    style="list-style: outside disc; padding-inline-start: 30px; padding: 0px 0px 4px 40px; margin-left: 13px; position: relative; left: -30px; border-left: 1px solid rgb(235, 235, 235);">
+                    <li style="line-height: 24px; list-style: none; position: relative;">
+                      <div class="bullet-wrapper"
+                        style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                        <div class="bullet-dot"
+                          style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                        </div>
+                      </div><span class="content mubu-node"
+                        style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>by
+                          keeping all metadata in main memory</span></span>
+                    </li>
+                    <li style="line-height: 24px; list-style: none; position: relative;">
+                      <div class="bullet-wrapper"
+                        style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                        <div class="bullet-dot"
+                          style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                        </div>
+                      </div><span class="content mubu-node"
+                        style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>make
+                          practical by dramatically </span><span class="bold" style="font-weight: bold;">reducing the
+                          per photo metadata</span><span> that is necessary to find a photo on disk</span></span>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+            <li style="line-height: 24px; list-style: none; position: relative;">
+              <div class="bullet-wrapper"
+                style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                <div class="bullet-dot"
+                  style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                </div>
+              </div><span class="content mubu-node"
+                style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>fault-tolerant</span></span>
+              <ul class="children"
+                style="list-style: outside disc; padding-inline-start: 30px; padding: 0px 0px 4px 40px; margin-left: 13px; position: relative; left: -30px; border-left: 1px solid rgb(235, 235, 235);">
+                <li style="line-height: 24px; list-style: none; position: relative;">
+                  <div class="bullet-wrapper"
+                    style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                    <div class="bullet-dot"
+                      style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                    </div>
+                  </div><span class="content mubu-node"
+                    style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>admit
+                      that failure is the norm</span></span>
+                </li>
+                <li style="line-height: 24px; list-style: none; position: relative;">
+                  <div class="bullet-wrapper"
+                    style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                    <div class="bullet-dot"
+                      style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                    </div>
+                  </div><span class="content mubu-node"
+                    style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>it
+                      may happen that an entire data center crash but haystack should still provide availability to
+                      users transparently </span></span>
+                  <ul class="children"
+                    style="list-style: outside disc; padding-inline-start: 30px; padding: 0px 0px 4px 40px; margin-left: 13px; position: relative; left: -30px; border-left: 1px solid rgb(235, 235, 235);">
+                    <li style="line-height: 24px; list-style: none; position: relative;">
+                      <div class="bullet-wrapper"
+                        style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                        <div class="bullet-dot"
+                          style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                        </div>
+                      </div><span class="content mubu-node"
+                        style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>by
+                          replicating each photo in </span><span class="bold" style="font-weight: bold;">geographically
+                          distinct locations</span><span>. We will introduce another machine to take the crashed
+                          machine, copying data for redundancy as necessary </span></span>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+            <li style="line-height: 24px; list-style: none; position: relative;">
+              <div class="bullet-wrapper"
+                style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                <div class="bullet-dot"
+                  style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                </div>
+              </div><span class="content mubu-node"
+                style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>cost-effective
+                </span></span>
+              <ul class="children"
+                style="list-style: outside disc; padding-inline-start: 30px; padding: 0px 0px 4px 40px; margin-left: 13px; position: relative; left: -30px; border-left: 1px solid rgb(235, 235, 235);">
+                <li style="line-height: 24px; list-style: none; position: relative;">
+                  <div class="bullet-wrapper"
+                    style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                    <div class="bullet-dot"
+                      style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                    </div>
+                  </div><span class="content mubu-node"
+                    style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>quantify
+                      savings along two dimensions</span></span>
+                  <ul class="children"
+                    style="list-style: outside disc; padding-inline-start: 30px; padding: 0px 0px 4px 40px; margin-left: 13px; position: relative; left: -30px; border-left: 1px solid rgb(235, 235, 235);">
+                    <li style="line-height: 24px; list-style: none; position: relative;">
+                      <div class="bullet-wrapper"
+                        style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                        <div class="bullet-dot"
+                          style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                        </div>
+                      </div><span class="content mubu-node"
+                        style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>cost
+                          per terabyte of usable storage [~28% less]</span></span>
+                    </li>
+                    <li style="line-height: 24px; list-style: none; position: relative;">
+                      <div class="bullet-wrapper"
+                        style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                        <div class="bullet-dot"
+                          style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                        </div>
+                      </div><span class="content mubu-node"
+                        style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>read
+                          rate normalized for each terabyte of usable storage [~4x more reads per seconds]</span></span>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+            <li style="line-height: 24px; list-style: none; position: relative;">
+              <div class="bullet-wrapper"
+                style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                <div class="bullet-dot"
+                  style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                </div>
+              </div><span class="content mubu-node"
+                style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>simple</span></span>
+              <ul class="children"
+                style="list-style: outside disc; padding-inline-start: 30px; padding: 0px 0px 4px 40px; margin-left: 13px; position: relative; left: -30px; border-left: 1px solid rgb(235, 235, 235);">
+                <li style="line-height: 24px; list-style: none; position: relative;">
+                  <div class="bullet-wrapper"
+                    style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                    <div class="bullet-dot"
+                      style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                    </div>
+                  </div><span class="content mubu-node"
+                    style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>should
+                      be straight-forward to implement and to maintain </span></span>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li style="line-height: 24px; list-style: none; position: relative;">
+          <div class="bullet-wrapper"
+            style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+            <div class="bullet-dot"
+              style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+            </div>
+          </div><span class="content mubu-node"
+            style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span
+              class="bold" style="font-weight: bold;">Design and Implementation</span></span>
+          <ul class="children"
+            style="list-style: outside disc; padding-inline-start: 30px; padding: 0px 0px 4px 40px; margin-left: 13px; position: relative; left: -30px; border-left: 1px solid rgb(235, 235, 235);">
+            <li style="line-height: 24px; list-style: none; position: relative;">
+              <div class="bullet-wrapper"
+                style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                <div class="bullet-dot"
+                  style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                </div>
+              </div><span class="content mubu-node"
+                style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>Facebook
+                  uses a </span><span class="bold" style="font-weight: bold;">CDN</span><span> to serve popular images
+                  and leverages Haystack to respond to photo requests in the </span><span class="bold"
+                  style="font-weight: bold;">long tail</span><span> efficiently </span></span>
+            </li>
+            <li style="line-height: 24px; list-style: none; position: relative;">
+              <div class="bullet-wrapper"
+                style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                <div class="bullet-dot"
+                  style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                </div>
+              </div><span class="content mubu-node"
+                style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>the
+                  CDN should have to cache an unreasonably large amount of the static content in order for traditional
+                  storage approaches not to be IO bound </span></span>
+            </li>
+            <li style="line-height: 24px; list-style: none; position: relative;">
+              <div class="bullet-wrapper"
+                style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                <div class="bullet-dot"
+                  style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                </div>
+              </div><span class="content mubu-node"
+                style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>it's
+                </span><span class="bold" style="font-weight: bold;">acceptable</span><span> that requests for
+                </span><span class="bold" style="font-weight: bold;">less popular photos</span><span> may require disk
+                  operations, but we aim to limit the number of such operations to only the ones necessary for reading
+                  actual photo data</span></span>
+              <ul class="children"
+                style="list-style: outside disc; padding-inline-start: 30px; padding: 0px 0px 4px 40px; margin-left: 13px; position: relative; left: -30px; border-left: 1px solid rgb(235, 235, 235);">
+                <li style="line-height: 24px; list-style: none; position: relative;">
+                  <div class="bullet-wrapper"
+                    style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                    <div class="bullet-dot"
+                      style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                    </div>
+                  </div><span class="content mubu-node"
+                    style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>by
+                      reduce the memory used for filesystem metadata, thereby making it practical to keep all this
+                      metadata in main memory </span></span>
+                </li>
+              </ul>
+            </li>
+            <li style="line-height: 24px; list-style: none; position: relative;">
+              <div class="bullet-wrapper"
+                style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                <div class="bullet-dot"
+                  style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                </div>
+              </div><span class="content mubu-node"
+                style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>Haystack
+                  stores multiple photos in a single file and therefore maintains very large files </span></span>
+              <ul class="children"
+                style="list-style: outside disc; padding-inline-start: 30px; padding: 0px 0px 4px 40px; margin-left: 13px; position: relative; left: -30px; border-left: 1px solid rgb(235, 235, 235);">
+                <li style="line-height: 24px; list-style: none; position: relative;">
+                  <div class="bullet-wrapper"
+                    style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                    <div class="bullet-dot"
+                      style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                    </div>
+                  </div><span class="content mubu-node"
+                    style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>simplicity
+                      is its strength, and it is indeed effective </span></span>
+                </li>
+              </ul>
+            </li>
+            <li style="line-height: 24px; list-style: none; position: relative;">
+              <div class="bullet-wrapper"
+                style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                <div class="bullet-dot"
+                  style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                </div>
+              </div><span class="content mubu-node"
+                style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>Two
+                  kinds of metadata</span></span>
+              <ul class="children"
+                style="list-style: outside disc; padding-inline-start: 30px; padding: 0px 0px 4px 40px; margin-left: 13px; position: relative; left: -30px; border-left: 1px solid rgb(235, 235, 235);">
+                <li style="line-height: 24px; list-style: none; position: relative;">
+                  <div class="bullet-wrapper"
+                    style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                    <div class="bullet-dot"
+                      style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                    </div>
+                  </div><span class="content mubu-node"
+                    style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span
+                      class="bold" style="font-weight: bold;">application metadata</span><span> that describes the info
+                      needed to construct a URL that a browser can use to retrieve a photo </span></span>
+                </li>
+                <li style="line-height: 24px; list-style: none; position: relative;">
+                  <div class="bullet-wrapper"
+                    style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                    <div class="bullet-dot"
+                      style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                    </div>
+                  </div><span class="content mubu-node"
+                    style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span
+                      class="bold" style="font-weight: bold;">filesystem metadata</span><span> that identifies the data
+                      necessary for a host to retrieve the photos that reside on that host's disk </span></span>
+                </li>
+              </ul>
+            </li>
+            <li style="line-height: 24px; list-style: none; position: relative;">
+              <div class="bullet-wrapper"
+                style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                <div class="bullet-dot"
+                  style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                </div>
+              </div><span class="content mubu-node"
+                style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>Three
+                  core components </span></span>
+              <ul class="children"
+                style="list-style: outside disc; padding-inline-start: 30px; padding: 0px 0px 4px 40px; margin-left: 13px; position: relative; left: -30px; border-left: 1px solid rgb(235, 235, 235);">
+                <li style="line-height: 24px; list-style: none; position: relative;">
+                  <div class="bullet-wrapper"
+                    style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                    <div class="bullet-dot"
+                      style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                    </div>
+                  </div><span class="content mubu-node"
+                    style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span
+                      class="bold" style="font-weight: bold;">Haystack store</span></span>
+                  <ul class="children"
+                    style="list-style: outside disc; padding-inline-start: 30px; padding: 0px 0px 4px 40px; margin-left: 13px; position: relative; left: -30px; border-left: 1px solid rgb(235, 235, 235);">
+                    <li style="line-height: 24px; list-style: none; position: relative;">
+                      <div class="bullet-wrapper"
+                        style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                        <div class="bullet-dot"
+                          style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                        </div>
+                      </div><span class="content mubu-node"
+                        style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>encapsulates
+                          the persistent storage system for photos and is the only component that manages the filesystem
+                          metadata for photos </span></span>
+                    </li>
+                    <li style="line-height: 24px; list-style: none; position: relative;">
+                      <div class="bullet-wrapper"
+                        style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                        <div class="bullet-dot"
+                          style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                        </div>
+                      </div><span class="content mubu-node"
+                        style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>store
+                          capacity is organized by </span><span class="bold" style="font-weight: bold;">physical
+                          volumes</span><span>, and physical volumes on different machines are grouped into </span><span
+                          class="bold" style="font-weight: bold;">logical volumes</span><span> </span></span>
+                    </li>
+                    <li style="line-height: 24px; list-style: none; position: relative;">
+                      <div class="bullet-wrapper"
+                        style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                        <div class="bullet-dot"
+                          style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                        </div>
+                      </div><span class="content mubu-node"
+                        style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>each
+                          Store machine manages multiple physical volumes and each volume holds millions of photos
+                          [think a physical volume as </span><span class="bold" style="font-weight: bold;">a large
+                          file</span><span> saved as '</span><span class="italic"
+                          style="font-style: italic;">/hay/haystack </span><span>' consisting of </span><span
+                          class="bold" style="font-weight: bold;">a superblock followed by a sequence of
+                          needles</span><span>]</span></span>
+                      <ul class="children"
+                        style="list-style: outside disc; padding-inline-start: 30px; padding: 0px 0px 4px 40px; margin-left: 13px; position: relative; left: -30px; border-left: 1px solid rgb(235, 235, 235);">
+                        <li style="line-height: 24px; list-style: none; position: relative;">
+                          <div class="bullet-wrapper"
+                            style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                            <div class="bullet-dot"
+                              style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                            </div>
+                          </div><span class="content mubu-node"
+                            style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>the
+                              Store machine access a photo quickly by using only the id of the corresponding logical
+                              volume and the file offset at which the photo resides (recall that we combine photos into
+                              a single large file) </span></span>
+                        </li>
+                        <li style="line-height: 24px; list-style: none; position: relative;">
+                          <div class="bullet-wrapper"
+                            style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                            <div class="bullet-dot"
+                              style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                            </div>
+                          </div><span class="content mubu-node"
+                            style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>each
+                              needle represents a photo stored in Haystack </span></span>
+                        </li>
+                        <li style="line-height: 24px; list-style: none; position: relative;">
+                          <div class="bullet-wrapper"
+                            style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                            <div class="bullet-dot"
+                              style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                            </div>
+                          </div><span class="content mubu-node"
+                            style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>it
+                              maintains an </span><span class="bold" style="font-weight: bold;">in-memory data
+                              structure</span><span> for </span><span class="bold" style="font-weight: bold;">each of
+                              its volumes</span><span> to retrieve needles quickly. that data structure maps pairs of
+                              (key, alternate key) to the corresponding needle's </span><span class="bold"
+                              style="font-weight: bold;">flags</span><span>, </span><span class="bold"
+                              style="font-weight: bold;">size</span><span> in bytes, and </span><span class="bold"
+                              style="font-weight: bold;">volume offset</span></span>
+                        </li>
+                      </ul>
+                    </li>
+                    <li style="line-height: 24px; list-style: none; position: relative;">
+                      <div class="bullet-wrapper"
+                        style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                        <div class="bullet-dot"
+                          style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                        </div>
+                      </div><span class="content mubu-node"
+                        style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>key:
+                          retriving the filename, offset, and size for a particular photo </span><span class="bold"
+                          style="font-weight: bold;">without needing disk operations</span></span>
+                    </li>
+                    <li style="line-height: 24px; list-style: none; position: relative;">
+                      <div class="bullet-wrapper"
+                        style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                        <div class="bullet-dot"
+                          style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                        </div>
+                      </div><span class="content mubu-node"
+                        style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>when
+                          Haystack stores a photo on a logical volume, the photo is written to all corresponding
+                          physical volumes [</span><span class="underline" style="text-decoration: underline;">achiving
+                          fault tolerance</span><span>]</span></span>
+                    </li>
+                    <li style="line-height: 24px; list-style: none; position: relative;">
+                      <div class="bullet-wrapper"
+                        style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                        <div class="bullet-dot"
+                          style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                        </div>
+                      </div><span class="content mubu-node"
+                        style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>newly
+                          added machines to the Store are </span><span class="bold"
+                          style="font-weight: bold;">write-enabled</span><span>,&nbsp;</span><span class="bold"
+                          style="font-weight: bold;">only write-enabled machines receive uploads</span></span>
+                    </li>
+                    <li style="line-height: 24px; list-style: none; position: relative;">
+                      <div class="bullet-wrapper"
+                        style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                        <div class="bullet-dot"
+                          style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                        </div>
+                      </div><span class="content mubu-node"
+                        style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>when
+                          a machine exhausts its capacity, we mark it as </span><span class="bold"
+                          style="font-weight: bold;">read-only</span></span>
+                    </li>
+                  </ul>
+                </li>
+                <li style="line-height: 24px; list-style: none; position: relative;">
+                  <div class="bullet-wrapper"
+                    style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                    <div class="bullet-dot"
+                      style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                    </div>
+                  </div><span class="content mubu-node"
+                    style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span
+                      class="bold" style="font-weight: bold;">Haystack directory </span></span>
+                  <ul class="children"
+                    style="list-style: outside disc; padding-inline-start: 30px; padding: 0px 0px 4px 40px; margin-left: 13px; position: relative; left: -30px; border-left: 1px solid rgb(235, 235, 235);">
+                    <li style="line-height: 24px; list-style: none; position: relative;">
+                      <div class="bullet-wrapper"
+                        style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                        <div class="bullet-dot"
+                          style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                        </div>
+                      </div><span class="content mubu-node"
+                        style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>maintains
+                          the logical to physical </span><span class="bold"
+                          style="font-weight: bold;">mapping</span><span> along with other </span><span class="bold"
+                          style="font-weight: bold;">application metadata</span><span> e.g. logical volume where each
+                          photo resides and the logical volume's free space</span></span>
+                      <ul class="children"
+                        style="list-style: outside disc; padding-inline-start: 30px; padding: 0px 0px 4px 40px; margin-left: 13px; position: relative; left: -30px; border-left: 1px solid rgb(235, 235, 235);">
+                        <li style="line-height: 24px; list-style: none; position: relative;">
+                          <div class="bullet-wrapper"
+                            style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                            <div class="bullet-dot"
+                              style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                            </div>
+                          </div><span class="content mubu-node"
+                            style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>web
+                              servers will use this info to construct the image URL in response to user's request
+                            </span></span>
+                        </li>
+                      </ul>
+                    </li>
+                    <li style="line-height: 24px; list-style: none; position: relative;">
+                      <div class="bullet-wrapper"
+                        style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                        <div class="bullet-dot"
+                          style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                        </div>
+                      </div><span class="content mubu-node"
+                        style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>load
+                          balances writes across logical volumes and reads across physical volumes </span></span>
+                    </li>
+                    <li style="line-height: 24px; list-style: none; position: relative;">
+                      <div class="bullet-wrapper"
+                        style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                        <div class="bullet-dot"
+                          style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                        </div>
+                      </div><span class="content mubu-node"
+                        style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>determines
+                          whether a photo request should be handled by the CDN or by the Haystack Cache</span></span>
+                    </li>
+                    <li style="line-height: 24px; list-style: none; position: relative;">
+                      <div class="bullet-wrapper"
+                        style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                        <div class="bullet-dot"
+                          style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                        </div>
+                      </div><span class="content mubu-node"
+                        style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>identifies
+                          those </span><span class="bold" style="font-weight: bold;">logical volumes that are
+                          read-only</span><span>, either because of operational reasons or because those volumes have
+                          reached their storage capacity. volumes are marked as read-only at the </span><span
+                          class="bold" style="font-weight: bold;">granularity</span><span> of machines for operational
+                          ease </span></span>
+                    </li>
+                    <li style="line-height: 24px; list-style: none; position: relative;">
+                      <div class="bullet-wrapper"
+                        style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                        <div class="bullet-dot"
+                          style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                        </div>
+                      </div><span class="content mubu-node"
+                        style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>in
+                          the event that we lose the data on a </span><span class="bold"
+                          style="font-weight: bold;">Store machine</span><span>, we remove the corresponding entry in
+                          the mapping and replace it with a new Store machine that is brought online </span></span>
+                    </li>
+                  </ul>
+                </li>
+                <li style="line-height: 24px; list-style: none; position: relative;">
+                  <div class="bullet-wrapper"
+                    style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                    <div class="bullet-dot"
+                      style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                    </div>
+                  </div><span class="content mubu-node"
+                    style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span
+                      class="bold" style="font-weight: bold;">Haystack cache (essentially a internal CDN)</span></span>
+                  <ul class="children"
+                    style="list-style: outside disc; padding-inline-start: 30px; padding: 0px 0px 4px 40px; margin-left: 13px; position: relative; left: -30px; border-left: 1px solid rgb(235, 235, 235);">
+                    <li style="line-height: 24px; list-style: none; position: relative;">
+                      <div class="bullet-wrapper"
+                        style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                        <div class="bullet-dot"
+                          style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                        </div>
+                      </div><span class="content mubu-node"
+                        style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>function
+                          as our internal CDN which shelters the Haystack store from requests for the most popular
+                          photos and provides insulation if upstream CDN nodes fail and need to refetch content
+                        </span></span>
+                    </li>
+                    <li style="line-height: 24px; list-style: none; position: relative;">
+                      <div class="bullet-wrapper"
+                        style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                        <div class="bullet-dot"
+                          style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                        </div>
+                      </div><span class="content mubu-node"
+                        style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>reduce
+                          our dependence on external CDNs</span></span>
+                    </li>
+                    <li style="line-height: 24px; list-style: none; position: relative;">
+                      <div class="bullet-wrapper"
+                        style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                        <div class="bullet-dot"
+                          style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                        </div>
+                      </div><span class="content mubu-node"
+                        style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>Cache
+                          is organized as a distributed hash table </span></span>
+                      <ul class="children"
+                        style="list-style: outside disc; padding-inline-start: 30px; padding: 0px 0px 4px 40px; margin-left: 13px; position: relative; left: -30px; border-left: 1px solid rgb(235, 235, 235);">
+                        <li style="line-height: 24px; list-style: none; position: relative;">
+                          <div class="bullet-wrapper"
+                            style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                            <div class="bullet-dot"
+                              style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                            </div>
+                          </div><span class="content mubu-node"
+                            style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>we
+                              use a photo's id as the key to locate cached data</span></span>
+                        </li>
+                      </ul>
+                    </li>
+                    <li style="line-height: 24px; list-style: none; position: relative;">
+                      <div class="bullet-wrapper"
+                        style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                        <div class="bullet-dot"
+                          style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                        </div>
+                      </div><span class="content mubu-node"
+                        style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>if
+                          the Cache cannot immediately respond to the request, then the Cache fetches the photo from the
+                          Store machine (identified through the URL), and replies to the requester (either the CDN or
+                          the user's browser) as appropriate </span></span>
+                    </li>
+                    <li style="line-height: 24px; list-style: none; position: relative;">
+                      <div class="bullet-wrapper"
+                        style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                        <div class="bullet-dot"
+                          style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                        </div>
+                      </div><span class="content mubu-node"
+                        style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>it
+                          caches a photo only if</span></span>
+                      <ul class="children"
+                        style="list-style: outside disc; padding-inline-start: 30px; padding: 0px 0px 4px 40px; margin-left: 13px; position: relative; left: -30px; border-left: 1px solid rgb(235, 235, 235);">
+                        <li style="line-height: 24px; list-style: none; position: relative;">
+                          <div class="bullet-wrapper"
+                            style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                            <div class="bullet-dot"
+                              style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                            </div>
+                          </div><span class="content mubu-node"
+                            style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>a.
+                              the request comes directly from a user and not the CDN </span></span>
+                          <ul class="children"
+                            style="list-style: outside disc; padding-inline-start: 30px; padding: 0px 0px 4px 40px; margin-left: 13px; position: relative; left: -30px; border-left: 1px solid rgb(235, 235, 235);">
+                            <li style="line-height: 24px; list-style: none; position: relative;">
+                              <div class="bullet-wrapper"
+                                style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                                <div class="bullet-dot"
+                                  style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                                </div>
+                              </div><span class="content mubu-node"
+                                style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>previous
+                                  attempts showed that post-CDN caching is ineffective as it is unlikely that a request
+                                  that misses in the CDN would hit in our internal cache </span></span>
+                            </li>
+                          </ul>
+                        </li>
+                        <li style="line-height: 24px; list-style: none; position: relative;">
+                          <div class="bullet-wrapper"
+                            style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                            <div class="bullet-dot"
+                              style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                            </div>
+                          </div><span class="content mubu-node"
+                            style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>b.
+                              the photo is fetched from a write-enabled Store machine </span></span>
+                          <ul class="children"
+                            style="list-style: outside disc; padding-inline-start: 30px; padding: 0px 0px 4px 40px; margin-left: 13px; position: relative; left: -30px; border-left: 1px solid rgb(235, 235, 235);">
+                            <li style="line-height: 24px; list-style: none; position: relative;">
+                              <div class="bullet-wrapper"
+                                style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                                <div class="bullet-dot"
+                                  style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                                </div>
+                              </div><span class="content mubu-node"
+                                style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>we
+                                  use the Cache to </span><span class="bold" style="font-weight: bold;">shelter the
+                                  write-enabled Sotre machines</span><span> </span><span class="bold"
+                                  style="font-weight: bold;">from reads</span><span> because</span></span>
+                              <ul class="children"
+                                style="list-style: outside disc; padding-inline-start: 30px; padding: 0px 0px 4px 40px; margin-left: 13px; position: relative; left: -30px; border-left: 1px solid rgb(235, 235, 235);">
+                                <li style="line-height: 24px; list-style: none; position: relative;">
+                                  <div class="bullet-wrapper"
+                                    style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                                    <div class="bullet-dot"
+                                      style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                                    </div>
+                                  </div><span class="content mubu-node"
+                                    style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>photos
+                                      are most heavily accessed soon after they are uploaded </span></span>
+                                </li>
+                                <li style="line-height: 24px; list-style: none; position: relative;">
+                                  <div class="bullet-wrapper"
+                                    style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                                    <div class="bullet-dot"
+                                      style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                                    </div>
+                                  </div><span class="content mubu-node"
+                                    style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>filesystems
+                                      for our workload generally perform better when doing </span><span class="bold"
+                                      style="font-weight: bold;">either reads or writes but not both</span><span>...
+                                    </span></span>
+                                </li>
+                              </ul>
+                            </li>
+                          </ul>
+                        </li>
+                      </ul>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+            <li style="line-height: 24px; list-style: none; position: relative;">
+              <div class="bullet-wrapper"
+                style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                <div class="bullet-dot"
+                  style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                </div>
+              </div><span class="content mubu-node"
+                style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>How
+                  the Store, Directory, and Cache components fit into the canonical interaction</span></span>
+              <ul class="children"
+                style="list-style: outside disc; padding-inline-start: 30px; padding: 0px 0px 4px 40px; margin-left: 13px; position: relative; left: -30px; border-left: 1px solid rgb(235, 235, 235);">
+                <li style="line-height: 24px; list-style: none; position: relative;">
+                  <div class="bullet-wrapper"
+                    style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                    <div class="bullet-dot"
+                      style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                    </div>
+                  </div><span class="content mubu-node"
+                    style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>the
+                      browser can be directed to either the CDN or the cache</span></span>
+                  <div
+                    style="padding: 3px 0px 0px 17px; margin-left: -17px; border-left: 1px solid rgb(235, 235, 235);">
+                    <img src="haystack/ca581003-a52b-462e-a302-05ea83038f64-5150716.jpg"
+                      style="max-width: 720px; width: 246px;" crossorigin="anonymous" class="attach-img"></div>
+                </li>
+                <li style="line-height: 24px; list-style: none; position: relative;">
+                  <div class="bullet-wrapper"
+                    style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                    <div class="bullet-dot"
+                      style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                    </div>
+                  </div><span class="content mubu-node"
+                    style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>when
+                      a user visits a page, the web server uses the Haystack directory to construct the URL for that
+                      photo</span></span>
+                </li>
+                <li style="line-height: 24px; list-style: none; position: relative;">
+                  <div class="bullet-wrapper"
+                    style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                    <div class="bullet-dot"
+                      style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                    </div>
+                  </div><span class="content mubu-node"
+                    style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>the
+                      browser can be directed to either the CDN or the cache </span></span>
+                  <ul class="children"
+                    style="list-style: outside disc; padding-inline-start: 30px; padding: 0px 0px 4px 40px; margin-left: 13px; position: relative; left: -30px; border-left: 1px solid rgb(235, 235, 235);">
+                    <li style="line-height: 24px; list-style: none; position: relative;">
+                      <div class="bullet-wrapper"
+                        style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                        <div class="bullet-dot"
+                          style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                        </div>
+                      </div><span class="content mubu-node"
+                        style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>a
+                          typical URL that provides such direction looks like: </span></span>
+                    </li>
+                    <li style="line-height: 24px; list-style: none; position: relative;">
+                      <div class="bullet-wrapper"
+                        style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                        <div class="bullet-dot"
+                          style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                        </div>
+                      </div><span class="content mubu-node"
+                        style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>http://〈CDN〉/〈Cache〉/〈Machine
+                          id〉/〈Logical volume, Photo〉</span></span>
+                    </li>
+                  </ul>
+                </li>
+                <li style="line-height: 24px; list-style: none; position: relative;">
+                  <div class="bullet-wrapper"
+                    style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                    <div class="bullet-dot"
+                      style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                    </div>
+                  </div><span class="content mubu-node"
+                    style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>the
+                      1st part of the URL specifies from which CDN to request the photo</span></span>
+                </li>
+                <li style="line-height: 24px; list-style: none; position: relative;">
+                  <div class="bullet-wrapper"
+                    style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                    <div class="bullet-dot"
+                      style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                    </div>
+                  </div><span class="content mubu-node"
+                    style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>the
+                      CDN can then loopup the photo internally using only the last part of the URL (i.e. using the
+                      logical volume and the photo id)</span></span>
+                </li>
+                <li style="line-height: 24px; list-style: none; position: relative;">
+                  <div class="bullet-wrapper"
+                    style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                    <div class="bullet-dot"
+                      style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                    </div>
+                  </div><span class="content mubu-node"
+                    style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>if
+                      the CDN cannot locate the photo, it then stripes the CDN address from the URL and contacts the
+                      Haystack Cache </span></span>
+                </li>
+                <li style="line-height: 24px; list-style: none; position: relative;">
+                  <div class="bullet-wrapper"
+                    style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                    <div class="bullet-dot"
+                      style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                    </div>
+                  </div><span class="content mubu-node"
+                    style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>the
+                      Cache does a similar lookup to find the photo. if still miss, the Cache strips the cache address
+                      from the URL and requests the photo from the specified Haystack Store machine </span></span>
+                </li>
+                <li style="line-height: 24px; list-style: none; position: relative;">
+                  <div class="bullet-wrapper"
+                    style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                    <div class="bullet-dot"
+                      style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                    </div>
+                  </div><span class="content mubu-node"
+                    style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>photo
+                      requests that go directly to the Cache have a similar workflow except that the URL is missing the
+                      CDN-specific infos since we skipped that step in such cases </span></span>
+                </li>
+              </ul>
+            </li>
+            <li style="line-height: 24px; list-style: none; position: relative;">
+              <div class="bullet-wrapper"
+                style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                <div class="bullet-dot"
+                  style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                </div>
+              </div><span class="content mubu-node"
+                style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>How
+                  to upload a photo </span></span>
+              <ul class="children"
+                style="list-style: outside disc; padding-inline-start: 30px; padding: 0px 0px 4px 40px; margin-left: 13px; position: relative; left: -30px; border-left: 1px solid rgb(235, 235, 235);">
+                <li style="line-height: 24px; list-style: none; position: relative;">
+                  <div class="bullet-wrapper"
+                    style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                    <div class="bullet-dot"
+                      style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                    </div>
+                  </div><span class="content mubu-node"
+                    style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>interactions
+                      when a user uploads a photo</span></span>
+                  <div
+                    style="padding: 3px 0px 0px 17px; margin-left: -17px; border-left: 1px solid rgb(235, 235, 235);">
+                    <img src="haystack/606ef550-f2de-4bb7-8ff5-2bd635b23531-5150716.jpg"
+                      style="max-width: 720px; width: 264px;" crossorigin="anonymous" class="attach-img"></div>
+                </li>
+                <li style="line-height: 24px; list-style: none; position: relative;">
+                  <div class="bullet-wrapper"
+                    style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                    <div class="bullet-dot"
+                      style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                    </div>
+                  </div><span class="content mubu-node"
+                    style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>the
+                      user sends the image data to a web server </span></span>
+                </li>
+                <li style="line-height: 24px; list-style: none; position: relative;">
+                  <div class="bullet-wrapper"
+                    style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                    <div class="bullet-dot"
+                      style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                    </div>
+                  </div><span class="content mubu-node"
+                    style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>the
+                      server requests a write-enabled logical volume from the Haystack Directory </span></span>
+                </li>
+                <li style="line-height: 24px; list-style: none; position: relative;">
+                  <div class="bullet-wrapper"
+                    style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                    <div class="bullet-dot"
+                      style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                    </div>
+                  </div><span class="content mubu-node"
+                    style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>then
+                      the web server assigns a unique id to the photo and uploads it to each of the physical volumes
+                      mapped to the assigned logical volume </span></span>
+                </li>
+              </ul>
+            </li>
+            <li style="line-height: 24px; list-style: none; position: relative;">
+              <div class="bullet-wrapper"
+                style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                <div class="bullet-dot"
+                  style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                </div>
+              </div><span class="content mubu-node"
+                style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span
+                  class="bold" style="font-weight: bold;">Index file</span></span>
+              <ul class="children"
+                style="list-style: outside disc; padding-inline-start: 30px; padding: 0px 0px 4px 40px; margin-left: 13px; position: relative; left: -30px; border-left: 1px solid rgb(235, 235, 235);">
+                <li style="line-height: 24px; list-style: none; position: relative;">
+                  <div class="bullet-wrapper"
+                    style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                    <div class="bullet-dot"
+                      style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                    </div>
+                  </div><span class="content mubu-node"
+                    style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>motivation</span></span>
+                  <ul class="children"
+                    style="list-style: outside disc; padding-inline-start: 30px; padding: 0px 0px 4px 40px; margin-left: 13px; position: relative; left: -30px; border-left: 1px solid rgb(235, 235, 235);">
+                    <li style="line-height: 24px; list-style: none; position: relative;">
+                      <div class="bullet-wrapper"
+                        style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                        <div class="bullet-dot"
+                          style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                        </div>
+                      </div><span class="content mubu-node"
+                        style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>though
+                          in theory a machine can reconstruct its in-memory mappings by reading all of its physical
+                          volumes, doing so is time-consuming as the amount of data has to all be read from disk
+                        </span></span>
+                    </li>
+                    <li style="line-height: 24px; list-style: none; position: relative;">
+                      <div class="bullet-wrapper"
+                        style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                        <div class="bullet-dot"
+                          style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                        </div>
+                      </div><span class="content mubu-node"
+                        style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>index
+                          files allow a Store machine to build its in-memory mappings quickly, shortening restart
+                          time</span></span>
+                    </li>
+                    <li style="line-height: 24px; list-style: none; position: relative;">
+                      <div class="bullet-wrapper"
+                        style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                        <div class="bullet-dot"
+                          style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                        </div>
+                      </div><span class="content mubu-node"
+                        style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>the
+                          index file is a checkpoint of the in-memory data structure used to locate needles efficiently
+                          on disk </span></span>
+                    </li>
+                  </ul>
+                </li>
+                <li style="line-height: 24px; list-style: none; position: relative;">
+                  <div class="bullet-wrapper"
+                    style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                    <div class="bullet-dot"
+                      style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                    </div>
+                  </div><span class="content mubu-node"
+                    style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>Store
+                      machines maintain an index file for each of their volumes</span></span>
+                </li>
+                <li style="line-height: 24px; list-style: none; position: relative;">
+                  <div class="bullet-wrapper"
+                    style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                    <div class="bullet-dot"
+                      style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                    </div>
+                  </div><span class="content mubu-node"
+                    style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>index
+                      file's layout is similar to a volume file's, containing </span><span class="bold"
+                      style="font-weight: bold;">a superblock followed a sequence of index records</span><span>
+                      corresponding to each needle in the superblock (?)</span></span>
+                </li>
+                <li style="line-height: 24px; list-style: none; position: relative;">
+                  <div class="bullet-wrapper"
+                    style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                    <div class="bullet-dot"
+                      style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                    </div>
+                  </div><span class="content mubu-node"
+                    style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>layout
+                      of Haystack index file</span></span>
+                  <div
+                    style="padding: 3px 0px 0px 17px; margin-left: -17px; border-left: 1px solid rgb(235, 235, 235);">
+                    <img src="haystack/a1854ca3-df64-409a-8841-086d12093052-5150716.jpg" style="max-width: 720px;"
+                      crossorigin="anonymous" class="attach-img"></div>
+                </li>
+                <li style="line-height: 24px; list-style: none; position: relative;">
+                  <div class="bullet-wrapper"
+                    style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                    <div class="bullet-dot"
+                      style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                    </div>
+                  </div><span class="content mubu-node"
+                    style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>index
+                      files are updated asynchronously, which means index files may represent stale
+                      checkpoints</span></span>
+                </li>
+                <li style="line-height: 24px; list-style: none; position: relative;">
+                  <div class="bullet-wrapper"
+                    style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                    <div class="bullet-dot"
+                      style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                    </div>
+                  </div><span class="content mubu-node"
+                    style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>To
+                      allow write and delete operations to return faster... </span></span>
+                  <ul class="children"
+                    style="list-style: outside disc; padding-inline-start: 30px; padding: 0px 0px 4px 40px; margin-left: 13px; position: relative; left: -30px; border-left: 1px solid rgb(235, 235, 235);">
+                    <li style="line-height: 24px; list-style: none; position: relative;">
+                      <div class="bullet-wrapper"
+                        style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                        <div class="bullet-dot"
+                          style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                        </div>
+                      </div><span class="content mubu-node"
+                        style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>when
+                          we write a new photo, the Store machine </span><span class="bold"
+                          style="font-weight: bold;">synchronously appends a needle to the end of the volume
+                          file</span><span> and </span><span class="bold" style="font-weight: bold;">asynchronously
+                          appends a record to the index file</span><span> </span></span>
+                    </li>
+                    <li style="line-height: 24px; list-style: none; position: relative;">
+                      <div class="bullet-wrapper"
+                        style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                        <div class="bullet-dot"
+                          style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                        </div>
+                      </div><span class="content mubu-node"
+                        style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>when
+                          we delete a photo, the Store machine </span><span class="bold"
+                          style="font-weight: bold;">synchronously</span><span> sets the flag in the photo's needle
+                        </span><span class="bold" style="font-weight: bold;">without</span><span> updating the index
+                          file</span></span>
+                      <ul class="children"
+                        style="list-style: outside disc; padding-inline-start: 30px; padding: 0px 0px 4px 40px; margin-left: 13px; position: relative; left: -30px; border-left: 1px solid rgb(235, 235, 235);">
+                        <li style="line-height: 24px; list-style: none; position: relative;">
+                          <div class="bullet-wrapper"
+                            style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                            <div class="bullet-dot"
+                              style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                            </div>
+                          </div><span class="content mubu-node"
+                            style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>=&gt;
+                              a Store machine may retrieve a photo that has in fact been deleted. therefore, after a
+                              Store machine reads the entire needle for a photo, that machine can then inspect the
+                              deleted flag. If a needle is marked as deleted, then the Store machine updates its
+                              in-memory mapping accordingly and notifies the Cache that the object was not
+                              found</span></span>
+                        </li>
+                      </ul>
+                    </li>
+                    <li style="line-height: 24px; list-style: none; position: relative;">
+                      <div class="bullet-wrapper"
+                        style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                        <div class="bullet-dot"
+                          style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                        </div>
+                      </div><span class="content mubu-node"
+                        style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>both
+                          avoid additional synchronous disk writes </span></span>
+                    </li>
+                    <li style="line-height: 24px; list-style: none; position: relative;">
+                      <div class="bullet-wrapper"
+                        style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                        <div class="bullet-dot"
+                          style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                        </div>
+                      </div><span class="content mubu-node"
+                        style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>Side
+                          effects</span></span>
+                      <ul class="children"
+                        style="list-style: outside disc; padding-inline-start: 30px; padding: 0px 0px 4px 40px; margin-left: 13px; position: relative; left: -30px; border-left: 1px solid rgb(235, 235, 235);">
+                        <li style="line-height: 24px; list-style: none; position: relative;">
+                          <div class="bullet-wrapper"
+                            style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                            <div class="bullet-dot"
+                              style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                            </div>
+                          </div><span class="content mubu-node"
+                            style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>needles
+                              can exist without corresponding index records [</span><span class="bold italic"
+                              style="font-weight: bold; font-style: italic;">orphans</span><span>] </span></span>
+                        </li>
+                        <li style="line-height: 24px; list-style: none; position: relative;">
+                          <div class="bullet-wrapper"
+                            style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                            <div class="bullet-dot"
+                              style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                            </div>
+                          </div><span class="content mubu-node"
+                            style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>index
+                              records do not reflect deleted photos </span></span>
+                        </li>
+                      </ul>
+                    </li>
+                  </ul>
+                </li>
+                <li style="line-height: 24px; list-style: none; position: relative;">
+                  <div class="bullet-wrapper"
+                    style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                    <div class="bullet-dot"
+                      style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                    </div>
+                  </div><span class="content mubu-node"
+                    style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>During
+                      restarts</span></span>
+                  <ul class="children"
+                    style="list-style: outside disc; padding-inline-start: 30px; padding: 0px 0px 4px 40px; margin-left: 13px; position: relative; left: -30px; border-left: 1px solid rgb(235, 235, 235);">
+                    <li style="line-height: 24px; list-style: none; position: relative;">
+                      <div class="bullet-wrapper"
+                        style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                        <div class="bullet-dot"
+                          style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                        </div>
+                      </div><span class="content mubu-node"
+                        style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>a
+                          Store machine sequentially examines each orphan, creates a matching index record, and appens
+                          that record to the index file</span></span>
+                    </li>
+                    <li style="line-height: 24px; list-style: none; position: relative;">
+                      <div class="bullet-wrapper"
+                        style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                        <div class="bullet-dot"
+                          style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                        </div>
+                      </div><span class="content mubu-node"
+                        style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>the
+                          orphan localization can be done quickly because the last record in the index file corresponds
+                          to the last non-orphan needle in the volume file </span></span>
+                    </li>
+                    <li style="line-height: 24px; list-style: none; position: relative;">
+                      <div class="bullet-wrapper"
+                        style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                        <div class="bullet-dot"
+                          style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                        </div>
+                      </div><span class="content mubu-node"
+                        style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>to
+                          complete the restarts, the Store machine now initializes its in-memory mappings using only the
+                          index files </span></span>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+            <li style="line-height: 24px; list-style: none; position: relative;">
+              <div class="bullet-wrapper"
+                style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                <div class="bullet-dot"
+                  style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                </div>
+              </div><span class="content mubu-node"
+                style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>Underlying
+                  filesystem used in the Store machine</span></span>
+              <ul class="children"
+                style="list-style: outside disc; padding-inline-start: 30px; padding: 0px 0px 4px 40px; margin-left: 13px; position: relative; left: -30px; border-left: 1px solid rgb(235, 235, 235);">
+                <li style="line-height: 24px; list-style: none; position: relative;">
+                  <div class="bullet-wrapper"
+                    style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                    <div class="bullet-dot"
+                      style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                    </div>
+                  </div><span class="content mubu-node"
+                    style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>Motivation</span></span>
+                  <ul class="children"
+                    style="list-style: outside disc; padding-inline-start: 30px; padding: 0px 0px 4px 40px; margin-left: 13px; position: relative; left: -30px; border-left: 1px solid rgb(235, 235, 235);">
+                    <li style="line-height: 24px; list-style: none; position: relative;">
+                      <div class="bullet-wrapper"
+                        style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                        <div class="bullet-dot"
+                          style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                        </div>
+                      </div><span class="content mubu-node"
+                        style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>should
+                          not need much memory to be able to perform random seeks within a large file quickly
+                        </span></span>
+                    </li>
+                  </ul>
+                </li>
+                <li style="line-height: 24px; list-style: none; position: relative;">
+                  <div class="bullet-wrapper"
+                    style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                    <div class="bullet-dot"
+                      style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                    </div>
+                  </div><span class="content mubu-node"
+                    style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>each
+                      Store machine usese </span><span class="bold" style="font-weight: bold;">XFS</span><span>, which
+                      is an extent based filesystem </span></span>
+                  <ul class="children"
+                    style="list-style: outside disc; padding-inline-start: 30px; padding: 0px 0px 4px 40px; margin-left: 13px; position: relative; left: -30px; border-left: 1px solid rgb(235, 235, 235);">
+                    <li style="line-height: 24px; list-style: none; position: relative;">
+                      <div class="bullet-wrapper"
+                        style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                        <div class="bullet-dot"
+                          style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                        </div>
+                      </div><span class="content mubu-node"
+                        style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span
+                          class="bold" style="font-weight: bold;">Advantages</span></span>
+                      <ul class="children"
+                        style="list-style: outside disc; padding-inline-start: 30px; padding: 0px 0px 4px 40px; margin-left: 13px; position: relative; left: -30px; border-left: 1px solid rgb(235, 235, 235);">
+                        <li style="line-height: 24px; list-style: none; position: relative;">
+                          <div class="bullet-wrapper"
+                            style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                            <div class="bullet-dot"
+                              style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                            </div>
+                          </div><span class="content mubu-node"
+                            style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>the
+                              blockmaps for several contiguous large files can be small enough to be sotred in main
+                              memory</span></span>
+                        </li>
+                        <li style="line-height: 24px; list-style: none; position: relative;">
+                          <div class="bullet-wrapper"
+                            style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                            <div class="bullet-dot"
+                              style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                            </div>
+                          </div><span class="content mubu-node"
+                            style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>XFS
+                              provides efficient file preallocation, mitigating fragmentation and reining in how large
+                              block maps can grow </span></span>
+                        </li>
+                      </ul>
+                    </li>
+                    <li style="line-height: 24px; list-style: none; position: relative;">
+                      <div class="bullet-wrapper"
+                        style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                        <div class="bullet-dot"
+                          style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                        </div>
+                      </div><span class="content mubu-node"
+                        style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>Haystack
+                          can then eliminate disk operations for retrieving filesystem metadata when reading a
+                          photo</span></span>
+                      <ul class="children"
+                        style="list-style: outside disc; padding-inline-start: 30px; padding: 0px 0px 4px 40px; margin-left: 13px; position: relative; left: -30px; border-left: 1px solid rgb(235, 235, 235);">
+                        <li style="line-height: 24px; list-style: none; position: relative;">
+                          <div class="bullet-wrapper"
+                            style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                            <div class="bullet-dot"
+                              style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                            </div>
+                          </div><span class="content mubu-node"
+                            style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>this
+                              does not imply that Haystack can guarantee every photo read will incur exactly one disk
+                              operation </span></span>
+                        </li>
+                        <li style="line-height: 24px; list-style: none; position: relative;">
+                          <div class="bullet-wrapper"
+                            style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                            <div class="bullet-dot"
+                              style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                            </div>
+                          </div><span class="content mubu-node"
+                            style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span
+                              class="bold" style="font-weight: bold;">corner cases exist</span><span> where the
+                              filesystem requires more than one disk operation when photo data crosses extents or RAID
+                              boundaries </span></span>
+                        </li>
+                      </ul>
+                    </li>
+                    <li style="line-height: 24px; list-style: none; position: relative;">
+                      <div class="bullet-wrapper"
+                        style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                        <div class="bullet-dot"
+                          style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                        </div>
+                      </div><span class="content mubu-node"
+                        style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>Haystack
+                          preallocates 1 Gigabyte extents and uses 256 kilobyte RAID stripe sizes so that in practice we
+                          encounter these cases rarely </span></span>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+            <li style="line-height: 24px; list-style: none; position: relative;">
+              <div class="bullet-wrapper"
+                style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                <div class="bullet-dot"
+                  style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                </div>
+              </div><span class="content mubu-node"
+                style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>Failure
+                  recovery </span></span>
+              <ul class="children"
+                style="list-style: outside disc; padding-inline-start: 30px; padding: 0px 0px 4px 40px; margin-left: 13px; position: relative; left: -30px; border-left: 1px solid rgb(235, 235, 235);">
+                <li style="line-height: 24px; list-style: none; position: relative;">
+                  <div class="bullet-wrapper"
+                    style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                    <div class="bullet-dot"
+                      style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                    </div>
+                  </div><span class="content mubu-node"
+                    style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>Motivation</span></span>
+                  <ul class="children"
+                    style="list-style: outside disc; padding-inline-start: 30px; padding: 0px 0px 4px 40px; margin-left: 13px; position: relative; left: -30px; border-left: 1px solid rgb(235, 235, 235);">
+                    <li style="line-height: 24px; list-style: none; position: relative;">
+                      <div class="bullet-wrapper"
+                        style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                        <div class="bullet-dot"
+                          style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                        </div>
+                      </div><span class="content mubu-node"
+                        style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>failures
+                          are the norm in large scale systems running on commodity hardware</span></span>
+                    </li>
+                    <li style="line-height: 24px; list-style: none; position: relative;">
+                      <div class="bullet-wrapper"
+                        style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                        <div class="bullet-dot"
+                          style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                        </div>
+                      </div><span class="content mubu-node"
+                        style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>failures
+                          can be:</span></span>
+                      <ul class="children"
+                        style="list-style: outside disc; padding-inline-start: 30px; padding: 0px 0px 4px 40px; margin-left: 13px; position: relative; left: -30px; border-left: 1px solid rgb(235, 235, 235);">
+                        <li style="line-height: 24px; list-style: none; position: relative;">
+                          <div class="bullet-wrapper"
+                            style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                            <div class="bullet-dot"
+                              style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                            </div>
+                          </div><span class="content mubu-node"
+                            style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>faulty
+                              hard drives</span></span>
+                        </li>
+                        <li style="line-height: 24px; list-style: none; position: relative;">
+                          <div class="bullet-wrapper"
+                            style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                            <div class="bullet-dot"
+                              style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                            </div>
+                          </div><span class="content mubu-node"
+                            style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>misbehaving
+                              RAID controllers</span></span>
+                        </li>
+                        <li style="line-height: 24px; list-style: none; position: relative;">
+                          <div class="bullet-wrapper"
+                            style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                            <div class="bullet-dot"
+                              style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                            </div>
+                          </div><span class="content mubu-node"
+                            style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>bad
+                              motherboards</span></span>
+                        </li>
+                        <li style="line-height: 24px; list-style: none; position: relative;">
+                          <div class="bullet-wrapper"
+                            style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                            <div class="bullet-dot"
+                              style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                            </div>
+                          </div><span class="content mubu-node"
+                            style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>...</span></span>
+                        </li>
+                      </ul>
+                    </li>
+                  </ul>
+                </li>
+                <li style="line-height: 24px; list-style: none; position: relative;">
+                  <div class="bullet-wrapper"
+                    style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                    <div class="bullet-dot"
+                      style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                    </div>
+                  </div><span class="content mubu-node"
+                    style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span
+                      class="bold" style="font-weight: bold;">Two dimensions </span></span>
+                  <ul class="children"
+                    style="list-style: outside disc; padding-inline-start: 30px; padding: 0px 0px 4px 40px; margin-left: 13px; position: relative; left: -30px; border-left: 1px solid rgb(235, 235, 235);">
+                    <li style="line-height: 24px; list-style: none; position: relative;">
+                      <div class="bullet-wrapper"
+                        style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                        <div class="bullet-dot"
+                          style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                        </div>
+                      </div><span class="content mubu-node"
+                        style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span
+                          class="bold" style="font-weight: bold;">failure detection</span></span>
+                      <ul class="children"
+                        style="list-style: outside disc; padding-inline-start: 30px; padding: 0px 0px 4px 40px; margin-left: 13px; position: relative; left: -30px; border-left: 1px solid rgb(235, 235, 235);">
+                        <li style="line-height: 24px; list-style: none; position: relative;">
+                          <div class="bullet-wrapper"
+                            style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                            <div class="bullet-dot"
+                              style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                            </div>
+                          </div><span class="content mubu-node"
+                            style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>Haystack
+                              maintains a background task, dubbed "</span><span class="bold"
+                              style="font-weight: bold;">pitchfork</span><span>"</span></span>
+                          <ul class="children"
+                            style="list-style: outside disc; padding-inline-start: 30px; padding: 0px 0px 4px 40px; margin-left: 13px; position: relative; left: -30px; border-left: 1px solid rgb(235, 235, 235);">
+                            <li style="line-height: 24px; list-style: none; position: relative;">
+                              <div class="bullet-wrapper"
+                                style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                                <div class="bullet-dot"
+                                  style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                                </div>
+                              </div><span class="content mubu-node"
+                                style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>periodically
+                                  checks the health of each Store machine</span></span>
+                              <ul class="children"
+                                style="list-style: outside disc; padding-inline-start: 30px; padding: 0px 0px 4px 40px; margin-left: 13px; position: relative; left: -30px; border-left: 1px solid rgb(235, 235, 235);">
+                                <li style="line-height: 24px; list-style: none; position: relative;">
+                                  <div class="bullet-wrapper"
+                                    style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                                    <div class="bullet-dot"
+                                      style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                                    </div>
+                                  </div><span class="content mubu-node"
+                                    style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>remotely
+                                      tests the connection to that machine</span></span>
+                                </li>
+                                <li style="line-height: 24px; list-style: none; position: relative;">
+                                  <div class="bullet-wrapper"
+                                    style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                                    <div class="bullet-dot"
+                                      style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                                    </div>
+                                  </div><span class="content mubu-node"
+                                    style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>checks
+                                      the availability of each volume file</span></span>
+                                </li>
+                                <li style="line-height: 24px; list-style: none; position: relative;">
+                                  <div class="bullet-wrapper"
+                                    style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                                    <div class="bullet-dot"
+                                      style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                                    </div>
+                                  </div><span class="content mubu-node"
+                                    style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>attempts
+                                      to read data from the Store machine</span></span>
+                                </li>
+                              </ul>
+                            </li>
+                          </ul>
+                        </li>
+                        <li style="line-height: 24px; list-style: none; position: relative;">
+                          <div class="bullet-wrapper"
+                            style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                            <div class="bullet-dot"
+                              style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                            </div>
+                          </div><span class="content mubu-node"
+                            style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>If
+                              pitchfork determines that a Store machine </span><span class="bold"
+                              style="font-weight: bold;">consistently fails these health checks</span><span>, then
+                              pitchfork </span><span class="bold" style="font-weight: bold;">automatically marks all
+                              logical volumes</span><span> that reside on that Store machine as </span><span
+                              class="bold" style="font-weight: bold;">read-only</span><span> </span></span>
+                        </li>
+                        <li style="line-height: 24px; list-style: none; position: relative;">
+                          <div class="bullet-wrapper"
+                            style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                            <div class="bullet-dot"
+                              style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                            </div>
+                          </div><span class="content mubu-node"
+                            style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>operators
+                            </span><span class="bold" style="font-weight: bold;">manually address</span><span> the
+                              underlying cause for the failed checks offline </span></span>
+                        </li>
+                      </ul>
+                    </li>
+                    <li style="line-height: 24px; list-style: none; position: relative;">
+                      <div class="bullet-wrapper"
+                        style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                        <div class="bullet-dot"
+                          style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                        </div>
+                      </div><span class="content mubu-node"
+                        style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span
+                          class="bold" style="font-weight: bold;">failure recovery</span></span>
+                      <ul class="children"
+                        style="list-style: outside disc; padding-inline-start: 30px; padding: 0px 0px 4px 40px; margin-left: 13px; position: relative; left: -30px; border-left: 1px solid rgb(235, 235, 235);">
+                        <li style="line-height: 24px; list-style: none; position: relative;">
+                          <div class="bullet-wrapper"
+                            style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                            <div class="bullet-dot"
+                              style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                            </div>
+                          </div><span class="content mubu-node"
+                            style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>occasionally,
+                              the situation requires a more heavy-handed </span><span class="bold underline italic"
+                              style="font-weight: bold; text-decoration: underline; font-style: italic;">bulk
+                              sync</span><span> operation in which we reset the data of a Store machine using the volume
+                              files supplied by a replica </span></span>
+                          <ul class="children"
+                            style="list-style: outside disc; padding-inline-start: 30px; padding: 0px 0px 4px 40px; margin-left: 13px; position: relative; left: -30px; border-left: 1px solid rgb(235, 235, 235);">
+                            <li style="line-height: 24px; list-style: none; position: relative;">
+                              <div class="bullet-wrapper"
+                                style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                                <div class="bullet-dot"
+                                  style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                                </div>
+                              </div><span class="content mubu-node"
+                                style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>bulk
+                                  sync happens rarely and is simple albeit slow to carry out (large amount of data that
+                                  exceeds the speed of the NIC on each Store machine), resulting in </span><span
+                                  class="bold" style="font-weight: bold;">hours for mean time to recovery</span><span>
+                                </span></span>
+                            </li>
+                          </ul>
+                        </li>
+                      </ul>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+            <li style="line-height: 24px; list-style: none; position: relative;">
+              <div class="bullet-wrapper"
+                style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                <div class="bullet-dot"
+                  style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                </div>
+              </div><span class="content mubu-node"
+                style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>Optimizations
+                </span></span>
+              <ul class="children"
+                style="list-style: outside disc; padding-inline-start: 30px; padding: 0px 0px 4px 40px; margin-left: 13px; position: relative; left: -30px; border-left: 1px solid rgb(235, 235, 235);">
+                <li style="line-height: 24px; list-style: none; position: relative;">
+                  <div class="bullet-wrapper"
+                    style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                    <div class="bullet-dot"
+                      style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                    </div>
+                  </div><span class="content mubu-node"
+                    style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>a.
+                      Compaction </span></span>
+                  <ul class="children"
+                    style="list-style: outside disc; padding-inline-start: 30px; padding: 0px 0px 4px 40px; margin-left: 13px; position: relative; left: -30px; border-left: 1px solid rgb(235, 235, 235);">
+                    <li style="line-height: 24px; list-style: none; position: relative;">
+                      <div class="bullet-wrapper"
+                        style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                        <div class="bullet-dot"
+                          style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                        </div>
+                      </div><span class="content mubu-node"
+                        style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>an
+                          online operation that reclaims the space used by deleted and duplicate needles (i.e. needles
+                          with the same key and alternate key)</span></span>
+                    </li>
+                    <li style="line-height: 24px; list-style: none; position: relative;">
+                      <div class="bullet-wrapper"
+                        style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                        <div class="bullet-dot"
+                          style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                        </div>
+                      </div><span class="content mubu-node"
+                        style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>a
+                          Store machine </span><span class="bold" style="font-weight: bold;">compacts</span><span> a
+                          volume file by copying needles into a new file while </span><span class="bold"
+                          style="font-weight: bold;">skipping any duplicate or deleted entries</span><span>
+                        </span></span>
+                    </li>
+                    <li style="line-height: 24px; list-style: none; position: relative;">
+                      <div class="bullet-wrapper"
+                        style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                        <div class="bullet-dot"
+                          style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                        </div>
+                      </div><span class="content mubu-node"
+                        style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>during
+                          compaction, deletes go to both files </span></span>
+                    </li>
+                    <li style="line-height: 24px; list-style: none; position: relative;">
+                      <div class="bullet-wrapper"
+                        style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                        <div class="bullet-dot"
+                          style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                        </div>
+                      </div><span class="content mubu-node"
+                        style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>once
+                          this procedure reaches the end of the file, it blocks any further modifications to the volume
+                          and atomically swaps the files and in-memory structures </span></span>
+                    </li>
+                  </ul>
+                </li>
+                <li style="line-height: 24px; list-style: none; position: relative;">
+                  <div class="bullet-wrapper"
+                    style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                    <div class="bullet-dot"
+                      style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                    </div>
+                  </div><span class="content mubu-node"
+                    style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>b.
+                      Saving more memory </span></span>
+                  <ul class="children"
+                    style="list-style: outside disc; padding-inline-start: 30px; padding: 0px 0px 4px 40px; margin-left: 13px; position: relative; left: -30px; border-left: 1px solid rgb(235, 235, 235);">
+                    <li style="line-height: 24px; list-style: none; position: relative;">
+                      <div class="bullet-wrapper"
+                        style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                        <div class="bullet-dot"
+                          style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                        </div>
+                      </div><span class="content mubu-node"
+                        style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>since
+                          we only use the flag field to mark a needle as deleted, we don't need to maintain a separate
+                          fields for the falgs, but rather we reuse the offset field. A photo is marked as deleted by
+                          setting the offset to be 0 </span></span>
+                    </li>
+                    <li style="line-height: 24px; list-style: none; position: relative;">
+                      <div class="bullet-wrapper"
+                        style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                        <div class="bullet-dot"
+                          style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                        </div>
+                      </div><span class="content mubu-node"
+                        style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>Store
+                          machines do not keep track of cookie values in main memory, but instead check the supplied
+                          cookie after reading a needle from disk</span></span>
+                    </li>
+                    <li style="line-height: 24px; list-style: none; position: relative;">
+                      <div class="bullet-wrapper"
+                        style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                        <div class="bullet-dot"
+                          style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                        </div>
+                      </div><span class="content mubu-node"
+                        style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>Currently
+                          uses 10 bytes of main memory per photo on average </span></span>
+                    </li>
+                    <li style="line-height: 24px; list-style: none; position: relative;">
+                      <div class="bullet-wrapper"
+                        style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                        <div class="bullet-dot"
+                          style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                        </div>
+                      </div><span class="content mubu-node"
+                        style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>Since
+                          we scale each uploaded image to 4 photo sizes </span></span>
+                      <ul class="children"
+                        style="list-style: outside disc; padding-inline-start: 30px; padding: 0px 0px 4px 40px; margin-left: 13px; position: relative; left: -30px; border-left: 1px solid rgb(235, 235, 235);">
+                        <li style="line-height: 24px; list-style: none; position: relative;">
+                          <div class="bullet-wrapper"
+                            style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                            <div class="bullet-dot"
+                              style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                            </div>
+                          </div><span class="content mubu-node"
+                            style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>they
+                              have the same key (64 bits)</span></span>
+                        </li>
+                        <li style="line-height: 24px; list-style: none; position: relative;">
+                          <div class="bullet-wrapper"
+                            style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                            <div class="bullet-dot"
+                              style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                            </div>
+                          </div><span class="content mubu-node"
+                            style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>different
+                              alternate keys (32 bits)</span></span>
+                        </li>
+                        <li style="line-height: 24px; list-style: none; position: relative;">
+                          <div class="bullet-wrapper"
+                            style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                            <div class="bullet-dot"
+                              style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                            </div>
+                          </div><span class="content mubu-node"
+                            style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>and
+                              consequently different data sizes (16 bits) </span></span>
+                        </li>
+                        <li style="line-height: 24px; list-style: none; position: relative;">
+                          <div class="bullet-wrapper"
+                            style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                            <div class="bullet-dot"
+                              style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                            </div>
+                          </div><span class="content mubu-node"
+                            style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>additional
+                              2 bytes per image in overheads due to hash tables </span></span>
+                        </li>
+                        <li style="line-height: 24px; list-style: none; position: relative;">
+                          <div class="bullet-wrapper"
+                            style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                            <div class="bullet-dot"
+                              style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                            </div>
+                          </div><span class="content mubu-node"
+                            style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>=&gt;
+                              the total for 4 scaled photos of the same image is 40 bytes </span></span>
+                        </li>
+                      </ul>
+                    </li>
+                  </ul>
+                </li>
+                <li style="line-height: 24px; list-style: none; position: relative;">
+                  <div class="bullet-wrapper"
+                    style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                    <div class="bullet-dot"
+                      style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                    </div>
+                  </div><span class="content mubu-node"
+                    style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>c.
+                      Batch upload</span></span>
+                  <ul class="children"
+                    style="list-style: outside disc; padding-inline-start: 30px; padding: 0px 0px 4px 40px; margin-left: 13px; position: relative; left: -30px; border-left: 1px solid rgb(235, 235, 235);">
+                    <li style="line-height: 24px; list-style: none; position: relative;">
+                      <div class="bullet-wrapper"
+                        style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                        <div class="bullet-dot"
+                          style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                        </div>
+                      </div><span class="content mubu-node"
+                        style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>motivation:
+                        </span></span>
+                      <ul class="children"
+                        style="list-style: outside disc; padding-inline-start: 30px; padding: 0px 0px 4px 40px; margin-left: 13px; position: relative; left: -30px; border-left: 1px solid rgb(235, 235, 235);">
+                        <li style="line-height: 24px; list-style: none; position: relative;">
+                          <div class="bullet-wrapper"
+                            style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                            <div class="bullet-dot"
+                              style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                            </div>
+                          </div><span class="content mubu-node"
+                            style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>disks
+                              are generally better at performing large sequential writes instead of small random writes
+                            </span></span>
+                        </li>
+                        <li style="line-height: 24px; list-style: none; position: relative;">
+                          <div class="bullet-wrapper"
+                            style="position: absolute; left: -25px; top: 6px; width: 18px; height: 18px; border-radius: 9px;">
+                            <div class="bullet-dot"
+                              style="position: absolute; left: 6px; top: 6px; width: 6px; height: 6px; background-color: rgb(100, 106, 115); border-radius: 3px;">
+                            </div>
+                          </div><span class="content mubu-node"
+                            style="line-height: 24px; min-height: 24px; font-size: 16px; padding: 2px 0px; display: inline-block; vertical-align: top;"><span>many
+                              users upload entire albums fo facebook instead of single pics, providing an obvious
+                              opportunity to batch the photos in an album together </span></span>
+                        </li>
+                      </ul>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+
+</body>
+
+</html>
